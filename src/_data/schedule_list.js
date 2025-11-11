@@ -8,7 +8,7 @@ module.exports = async function() {
   const flatList = Object.values(grouped).flat();
 
   // Optional: log to confirm slugs are there
-  console.log("Program points for slug pages:", flatList.map(p => p.slug));
+  //console.log("Program points for slug pages:", flatList.map(p => p.slug));
 
   return flatList;
 };

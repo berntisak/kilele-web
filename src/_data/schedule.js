@@ -119,7 +119,7 @@ const { DateTime } = require('luxon');
 module.exports = async function() {
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLIC_KEY
   );
 
   // 1️⃣ Get all program points with their category + venue info
