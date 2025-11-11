@@ -1,0 +1,32 @@
+---
+pagination:
+  data: news
+  size: 1
+  alias: post
+  resolve: values
+permalink: "/news/{{ post.slug }}/"
+layout: layouts/base.html
+eleventyComputed:
+  title: "{{ post.title }}"
+---
+
+<article class="content__container">
+    <div class="news-content-date">
+        <strong>NEWS - </strong>{{ post.publish_date | postDate }}
+    </div>
+    <div class="news__section news__section--split active">
+        <div>
+        {% if post.photo_path %}
+            <img src="{{ post.photo_path }}" alt="{{ post.title }}" />
+        {% endif %}
+        </div>
+        <div class="news-content-container">
+            <div class="content__title">
+                <h1>{{post.title}}</h1>
+            </div>
+            <div class="news-content-text">
+                {{ post.content | markdown | safe }}
+            </div>
+        </div>
+    </div>
+</article>

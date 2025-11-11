@@ -1,0 +1,95 @@
+---
+pagination:
+  data: schedule_list
+  size: 1
+  alias: point
+permalink: "/2026/schedule/{{ point.slug }}/index.html"
+layout: layouts/base.html
+eleventyComputed:
+  title: "{{ point.title }}"
+---
+
+<article class="content__container">
+    <div class="content__title">
+        <h1>{{point.title}}</h1>
+    </div>
+        <div class="schedule__section schedule__section--split">
+            <div>
+            {% if point.photo_path %}
+                <img src="{{ point.photo_path }}" alt="{{ point.title }}" width="1920"/>
+            {% endif %}
+            </div>
+            <div class="schedule__section-text">
+                <p><strong>Category:</strong> {{ point.category_name }}</p>
+                <p><strong>Venue:</strong> {{ point.venue_name }}</p>
+                <div>
+                    {% if point.artists.length %}
+                        <p><strong>Artists:</strong></p>
+                        <ul>
+                        {% for artist in point.artists %}
+                            <li>{{ artist }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <h2>Description</h2>
+                    {{ point.description | markdown | safe }}
+                </div>
+            </div>
+        </div>
+</article>
+
+<style>
+.news-article {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.article-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Remove the h1 styles from here since we're using the hero title */
+.article-meta {
+    color: #666;
+    font-size: 1rem;
+}
+
+.article-tags {
+    margin-top: 0.5rem;
+}
+
+.tag {
+    display: inline-block;
+    background: #f0f0f0;
+    padding: 0.3rem 0.8rem;
+    border-radius: 16px;
+    font-size: 0.9rem;
+    margin-right: 0.5rem;
+}
+
+.article-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+.article-content {
+    line-height: 1.7;
+    font-size: 1.1rem;
+}
+
+.article-content p {
+    margin-bottom: 1.5rem;
+}
+
+.article-content h2, .article-content h3 {
+    margin: 2rem 0 1rem 0;
+}
+</style>

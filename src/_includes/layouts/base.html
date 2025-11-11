@@ -1,0 +1,42 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+    <head> 
+        {% include "basehead.html" %} 
+        {% block head %} {% endblock %}
+    </head> 
+    <body>
+        <div class="header__outer_container ">
+            <header class="header__container">
+                <div class="header__logo">
+                    <a href="/">
+                    <img class="logo" src="/assets/logos/kilele_2026.png" alt="Kilele Festival logo"-->
+                    </a>
+                </div>
+
+                <div class="nav__wrapper">
+                    <nav class="header__links">
+                        <a href="/news" class="nav__button">News</a>
+                        <a href="/2026/schedule" class="nav__button">Schedule</a>
+                        <a href="/2026/lineup" class="nav__button">Line-up</a>
+                        <a href="/about" class="nav__button">About</a>
+                    </nav>
+                    
+                    <nav class="mobile__header_button-wrapper">
+                        <!-- mobile menu toggle -->
+                        <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">☰</button>
+                    </nav>
+                </div>
+            </header>
+        </div>
+        <div class="container">
+            <div class="body__container">
+                {{ content | safe }}
+                {% include "layouts/partners.html" %} 
+            </div>
+        </div>
+
+        <script src="/scripts/menu.js" defer></script>
+        <script src="/scripts/hero.js" defer></script>
+    
+    </body>
+</html>

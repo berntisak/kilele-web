@@ -1,0 +1,59 @@
+@import url("./reset.css");
+@import url("./variables.css");
+@import url("./layout.css");
+@import url("./components.css");
+@import url("./hero.css");
+@import url("./about.css");
+@import url("./lineup.css");
+@import url("./schedule.css");
+@import url("./news.css");
+
+
+.montserrat-normal {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.montserrat-bold {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.montserrat-bolder {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+}
+
+
+
+/* global defaults, typography, etc. */
+body {
+  font-family: "Montserrat"; 
+  /*font-family: gotha;*/
+  color: var(--text);
+  background-color: var(--background);
+  background-image: var(--background-img);
+  background-position: center;
+  background-size: cover;
+}
+
+a {
+    text-decoration: none;
+}
+
+iframe {
+    margin-top: 1rem;
+    width: 40vw;
+    height: auto; 
+    aspect-ratio: 16/9;
+    @media (max-width: 900px) {
+        width: 70vw;
+       /* font-size: 8vw; /*1.5rem;*/
+    }
+}

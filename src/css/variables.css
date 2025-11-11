@@ -1,0 +1,27 @@
+:root {
+    --background: #fff;
+    --text: #111;
+    --accent: #6528f7;
+    --background-img: url("/assets/backgrounds/kilele_bg_2026.png");
+    --button-purple: url("/assets/ui/button_purple.png");
+
+    --primary: #7117ff;
+    --primary-alt1: #0011b2;
+    --primary-alt2: #ff8b00;
+    --secondary: #ff0000;
+    --secondary-alt1: #201d1d;
+
+    --header-height: 100px;
+    --header-offset: -80px;
+    --gap: min(1.5rem, 3%);
+}
+
+/*
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #111;
+    --text: #f5f5f5;
+    --accent: #a98cff;
+  }
+}
+*/

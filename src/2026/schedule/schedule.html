@@ -1,0 +1,69 @@
+---
+layout: layouts/base.html
+title: Schedule
+description: "Schedule"
+permalink: /2026/schedule/index.html
+---
+
+<div class="content__container">
+  <div style="display: flex; justify-content: space-evenly;">
+    <div class="title">
+        <div class="schedule-title">Schedule Kilele 2026</div> 
+    </div>
+    <div class="schedule-sorting">
+      <a href="" class="about__button">By time</a>
+      <a href="" class="about__button">By category</a>
+    </div>
+  </div>
+
+  <div class="schedule-list">
+    {% for date, points in schedule %}
+      <div class="schedule-day">
+        <h2 class="schedule-date">{{ date }}</h2>
+
+        {% for point in points %}
+          <a href="/2026/schedule/{{ point.slug }}/">
+          <article class="schedule-item" 
+          style="outline: 3px solid {{ point.category_color | default('#cccccc') }};"
+          >
+            <img 
+              src="{{ point.photo_path_small if point.photo_path_small else '/assets/images/placeholder.jpg' }}" 
+              alt="{{ point.title }}" 
+              width="400" height="400"
+            />
+            <div class="schedule-text schedule-item-left">
+                <h3>{{ point.title }}</h3>
+                <div>
+                  {{ point.start_time_local }}: {{ point.venue_name }}
+                </div>
+            </div>
+            <div class="schedule-text schedule-item-right">
+                <small><b>{{ point.category_name }}</b></small>
+            </div>
+
+          </article>
+          </a>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+<!--
+<div class="content__container">
+  <div class="title">
+  <h1>Schedule Kilele 2026</h1>
+  </div>
+<div class="lineup-list">
+{% for point in schedule %}
+  <article class="lineup-list-element">
+      <img style="width:150px" src="{{point.photo_path if point.photo_path else '/assets/images/placeholder.jpg' }}" />
+      <div class="lineup-list---text"><h2><a href="/2026/schedule/{{ point.slug }}/">{{ point.title }}</a></h2></div>
+
+  </article>
+{% endfor %}
+</div>
+
+</div>
+-->

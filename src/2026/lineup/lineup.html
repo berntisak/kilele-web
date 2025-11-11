@@ -1,0 +1,59 @@
+---
+layout: layouts/base.html
+title: Line-up
+description: "Line-up"
+---
+
+<div class="content__container">
+  <div class="title">
+    <div class="lineup-title">Lineup Kilele 2026</div>
+  </div>
+
+  <div class="lineup-list">
+    {% set current_letter = '' %}
+    {% for artist in lineup | sort(attribute='name') %}
+      {% set first_letter = artist.name[0] | upper %}
+      {% if first_letter != current_letter %}
+        {% set current_letter = first_letter %}
+        <div class="letter-section">
+          <h2 class="letter-heading">{{ current_letter }}</h2>
+        </div>
+      {% endif %}
+      <a href="/2026/lineup/{{ artist.slug }}/">
+      <article class="lineup-list-element">
+        <img 
+          src="{{ artist.photo_path if artist.photo_path else '/assets/images/placeholder.jpg' }}" 
+          alt="{{ artist.name }}"
+          width="400" height="400"
+        />
+        <div class="lineup-list---text">
+          <h2>
+            {{ artist.name }}
+          </h2>
+        </div>
+
+      </article>
+      </a>
+    {% endfor %}
+  </div>
+</div>
+
+
+<!--
+<div class="content__container">
+  <div class="title">
+  <h1>Lineup Kilele 2026</h1>
+  </div>
+<div class="lineup-list">
+{% for artist in lineup %}
+  <article class="lineup-list-element">
+
+      <div class="lineup-list---text"><h2><a href="/2026/lineup/{{ artist.slug }}/">{{ artist.name }}</a></h2></div>
+      <img style="width:150px" src="{{artist.photo_path}}" />
+
+  </article>
+{% endfor %}
+</div>
+
+</div>
+-->

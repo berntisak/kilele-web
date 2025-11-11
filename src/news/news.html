@@ -1,0 +1,41 @@
+---
+layout: layouts/base.html
+title: Latest news
+description: "Latest news"
+---
+
+<div class="content__container">
+  <div class="title">
+    <h1>Latest news</h1>
+  </div>
+
+  <div class="news-grid">
+    {% for post in news %}
+      {% if not post.hero %}
+    <a href="/news/{{ post.slug }}/">
+    <article class="news-card">
+
+        {% if post.photo_path %}
+
+            <img src="{{ post.photo_path }}" alt="{{ post.title }}" width="400" height="400"/>
+            
+        {% endif %}
+        <div class="news-card-container">
+            {{ post.publish_date | postDate }}
+            <div class="news-card-title">{{ post.title }}</div>       
+            {% if post.tags %}
+            <div class="tags">
+                {% for tag in post.tags %}
+                <span class="tag">{{ tag }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <div class="news-card-text">{{ post.excerpt }}</div>
+            
+        </div>
+    </article>
+    </a>
+    {% endif %}
+    {% endfor %}
+</div>
+</div>

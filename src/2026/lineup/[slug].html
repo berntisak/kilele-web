@@ -1,0 +1,102 @@
+---
+pagination:
+  data: lineup
+  size: 1
+  alias: artist
+  resolve: values
+permalink: "/2026/lineup/{{ artist.slug }}/"
+layout: layouts/base.html
+eleventyComputed:
+  title: "{{ lineup.name }}"
+---
+
+<article class="content__container">
+    <div class="content__title">
+        <h1>{{artist.name}}</h1>
+    </div>
+    <div class="lineup__section lineup__section--split">
+        <div>
+        {% if artist.photo_path %}
+            <img src="{{ artist.photo_path }}" alt="{{ aritst.name }}" width="1000"/>
+        {% endif %}
+        </div>
+        <div class="lineup__section-text">
+            <div>
+                <h2>Artist bio</h2>
+                {{ artist.bio | markdown | safe }}
+            </div>
+            <div>
+            {% if artist.links %}
+                <h3>Links</h3>
+                <p>{{artist.links}}</p>
+            {% endif %}
+            </div>
+            <div>
+            {% if artist.instagram %}
+                <h3>Instagram</h3>
+                {{artist.instagram}}
+            {% endif %}
+            </div>
+            <div>
+            {% if artist.website %}
+                <h3>Website</h3>
+                <a href={{artist.website}}>{{artist.website}}</a>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+</article>
+
+<style>
+.news-article {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.article-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Remove the h1 styles from here since we're using the hero title */
+.article-meta {
+    color: #666;
+    font-size: 1rem;
+}
+
+
+.article-tags {
+    margin-top: 0.5rem;
+}
+
+.tag {
+    display: inline-block;
+    background: #f0f0f0;
+    padding: 0.3rem 0.8rem;
+    border-radius: 16px;
+    font-size: 0.9rem;
+    margin-right: 0.5rem;
+}
+
+.article-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+.article-content {
+    line-height: 1.7;
+    font-size: 1.1rem;
+}
+
+.article-content p {
+    margin-bottom: 1.5rem;
+}
+
+.article-content h2, .article-content h3 {
+    margin: 2rem 0 1rem 0;
+}
+</style>
