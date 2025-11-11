@@ -28,7 +28,7 @@ module.exports = function(eleventyConfig) {
     const ALLOWED_TAGS = false; // allow all standard HTML5 tags
     const ALLOWED_ATTR = false; // allow all safe attributes
 
-    
+    /*
     eleventyConfig.addTransform("sanitizeHtml", (content, outputPath) => {
     if (outputPath && outputPath.endsWith(".html")) {
         try {
@@ -45,7 +45,7 @@ module.exports = function(eleventyConfig) {
     }
     return content;
     });
-    
+    */
 
     return {
         dir: {
