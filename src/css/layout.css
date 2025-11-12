@@ -43,7 +43,7 @@
     height: var(--header-height);
     /*align-items: flex-end;*/
     justify-content: space-between;
-    padding: 0 min(2rem, 8%);
+    padding: 0 min(2rem, 5%);
     z-index: 1000;
 
     @media (max-width: 900px) {

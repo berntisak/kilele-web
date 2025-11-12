@@ -34,7 +34,8 @@ button {
     background-color: var(--background);
     box-shadow: -3px -2px 0px var(--text);
     @media (max-width:760px) {
-        width: var(--header-height);
+        width: 30vw;
+        /*width: var(--header-height);*/
         background-color: var(--background);
         padding: 0.25rem;
     }
