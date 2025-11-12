@@ -11,22 +11,27 @@ eleventyComputed:
 ---
 
 <article class="content__container">
-    <div class="news-content-date">
-        <strong>NEWS - </strong>{{ post.publish_date | postDate }}
-    </div>
-    <div class="news__section news__section--split active">
+    <div class="news__section news__section-content active">
+
+        <div class="news__section-header">
+            <div>
+                <strong>NEWS - </strong>{{ post.publish_date | postDate }}
+            </div>
+            <div>
+                2025 HIGHLIGHTS
+            </div>
+         </div>
+         <div class="news__section-title"> 
+            {{post.title}}
+         </div>
         <div>
         {% if post.photo_path %}
             <img src="{{ post.photo_path }}" alt="{{ post.title }}" />
         {% endif %}
         </div>
-        <div class="news-content-container">
-            <div class="content__title">
-                <h1>{{post.title}}</h1>
-            </div>
-            <div class="news-content-text">
+            <div class="news__section-text">
                 {{ post.content | markdown | sanitize | safe }}
             </div>
-        </div>
+
     </div>
 </article>

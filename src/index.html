@@ -7,19 +7,20 @@ title: Kilele 2026
     <div class="hero__section hero__carousel">
         {% for post in news_latest.hero %}
         <div class="hero__section--split {% if loop.index == 1 %}active{% endif %}">
+            <a href="/news/{{ post.slug }}/" >
             <div class="hero__image">
             {% if post.photo_path %}
-                <a href="/news/{{ post.slug }}/" ></a>
                     <img src="{{ post.photo_path }}" alt="{{ post.title }}">
-                </a>
             {% endif %}
             </div>
             <div class="hero__info">
                 <div class="hero__info_title">{{ post.title }}</div>
                 <div class="hero__info_shout">{{ post.sub_title }}</div>
-                <div class="hero__info_text">{{ post.content | markdown | safe }}
+                <div class="hero__info_text">
+                    {{ post.content | markdown | safe }}
                 </div>
             </div>
+            </a>
         </div>
         {% endfor %}  
     </div>
