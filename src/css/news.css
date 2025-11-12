@@ -26,8 +26,8 @@
         aspect-ratio: unset;
     }
     border-radius: 10px;
-    outline: 3px solid black;
-    box-shadow: 6px 5px 3px black;
+    outline: 2px solid black;
+    box-shadow: 5px 3px 3px black;
 }
 
 .news-card-container {
@@ -52,8 +52,8 @@
 
 .news__section {
     border-radius: 10px;
-    outline: 3px solid black;
-    box-shadow: 7px 5px 4px black;
+    outline: 2px solid black;
+    box-shadow: 5px 3px 3px black;
     background-color: var(--background);
     /*flex-grow: 1;*/
 }

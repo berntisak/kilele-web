@@ -30,6 +30,12 @@
     }
 }
 
+.about__banner {
+    @media (max-width: 600px) {
+        display: none;
+    }
+}
+
 .about__header {
     display: flex;
     font-weight: bold;

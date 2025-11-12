@@ -7,7 +7,7 @@ title: Kilele 2026
     <div class="hero__carousel">
         {% for post in news_latest.hero %}
         <div class="hero__section {% if loop.index == 1 %}active{% endif %}">
-            <a href="/news/{{ post.slug }}/" >
+            <!--a href="/news/{{ post.slug }}/" -->
             <div class="hero__section-content">
                 <div class="hero__section-image">
                 {% if post.photo_path %}
@@ -22,7 +22,7 @@ title: Kilele 2026
                     </div>
                 </div>
             </div>
-            </a>
+
         </div>
         
         {% endfor %}  

@@ -2,37 +2,38 @@
 .hero__carousel {
     position: relative;
     overflow: hidden;
-    display: block;
+    display: flex;
     aspect-ratio: 2/1;
 
     border-radius: 10px;
     outline: 2px solid black;
-    box-shadow: 7px 5px 4px black;
+    box-shadow: 5px 3px 3px black;
     background-color: var(--background);
 }
 
 .general__container {
     border-radius: 10px;
     outline: 2px solid black;
-    box-shadow: 7px 5px 4px black;
+    box-shadow: 5px 3px 3px black;
     background-color: var(--background);
 }
 
 /* Ensure carousel height adapts to its content */
+/*
 .hero__section.hero__carousel::after {
   content: "";
   display: block;
-  padding-top: 50%; /* adjust aspect ratio, e.g., 50% = 2:1 */
-}
+  padding-top: 50%; /* adjust aspect ratio, e.g., 50% = 2:1 
+}*/
 
 .hero__section {
     position: absolute;
+    inset: 0; /* fill parent */
     min-height: 75vh;
     height: 100%;
     opacity: 0;
     transition: opacity 1s ease-in-out;
     z-index: 0;
-    inset: 0;
     /*flex-grow: 1;*/
 }
 
@@ -45,7 +46,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   background-color: var(--background);
-
+  height: 100%; /* make sure it fills */
 }
 
 .hero__section-content picture,
@@ -54,10 +55,7 @@
     object-fit: cover;
     height: auto;
     @media (max-width: 550px) {
-        object-fit: cover;
-        width: 100%;
-        height: auto;
-        aspect-ratio: unset;
+
     }
 }
 
@@ -65,42 +63,44 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    padding: 1rem 2rem;
+    padding: 1.5rem;
     aspect-ratio: 1 / 1;
-    @media (max-width: 550px) {
+    @media (max-width: 600px) {
         aspect-ratio: unset;
-        padding: 0.5rem 1rem;
-        object-fit: unset;
+        padding: 0.25rem 0.75rem;
+        padding-bottom: 1rem;
     }
 }
 
-@media (max-width: 550px) {
+@media (max-width: 600px) {
   .hero__section {
-
+    min-height: unset;
   }
   .hero__section-content {
-    grid-template-columns: 1fr;
-    /*max-height: calc(100vh - var(--header-height));*/
-    /*object-fit: cover;
-    max-height: 70vh;
-    min-height: 70vh;*/
-    height: auto;
+    grid-template-columns: 1fr; 
+    grid-template-rows: 3fr 2fr;
+    gap: 0;
+    /*display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    justify-content: space-between;*/
   }
 
   .hero__carousel {
     display: grid;
     grid-template-columns: 1fr;
-
-    /*height: auto;
-    width: 100%;
-    max-height: 70vh;
-    aspect-ratio: unset*/
+    /*aspect-ratio: 1/1.5;*/
+    /*min-height: calc(80vh - var(--header-height));*/
+    aspect-ratio: 1/1.7;
+    /*width: auto;*/
   }
-  .hero__image {
-    min-height: 40vh;
-    min-width: 40vh;
-    max-width: 60vh;
-    max-height: 60vh;
+  .hero__section-text {
+    justify-content: center;
+    gap: 0.25rem;
+    height: 100%;
+  }
+  .hero__info-text {
+    height: 100%;
   }
 }
 
@@ -110,15 +110,15 @@
 
     border-radius: 10px;
     outline: 2px solid black;
-    box-shadow: 7px 5px 4px black;
+    box-shadow: 5px 3px 3px black;
     background-color: var(--background);
 
     grid-template-columns: repeat(3, 1fr);
     /*grid-template-rows: 3fr 1fr; /* images twice as tall as text */
-    padding: 2rem 3rem;
-    gap: 1rem;
+    padding: clamp(1rem, (1vw), 2rem) clamp(1rem, (1vw), 3rem);
+    gap: clamp(0, 1vw, 1rem);
     background-color: var(--background);
-    @media (max-width: 550px) {
+    @media (max-width: 600px) {
         grid-template-columns: 1fr;
         /*grid-template-rows: auto;*/
         gap: 0;
@@ -194,7 +194,7 @@
     font-weight: bold;
     color: black;
     /*font-size: 4vw; */
-    font-size: clamp(0.5rem, calc(3vw + 0.5rem), 3rem);
+    font-size: clamp(0.25rem, calc(3vw + 0.25rem), 2.5rem);
     @media (max-width: 550px) {
         padding-bottom: 0;
     }
@@ -204,7 +204,7 @@
     font-weight: 900;
     color: purple;
     font-size: 5vw;
-    font-size: clamp(0.5rem, calc(4vw + 0.5rem), 5rem);
+    font-size: clamp(0.5rem, calc(4vw + 0.25rem), 5rem);
     /*
     font-size: 3.5rem;*/
     @media (max-width: 550px) {
@@ -221,7 +221,6 @@
     font-size: clamp(1rem, calc(2vw), 2rem);
     @media (max-width: 550px) {
         align-content: flex-start;
-        /*Æwhite-space: wrap;*/
     }
 }
 
