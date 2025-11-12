@@ -25,7 +25,7 @@ eleventyComputed:
                 <h1>{{post.title}}</h1>
             </div>
             <div class="news-content-text">
-                {{ post.content | markdown | safe }}
+                {{ post.content | markdown | sanitize | safe }}
             </div>
         </div>
     </div>
