@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const slides = document.querySelectorAll(".hero__section--split");
+  const slides = document.querySelectorAll(".hero__section");
   const dots = document.querySelectorAll(".dot");
   let current = 0;
 

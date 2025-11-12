@@ -4,24 +4,27 @@ title: Kilele 2026
 ---
 
 <div class="content__container">
-    <div class="hero__section hero__carousel">
+    <div class="hero__carousel">
         {% for post in news_latest.hero %}
-        <div class="hero__section--split {% if loop.index == 1 %}active{% endif %}">
+        <div class="hero__section {% if loop.index == 1 %}active{% endif %}">
             <a href="/news/{{ post.slug }}/" >
-            <div class="hero__image">
-            {% if post.photo_path %}
-                    <img src="{{ post.photo_path }}" alt="{{ post.title }}">
-            {% endif %}
-            </div>
-            <div class="hero__info">
-                <div class="hero__info_title">{{ post.title }}</div>
-                <div class="hero__info_shout">{{ post.sub_title }}</div>
-                <div class="hero__info_text">
-                    {{ post.content | markdown | safe }}
+            <div class="hero__section-content">
+                <div class="hero__section-image">
+                {% if post.photo_path %}
+                        <img src="{{ post.photo_path }}" alt="{{ post.title }}">
+                {% endif %}
+                </div>
+                <div class="hero__section-text">
+                    <div class="hero__info_title">{{ post.title }}</div>
+                    <div class="hero__info_shout">{{ post.sub_title }}</div>
+                    <div class="hero__info_text">
+                        {{ post.content | markdown | safe }}
+                    </div>
                 </div>
             </div>
             </a>
         </div>
+        
         {% endfor %}  
     </div>
       <div class="hero__dots">
@@ -35,10 +38,10 @@ title: Kilele 2026
     <div class="content__title">
         <h1>News</h1>
     </div>
-    <div class="hero__section hero__section--columns">
+    <div class="news__section--hero">
         {% for post in news_latest.regular %}
-        <a href="/news/{{ post.slug }}/" >
         <div class="hero__pair">
+            <a href="/news/{{ post.slug }}/" >
             <div class="hero__pair-img-container">
             {% if post.photo_path %}
                 <img src="{{ post.photo_path }}" alt="{{ post.title }}">
@@ -53,8 +56,8 @@ title: Kilele 2026
                     {{ post.excerpt }}
                 </div>
             </div>
-        </div>
         </a>
+        </div>
         {% endfor %}  
     </div>
 </div>
@@ -63,7 +66,7 @@ title: Kilele 2026
     <div class="content__title">
         <h1>Newsletter</h1>
     </div>
-    <div class="hero__section hero__section--newsletter">
+    <div class="general__container hero__section--newsletter">
         <!--div>GET THE LATEST UPDATES FROM KILELE</div-->
         <div class="hero__info_text">
         <iframe src="https://kilelesummit.substack.com/embed" frameborder="0" scrolling="no"></iframe>

@@ -1,18 +1,21 @@
 
-.hero__section {
+.hero__carousel {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    aspect-ratio: 2/1;
+
     border-radius: 10px;
-    outline: 3px solid black;
+    outline: 2px solid black;
     box-shadow: 7px 5px 4px black;
-    /*flex-grow: 1;*/
+    background-color: var(--background);
 }
 
-.hero__carousel {
-  position: relative;
-  overflow: hidden;
-  display: block;
-  /*min-height: 75vh;*/
-  /*max-height: 75vh;*/
-  aspect-ratio: 2/1;
+.general__container {
+    border-radius: 10px;
+    outline: 2px solid black;
+    box-shadow: 7px 5px 4px black;
+    background-color: var(--background);
 }
 
 /* Ensure carousel height adapts to its content */
@@ -22,73 +25,94 @@
   padding-top: 50%; /* adjust aspect ratio, e.g., 50% = 2:1 */
 }
 
-.hero__section--split {
-  position: absolute;
-  /*max-height: 75vh;*/
-  min-height: 75vh;
-  height: 100%;
-
-  inset: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  background-color: var(--background);
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-  z-index: 0;
+.hero__section {
+    position: absolute;
+    min-height: 75vh;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    z-index: 0;
+    inset: 0;
+    /*flex-grow: 1;*/
 }
 
-.hero__section--split.active {
+.hero__section.active {
   opacity: 1;
   z-index: 2;
 }
 
+.hero__section-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: var(--background);
+
+}
+
+.hero__section-content picture,
+.hero__section-content img {
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    height: auto;
+    @media (max-width: 550px) {
+        object-fit: cover;
+        width: 100%;
+        height: auto;
+        aspect-ratio: unset;
+    }
+}
+
+.hero__section-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 1rem 2rem;
+    aspect-ratio: 1 / 1;
+    @media (max-width: 550px) {
+        aspect-ratio: unset;
+        padding: 0.5rem 1rem;
+        object-fit: unset;
+    }
+}
 
 @media (max-width: 550px) {
-  .hero__section--split {
+  .hero__section {
+
+  }
+  .hero__section-content {
     grid-template-columns: 1fr;
     /*max-height: calc(100vh - var(--header-height));*/
-    /*object-fit: cover;*/
+    /*object-fit: cover;
     max-height: 70vh;
-    min-height: 70vh;
-    height: 100%;
-    gap: 0;
+    min-height: 70vh;*/
+    height: auto;
   }
+
   .hero__carousel {
-    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+
+    /*height: auto;
     width: 100%;
-    min-height: 70vh;
     max-height: 70vh;
-    aspect-ratio: unset
+    aspect-ratio: unset*/
   }
   .hero__image {
     min-height: 40vh;
     min-width: 40vh;
     max-width: 60vh;
     max-height: 60vh;
-
-    /*height: 60vmin;*/
   }
-
 }
 
-.hero__section--split picture,
-.hero__section--split img {
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    height: auto;
-    /*max-height: 75vh;
-    max-width: 100%;*/
-    @media (max-width: 550px) {
-        object-fit: cover;
-        display: block;
-        max-height: 60vmax;
-        /*max-height: 45vh;*/
-    }
-}
 
-.hero__section--columns {
+.news__section--hero {
     display: grid;
-    /*grid-template-columns: 1fr 1fr 1fr;*/
+
+    border-radius: 10px;
+    outline: 2px solid black;
+    box-shadow: 7px 5px 4px black;
+    background-color: var(--background);
+
     grid-template-columns: repeat(3, 1fr);
     /*grid-template-rows: 3fr 1fr; /* images twice as tall as text */
     padding: 2rem 3rem;
@@ -110,26 +134,6 @@
     grid-template-columns: 1fr 1fr;
     background-color: var(--background);
     align-items: center;
-}
-.hero__section--partners {
-    display: grid;
-    align-content: center;
-    background-color: var(--background);
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive columns */
-    gap: 15px; /* Spacing between grid items */
-}
-
-.hero__section--partners picture,
-.hero__section--partners img {
-    align-self: center;
-    justify-self: center;
-    object-fit: contain;
-    max-width: 150px;
-    height: 150px;
-    @media (max-width: 550px) {
-        height: auto;
-        max-height: 150px;
-    }
 }
 
 

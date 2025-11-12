@@ -12,7 +12,6 @@ eleventyComputed:
 
 <article class="content__container">
     <div class="news__section news__section-content active">
-
         <div class="news__section-header">
             <div>
                 <strong>NEWS - </strong>{{ post.publish_date | postDate }}
@@ -31,7 +30,6 @@ eleventyComputed:
         </div>
             <div class="news__section-text">
                 {{ post.content | markdown | sanitize | safe }}
-            </div>
-
+        </div>
     </div>
 </article>
