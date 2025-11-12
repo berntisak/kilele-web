@@ -19,6 +19,13 @@
     --gap: min(1.5rem, 3%);
 }
 
+@media (max-width: 900px) {
+    :root {
+        --header-height: clamp(3vh, 4vh + 1rem, 100px);
+        --header-offset: calc(20px - var(var(--header-height))); 
+    }
+}
+
 /*
 @media (prefers-color-scheme: dark) {
   :root {
