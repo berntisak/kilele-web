@@ -28,7 +28,8 @@
                 </div>
             </header>
         </div>
-        <div class="container">
+        
+        <div id="swup" class="container transition-fade">
             <div class="body__container">
                 {{ content | safe }}
                 {% include "layouts/partners.html" %} 
@@ -37,6 +38,11 @@
 
         <script src="/scripts/menu.js" defer></script>
         <script src="/scripts/hero.js" defer></script>
-    
+        <script type="module">
+            import Swup from 'https://unpkg.com/swup@4?module';
+            const swup = new Swup({
+                containers: ['#swup'],
+            });
+        </script>
     </body>
 </html>
