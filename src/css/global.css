@@ -30,7 +30,14 @@
   font-style: normal;
 }
 
-
+/* For Swup fades */
+.transition-fade {
+  opacity: 1;
+  transition: opacity 0.4s;
+}
+html.is-changing .transition-fade {
+  opacity: 0;
+}
 
 /* global defaults, typography, etc. */
 body {
@@ -42,6 +49,7 @@ body {
   background-position: top;
   background-size: cover;
   background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 a {
