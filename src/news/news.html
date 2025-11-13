@@ -15,9 +15,11 @@ description: "Latest news"
     <a href="/news/{{ post.slug }}/">
     <article class="news-card">
 
-
+        
         {% if post.photo_path %}
+        <div class="news-card-image">
             <img src="{{ post.photo_path }}" alt="{{ post.title }}" width="400" height="400"/>
+        </div>
         {% endif %}
  
 
