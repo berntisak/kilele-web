@@ -50,6 +50,9 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  @media (max-width: 768px) {
+      background-image: var(--background-img-responsive);
+  }
 }
 
 a {

@@ -5,15 +5,15 @@ description: "Latest news"
 ---
 
 <div class="content__container">
-  <div class="title">
-    <h1>Latest news</h1>
+  <div class="news-title">
+    Latest news
   </div>
 
   <div class="news-grid">
     {% for post in news %}
      {% if not post.hero %}
     <a href="/news/{{ post.slug }}/">
-    <article class="news-card">
+    <div class="news-card">
 
         
         {% if post.photo_path %}
@@ -23,7 +23,7 @@ description: "Latest news"
         {% endif %}
  
 
-        <div class="news-card-container">
+        <div class="news-card-content">
             {{ post.publish_date | postDate }}
             <div class="news-card-title">{{ post.title }}</div>       
             {% if post.tags %}
@@ -36,7 +36,7 @@ description: "Latest news"
             <div class="news-card-text">{{ post.excerpt }}</div>
             
         </div>
-    </article>
+    </div>
     </a>
     {% endif %}
     {% endfor %}
