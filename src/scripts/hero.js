@@ -21,5 +21,5 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(() => {
     current = (current + 1) % slides.length;
     showSlide(current);
-  }, 60000);
+  }, 6000);
 });

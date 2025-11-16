@@ -153,6 +153,9 @@
     border-radius: 3px 5px;
     box-shadow: -5px -4px 0px var(--text);
     border: 3px solid black;
+    @media (max-width: 550px) {
+        max-height: 50vh;
+    }
 }
 
 .hero__pair picture,
