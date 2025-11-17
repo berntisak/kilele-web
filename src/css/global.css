@@ -8,7 +8,6 @@
 @import url("./schedule.css");
 @import url("./news.css");
 
-
 .montserrat-normal {
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
@@ -41,19 +40,54 @@ html.is-changing .transition-fade {
 
 /* global defaults, typography, etc. */
 body {
-  font-family: "Montserrat"; 
+  font-family: "Montserrat";
   /*font-family: gotha;*/
   color: var(--text);
   background-color: var(--background);
+}
+
+.background-fixed {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
   background-image: var(--background-img);
-  background-position: top;
   background-size: cover;
+  background-position: top;
   background-repeat: no-repeat;
-  background-attachment: fixed;
-  @media (max-width: 768px) {
-      background-image: var(--background-img-responsive);
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .background-fixed {
+    background-image: var(--background-img-responsive, var(--background-img));
   }
 }
+
+/* Standardized heading and subheader styles */
+
+h1, h2, h3, h4 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  margin: 0 0 1rem 0;
+}
+
+h1 { font-size: clamp(1.75rem, 6vw, 32px); }
+h2 { font-size: clamp(1.25rem, 4vw, 24px); }
+h3 { font-size: clamp(1rem, 3vw, 16px); }
+h4 { font-size: clamp(0.5rem, 2vw, 8px); }
+
+.sh1, .sh2, .sh3, .sh4 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500; /* medium */
+  margin: 0 0 1rem 0;
+}
+
+.sh1 { font-size: clamp(2rem, 6vw, 32px); }
+.sh2 { font-size: clamp(1.5rem, 4vw, 24px); }
+.sh3 { font-size: clamp(1rem, 3vw, 16px); }
+.sh4 { font-size: clamp(0.5rem, 2vw, 8px); }
 
 a {
     text-decoration: none;

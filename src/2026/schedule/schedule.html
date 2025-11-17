@@ -6,17 +6,19 @@ permalink: /2026/schedule/index.html
 ---
 
 <div class="content__container">
-  <div style="display: flex; justify-content: space-evenly;">
-    <div class="title">
-        <div class="schedule-title">Schedule Kilele 2026</div> 
-    </div>
-    <div class="schedule-sorting">
+      <h1>Schedule Kilele 2026</h1>
+<div class="schedule-list">
+        <div class="schedule-day">
+          <br><br>
+      <div class="sh2">Full schedule for Kilele 2026 will be announced in January</div>
+      </div>
+</div>
+    <!--div class="schedule-sorting">
       <a href="" class="about__button">By time</a>
       <a href="" class="about__button">By category</a>
-    </div>
-  </div>
+    </div-->
 
-  <div class="schedule-list">
+  <!--div class="schedule-list">
     {% for date, points in schedule %}
       <div class="schedule-day">
         <h2 class="schedule-date">{{ date }}</h2>
@@ -46,24 +48,7 @@ permalink: /2026/schedule/index.html
         {% endfor %}
       </div>
     {% endfor %}
-  </div>
+  </div-->
 </div>
 
 
-<!--
-<div class="content__container">
-  <div class="title">
-  <h1>Schedule Kilele 2026</h1>
-  </div>
-<div class="lineup-list">
-{% for point in schedule %}
-  <article class="lineup-list-element">
-      <img style="width:150px" src="{{point.photo_path if point.photo_path else '/assets/images/placeholder.jpg' }}" />
-      <div class="lineup-list---text"><h2><a href="/2026/schedule/{{ point.slug }}/">{{ point.title }}</a></h2></div>
-
-  </article>
-{% endfor %}
-</div>
-
-</div>
--->
