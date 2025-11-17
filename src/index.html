@@ -3,6 +3,7 @@ layout: layouts/base.html
 title: Kilele 2026
 ---
 
+
 <div class="content__container">
     <div class="hero__carousel">
         {% for post in news_latest.hero %}
@@ -15,8 +16,8 @@ title: Kilele 2026
                 {% endif %}
                 </div>
                 <div class="hero__section-text">
-                    <div class="hero__info_title">{{ post.title }}</div>
-                    <div class="hero__info_shout">{{ post.sub_title }}</div>
+                    <h1>{{ post.title }}</h1>
+                    <span class="hero__info_shout">{{ post.sub_title }}</span>
                     <div class="hero__info_text">
                         {{ post.hero_text | markdown | safe }}
                     </div>
@@ -24,10 +25,9 @@ title: Kilele 2026
             </div>
             </a>
         </div>
-        
         {% endfor %}  
     </div>
-      <div class="hero__dots">
+    <div class="hero__dots">
         {% for post in news_latest.hero %}
         <span class="dot {% if loop.index == 1 %}active{% endif %}" data-index="{{ loop.index0 }}"></span>
         {% endfor %}
@@ -35,9 +35,7 @@ title: Kilele 2026
 </div>
 
 <div class="content__container">
-    <div class="content__title">
-        <h1>News</h1>
-    </div>
+    <h1>News</h1>
     <div class="news__section--hero">
         {% for post in news_latest.regular %}
         <div class="hero__pair">
@@ -48,13 +46,9 @@ title: Kilele 2026
             {% endif %}
             </div>
             <div class="hero__info--below">
-                {{ post.publish_date | postDate }}
-                <div class="news-card-title"> 
-                    {{ post.title }}
-                </div>
-                <div class="news-card-text">
-                    {{ post.excerpt }}
-                </div>
+                <span class="sh4">{{ post.publish_date | postDate }}</span>
+                <h2>{{ post.title }}</h2>
+                <span class="sh3">{{ post.excerpt }}</span>
             </div>
         </a>
         </div>
@@ -63,17 +57,11 @@ title: Kilele 2026
 </div>
 
 <div class="content__container">
-    <div class="content__title">
-        <h1>Subscribe to our Substack for Updates</h1>
-    </div>
+    <h1>Subscribe to our Substack for Updates</h1>
     <div class="general__container hero__section--newsletter">
-        <!--div>GET THE LATEST UPDATES FROM KILELE</div-->
         <div class="hero__info_text">
         <iframe src="https://kilelesummit.substack.com/embed" frameborder="0" scrolling="no"></iframe>
         </div>
-        <!--div>
-        <a style="height: 150px" href="" class="button-link">SUBMIT</a>
-        </div-->
     </div>
 </div>
 
