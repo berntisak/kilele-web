@@ -24,8 +24,9 @@
     box-shadow: 5px 3px 3px black;
     overflow: hidden;
     @media (max-width: 900px) {
-        height: auto;
-        max-height: none;
+        /*height: auto;
+        max-height: none;*/
+        height: 400px;
     }
 }
 
@@ -51,6 +52,9 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    @media (max-width: 900px) {
+        padding: 0.25rem 0.5rem;    
+    }
 }
 
 
