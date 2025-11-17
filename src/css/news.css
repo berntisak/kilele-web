@@ -18,7 +18,7 @@
     background-color: var(--background);
     display: flex;
     flex-direction: column;
-    height: 500px;
+    height: 450px;
     border-radius: 10px;
     outline: 2px solid black;
     box-shadow: 5px 3px 3px black;

@@ -11,7 +11,7 @@ description: "Latest news"
 
   <div class="news-grid">
     {% for post in news %}
-     {% if not post.hero %}
+
     <a href="/news/{{ post.slug }}/">
     <div class="news-card">
 
@@ -38,7 +38,7 @@ description: "Latest news"
         </div>
     </div>
     </a>
-    {% endif %}
+
     {% endfor %}
 </div>
 </div>
