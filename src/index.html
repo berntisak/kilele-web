@@ -35,7 +35,7 @@ title: Kilele 2026
 </div>
 
 <div class="content__container">
-    <h1>News</h1>
+    <h1>Latest News</h1>
     <div class="news__section--hero">
         {% for post in news_latest.regular %}
         <div class="hero__pair">
@@ -46,7 +46,7 @@ title: Kilele 2026
             {% endif %}
             </div>
             <div class="hero__info--below">
-                <span class="sh4">{{ post.publish_date | postDate }}</span>
+                <span class="sh3">{{ post.publish_date | postDate }}</span>
                 <h2>{{ post.title }}</h2>
                 <span class="sh3">{{ post.excerpt }}</span>
             </div>
