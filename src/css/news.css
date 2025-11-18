@@ -48,7 +48,7 @@
 
 .news-card-content {
     flex: 0 0 30%;
-    padding: 1rem;
+    padding: 0.5rem 1rem;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -61,6 +61,29 @@
 .news-card-title {
     font-size: clamp(1rem, calc(2vw + 0.25rem), 1.5rem);
     font-weight: 600;
+}
+
+.news-card-date-tag {
+    display: flex;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.tags {
+    align-content: center;
+    padding-bottom: 4px;
+}
+.small-tag {
+    border: 2px solid black;
+    background-color: var(--primary);
+    color: white;
+    border-radius: 7px;
+    /*padding: 7px 10px;*/
+    font-size: smaller;
+    padding: 0.1rem 0.25rem;
+    height: 100px;
 }
 
 .news-card-text {

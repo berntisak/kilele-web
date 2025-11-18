@@ -17,7 +17,9 @@ eleventyComputed:
                 <strong>NEWS - </strong>{{ post.publish_date | postDate }}
             </div>
             <div>
-                2025 HIGHLIGHTS
+                {% for tag in post.tags %}
+                <span class="tag">{{ tag.name }}</span>
+                {% endfor %}
             </div>
          </div>
          <div class="news__section-title"> 

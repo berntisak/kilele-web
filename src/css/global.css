@@ -96,9 +96,10 @@ a {
 
 iframe {
     margin-top: 1rem;
-    width: 40vw;
+    width: 50vw;
     height: auto; 
     aspect-ratio: 16/9;
+    border-radius: 7px 10px;
     @media (max-width: 900px) {
         width: 70vw;
        /* font-size: 8vw; /*1.5rem;*/
