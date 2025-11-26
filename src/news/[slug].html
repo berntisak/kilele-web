@@ -13,9 +13,7 @@ eleventyComputed:
 <article class="content__container">
     <div class="news__section news__section-content active">
         <div class="news__section-header">
-            <div>
-                <strong>NEWS - </strong>{{ post.publish_date | postDate }}
-            </div>
+            <h3>{{ post.publish_date | postDate }}</h3>
             <div>
                 {% for tag in post.tags %}
                 <span class="tag">{{ tag.name }}</span>
