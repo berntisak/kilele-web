@@ -39,7 +39,7 @@
 
 .header__container {
     margin: 0 auto;
-    max-width: 85vw;
+    max-width: calc(85vw - var(--header-height));
     display: flex;
     height: var(--header-height);
     /*align-items: flex-end;*/
@@ -83,7 +83,7 @@
     min-height: 100vh;
     min-height: 100dvh;
     padding: 1.5rem;
-    max-width: calc(95vw - var(--header-height));
+    max-width: calc(85vw - var(--header-height));
     margin: 0 auto;
     @media (max-width: 900px) {
         max-width: 100vw;
