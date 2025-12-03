@@ -33,8 +33,11 @@
 .news-card-image {
     border-bottom: 2px solid black;
     overflow: hidden;
-    flex: 0 0 70%;
+    flex: 0 0 60%;
     width: 100%;
+    @media (max-width: 900px) {
+        flex: 0 0 70%;
+    }
 }
 
 .news-card-image img,
@@ -47,13 +50,14 @@
 
 
 .news-card-content {
-    flex: 0 0 30%;
+    flex: 0 0 40%;
     padding: 0.5rem 1rem;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     @media (max-width: 900px) {
         padding: 0.25rem 0.5rem;    
+        flex: 0 0 30%;
     }
 }
 

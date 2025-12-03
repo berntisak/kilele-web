@@ -95,7 +95,7 @@
 
 
 .body__container {
-    gap: 5rem;
+    gap: 2.5rem;
     display: flex;
     flex-direction: column;
     align-items: stretch;
