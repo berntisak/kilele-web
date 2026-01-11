@@ -35,7 +35,7 @@ title: Kilele 2026
 </div>
 
 <div class="content__container">
-    <h1>Latest News</h1>
+    <h2>Latest News</h2>
     <div class="news__section--hero">
         {% for post in news_latest.regular %}
         <div class="hero__pair">
@@ -47,7 +47,7 @@ title: Kilele 2026
             </div>
             <div class="hero__info--below">
                 <span class="sh3">{{ post.publish_date | postDate }}</span>
-                <h2>{{ post.title }}</h2>
+                <h3>{{ post.title }}</h3>
                 <span class="sh3">{{ post.excerpt }}</span>
             </div>
         </a>
@@ -57,7 +57,7 @@ title: Kilele 2026
 </div>
 
 <div class="content__container">
-    <h1>Subscribe to our Substack for Updates</h1>
+    <h2>Subscribe to our Substack for Updates</h2>
     <div class="general__container hero__section--newsletter">
         <div class="hero__info_text">
         <iframe src="https://kilelesummit.substack.com/embed" frameborder="0" scrolling="no"></iframe>
