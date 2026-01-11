@@ -6,7 +6,10 @@ pagination:
 permalink: "/2026/schedule/{{ point.slug }}/index.html"
 layout: layouts/base.html
 eleventyComputed:
-  title: "{{ point.title }}"
+    title: "{{ point.title }}"
+    description: "{{ (point.description or point.title) | truncate(160, true, '...') }}"
+    og_image: "{{ point.photo_path }}"
+    og_type: "event"
 ---
 
 <article class="content__container">
@@ -16,7 +19,7 @@ eleventyComputed:
         <div class="schedule__section schedule__section--split">
             <div>
             {% if point.photo_path %}
-                <img src="{{ point.photo_path }}" alt="{{ point.title }}" width="1920"/>
+                <img src="{{ point.photo_path }}" alt="{{ point.title }}" width="1920" loading="lazy"/>
             {% endif %}
             </div>
             <div class="schedule__section-text">
@@ -41,6 +44,28 @@ eleventyComputed:
         </div>
 </article>
 
+{% set canonicalUrl = site.url ~ page.url %}
+
+<script type="application/ld+json">
+{{ {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": point.title,
+    "description": point.description,
+    "startDate": point.start_time,
+    "endDate": point.end_time,
+    "eventStatus": "https://schema.org/EventScheduled",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "location": {
+        "@type": "Place",
+        "name": point.venue_name
+    },
+    "image": point.photo_path,
+    "url": canonicalUrl,
+    "performer": point.artists
+} | dump | safe }}
+</script>
+
 <style>
 .news-article {
     max-width: 800px;
@@ -63,14 +88,6 @@ eleventyComputed:
     margin-top: 0.5rem;
 }
 
-.tag {
-    display: inline-block;
-    background: #f0f0f0;
-    padding: 0.3rem 0.8rem;
-    border-radius: 16px;
-    font-size: 0.9rem;
-    margin-right: 0.5rem;
-}
 
 .article-image {
     width: 100%;

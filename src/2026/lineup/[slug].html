@@ -7,7 +7,10 @@ pagination:
 permalink: "/2026/lineup/{{ artist.slug }}/"
 layout: layouts/base.html
 eleventyComputed:
-  title: "{{ lineup.name }}"
+    title: "{{ artist.name }}"
+    description: "{{ (artist.bio or artist.name) | truncate(160, true, '...') }}"
+    og_image: "{{ artist.photo_path }}"
+    og_type: "profile"
 ---
 
 <article class="content__container">
@@ -17,7 +20,7 @@ eleventyComputed:
     <div class="lineup__section lineup__section--split">
         <div>
         {% if artist.photo_path %}
-            <img src="{{ artist.photo_path }}" alt="{{ aritst.name }}" width="1000"/>
+            <img src="{{ artist.photo_path }}" alt="{{ artist.name }}" width="1000" loading="lazy"/>
         {% endif %}
         </div>
         <div class="lineup__section-text">
@@ -47,6 +50,19 @@ eleventyComputed:
     </div>
 </article>
 
+{% set canonicalUrl = site.url ~ page.url %}
+
+<script type="application/ld+json">
+{{ {
+  "@context": "https://schema.org",
+  "@type": "MusicGroup",
+  "name": artist.name,
+  "description": artist.bio,
+  "image": artist.photo_path,
+    "url": canonicalUrl
+} | dump | safe }}
+</script>
+
 <style>
 .news-article {
     max-width: 800px;
@@ -70,14 +86,7 @@ eleventyComputed:
     margin-top: 0.5rem;
 }
 
-.tag {
-    display: inline-block;
-    background: #f0f0f0;
-    padding: 0.3rem 0.8rem;
-    border-radius: 16px;
-    font-size: 0.9rem;
-    margin-right: 0.5rem;
-}
+
 
 .article-image {
     width: 100%;

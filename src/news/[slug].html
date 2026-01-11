@@ -7,7 +7,10 @@ pagination:
 permalink: "/news/{{ post.slug }}/"
 layout: layouts/base.html
 eleventyComputed:
-  title: "{{ post.title }}"
+    title: "{{ post.title }}"
+    description: "{{ post.excerpt or post.sub_title or post.title }}"
+    og_image: "{{ post.photo_path }}"
+    og_type: "article"
 ---
 
 <article class="content__container">
@@ -33,3 +36,24 @@ eleventyComputed:
         </div>
     </div>
 </article>
+{% set canonicalUrl = site.url ~ page.url %}
+
+<script type="application/ld+json">
+{{ {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": post.title,
+    "description": post.excerpt or post.sub_title or post.title,
+    "datePublished": post.publish_date,
+    "image": post.photo_path,
+    "mainEntityOfPage": canonicalUrl,
+    "publisher": {
+        "@type": "Organization",
+        "name": site.name,
+        "logo": {
+            "@type": "ImageObject",
+            "url": site.logo
+        }
+    }
+} | dump | safe }}
+</script>
