@@ -18,7 +18,7 @@
 
     --header-height: 100px;
     --header-offset: -80px;
-    --gap: min(1.5rem, 3%);
+    --gap: min(1rem, 3%);
 }
 
 @media (max-width: 900px) {
