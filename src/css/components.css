@@ -42,10 +42,51 @@ button {
     }
 }
 
+/* reset native button chrome so <button class="nav__button"> matches anchors */
+button.nav__button {
+    -webkit-appearance: none;
+    appearance: none;
+    background-clip: padding-box;
+}
+
 .nav__button:hover {
   background: var(--primary);
   color: var(--background);
 }
+
+/* Dropdown styles */
+.dropdown { 
+    position: relative; 
+    display: inline-block; 
+}
+.nav__button.dropdown-toggle { /* keep base .nav__button styles, add caret spacing */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.nav__button.dropdown-toggle:focus { outline: 2px solid var(--accent); }
+.dropdown-menu { 
+    position: absolute; 
+    top: 100%; 
+    left: 0; 
+    background: var(--background); 
+    border-radius: 5px 5px;
+    border: 2px solid black; 
+    color: var(--primary);
+    min-width: 200px; 
+    display: none; 
+    z-index: 50; 
+}
+.dropdown-item { display: block; padding: 0.5rem 1rem; color: var(--primary); text-decoration: none; }
+.dropdown-item:hover, .dropdown-item:focus { background: var(--primary); color: var(--background); }
+
+/* show on hover for pointer devices */
+@media (hover: hover) {
+    .dropdown:hover .dropdown-menu { display: block; }
+}
+
+/* show when .open class is present (for click toggling/mobile) */
+.dropdown.open .dropdown-menu { display: block; }
 
 .tag {
     border: 2px solid black;

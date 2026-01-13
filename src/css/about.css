@@ -1,7 +1,7 @@
 
 .about__container {
     background-color: var(--background);
-    padding-bottom: 5rem;
+    padding-bottom: 1rem;
     border-radius: 10px;
     outline: 3px solid black;
     box-shadow: 6px 5px 3px black;
@@ -15,6 +15,10 @@
     object-fit: contain;
     height: auto;
     max-width: 100%;
+}
+
+.about__spacer_top {
+    padding-top: 2rem;
 }
 
 .about__section {
@@ -55,6 +59,7 @@
     color: black;
     font-size: 2rem;
     padding: 1rem 0;
+    margin-top: 1rem;
     @media (max-width: 900px) {
         font-size: 1.5rem;
        
