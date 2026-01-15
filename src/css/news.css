@@ -160,3 +160,67 @@
     color: var(--primary-alt2);
     text-decoration: underline;
 }
+
+/* Tag filtering */
+.news-filter-container {
+    margin-bottom: 2rem;
+}
+
+
+.active-filter {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 8px;
+    border: 2px solid black;
+    box-shadow: 4px 2px 2px black;
+}
+
+.active-filter strong {
+    color: var(--primary);
+}
+
+.clear-filter-btn {
+    border: 2px solid var(--text);
+    padding: 0.25rem 1rem;
+    border-radius: 3px 5px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    background-color: var(--background);
+    color: var(--primary);
+    transition: all 0.2s;
+
+}
+
+.clear-filter-btn:hover {
+    background-color: var(--primary);
+    color: var(--background);
+}
+
+.news-card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.tag {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background-color: var(--primary-alt);
+    border: 2px solid black;
+    border-radius: 5px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-right: 0.5rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s;
+}
+
+.tag:hover {
+    background-color: var(--primary);
+    color: var(--background);
+}
+

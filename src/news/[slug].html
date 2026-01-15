@@ -19,7 +19,7 @@ eleventyComputed:
             <h3>{{ post.publish_date | postDate }}</h3>
             <div>
                 {% for tag in post.tags %}
-                <span class="tag">{{ tag.name }}</span>
+                <a href="/news/?tag={{ tag.name }}" class="tag">{{ tag.name }}</a>
                 {% endfor %}
             </div>
          </div>
