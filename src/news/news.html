@@ -7,10 +7,17 @@ description: "Latest news"
 <div class="content__container">
   <h1>Latest News</h1>
 
-  <div class="news-grid">
-    {% for post in news %}
+  <div class="news-filter-container">
+    <div id="activeFilter" class="active-filter" style="display: none;">
+      <span><b>Filtering by:</b> <strong id="activeFilterTag"></strong></span>
+      <button id="clearFilter" class="clear-filter-btn">Clear</button>
+    </div>
+  </div>
 
-    <a href="/news/{{ post.slug }}/">
+  <div class="news-grid">
+    {% for post in news %}  
+
+    <a href="/news/{{ post.slug }}/" class="news-card-link" data-tags="{% if post.tags %}{% for tag in post.tags %}{{ tag.name }}{% if not loop.last %},{% endif %}{% endfor %}{% endif %}">
     <div class="news-card">
 
         
@@ -27,7 +34,9 @@ description: "Latest news"
             {% if post.tags %}
             <div class="tags">
                 {% for tag in post.tags %}
+                {% if loop.index <= 2 %}
                 <span class="small-tag">{{ tag.name }}</span>
+                {% endif %}
                 {% endfor %}
             </div>
             {% endif %}
@@ -43,3 +52,5 @@ description: "Latest news"
     {% endfor %}
 </div>
 </div>
+
+<script src="/scripts/newsFilter.js"></script>
