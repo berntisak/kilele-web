@@ -64,4 +64,7 @@
 
   // Re-run when Swup navigates to a new page
   document.addEventListener('swup:contentReplaced', initFilter);
+  
+  // Also run on popstate (back/forward button)
+  window.addEventListener('popstate', initFilter);
 })();
