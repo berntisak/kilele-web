@@ -75,7 +75,11 @@ button.nav__button {
     color: var(--primary);
     min-width: 200px; 
     display: none; 
-    z-index: 50; 
+    z-index: 50;
+    @media (max-width: 768px) {
+        right: 0;
+        left: auto;
+    }
 }
 .dropdown-item { display: block; padding: 0.5rem 1rem; color: var(--primary); text-decoration: none; }
 .dropdown-item:hover, .dropdown-item:focus { background: var(--primary); color: var(--background); }

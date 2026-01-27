@@ -118,7 +118,6 @@
 
 .content__title {
     font-weight: 800;
-    margin-bottom: 2rem;
 }
 
 .nav__wrapper {
@@ -185,11 +184,12 @@
 }
 
 .partners__section-box {
-    width: clamp(5rem, 150px);
+    min-width: 150px;
     max-height: 100px;
     height: auto;
     justify-content: center;
     @media (max-width: 550px) {
+        min-width: 100px;
         max-height: 50px;
     }
 }

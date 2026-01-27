@@ -25,6 +25,7 @@
                                 <!--a role="menuitem" class="dropdown-item" href="/about#other-channels">Other channels</a-->
                                 <a role="menuitem" class="dropdown-item" href="/about/code-of-conduct">Code of Conduct</a>
                                 <a role="menuitem" class="dropdown-item" href="/about/faq">FAQ</a>
+                                <a role="menuitem" class="dropdown-item" href="/about/partners">Partners</a>
                                 <a role="menuitem" class="dropdown-item" href="/about/contact">Contact</a>
                             </div>
                         </div>
@@ -45,7 +46,9 @@
         <div id="swup" class="container transition-fade">
             <div class="body__container">
                 {{ content | safe }}
-                {% include "layouts/partners.html" %} 
+                {% if not hidePartnersFooter %}
+                {% include "layouts/partners_footer.html" %}
+                {% endif %}
             </div>
         </div>
 
