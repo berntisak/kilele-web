@@ -24,27 +24,51 @@ eleventyComputed:
         {% endif %}
         </div>
         <div class="lineup__section-text">
-            <div>
-                <h2>Artist bio</h2>
+                <h2>{{artist.name}}</h2>
+            <div class="lineup__info-box">
                 {{ artist.bio | markdown | safe }}
             </div>
-            <div>
-            {% if artist.links %}
-                <h3>Links</h3>
-                <p>{{artist.links}}</p>
-            {% endif %}
-            </div>
-            <div>
-            {% if artist.instagram %}
-                <h3>Instagram</h3>
-                {{artist.instagram}}
-            {% endif %}
-            </div>
-            <div>
-            {% if artist.website %}
-                <h3>Website</h3>
-                <a href={{artist.website}}>{{artist.website}}</a>
-            {% endif %}
+            <div class="lineup__link-list">
+                {% if artist.website %}
+                <div>
+                    <b>Website:</b> <a href={{artist.website}} target="_blank">{{artist.website}}</a>
+                </div>
+                {% endif %}
+                {% if artist.bandcamp %}
+                <div>
+                    <b>Bandcamp:</b> <a href={{artist.bandcamp}} target="_blank">{{artist.bandcamp}}</a>
+                </div>
+                {% endif %}
+                {% if artist.soundcloud %}
+                <div>
+                    <b>Soundcloud:</b> <a href={{artist.soundcloud}} target="_blank">{{artist.soundcloud}}</a>
+                </div>
+                {% endif %}
+                {% if artist.youtube %}
+                <div>
+                    <b>Youtube:</b> <a href={{artist.youtube}} target="_blank">{{artist.youtube}}</a>
+                </div>
+                {% endif %}
+                {% if artist.applemusic %}
+                <div>
+                    <b>Apple Music:</b> <a href={{artist.applemusic}} target="_blank">{{artist.applemusic}}</a>
+                </div>
+                {% endif %}
+                {% if artist.spotify %}
+                <div>
+                    <b>Spotify:</b> <a href={{artist.spotify}} target="_blank">{{artist.spotify}}</a>
+                </div>
+                {% endif %}
+                {% if artist.instagram %}
+                <div>
+                    <b>Instagram:</b> <a href={{artist.instagram}} target="_blank">{{artist.instagram}}</a>
+                </div>
+                {% endif %}
+                {% if artist.tiktok %}
+                <div>
+                    <b>TikTok:</b> <a href={{artist.tiktok}} target="_blank">{{artist.tiktok}}</a>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
