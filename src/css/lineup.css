@@ -39,6 +39,11 @@
     margin-top: 1rem;
 }
 
+.lineup__link-list a {
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
 
 .lineup__section--split picture,
 .lineup__section--split img {
