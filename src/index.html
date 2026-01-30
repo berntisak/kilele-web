@@ -3,36 +3,57 @@ layout: layouts/base.html
 title: Kilele 2026
 ---
 
-
-<div class="content__container">
-    <div class="hero__carousel">
+<div class="hero__wrapper">
+    <div class="content__container">
         {% for post in news_latest.hero %}
-        <div class="hero__section {% if loop.index == 1 %}active{% endif %}">
+        {% if post.hero_video and loop.index == 1 %}
+        <div class="hero__video-section">
             <a href="/news/{{ post.slug }}/">
-            <div class="hero__section-content">
-                <div class="hero__section-image">
-                {% if post.photo_path %}
-                        <img src="{{ post.photo_path }}" alt="{{ post.title }}">
-                {% endif %}
+                <div class="hero__section-video">
+                    <iframe src="{{ post.video_url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                 </div>
-                <div class="hero__section-text">
-                    <h1>{{ post.title }}</h1>
-                    <span class="hero__info_shout">{{ post.sub_title }}</span>
-                    <div class="hero__info_text">
-                        {{ post.hero_text | markdown | safe }}
-                    </div>
-                </div>
-            </div>
             </a>
         </div>
-        {% endfor %}  
-    </div>
-    <div class="hero__dots">
-        {% for post in news_latest.hero %}
-        <span class="dot {% if loop.index == 1 %}active{% endif %}" data-index="{{ loop.index0 }}"></span>
+        {% endif %}
         {% endfor %}
     </div>
+
+    <div class="content__container">
+        <div class="hero__carousel">
+            {% for post in news_latest.hero %}
+            {% if not post.hero_video %}
+            <div class="hero__section {% if loop.index == 1 %}active{% endif %}">
+                <a href="/news/{{ post.slug }}/">
+                <div class="hero__section-content">
+                    <div class="hero__section-image">
+                    {% if post.photo_path %}
+                            <img src="{{ post.photo_path }}" alt="{{ post.title }}">
+                    {% endif %}
+                    </div>
+                    <div class="hero__section-text">
+                        <h1>{{ post.title }}</h1>
+                        <span class="hero__info_shout">{{ post.sub_title }}</span>
+                        <div class="hero__info_text">
+                            {{ post.hero_text | markdown | safe }}
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+            {% endif %}
+            {% endfor %}  
+        </div>
+        <div class="hero__dots">
+            {% for post in news_latest.hero %}
+            {% if not post.hero_video %}
+            <span class="dot {% if loop.index == 1 %}active{% endif %}" data-index="{{ loop.index0 }}"></span>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
 </div>
+
 
 <div class="content__container">
     <h2>Latest News</h2>
