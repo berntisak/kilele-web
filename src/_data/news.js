@@ -34,6 +34,6 @@ module.exports = async function () {
   return (news || []).map(post => ({
     ...post,
     tags: (post.news_post_tags || []).map(row => row.tags),  // <-- works now
-    photo_path: post.image_path ? baseUrl + post.image_path : null,
+    photo_path: post.image_path ? baseUrl + encodeURIComponent(post.image_path) : null,
   }));
 };
