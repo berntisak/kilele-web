@@ -58,8 +58,8 @@ module.exports = async function() {
       weekday_date: start.isValid ? start.toFormat('cccc dd.MM') : null,
       start_time_local: start.isValid ? start.toFormat('HH:mm') : null,
       end_time_local: end.isValid ? end.toFormat('HH:mm') : null,
-      photo_path_small: point.photo_path ? `${baseUrl}${point.photo_path}?width=100&quality=70`: null,
-      photo_path: point.photo_path ? baseUrl + point.photo_path : null,
+      photo_path_small: point.photo_path ? `${baseUrl}${encodeURIComponent(point.photo_path)}?width=100&quality=70`: null,
+      photo_path: point.photo_path ? baseUrl + encodeURIComponent(point.photo_path) : null,
     };
   });
 

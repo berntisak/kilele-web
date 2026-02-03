@@ -35,8 +35,8 @@ module.exports = async function() {
 
   return (artists || []).map(artist => ({
     ...artist,
-      photo_path_small: artist.photo_path ? `${baseUrl}${artist.photo_path}?width=100&quality=70`: null,
-      photo_path: artist.photo_path ? baseUrl + artist.photo_path : null,
+      photo_path_small: artist.photo_path ? `${baseUrl}${encodeURIComponent(artist.photo_path)}?width=100&quality=70`: null,
+      photo_path: artist.photo_path ? baseUrl + encodeURIComponent(artist.photo_path) : null,
   }));
 
 };
