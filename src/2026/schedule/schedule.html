@@ -8,16 +8,33 @@ permalink: /2026/schedule/index.html
 <div class="content__container">
       <h1>Schedule Kilele 2026</h1>
 <div class="schedule-list">
-        <div class="schedule-day">
-          <br><br>
-      <div class="sh2">Full schedule for Kilele 2026 will be announced in January</div>
-      </div>
-</div>
     <!--div class="schedule-sorting">
-      <a href="" class="about__button">By time</a>
-      <a href="" class="about__button">By category</a>
+      <a href="#" class="nav__button" data-sort="time">By time</a>
+      <a href="#" class="nav__button" data-sort="category">By category</a>
     </div-->
+    {% for date, points in schedule %}
+      <div class="schedule-day">
+        <h2 class="schedule-date">{{ date }}</h2>
 
+        {% for point in points %}
+          <article class="schedule-item" 
+          style="padding: 0.5rem; outline: 3px solid {{ point.category_color | default('#cccccc') }};"
+          >
+               <div class="schedule-text schedule-item-left">
+                <h3>{{ point.title }}</h3>
+                <div>
+                  {{ point.start_time_local }} - {{ point.end_time_local }} at {{ point.venue_name }}
+                </div>
+            </div>
+            <div class="schedule-text schedule-item-right">
+                <small><b>{{ point.category_name }}</b></small>
+            </div>
+
+          </article>
+        {% endfor %}
+      </div>
+    {% endfor %}
+    </div>
   <!--div class="schedule-list">
     {% for date, points in schedule %}
       <div class="schedule-day">
@@ -50,5 +67,7 @@ permalink: /2026/schedule/index.html
     {% endfor %}
   </div-->
 </div>
+
+<script src="/scripts/scheduleSort.js"></script>
 
 

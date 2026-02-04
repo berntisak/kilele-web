@@ -5,7 +5,6 @@
     font-size: clamp(1rem, calc(2vw + 0.5rem), 3rem);
 }
 
-
 .schedule-list {
   display: flex;
   flex-direction: column;
@@ -87,6 +86,16 @@
     justify-content: flex-start; 
     align-items: center; 
     flex-grow: 1; gap: 1rem;
+}
+
+.schedule-sorting .about__button {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.schedule-sorting .about__button.active {
+    background-color: var(--accent);
+    font-weight: bold;
 }
 
 .schedule__section {
