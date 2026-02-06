@@ -5,8 +5,8 @@ title: Kilele 2026
 
 <div class="hero__wrapper">
     <div class="content__container">
-        {% for post in news_latest.hero %}
-        {% if post.hero_video and loop.index == 1 %}
+        {% for post in news_latest.hero_video %}
+        {% if post.hero_video %}
         <div class="hero__video-section">
             <a href="/news/{{ post.slug }}/">
                 <div class="hero__section-video">
@@ -31,7 +31,7 @@ title: Kilele 2026
                     {% endif %}
                     </div>
                     <div class="hero__section-text">
-                        <h1>{{ post.title }}</h1>
+                        <div class="hero__title_text">{{ post.title }}</div>
                         <span class="hero__info_shout">{{ post.sub_title }}</span>
                         <div class="hero__info_text">
                             {{ post.hero_text | markdown | safe }}
