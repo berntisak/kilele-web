@@ -19,14 +19,21 @@ eleventyComputed:
     </div>
     <div class="lineup__section lineup__section--split">
         <div>
-        {% if artist.photo_path %}
-            <img src="{{ artist.photo_path }}" alt="{{ artist.name }}" width="1000" loading="lazy"/>
-        {% endif %}
+            <img src="{{ artist.photo_path if artist.photo_path else '/assets/images/placeholder.jpg' }}" alt="{{ artist.name }}" width="1000" loading="lazy"/>
         </div>
         <div class="lineup__section-text">
                 <h2>{{artist.name}}</h2>
             <div class="lineup__info-box">
                 {{ artist.bio | markdown | safe }}
+                {% if artist.program_points.length %}
+                <p>
+                Experience <strong>{{ artist.name }}</strong> at  
+                {%- for point in artist.program_points -%}
+                    <a href="/2026/schedule/{{ point.slug }}/"> <u><i>{{ point.short_title or point.title }}</i></u></a>
+                    {%- if not loop.last %}, {% endif -%}
+                {%- endfor -%}
+                </p>
+                {% endif %}
             </div>
             <div class="lineup__link-list">
                 {% if artist.website %}

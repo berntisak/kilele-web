@@ -11,7 +11,12 @@ description: "Line-up"
 
     {% set current_letter = '' %}
     {% for artist in lineup | sort(attribute='name') %}
-      {% set first_letter = artist.name[0] | upper %}
+      {% set first_char = artist.name[0] | upper %}
+      {% if first_char >= 'A' and first_char <= 'Z' %}
+        {% set first_letter = first_char %}
+      {% else %}
+        {% set first_letter = '#' %}
+      {% endif %}
       {% if first_letter != current_letter %}
         {% set current_letter = first_letter %}
         <div class="letter-section">

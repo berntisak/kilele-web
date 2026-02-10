@@ -14,31 +14,30 @@ eleventyComputed:
 
 <article class="content__container">
     <div class="content__title">
-        <h1>{{point.title}}</h1>
+        <h1>{{ point.short_title or point.title }}</h1>
     </div>
         <div class="schedule__section schedule__section--split">
             <div>
-            {% if point.photo_path %}
-                <img src="{{ point.photo_path }}" alt="{{ point.title }}" width="1920" loading="lazy"/>
-            {% endif %}
+                <img src="{{ point.photo_path if point.photo_path else '/assets/images/placeholder.jpg' }}" alt="{{ point.title }}" width="1920" loading="lazy"/>
             </div>
             <div class="schedule__section-text">
-                <p><strong>Category:</strong> {{ point.category_name }}</p>
-                <p><strong>Venue:</strong> {{ point.venue_name }}</p>
+                <div>
+                    <h2>{{ point.title }}</h2>
+                    {{ point.description | markdown | safe }}
+                </div>
                 <div>
                     {% if point.artists.length %}
-                        <p><strong>Artists:</strong></p>
-                        <ul>
-                        {% for artist in point.artists %}
-                            <li>{{ artist }}</li>
-                        {% endfor %}
-                        </ul>
+                        <p><strong>With: </strong>
+                        {%- for artist in point.artists -%}
+                            <a href="/2026/lineup/{{ artist.slug }}/"><u>{{ artist.name }}</u></a>
+                            {%- if not loop.last %}, {% endif -%}
+                        {%- endfor -%}
+                        </p>
                     {% endif %}
-                </div>
-
-                <div>
-                    <h2>Description</h2>
-                    {{ point.description | markdown | safe }}
+                    {% if point.category_name != "Uncategorized" %}
+                    <p><strong>Category:</strong> {{ point.category_name }}</p>
+                    {% endif %}
+                    <p><strong>Venue:</strong> {{ point.venue_name }}</p>
                 </div>
             </div>
         </div>
