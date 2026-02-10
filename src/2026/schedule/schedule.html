@@ -23,7 +23,7 @@ permalink: /2026/schedule/index.html
         <div class="schedule-list">
           <div class="schedule-day">
             <h2 class="schedule-date">{{ point.start_day }} to {{ point.end_day }}</h2>
-        <a href="/2026/schedule/{{ point.slug }}/">
+            <a href="/2026/schedule/{{ point.slug }}/">
             <article class="schedule-item" 
               style="outline: 3px solid {{ point.category_color | default('#cccccc') }};"
               data-category="{{ point.category_name }}"
@@ -33,16 +33,17 @@ permalink: /2026/schedule/index.html
                 alt="{{ point.title }}"
                 width="250" height="250"
               />
-              <div class="schedule-text schedule-item-left">
-                <h3>{{ point.title }}</h3>
-                <div>
-                  {{ point.date_range }} at {{ point.venue_name }}
+            <div class="schedule-text schedule-item-left">
+                <h3 class="schedule__list-title">{{ point.title }}</h3>
+                <div class="schedule__section-date-category">
+                  {{ point.start_time_local }} - {{ point.end_time_local }} at {{ point.venue_name }}
                 </div>
-                <small>{{ point.start_time_local }} - {{ point.end_time_local }}</small>
-              </div>
-              <div class="schedule-text schedule-item-right">
+            </div>
+            {% if point.category_name != "Uncategorized" %}
+            <div class="schedule-text schedule-item-right">
                 <small><b>{{ point.category_name }}</b></small>
-              </div>
+            </div>
+            {% endif %}
             </article>
             </a>
           </div>
@@ -51,10 +52,7 @@ permalink: /2026/schedule/index.html
     {% endif %}
 
 <div class="schedule-list">
-    <!--div class="schedule-sorting">
-      <a href="#" class="nav__button" data-sort="time">By time</a>
-      <a href="#" class="nav__button" data-sort="category">By category</a>
-    </div-->
+
     {% for date, points in schedule.byDay %}
       <div class="schedule-day">
         <h2 class="schedule-date">{{ date }}</h2>
@@ -70,9 +68,14 @@ permalink: /2026/schedule/index.html
                 alt="{{ point.title }}"
                 width="250" height="250"
               />
-               <div class="schedule-text schedule-item-left">
-                <h3>{{ point.title }}</h3>
-                <div>
+            <div class="schedule-text schedule-item-left">
+                <!--h3 class="schedule__list-title">{{ point.short_title or point.title }}</h3-->
+                <h3 class="schedule__list-title">
+                  <span class="schedule-title-mobile">{{ point.short_title or point.title }}</span>
+                  <span class="schedule-title-desktop">{{ point.title }}</span>
+                </h3>
+
+                <div class="schedule__section-date-category">
                   {{ point.start_time_local }} - {{ point.end_time_local }} at {{ point.venue_name }}
                 </div>
             </div>
