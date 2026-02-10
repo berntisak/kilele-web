@@ -67,6 +67,7 @@
     flex-direction: column;
     justify-content: center;
     align-content: flex-start;
+    margin-right: 1rem;
 }
 
 .schedule-item-right {
@@ -170,6 +171,7 @@
 }
 
 .schedule__list-title {
+    text-wrap: wrap;
     font-size: clamp(1rem, calc(1vw + 0.25rem), 1.5rem);
 }
 .schedule-title-mobile {
@@ -192,6 +194,9 @@
   .schedule-item {
     margin-left: 0.25rem;
   }
+  .schedule-item-left {
+    margin-right: 0.25rem;
+  }
 
   .schedule-text {
     margin-left: 0.25rem;
@@ -199,7 +204,6 @@
     flex: 1;
   }
   .schedule__list-title {
-    text-wrap: wrap;
     hyphens: auto;
     word-break: break-word;
   }
