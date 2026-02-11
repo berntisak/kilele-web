@@ -1,0 +1,69 @@
+---
+pagination:
+  data: projects
+  size: 1
+  alias: project
+  resolve: values
+permalink: "/2026/projects/{{ project.slug }}/"
+layout: layouts/base.html
+eleventyComputed:
+    title: "{{ project.title }}"
+    description: "{{ project.excerpt or project.title }}"
+    og_image: "{{ project.photo_path }}"
+    og_type: "project"
+---
+
+<article class="content__container">
+    <div class="news__section news__section-content active">
+         <div class="news__section-title"> 
+            {{project.title}}
+         </div>
+        <div class="news-post-image">
+        {% if project.photo_path %}
+            <img src="{{ project.photo_path }}" alt="{{ project.title }}" />
+        {% endif %}
+        </div>
+            <div class="news__section-text">
+                {{ project.description | markdown | sanitize | safe }}
+                {% if project.programPoints.length %}
+                <p>
+                <strong>{{project.title}}</strong> in the Kilele 2026 program:  
+                {%- for point in project.programPoints -%}
+                    <a href="/2026/schedule/{{ point.slug }}/"> <u><i>{{ point.short_title or point.title }}</i></u></a>
+                    {%- if not loop.last %}, {% endif -%}
+                {%- endfor -%}                    
+                </p>
+                {% endif %}
+                {% if project.artists.length %}
+                <p>
+                <strong>Artist profiles: </strong>     
+                {%- for artist in project.artists -%}
+                    <a href="/2026/lineupe/{{ artist.slug }}/"> <u><i>{{ artist.name }}</i></u></a>
+                    {%- if not loop.last %}, {% endif -%}
+                {%- endfor -%}
+                </p>
+                {% endif %}
+        </div>
+    </div>
+</article>
+{% set canonicalUrl = site.url ~ page.url %}
+
+<script type="application/ld+json">
+{{ {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": project.title,
+    "description": project.excerpt or project.sub_title or project.title,
+    "datePublished": project.publish_date,
+    "image": project.photo_path,
+    "mainEntityOfPage": canonicalUrl,
+    "publisher": {
+        "@type": "Organization",
+        "name": site.name,
+        "logo": {
+            "@type": "ImageObject",
+            "url": site.logo
+        }
+    }
+} | dump | safe }}
+</script>
