@@ -80,13 +80,16 @@ module.exports = async function() {
     const start = DateTime.fromISO(p.start_time, { zone: 'Africa/Nairobi' });
     const end = DateTime.fromISO(p.end_time, { zone: 'Africa/Nairobi' });
     
-    // Calculate if event spans multiple days
-    const startDay = start.startOf('day');
-    const endDay = end.startOf('day');
-    const daysDiff = endDay.diff(startDay, 'days').days;
+    // Calculate event duration in hours
+    const durationHours = end.diff(start, 'hours').hours;
     
-    if (daysDiff >= 1) {
+    // Only consider it multi-day if it's at least 24 hours long
+    if (durationHours >= 24) {
       // Multi-day event
+      const startDay = start.startOf('day');
+      const endDay = end.startOf('day');
+      const daysDiff = endDay.diff(startDay, 'days').days;
+      
       multiDayEvents.push({
         ...p,
         date_range: `${start.toFormat('cccc dd.MM')} to ${end.toFormat('cccc dd.MM')}`,
