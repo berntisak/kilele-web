@@ -16,7 +16,7 @@ module.exports = async function() {
     .select(`
       id, title, short_title, description, photo_path, start_time, end_time, slug, public,
       category_id (name, color),
-      venue_id (name)
+      venue_id (name, color)
     `)
     .eq('public', true)
     .order('start_time', { ascending: true });
@@ -63,8 +63,10 @@ module.exports = async function() {
       category_name: point.category_id?.name || null,
       category_color: point.category_id?.color || null,
       venue_name: point.venue_id?.name || null,
+      venue_color: point.venue_id?.color || null,
       artists: artistMap[point.id] || [],
-      weekday_date: displayDate.isValid ? displayDate.toFormat('cccc dd.MM') : null,
+      weekday_date: displayDate.isValid ? displayDate.toFormat('cccc') : null,
+      weekday_label: displayDate.isValid ? displayDate.toFormat('cccc dd.MM') : null,
       start_time_local: start.isValid ? start.toFormat('HH:mm') : null,
       end_time_local: end.isValid ? end.toFormat('HH:mm') : null,
       photo_path_small: point.photo_path ? `${baseUrl}${encodeURIComponent(point.photo_path)}?width=100&quality=70`: null,
@@ -92,7 +94,7 @@ module.exports = async function() {
       
       multiDayEvents.push({
         ...p,
-        date_range: `${start.toFormat('cccc dd.MM')} to ${end.toFormat('cccc dd.MM')}`,
+        date_range: `${start.toFormat('dd.MM')} to ${end.toFormat('dd.MM')}`,
         days_count: Math.round(daysDiff-0.5) + 1,
         start_day: start.toFormat('cccc dd.MM'),
         end_day: end.toFormat('cccc dd.MM'),
