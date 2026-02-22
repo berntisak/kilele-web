@@ -7,6 +7,27 @@ description: "Line-up"
 <div class="content__container">
     <h1>Lineup Kilele 2026</h1>
 
+  <div class="lineup-letter-nav">
+    {% set current_letter = '' %}
+    {% for artist in lineup | sort(attribute='name') %}
+      {% set first_char = artist.name[0] | upper %}
+      {% if first_char >= 'A' and first_char <= 'Z' %}
+        {% set first_letter = first_char %}
+      {% else %}
+        {% set first_letter = '#' %}
+      {% endif %}
+      {% if first_letter != current_letter %}
+        {% set current_letter = first_letter %}
+        {% if first_letter == '#' %}
+          {% set anchor_id = 'letter-other' %}
+        {% else %}
+          {% set anchor_id = 'letter-' ~ first_letter | lower %}
+        {% endif %}
+        <a href="#{{ anchor_id }}">{{ current_letter }}</a>
+      {% endif %}
+    {% endfor %}
+  </div>
+
   <div class="lineup-list">
 
     {% set current_letter = '' %}
@@ -19,8 +40,13 @@ description: "Line-up"
       {% endif %}
       {% if first_letter != current_letter %}
         {% set current_letter = first_letter %}
+        {% if first_letter == '#' %}
+          {% set anchor_id = 'letter-other' %}
+        {% else %}
+          {% set anchor_id = 'letter-' ~ first_letter | lower %}
+        {% endif %}
         <div class="letter-section">
-          <h2 class="letter-heading">{{ current_letter }}</h2>
+          <h2 class="letter-heading" id="{{ anchor_id }}">{{ current_letter }}</h2>
         </div>
       {% endif %}
       <a href="/2026/lineup/{{ artist.slug }}/">
