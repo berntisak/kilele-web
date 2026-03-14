@@ -156,6 +156,12 @@
     padding-bottom: 2rem;
 }
 
+.news__section-text img,
+.news__section-text picture {
+    display: inline-block;
+    vertical-align: top;
+}
+
 .news__section-text a {
     color: var(--primary-alt2);
     text-decoration: underline;
