@@ -31,9 +31,15 @@
                             </div>
                         </div>
                         <a href="/news" class="nav__button">News</a>
-                        <a href="/2026/schedule" class="nav__button">Schedule</a>
-                        <a href="/2026/lineup" class="nav__button">Line-up</a>
-                        <a href="https://mookh.com/event/kilele-26" target="_blank" class="nav__button">Tickets</a>
+                        <div class="nav-item dropdown">
+                            <a href="/2026" class="nav__button dropdown-toggle" role="button" aria-expanded="false" aria-haspopup="true" aria-controls="archive-submenu">Archive ▾</a>
+                            <div id="archive-submenu" class="dropdown-menu" role="menu">
+                                <a role="menuitem" class="dropdown-item" href="/2026/gallery">Gallery 2026</a>
+                                <a role="menuitem" class="dropdown-item" href="/2026/schedule">Schedule 2026</a>
+                                <a role="menuitem" class="dropdown-item" href="/2026/lineup">Lineup 2026</a>
+                            </div>
+                        </div>
+                        <!--a href="https://mookh.com/event/kilele-26" target="_blank" class="nav__button">Tickets</a-->
                     </nav>
                     
                     <nav class="mobile__header_button-wrapper">
@@ -54,6 +60,7 @@
         </div>
 
         <script src="/scripts/menu.js" defer></script>
+        <script src="/scripts/galleryFilter.js" defer></script>
         <script src="/scripts/hero.js" defer></script>
         <script src="/scripts/scheduleFilter.js" defer></script>
         <script src="/scripts/calendarView.js" defer></script>
