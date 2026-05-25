@@ -1,0 +1,66 @@
+---
+layout: layouts/base.html
+title: Gallery 2026
+description: "Gallery from Kilele 2026"
+permalink: /2026/gallery/index.html
+---
+
+<div class="content__container">
+  <h1>Gallery Kilele 2026</h1>
+
+  {% if gallery.categories and gallery.categories.length %}
+  <div class="gallery-filters">
+    <button class="nav__button gallery-filter-button active" data-category="all">All</button>
+    {% for category in gallery.categories %}
+    <button class="nav__button gallery-filter-button" data-category="{{ category.slug }}">{{ category.display_name or category.name }}</button>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="gallery-sections">
+    {% for category in gallery.categories %}
+    <div class="gallery-section" data-category-section="{{ category.slug }}">
+      <h2 class="gallery-category-title">{{ category.display_name or category.name }}</h2>
+      <div class="gallery-grid">
+        {% for photo in gallery.photos %}
+        {% if photo.category_slug == category.slug and photo.url %}
+        <a
+          class="gallery-item"
+          data-category="{{ photo.category_slug }}"
+          data-full-src="{{ photo.url }}"
+          data-caption="{{ photo.caption }}"
+          data-photographer="{{ photo.photographer_name }}"
+          data-photographer-link="{{ photo.photographer_link }}"
+          data-artists="{{ photo.artists | dump | escape }}"
+          data-program-point-slug="{{ photo.program_point_slug }}"
+          data-program-point-title="{{ photo.program_point_title }}"
+          href="{{ photo.url }}"
+          aria-label="{{ photo.caption or 'Gallery photo' }}"
+        >
+          <img
+            src="{{ photo.url_thumb or photo.url }}"
+            alt="{{ photo.caption or '' }}"
+            loading="lazy"
+          />
+        </a>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="gallery-lightbox" id="gallery-lightbox" role="dialog" aria-modal="true" aria-label="Photo lightbox">
+  <button class="gallery-lightbox__close" aria-label="Close">&times;</button>
+  <div class="gallery-lightbox__inner">
+    <button class="gallery-lightbox__arrow gallery-lightbox__prev" aria-label="Previous photo">&#8249;</button>
+    <img class="gallery-lightbox__img" src="" alt="" />
+    <button class="gallery-lightbox__arrow gallery-lightbox__next" aria-label="Next photo">&#8250;</button>
+  </div>
+  <div class="gallery-lightbox__meta">
+    <p class="gallery-lightbox__caption"></p>
+    <p class="gallery-lightbox__event"></p>
+    <p class="gallery-lightbox__photographer"></p>
+  </div>
+</div>
