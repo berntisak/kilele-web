@@ -121,7 +121,7 @@
     flex-direction: column;
     justify-content: space-around;
     font-size: large;
-    white-space: normal;
+    white-space: normal;;
     text-wrap: pretty;
     @media (max-width: 600px) {
         font-size: medium;
