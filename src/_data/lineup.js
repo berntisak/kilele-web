@@ -19,16 +19,29 @@ module.exports = async function() {
     return [];
   }
 
-  /*
-  if (artists != null) {
-    console.log("Artists found: " + artists.length)
-    for (var i = 0; i < artists.length; i++) {
-      console.log(artists[i].name);
+  // Fetch program points linked to artists
+  const { data: programPointLinks, error: linkError } = await supabase
+    .from('program_point_artists')
+    .select(`
+      artist_id,
+      program_points (title, short_title, slug, public)
+    `);
+
+  if (linkError) console.error('Error fetching program point links:', linkError);
+
+  // Create a map of artist_id -> array of program points
+  const programPointMap = {};
+  (programPointLinks || []).forEach(link => {
+    // Only include public program points
+    if (link.program_points?.public) {
+      if (!programPointMap[link.artist_id]) programPointMap[link.artist_id] = [];
+      programPointMap[link.artist_id].push({
+        title: link.program_points.title,
+        short_title: link.program_points.short_title,
+        slug: link.program_points.slug
+      });
     }
-  }
-  else {
-    console.log("No artists found")
-  }*/
+  });
 
   // Build full image URLs
   const baseUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/artists/`;
@@ -37,6 +50,7 @@ module.exports = async function() {
     ...artist,
       photo_path_small: artist.photo_path ? `${baseUrl}${encodeURIComponent(artist.photo_path)}?width=100&quality=70`: null,
       photo_path: artist.photo_path ? baseUrl + encodeURIComponent(artist.photo_path) : null,
+      program_points: programPointMap[artist.id] || []
   }));
 
 };

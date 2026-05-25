@@ -4,19 +4,24 @@ const { eleventyImageTransformPlugin } = require("@11ty/eleventy-img");
 const markdownIt = require("markdown-it");
 const { DateTime } = require("luxon");
 
-const imageShortcode = require("./utils/imageShortcode.js");
+//const imageShortcode = require("./utils/imageShortcode.js");
 const createDOMPurify = require("dompurify");
 const { JSDOM } = require("jsdom");
 
 module.exports = function(eleventyConfig) {
     const md = markdownIt({ html: true, linkify: true });
-    eleventyConfig.addFilter("markdown", (content) => md.render(content || ""));
+    eleventyConfig.addFilter("markdown", (content) => {
+        let html = md.render(content || "");
+        // Unwrap <img> tags from <p> wrappers so adjacent images can sit inline
+        html = html.replace(/<p>\s*((?:<img[^>]*>\s*)+)<\/p>/gi, '$1');
+        return html;
+    });
     eleventyConfig.addFilter("postDate", (dateObj) => {
         return DateTime.fromISO(dateObj).toLocaleString(DateTime.DATE_MED);
     });
 
     // Image shorthand functions
-    eleventyConfig.addNunjucksAsyncFilter("image", imageShortcode);
+    //eleventyConfig.addNunjucksAsyncFilter("image", imageShortcode);
     //eleventyConfig.addLiquidShortcode("image", imageShortcode); // optional if you use Liquid
     //eleventyConfig.addJavaScriptFunction("image", imageShortcode); // optional for JS templates
 

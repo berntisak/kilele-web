@@ -16,6 +16,7 @@ description: "Latest news"
 
   <div class="news-grid">
     {% for post in news %}  
+    {% if not post.hero_video %}
 
     <a href="/news/{{ post.slug }}/" class="news-card-link" data-tags="{% if post.tags %}{% for tag in post.tags %}{{ tag.name }}{% if not loop.last %},{% endif %}{% endfor %}{% endif %}">
     <div class="news-card">
@@ -48,7 +49,7 @@ description: "Latest news"
         </div>
     </div>
     </a>
-
+    {% endif %}
     {% endfor %}
 </div>
 </div>
