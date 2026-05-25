@@ -34,8 +34,9 @@ button {
     background-color: var(--background);
     color: var(--primary);
     box-shadow: -3px -2px 0px var(--text);
-    @media (max-width:760px) {
+    @media (max-width:1300px) {
         width: 30vw;
+        max-width: 8rem;
         /*width: var(--header-height);*/
         background-color: var(--background);
         padding: 0.25rem;
@@ -76,7 +77,7 @@ button.nav__button {
     min-width: 200px; 
     display: none; 
     z-index: 50;
-    @media (max-width: 768px) {
+    @media (max-width: 1300px) {
         right: 0;
         left: auto;
     }
@@ -118,47 +119,29 @@ button.nav__button {
     padding: 7px 10px;
     color: white;
     text-decoration: none;
-    /*
-    position: relative;
-    background-color: purple;
-    border: 2px solid black;
-    border-radius: 4px;
-    margin-top: -8px;
-    margin-left: -8px;
+}
+
+.radio_player {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    &::before {
-        content: "";
-        display: block;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: calc(100% + 4px);
-        height: calc(100% + 4px);
-        transform: translateX(2px) translateY(2px);
-        border: 2px solid black;
-        border-radius: 4px;
-        background-color: purple;
-    }
-    &::after {
-        content: "";
-        display: block;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: calc(100% + 4px);
-        height: calc(100% + 4px);
-        transform: translateX(6px) translateY(6px);
-        border: 2px solid black;
-        border-radius: 4px;
-        background-color: purple;
-    }
-    & div {
-        position: relative;
-        z-index: 1;
-        margin: auto;
-        padding: 7px 10px;
-    }
-        */
+    flex-direction: column;
+    border-radius: 10px;
+    outline: 2px solid black;
+    box-shadow: 5px 3px 3px black;
+    background-color: white;
+    padding: 2rem;
+    color: black;
+   /* background-image:
+        linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)),
+        url("/assets/logos/partners/Calotropis.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;*/
+
+}
+
+.radio_player iframe {
+    color: black;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 1rem;
 }

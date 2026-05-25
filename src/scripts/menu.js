@@ -30,41 +30,51 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.key === "Escape") close();
   });
 
-  // Dropdown click toggle (for About submenu)
-  const dropdown = document.querySelector('.dropdown');
-  if (dropdown) {
+  // Dropdown click toggle (for all submenus)
+  const dropdowns = document.querySelectorAll('.dropdown');
+  dropdowns.forEach((dropdown) => {
     const toggle = dropdown.querySelector('.dropdown-toggle');
-    const menu = dropdown.querySelector('.dropdown-menu');
+    if (!toggle) return;
 
     const toggleOpen = () => {
       const isOpen = dropdown.classList.contains('open');
+      // close all other dropdowns first
+      dropdowns.forEach((d) => {
+        if (d !== dropdown) {
+          d.classList.remove('open');
+          d.querySelector('.dropdown-toggle')?.setAttribute('aria-expanded', 'false');
+        }
+      });
       dropdown.classList.toggle('open', !isOpen);
       toggle.setAttribute('aria-expanded', String(!isOpen));
     };
 
     toggle.addEventListener('click', (ev) => {
-      // if toggle is an anchor, prevent navigation and toggle menu instead
       if (ev && ev.preventDefault) ev.preventDefault();
       ev.stopPropagation();
       toggleOpen();
     });
+  });
 
-    // close when clicking outside
-    document.addEventListener('click', (ev) => {
+  // close all dropdowns when clicking outside
+  document.addEventListener('click', (ev) => {
+    dropdowns.forEach((dropdown) => {
       if (!dropdown.contains(ev.target)) {
         dropdown.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
+        dropdown.querySelector('.dropdown-toggle')?.setAttribute('aria-expanded', 'false');
       }
     });
+  });
 
-    // close with escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
+  // close all dropdowns with escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      dropdowns.forEach((dropdown) => {
         dropdown.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-  }
+        dropdown.querySelector('.dropdown-toggle')?.setAttribute('aria-expanded', 'false');
+      });
+    }
+  });
 
   const nav = document.querySelector(".header__outer_container");
   const observer = new IntersectionObserver(
