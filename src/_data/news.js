@@ -26,14 +26,9 @@ module.exports = async function () {
 
   const baseUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/news/`;
 
-  for (const item of news) {
-    console.log(item.title);
-    console.log(item.news_post_tags.map(t => t.tags?.name));
-  }
-
   return (news || []).map(post => ({
     ...post,
-    tags: (post.news_post_tags || []).map(row => row.tags),  // <-- works now
+    tags: (post.news_post_tags || []).map(row => row.tags),
     photo_path: post.image_path
       ? /^https?:\/\//.test(post.image_path.trim())
         ? post.image_path.trim()
