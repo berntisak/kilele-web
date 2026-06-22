@@ -41,6 +41,7 @@ permalink: /2026/gallery/index.html
             src="{{ photo.url_thumb or photo.url }}"
             alt="{{ photo.caption or '' }}"
             loading="lazy"
+            eleventy:ignore
           />
         </a>
         {% endif %}

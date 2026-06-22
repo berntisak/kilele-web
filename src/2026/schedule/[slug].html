@@ -18,7 +18,7 @@ eleventyComputed:
     </div>
         <div class="schedule__section schedule__section--split">
             <div>
-                <img src="{{ point.photo_path if point.photo_path else '/assets/images/placeholder.jpg' }}" alt="{{ point.title }}" width="1920" loading="lazy"/>
+                <img src="{{ point.photo_path if point.photo_path else '/assets/images/placeholder.jpg' }}" alt="{{ point.title }}" width="1920" loading="lazy" eleventy:ignore/>
             </div>
             <div class="schedule__section-text">
                 <div>

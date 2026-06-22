@@ -28,7 +28,7 @@ eleventyComputed:
          </div>
         <div class="news-post-image">
         {% if post.photo_path %}
-            <img src="{{ post.photo_path }}" alt="{{ post.title }}" />
+            <img src="{{ post.photo_path }}" alt="{{ post.title }}" eleventy:ignore />
         {% endif %}
         </div>
             <div class="news__section-text">

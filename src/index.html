@@ -27,7 +27,7 @@ title: Kilele 2026
                 <div class="hero__section-content">
                     <div class="hero__section-image">
                     {% if post.photo_path %}
-                            <img src="{{ post.photo_path }}" alt="{{ post.title }}">
+                            <img src="{{ post.photo_path }}" alt="{{ post.title }}" eleventy:ignore>
                     {% endif %}
                     </div>
                     <div class="hero__section-text">
@@ -63,7 +63,7 @@ title: Kilele 2026
             <a href="/news/{{ post.slug }}/" >
             <div class="hero__pair-img-container">
             {% if post.photo_path %}
-                <img src="{{ post.photo_path }}" alt="{{ post.title }}">
+                <img src="{{ post.photo_path }}" alt="{{ post.title }}" eleventy:ignore>
             {% endif %}
             </div>
             <div class="hero__info--below">

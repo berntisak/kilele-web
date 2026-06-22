@@ -19,7 +19,7 @@ eleventyComputed:
     </div>
     <div class="lineup__section lineup__section--split">
         <div>
-            <img src="{{ artist.photo_path if artist.photo_path else '/assets/images/placeholder.jpg' }}" alt="{{ artist.name }}" width="1000" loading="lazy"/>
+            <img src="{{ artist.photo_path if artist.photo_path else '/assets/images/placeholder.jpg' }}" alt="{{ artist.name }}" width="1000" loading="lazy" eleventy:ignore/>
         </div>
         <div class="lineup__section-text">
                 <h2>{{artist.name}}</h2>

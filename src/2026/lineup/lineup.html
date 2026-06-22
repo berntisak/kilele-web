@@ -51,10 +51,11 @@ description: "Line-up"
       {% endif %}
       <a href="/2026/lineup/{{ artist.slug }}/">
       <article class="lineup-list-element">
-        <img 
-          src="{{ artist.photo_path if artist.photo_path else '/assets/images/placeholder.jpg' }}" 
+        <img
+          src="{{ artist.photo_path if artist.photo_path else '/assets/images/placeholder.jpg' }}"
           alt="{{ artist.name }}"
           width="400" height="400"
+          eleventy:ignore
         />
         <div class="lineup-list---text">
           <h2>
