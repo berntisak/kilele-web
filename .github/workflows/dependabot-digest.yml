@@ -1,0 +1,47 @@
+name: Dependabot Monthly Digest
+
+on:
+  schedule:
+    - cron: '0 8 1 * *' # 08:00 UTC on the 1st of every month
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pull-requests: read
+  issues: write
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build and post digest issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          set -euo pipefail
+
+          prs_json=$(gh pr list --repo "$REPO" --search "author:app/dependabot" --state open --json number,title,url,createdAt)
+          count=$(echo "$prs_json" | jq 'length')
+
+          if [ "$count" -eq 0 ]; then
+            echo "No open Dependabot PRs this month, skipping."
+            exit 0
+          fi
+
+          month=$(date -u +"%B %Y")
+
+          {
+            echo "### ${count} open Dependabot pull request(s) as of $(date -u +%Y-%m-%d)"
+            echo
+            echo "$prs_json" | jq -r '.[] | "- [#\(.number)](\(.url)) \(.title) (opened \(.createdAt | split("T")[0]))"'
+            echo
+            echo "_Routine monthly check. Security alerts for serious vulnerabilities are sent immediately via GitHub's own Dependabot alert notifications, separate from this digest._"
+          } > /tmp/digest-body.md
+
+          gh issue create --repo "$REPO" \
+            --title "Dependabot PR digest - ${month}" \
+            --body-file /tmp/digest-body.md \
+            --assignee "$OWNER" \
+            --label "dependencies"
