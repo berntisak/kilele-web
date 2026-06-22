@@ -46,10 +46,11 @@ permalink: /2026/schedule/index.html
               style="outline: 4px solid {{ point.venue_color | default('#FEFAF2') }};"
               data-category="{{ point.category_name }}"
             >
-              <img 
-                src="{{ point.photo_path if point.photo_path else '/assets/images/placeholder.jpg' }}" 
+              <img
+                src="{{ point.photo_path if point.photo_path else '/assets/images/placeholder.jpg' }}"
                 alt="{{ point.title }}"
                 width="250" height="250"
+                eleventy:ignore
               />
             <div class="schedule-text schedule-item-left">
                 <h3 class="schedule__list-title">{{ point.title }}</h3>
@@ -81,10 +82,11 @@ permalink: /2026/schedule/index.html
           style="outline: 4px solid {{ point.venue_color | default('#FEFAF2') }};"
           data-category="{{ point.category_name }}"
           >
-              <img 
-                src="{{ point.photo_path if point.photo_path else '/assets/images/placeholder.jpg' }}" 
+              <img
+                src="{{ point.photo_path if point.photo_path else '/assets/images/placeholder.jpg' }}"
                 alt="{{ point.title }}"
                 width="250" height="250"
+                eleventy:ignore
               />
             <div class="schedule-text schedule-item-left">
                 <!--h3 class="schedule__list-title">{{ point.short_title or point.title }}</h3-->

@@ -24,7 +24,7 @@ description: "Latest news"
         
         {% if post.photo_path %}
         <div class="news-card-image">
-            <img src="{{ post.photo_path }}" alt="{{ post.title }}" width="400" height="400"/>
+            <img src="{{ post.photo_path }}" alt="{{ post.title }}" width="400" height="400" eleventy:ignore/>
         </div>
         {% endif %}
  

@@ -4,7 +4,15 @@ require('dotenv').config();
 const { createClient } = require('@supabase/supabase-js');
 const { DateTime } = require('luxon');
 
+let cachedPromise = null;
+
 module.exports = async function() {
+  if (cachedPromise) return cachedPromise;
+  cachedPromise = fetchSchedule();
+  return cachedPromise;
+};
+
+async function fetchSchedule() {
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
     process.env.NEXT_PUBLIC_SUPABASE_PUBLIC_KEY
@@ -115,4 +123,4 @@ module.exports = async function() {
     byDay: grouped,
     multiDay: multiDayEvents
   };
-};
+}

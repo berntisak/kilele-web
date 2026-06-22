@@ -19,7 +19,7 @@ eleventyComputed:
     </div>
     <div class="lineup__section lineup__section--split">
         <div>
-            <img src="{{ artist.photo_path if artist.photo_path else '/assets/images/placeholder.jpg' }}" alt="{{ artist.name }}" width="1000" loading="lazy"/>
+            <img src="{{ artist.photo_path if artist.photo_path else '/assets/images/placeholder.jpg' }}" alt="{{ artist.name }}" width="1000" loading="lazy" eleventy:ignore/>
         </div>
         <div class="lineup__section-text">
                 <h2>{{artist.name}}</h2>
@@ -93,52 +93,3 @@ eleventyComputed:
     "url": canonicalUrl
 } | dump | safe }}
 </script>
-
-<style>
-    /*
-.news-article {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
-}
-
-.article-header {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-
-.article-meta {
-    color: #666;
-    font-size: 1rem;
-}
-
-
-.article-tags {
-    margin-top: 0.5rem;
-}
-
-
-
-.article-image {
-    width: 100%;
-    max-height: 400px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin: 2rem 0;
-}
-
-.article-content {
-    line-height: 1.7;
-    font-size: 1.1rem;
-}
-
-.article-content p {
-    margin-bottom: 1.5rem;
-}
-
-.article-content h2, .article-content h3 {
-    margin: 2rem 0 1rem 0;
-}
-    */
-</style>

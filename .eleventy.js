@@ -47,6 +47,7 @@ module.exports = function(eleventyConfig) {
     eleventyConfig.addPlugin(eleventyImageTransformPlugin);
     eleventyConfig.addPassthroughCopy("src/assets/");
     eleventyConfig.addPassthroughCopy("src/scripts/");
+    eleventyConfig.addPassthroughCopy({ "node_modules/swup/dist/Swup.umd.js": "scripts/swup.umd.js" });
     
     eleventyConfig.addPassthroughCopy("src/css/");
     eleventyConfig.addWatchTarget("src/css/");
