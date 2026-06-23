@@ -48,6 +48,11 @@ module.exports = function(eleventyConfig) {
     eleventyConfig.addPassthroughCopy("src/assets/");
     eleventyConfig.addPassthroughCopy("src/scripts/");
     eleventyConfig.addPassthroughCopy({ "node_modules/swup/dist/Swup.umd.js": "scripts/swup.umd.js" });
+    // Browser builds for the client-side news preview page (src/news/preview.html).
+    // These render draft markdown exactly like the build-time `markdown`/`sanitize`
+    // filters above, so editors see a faithful preview without a full rebuild.
+    eleventyConfig.addPassthroughCopy({ "node_modules/markdown-it/dist/markdown-it.min.js": "scripts/markdown-it.min.js" });
+    eleventyConfig.addPassthroughCopy({ "node_modules/dompurify/dist/purify.min.js": "scripts/purify.min.js" });
     
     eleventyConfig.addPassthroughCopy("src/css/");
     eleventyConfig.addWatchTarget("src/css/");

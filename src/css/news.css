@@ -230,3 +230,13 @@
     color: var(--background);
 }
 
+/* Banner shown on the CMS draft-preview page (src/news/preview.html) */
+.preview-banner {
+    background-color: var(--primary-alt2);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
