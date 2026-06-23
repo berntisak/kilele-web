@@ -255,6 +255,7 @@
 
 .hero__info_shout {
     font-weight: 900;
+    text-transform: uppercase;
     color: var(--primary);
     font-size: 5vw;
     font-size: clamp(1rem, calc(3.5vw + 0.5rem), 4.5rem);
