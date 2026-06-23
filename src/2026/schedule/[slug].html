@@ -23,7 +23,7 @@ eleventyComputed:
             <div class="schedule__section-text">
                 <div>
                     <h2>{{ point.title }}</h2>
-                    {{ point.description | markdown | safe }}
+                    {{ point.description | markdown | sanitize | safe }}
                 </div>
                 <div>
                     {% if point.artists.length %}

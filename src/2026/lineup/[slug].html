@@ -24,7 +24,7 @@ eleventyComputed:
         <div class="lineup__section-text">
                 <h2>{{artist.name}}</h2>
             <div class="lineup__info-box">
-                {{ artist.bio | markdown | safe }}
+                {{ artist.bio | markdown | sanitize | safe }}
                 {% if artist.program_points.length %}
                 <p>
                 Experience <strong>{{ artist.name }}</strong> at  
