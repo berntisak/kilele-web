@@ -35,7 +35,7 @@ module.exports = function(eleventyConfig) {
     try {
         return DOMPurify.sanitize(html, {
             ADD_TAGS: ["iframe"],
-            ADD_ATTR: ["allow", "allowfullscreen", "frameborder", "loading", "referrerpolicy"],
+            ADD_ATTR: ["allow", "allowfullscreen", "frameborder", "loading", "referrerpolicy", "target"],
             USE_PROFILES: { html: true }
         });
     } catch (e) {

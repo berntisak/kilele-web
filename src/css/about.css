@@ -129,6 +129,28 @@
     }
 }
 
+/* CMS static-page body (src/pages/static.html). Underline links so they read as
+   links — Markdown links render as bare <a>, unlike the old hand-coded pages
+   which wrapped links in <u>. Scoped to .static-content so the hardcoded About
+   pages are unaffected. */
+.static-content a {
+    text-decoration: underline;
+}
+
+/* Headings sit inside a flex column (.about__text), so default margins don't
+   collapse. Give them clear separation from the preceding block and sit close to
+   the text they introduce: more space before, less after. */
+.static-content h2,
+.static-content h3 {
+    margin-top: 1.75rem;
+    margin-bottom: 0.25rem;
+}
+
+/* Tighten the gap below the page H1 (rendered from the title field). */
+.static-title h1 {
+    margin-bottom: 0.25rem;
+}
+
 @media (max-width: 600px) {
     ul {
         margin-top: 0;

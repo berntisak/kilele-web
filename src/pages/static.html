@@ -1,0 +1,34 @@
+---
+pagination:
+  data: staticPages
+  size: 1
+  alias: staticPage
+  resolve: values
+permalink: "/{{ staticPage.category }}/{{ staticPage.slug }}/"
+layout: layouts/base.html
+eleventyExcludeFromCollections: true
+eleventyComputed:
+    title: "{{ staticPage.title }}"
+    description: "{{ staticPage.excerpt or staticPage.title }}"
+    og_image: "{{ staticPage.photo_path }}"
+---
+
+{# CMS-managed static page. The `title` column is rendered as the page's <h1>
+   heading (in .about__title); the Markdown `content` holds only the body and is
+   rendered through the same `markdown | sanitize` pipeline as news. The
+   .content__container > .about__container > .about__section wrapper + .about__text
+   are provided here (not in content) so the Markdown body inherits the same
+   about.css typography as the old hand-coded pages while staying editable in the
+   CMS WYSIWYG editor. .static-content scopes the link-underline rule. #}
+<div class="content__container">
+    <div class="about__container">
+        <div class="about__section">
+            <div class="about__title static-title">
+                <h1>{{ staticPage.title }}</h1>
+            </div>
+            <div class="about__text static-content">
+                {{ staticPage.content | markdown | sanitize | safe }}
+            </div>
+        </div>
+    </div>
+</div>

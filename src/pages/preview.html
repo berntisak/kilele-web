@@ -1,0 +1,24 @@
+---
+layout: layouts/base.html
+permalink: /pages/preview/index.html
+eleventyExcludeFromCollections: true
+hidePartnersFooter: true
+title: Page preview
+---
+
+<div class="preview-banner">Preview — not yet public. This is a live draft preview; the published page may differ.</div>
+
+<div id="preview-root">
+  <div class="content__container">
+    <p style="padding: 2rem; text-align: center;">Loading preview…</p>
+  </div>
+</div>
+
+<script>
+  // Public-by-design anon key (already ships in every build via _data/*.js).
+  window.__SUPABASE_URL = "{{ supabaseConfig.url }}";
+  window.__SUPABASE_ANON_KEY = "{{ supabaseConfig.anonKey }}";
+</script>
+<script src="/scripts/markdown-it.min.js" defer></script>
+<script src="/scripts/purify.min.js" defer></script>
+<script src="/scripts/previewStaticPage.js" defer></script>
