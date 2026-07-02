@@ -12,7 +12,7 @@ module.exports = async function () {
 
   const { data: pages, error } = await supabase
     .from('static_pages')
-    .select('id, title, slug, category, content, excerpt, image_path, menu_order, public')
+    .select('id, title, slug, category, year, content, excerpt, image_path, menu_order, public')
     .eq('public', true)
     .order('menu_order', { ascending: true });
 
@@ -25,8 +25,13 @@ module.exports = async function () {
 
   // photo_path is the resolved og:image URL (image_path is a stored path or a
   // full gallery URL). Keep the same ^https?:// pass-through check as news.js.
+  // path is the public URL: year-category pages live at /{year}/{slug}/, all
+  // others at /{category}/{slug}/.
   return (pages || []).map(p => ({
     ...p,
+    path: p.category === 'year' && p.year
+      ? `/${p.year}/${p.slug}/`
+      : `/${p.category}/${p.slug}/`,
     photo_path: p.image_path
       ? /^https?:\/\//.test(p.image_path.trim())
         ? p.image_path.trim()
