@@ -4,7 +4,7 @@ pagination:
   size: 1
   alias: staticPage
   resolve: values
-permalink: "/{{ staticPage.category }}/{{ staticPage.slug }}/"
+permalink: "{{ staticPage.path }}"
 layout: layouts/base.html
 eleventyExcludeFromCollections: true
 eleventyComputed:
