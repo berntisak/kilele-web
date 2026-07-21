@@ -10,23 +10,30 @@
             <header class="header__container">
                 <div class="header__logo">
                     <a href="/">
-                    <img class="logo" src="/assets/logos/kilele_logo_2026.png" alt="Kilele Festival logo"-->
+                    <img class="logo" src="/assets/logos/kilele_logo_noYear.png" alt="Kilele Festival logo">
                     </a>
                 </div>
 
                 <div class="nav__wrapper">
                     <nav class="header__links">
                         <div class="nav-item dropdown">
+                            <a href="" class="nav__button dropdown-toggle" role="button" aria-expanded="false" aria-haspopup="true" aria-controls="about-submenu">Open Call 2027▾</a>
+                            <div id="about-submenu" class="dropdown-menu" role="menu">
+                                <a role="menuitem" class="dropdown-item" href="/2027/proposal-guidelines">Guidelines</a>
+                                <a role="menuitem" class="dropdown-item" href="https://cms.kilelesummit.org/apply/open-call-2027" target="_blank">Application Form</a>
+                            </div>
+                        </div>
+                        <div class="nav-item dropdown">
                             <a href="/about" class="nav__button dropdown-toggle" role="button" aria-expanded="false" aria-haspopup="true" aria-controls="about-submenu">About ▾</a>
                             <div id="about-submenu" class="dropdown-menu" role="menu">
-                                <a role="menuitem" class="dropdown-item" href="/about/theme-2026">Theme for 2026</a>
+                                <a role="menuitem" class="dropdown-item" href="/2027/theme-2027">Theme for 2027</a>
                                 <a role="menuitem" class="dropdown-item" href="/about/what-is-kilele">What is Kilele?</a>
                                 <a role="menuitem" class="dropdown-item" href="/about/practical">Practical</a>
                                 <!--a role="menuitem" class="dropdown-item" href="/about#other-channels">Other channels</a-->
                                 <a role="menuitem" class="dropdown-item" href="/about/code-of-conduct">Code of Conduct</a>
                                 <a role="menuitem" class="dropdown-item" href="/about/faq">FAQ</a>
-                                <a role="menuitem" class="dropdown-item" href="/2026/projects">Projects</a>
-                                <a role="menuitem" class="dropdown-item" href="/about/partners">Partners</a>
+                                <!--a role="menuitem" class="dropdown-item" href="/2026/projects">Projects</a-->
+                                <!--a role="menuitem" class="dropdown-item" href="/about/partners">Partners</a-->
                                 <a role="menuitem" class="dropdown-item" href="/about/contact">Contact</a>
                             </div>
                         </div>
@@ -37,6 +44,8 @@
                                 <a role="menuitem" class="dropdown-item" href="/2026/gallery">Gallery 2026</a>
                                 <a role="menuitem" class="dropdown-item" href="/2026/schedule">Schedule 2026</a>
                                 <a role="menuitem" class="dropdown-item" href="/2026/lineup">Lineup 2026</a>
+                                <a role="menuitem" class="dropdown-item" href="/2026/projects">Projects 2026</a>
+                                <a role="menuitem" class="dropdown-item" href="/2026/theme-2026">Theme 2026</a>
                             </div>
                         </div>
                         <!--a href="https://mookh.com/event/kilele-26" target="_blank" class="nav__button">Tickets</a-->
@@ -59,6 +68,12 @@
             </div>
         </div>
 
+        <!-- Vercel Web Analytics (page views). Cookieless — no consent banner needed.
+             Lives outside #swup so it persists across Swup navigations; Vercel's
+             script auto-tracks History API (pushState) route changes, so client-side
+             Swup page transitions are counted too. Requires "Web Analytics" to be
+             enabled in the Vercel project settings, otherwise the script 404s. -->
+        <script defer src="/_vercel/insights/script.js"></script>
         <script src="/scripts/menu.js" defer></script>
         <script src="/scripts/galleryFilter.js" defer></script>
         <script src="/scripts/hero.js" defer></script>
