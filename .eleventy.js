@@ -1,8 +1,35 @@
 require('dotenv').config()
 
+const fs = require("fs");
+const path = require("path");
 const { eleventyImageTransformPlugin } = require("@11ty/eleventy-img");
 const markdownIt = require("markdown-it");
 const { DateTime } = require("luxon");
+
+/**
+ * Picks the first candidate path that actually exists inside node_modules.
+ *
+ * Eleventy silently skips a passthrough copy whose source file is missing, so a
+ * dependency that relocates its browser bundle ships a 404 instead of a build
+ * error. That is exactly what happened when markdown-it v15 moved its UMD build
+ * from `dist/markdown-it.min.js` to `dist/browser/markdown-it.umd.min.js`:
+ * /scripts/markdown-it.min.js 404'd in production and the client-side preview
+ * page died with "window.markdownit is not a function". Throwing here turns the
+ * next such bump into a loud build failure.
+ *
+ * @param {string[]} candidates - Project-relative paths, most-preferred first.
+ * @returns {string} The first candidate that exists on disk.
+ */
+function resolveVendorScript(candidates) {
+    const found = candidates.find((p) => fs.existsSync(path.join(__dirname, p)));
+    if (!found) {
+        throw new Error(
+            "Vendored browser bundle not found — did a dependency move its dist files? Tried: " +
+            candidates.join(", ")
+        );
+    }
+    return found;
+}
 
 //const imageShortcode = require("./utils/imageShortcode.js");
 const createDOMPurify = require("dompurify");
@@ -51,8 +78,15 @@ module.exports = function(eleventyConfig) {
     // Browser builds for the client-side news preview page (src/news/preview.html).
     // These render draft markdown exactly like the build-time `markdown`/`sanitize`
     // filters above, so editors see a faithful preview without a full rebuild.
-    eleventyConfig.addPassthroughCopy({ "node_modules/markdown-it/dist/markdown-it.min.js": "scripts/markdown-it.min.js" });
-    eleventyConfig.addPassthroughCopy({ "node_modules/dompurify/dist/purify.min.js": "scripts/purify.min.js" });
+    eleventyConfig.addPassthroughCopy({
+        [resolveVendorScript([
+            "node_modules/markdown-it/dist/browser/markdown-it.umd.min.js", // v15+
+            "node_modules/markdown-it/dist/markdown-it.min.js",             // v14 and earlier
+        ])]: "scripts/markdown-it.min.js",
+    });
+    eleventyConfig.addPassthroughCopy({
+        [resolveVendorScript(["node_modules/dompurify/dist/purify.min.js"])]: "scripts/purify.min.js",
+    });
     
     eleventyConfig.addPassthroughCopy("src/css/");
     eleventyConfig.addWatchTarget("src/css/");
