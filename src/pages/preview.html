@@ -6,10 +6,10 @@ hidePartnersFooter: true
 title: Page preview
 ---
 
-<!-- Wording stays neutral about publication state: this page previews both
-     unpublished drafts and already-public pages, so it only promises that the
-     rendering comes from the latest saved row rather than the built page. -->
-<div class="preview-banner">Preview — rendered live from the latest saved version. The published page may differ.</div>
+<!-- Neutral until the fetch resolves: this page previews both unpublished drafts
+     and already-public pages, so previewStaticPage.js fills in the real status
+     from the row's `public` column. -->
+<div class="preview-banner" id="preview-banner">Preview — rendered live from the latest saved version.</div>
 
 <div id="preview-root">
   <div class="content__container">

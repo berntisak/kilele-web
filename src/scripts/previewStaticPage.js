@@ -20,11 +20,30 @@
   var params = new URLSearchParams(window.location.search);
   var id = params.get("id");
 
+  var banner = document.getElementById("preview-banner");
+
   function showMessage(msg) {
     root.innerHTML =
       '<div class="content__container"><p style="padding:2rem;text-align:center;">' +
       msg +
       "</p></div>";
+  }
+
+  /**
+   * Replaces the banner's neutral placeholder with the page's real publication
+   * state. The build gates static pages on `public === true`
+   * (src/_data/staticPages.js), so that column alone decides whether the page is
+   * live on the site — the banner must not claim "not yet public" for a page
+   * that is already published. Keep in sync with src/scripts/previewNews.js.
+   *
+   * @param {boolean} isPublic - The row's `public` column, coerced to a boolean.
+   */
+  function showStatus(isPublic) {
+    if (!banner) return;
+    banner.classList.add(isPublic ? "preview-banner--public" : "preview-banner--draft");
+    banner.textContent = isPublic
+      ? "Published — this preview renders the latest saved version, which may differ from the live page until the site rebuilds."
+      : "Draft — not public yet. This preview renders the latest saved version.";
   }
 
   if (!id) {
@@ -94,6 +113,7 @@
         showMessage("Preview not found — the page may have been deleted.");
         return;
       }
+      showStatus(rows[0].public === true);
       root.innerHTML = renderPage(rows[0]);
     })
     .catch(function (err) {
