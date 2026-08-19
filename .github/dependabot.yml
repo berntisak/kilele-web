@@ -1,7 +1,12 @@
 version: 2
 updates:
+  # Bumps target `dev`, not the default branch, so they follow the same
+  # dev -> main PR path as feature work. Left on main they land straight in
+  # production and dev silently drifts behind (which is how the markdown-it v15
+  # bump broke the preview pages).
   - package-ecosystem: "npm"
     directory: "/"
+    target-branch: "dev"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
@@ -12,5 +17,6 @@ updates:
         versions: ["<1.2.0"] # optional
   - package-ecosystem: "github-actions"
     directory: "/"
+    target-branch: "dev"
     schedule:
       interval: "weekly"

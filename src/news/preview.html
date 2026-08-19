@@ -6,7 +6,10 @@ hidePartnersFooter: true
 title: News preview
 ---
 
-<div class="preview-banner">Preview — not yet public. This is a live draft preview; the published page may differ.</div>
+<!-- Neutral until the fetch resolves: this page previews both unpublished drafts
+     and already-public posts, so previewNews.js fills in the real status from
+     the row's `public` column. -->
+<div class="preview-banner" id="preview-banner">Preview — rendered live from the latest saved version.</div>
 
 <div id="preview-root">
   <div class="content__container">

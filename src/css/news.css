@@ -230,7 +230,9 @@
     color: var(--background);
 }
 
-/* Banner shown on the CMS draft-preview page (src/news/preview.html) */
+/* Banner on the CMS preview pages (src/news/preview.html, src/pages/preview.html).
+   Base style is the neutral pre-fetch state; the preview scripts add one of the
+   modifiers below once the row's `public` column is known. */
 .preview-banner {
     background-color: var(--primary-alt2);
     color: #fff;
@@ -238,5 +240,15 @@
     text-align: center;
     font-weight: 600;
     font-size: 0.9rem;
+}
+
+/* Not live yet — keep the orange "attention" treatment. */
+.preview-banner--draft {
+    background-color: var(--primary-alt2);
+}
+
+/* Already live — informational rather than cautionary, so drop to the calmer blue. */
+.preview-banner--public {
+    background-color: var(--primary-alt1);
 }
 
