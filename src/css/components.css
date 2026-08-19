@@ -55,6 +55,28 @@ button.nav__button {
   color: var(--background);
 }
 
+/* A link inside CMS body content marked up as a button (the news/static-page
+   editor's "Button" toggle emits <a class="nav__button">). Three things need
+   undoing here: the content areas style bare <a> with a more specific selector
+   than .nav__button (colour + underline), the nav's narrow-viewport width cap
+   is meant for the header only, and an inline <a> would let the button's
+   padding overlap the lines of prose above and below. */
+.news__section-text a.nav__button,
+.static-content a.nav__button {
+    display: inline-block;
+    width: auto;
+    max-width: 100%;
+    padding: 0.25rem 1rem;
+    margin: 0.25rem 0;
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.news__section-text a.nav__button:hover,
+.static-content a.nav__button:hover {
+    color: var(--background);
+}
+
 /* Dropdown styles */
 .dropdown { 
     position: relative; 
