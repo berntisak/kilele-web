@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 230" role="img" aria-label="kilele">
+  <style>
+    svg { --m-ink: #0f0f0e; --m-red: #b61212; --m-ground: #f2eee2; }
+  </style>
+  <rect x="8" y="8" width="744" height="214" rx="107" fill="var(--m-red)"/>
+  <circle cx="52" cy="115" r="9" fill="var(--m-ground)"/>
+  <circle cx="708" cy="115" r="9" fill="var(--m-ground)"/>
+  <text x="380" y="164.7" text-anchor="middle" font-family="'Special Gothic Expanded One','Arial Black',sans-serif" font-size="140"
+        letter-spacing="2" fill="var(--m-ground)">KILELE</text>
+</svg>

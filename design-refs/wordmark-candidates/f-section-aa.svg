@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 300" role="img" aria-label="kilele">
+  <style>
+    svg { --m-ink: #0f0f0e; --m-red: #b61212; --m-ground: #f2eee2; }
+  </style>
+  <path d="M240,96 L282,96 Q308,96 308,70 L308,64 Q308,38 334,38 L660,38"
+        fill="none" stroke="var(--m-red)" stroke-width="17"
+        stroke-linecap="butt"/>
+  <g fill="var(--m-ink)" stroke="var(--m-ink)">
+    <rect x="236" y="80" width="7" height="32"/>
+    <rect x="467" y="25" width="6" height="26"/><rect x="468.5" y="51" width="3" height="16"/><circle cx="470" cy="74" r="7" fill="none" stroke-width="3.5"/>
+  </g>
+  <circle cx="202" cy="126.25" r="19.6" fill="none" stroke="var(--m-red)" stroke-width="15.5"/>
+  <text x="330" y="276" text-anchor="middle" font-family="'Archivo Black','Arial Black',sans-serif" font-size="210"
+        letter-spacing="-6" fill="var(--m-ink)">k&#305;lele</text>
+</svg>

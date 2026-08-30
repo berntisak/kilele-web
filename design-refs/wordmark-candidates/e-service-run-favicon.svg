@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="kilele">
+  <style>
+    svg { --m-ink: #0f0f0e; --m-red: #b61212; --m-ground: #f2eee2; }
+  </style>
+  <g stroke="var(--m-red)" stroke-width="4" fill="none">
+    <line x1="0" y1="25.5" x2="28" y2="25.5" stroke-linecap="butt"/>
+    <g stroke-linecap="round">
+      <line x1="6" y1="25.5" x2="6" y2="15"/>
+      <line x1="13" y1="25.5" x2="13" y2="5"/>
+      <line x1="24" y1="25.5" x2="24" y2="11"/>
+    </g>
+  </g>
+</svg>

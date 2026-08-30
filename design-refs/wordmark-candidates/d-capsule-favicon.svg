@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="kilele">
+  <style>
+    svg { --m-ink: #0f0f0e; --m-red: #b61212; --m-ground: #f2eee2; }
+  </style>
+  <rect x="1" y="7" width="30" height="18" rx="9" fill="var(--m-red)"/>
+  <text x="16" y="21.3" text-anchor="middle" font-family="'Special Gothic Expanded One','Arial Black',sans-serif" font-size="15"
+        fill="var(--m-ground)">K</text>
+</svg>
