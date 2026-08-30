@@ -1,0 +1,63 @@
+/*
+ * Kilele — red-pipes prototype tokens
+ *
+ * Every raw value below is MEASURED from design-refs/red-pipes-reference.jpg,
+ * not chosen by eye. Nothing here is invented: the two reds are the reference's
+ * own body and highlight bands, because its pipes are lit.
+ *
+ * NOT IMPORTED ANYWHERE YET — issue #140 decides how this coexists with
+ * src/css/variables.css and the eleven stylesheets global.css pulls in.
+ * Until then this file ships nothing and changes nothing.
+ *
+ * Ref: https://github.com/berntisak/kilele-web/issues/136
+ */
+
+:root {
+  /* ---- Raw, measured ------------------------------------------------ */
+
+  /* The ground is a warm CREAM, not an off-white: hsl(45 38% 92%).
+     27% of the reference's pixels. The warmth is load-bearing — drop the
+     saturation and the whole thing reads as a generic white website. */
+  --cream: #f2eee2;
+
+  /* Dominant black, 7.1% of the reference. Near-black, not #000. */
+  --ink: #0f0f0e;
+
+  /* Concrete ladder. Three steps, because the reference only ever uses
+     three. Resist adding a fourth until something actually needs it. */
+  --concrete-100: #bbb5ab;  /* light concrete   hsl(36 11% 70%) */
+  --concrete-300: #85807a;  /* mid beam         hsl(35  4% 50%) */
+  --concrete-500: #4a4742;  /* shadowed band    hsl(37  6% 27%) */
+
+  /* Two reds, both measured. --signal is the pipe body; --signal-lit is the
+     highlight where a pipe catches light. The split is not decorative: at
+     2.82:1 --signal FAILS WCAG 1.4.11 (3:1, non-text) against --ink, so any
+     pipe on a dark ground must use --signal-lit. */
+  --signal: #b61212;      /* hsl(  0 82% 39%)  5.87:1 on cream */
+  --signal-lit: #c74240;  /* hsl(  1 55% 52%)  3.91:1 on ink, 4.23:1 on cream */
+
+  /* ---- Semantic — cream ground (default) ---------------------------- */
+
+  --ground: var(--cream);
+  --text: var(--ink);            /* 16.53:1  AA */
+  --text-muted: var(--concrete-500); /*  7.97:1  AA */
+  --rule: var(--concrete-100);   /* hairlines only — 1.76:1, never text */
+  --pipe: var(--signal);
+}
+
+/* ---- Semantic — ink ground -----------------------------------------
+   Set data-ground="ink" on <body> or any section to invert. Every semantic
+   token below still clears AA for text and 3:1 for the pipe. */
+
+[data-ground="ink"] {
+  --ground: var(--ink);
+  --text: var(--cream);            /* 16.53:1  AA */
+  --text-muted: var(--concrete-300); /*  4.90:1  AA */
+  --rule: var(--concrete-500);     /* hairlines only — 2.07:1, never text */
+  --pipe: var(--signal-lit);       /*  3.91:1  passes 1.4.11 */
+}
+
+/* --concrete-500 must never be text on an ink ground (2.07:1) and
+   --concrete-300 must never be body text on cream (3.37:1 — large only).
+   The semantic layer above already routes around both; use the semantic
+   tokens, not the raw ones, and you cannot get this wrong. */
