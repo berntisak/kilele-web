@@ -1,0 +1,124 @@
+{
+  "artboards": [
+    {
+      "file": "PressDesktop.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 1440,
+      "h": 3500,
+      "title": "E · Press — desktop 1440"
+    },
+    {
+      "file": "PressMobile.dc.html",
+      "x": 1600,
+      "y": 0,
+      "w": 375,
+      "h": 3500,
+      "title": "E · Press — 375"
+    },
+    {
+      "file": "Main.dc.html",
+      "x": 0,
+      "y": 3680,
+      "w": 1440,
+      "h": 2300,
+      "title": "A · Index — desktop 1440"
+    },
+    {
+      "file": "IndexMobile.dc.html",
+      "x": 1600,
+      "y": 3680,
+      "w": 375,
+      "h": 1450,
+      "title": "A · Index — 375"
+    },
+    {
+      "file": "StatementDesktop.dc.html",
+      "x": 0,
+      "y": 6160,
+      "w": 1440,
+      "h": 1700,
+      "title": "B · Statement — desktop 1440"
+    },
+    {
+      "file": "StatementMobile.dc.html",
+      "x": 1600,
+      "y": 6160,
+      "w": 375,
+      "h": 1200,
+      "title": "B · Statement — 375"
+    },
+    {
+      "file": "ArchiveDesktop.dc.html",
+      "x": 0,
+      "y": 8040,
+      "w": 1440,
+      "h": 2100,
+      "title": "C · Archive — desktop 1440"
+    },
+    {
+      "file": "ArchiveMobile.dc.html",
+      "x": 1600,
+      "y": 8040,
+      "w": 375,
+      "h": 1750,
+      "title": "C · Archive — 375"
+    },
+    {
+      "file": "OpenerDesktop.dc.html",
+      "x": 0,
+      "y": 10320,
+      "w": 1440,
+      "h": 2000,
+      "title": "D · Opener — desktop 1440"
+    },
+    {
+      "file": "OpenerMobile.dc.html",
+      "x": 1600,
+      "y": 10320,
+      "w": 375,
+      "h": 1950,
+      "title": "D · Opener — 375"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "note-e",
+      "x": 2080,
+      "y": 0,
+      "w": 360,
+      "text": "E · PRESS — CHOSEN (#138).\nC's grid and C's faces, B's material, and the part of D that worked (the block below Common Grounds). Cream ground; ink appears ONCE, as a contained band.\n\nGROUND is the locked #f2eee2 from #136 — a cooled variant was tried and reverted. A real background TEXTURE is wanted for the final and is not decided here.\n\nGRIT: a tiled print grain (placeholder, deliberately strong), concrete at the masthead, halftone at 13–14px pitch, hatching in the ink band. Portraits warmed with sepia rather than flat grey.\n\nORDER: theme, then latest news, then the 2026 archive, then the archive cards. That order is load-bearing — no 2027 artists exist yet, so news carries the page today and the 2026 grid is labelled as archive.\n\nSTILL OPEN: the final texture, and whether the reduced-leg mark at 375px holds."
+    },
+    {
+      "id": "note-a",
+      "x": 2080,
+      "y": 3680,
+      "w": 360,
+      "text": "A · INDEX — riskiest.\nThe mark is the only large element; the site becomes a numbered parts catalogue of what already exists. Every number is real (111 / 66 / 5 / 125 / 29).\n\nWHY: most faithful to the MSCHF register in the map's Notes — deadpan, institutional, humour in the rigour. Costs nothing to author and never goes stale: the counts update themselves from Supabase.\n\nTRADEOFF: a visitor who wants a festival poster gets a directory instead. Row 003 shows the pipe crossing type with a knockout — the one place the motif appears at page scale."
+    },
+    {
+      "id": "note-b",
+      "x": 2080,
+      "y": 6160,
+      "w": 360,
+      "text": "B · STATEMENT — ink poster.\nOne screen: mark, year on its dimension leader, one line, one action. The archive is a strip, not the body.\n\nWHY: highest impact per pixel, and the only direction that reads as a poster rather than a website. The concrete blocks and the downcomer do the work the content isn't doing.\n\nTRADEOFF: it says almost nothing. If someone arrives wanting the lineup or the schedule, they are one strip away from bouncing. Also the least to look at on a return visit."
+    },
+    {
+      "id": "note-c",
+      "x": 2080,
+      "y": 8040,
+      "w": 360,
+      "text": "C · ARCHIVE — cream, portraits as the body.\n28 of the 111 portraits shown, greyscaled so the red still reads as the only colour. The pipe runs in the GUTTER between grid rows — the one place on a photographic page where the knockout ground still exists (#137).\n\nWHY: zero new authoring, and the most human page of the four. Faces sell a festival.\n\nTRADEOFF: the whole page is last year. Without a strong 2027 line at the top it can read as an archive site rather than a live one. Greyscale is a real decision to accept or reject."
+    },
+    {
+      "id": "note-d",
+      "x": 2080,
+      "y": 10320,
+      "w": 360,
+      "text": "D · OPENER — keeps the 2026 image.\nThe safest end, but not conventional: the photo is framed by pipe rails and the mark sits on a SOLID INK SLAB dropped over the image, because the knockout halo cannot survive a photographic ground.\n\nWHY: least disruptive to what exists, and the image is genuinely good.\n\nTRADEOFF: the slab is the compromise — judge whether it reads as deliberate or as a logo in a box. The photo also does most of the talking, so the new identity does the least work here."
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  }
+}
