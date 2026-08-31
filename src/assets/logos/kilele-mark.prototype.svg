@@ -1,8 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 366" role="img" aria-label="kilele">
   <!--
     Kilele evergreen wordmark — "H · Downcomer", chosen in issue #137.
-    NOT WIRED IN ANYWHERE YET: #140 decides how the prototype layer
-    coexists with the live site, so this file ships nothing today.
+    Wired into the prototype front page (#141), inlined via the `svg`
+    shortcode in .eleventy.js. Below 640px the reduced-leg cut takes over —
+    kilele-mark-reduced.prototype.svg — because the eighteen legs here fall
+    closer together than their own stroke weight at that size.
 
     Colour comes from three custom properties, defaulted below to the
     cream colourway. INLINE this file (not <img src>) and override them

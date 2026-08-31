@@ -5,9 +5,11 @@
  * not chosen by eye. Nothing here is invented: the two reds are the reference's
  * own body and highlight bands, because its pipes are lit.
  *
- * NOT IMPORTED ANYWHERE YET — issue #140 decides how this coexists with
- * src/css/variables.css and the eleven stylesheets global.css pulls in.
- * Until then this file ships nothing and changes nothing.
+ * Imported by src/css/press.css, and by nothing else. The prototype front
+ * page (#141) links press.css instead of global.css, so these tokens and
+ * src/css/variables.css never meet in one document and the archive pages are
+ * unaffected. #140 still decides the real arrangement — whether this file
+ * replaces variables.css, sits beside it, or is scoped.
  *
  * Ref: https://github.com/berntisak/kilele-web/issues/136
  */

@@ -1,0 +1,953 @@
+/*
+ * Kilele — E · Press (#141)
+ *
+ * The prototype front page's entire stylesheet. It imports the reset and the
+ * measured tokens from #136 and NOTHING from global.css: no variables.css, no
+ * layout.css, no Montserrat. The prototype layout (layouts/press.html) links
+ * this file instead of global.css, so the two systems never meet in one
+ * document and the archive pages are byte-for-byte unaffected.
+ *
+ * That is a build-time arrangement, not an answer. #140 decides how the
+ * prototype really coexists — whether the shared layout is edited or forked,
+ * and whether the token layer replaces variables.css. Forking was chosen here
+ * because it is the only option with a blast radius of zero, which is what a
+ * prototype on a throwaway branch wants; it is also the option that is cheapest
+ * to abandon. Everything below is written to be liftable into the shared chain
+ * (all page CSS is scoped under .press or the two chrome components) rather
+ * than to stay forked.
+ *
+ * Sketch: design-refs/landing-directions/build.mjs, the E_DESK / E_MOB boards.
+ * Canvas: https://claude.ai/code/artifact/17659f28-0169-4e97-9c32-23f9fb9f7576
+ */
+
+@import url("./reset.css");
+@import url("./tokens.prototype.css");
+
+/* ------------------------------------------------------------------ *
+ * Scale
+ *
+ * The sketch is two fixed artboards, 1440 and 375. Everything between is
+ * this clamp ladder: the two literal values from the boards become the
+ * two ends, so both artboards still render as drawn and the middle is
+ * interpolated rather than invented.
+ * ------------------------------------------------------------------ */
+
+:root {
+  --font-display: "Special Gothic Expanded One", "Archivo Black", "Arial Black", sans-serif;
+  --font-wordmark: "Archivo Black", "Arial Black", sans-serif;
+  --font-mono: "Space Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Page gutter: 20px at 375, 72px at 1440. */
+  --m: clamp(20px, 0.8rem + 3.6vw, 72px);
+
+  /* The hairline strip's height, needed as scroll padding and as the
+     overlay's top inset. */
+  --bar-h: 38px;
+
+  /* #139 owns the real material settings; these are the dials it will
+     turn.
+     The grain came off the canvas at full strength — #138 called it a
+     deliberately-strong placeholder — and at real size on a real screen
+     it buried the halftone and furred every edge of the display type.
+     0.35 is where the tile still reads as printed paper and stops
+     competing with the type. It is a placeholder at a usable strength,
+     not a decision: #139 still owns which texture this ends up being. */
+  --grain-opacity: 0.35;
+  --halftone-pitch: 14px;
+  --halftone-dot: 2.1px;
+  --hatch-pitch: 7px;
+}
+
+@media (min-width: 900px) {
+  :root { --bar-h: 46px; }
+}
+
+/* ------------------------------------------------------------------ *
+ * Page
+ * ------------------------------------------------------------------ */
+
+body.press-body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--text);
+  font-family: var(--font-mono);
+  -webkit-font-smoothing: antialiased;
+  /* The strip is fixed; anchor jumps and :target must clear it. */
+  scroll-padding-top: var(--bar-h);
+}
+
+.press {
+  position: relative;
+  padding-top: var(--bar-h);
+  background: var(--ground);
+  overflow-x: clip;
+}
+
+/*
+ * The print grain (#133: a baked, tiled background-image, never a live
+ * full-bleed filter). Absolute rather than fixed so it scrolls with the
+ * page and reads as printed paper rather than as a screen effect. It
+ * sits above the ink band too, exactly as the sketch has it.
+ */
+.press__grain {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background-image: url("/assets/textures/grain.png");
+  background-repeat: repeat;
+  opacity: var(--grain-opacity);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+/* ------------------------------------------------------------------ *
+ * Type primitives
+ * ------------------------------------------------------------------ */
+
+.t-mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.t-display {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  line-height: 0.93;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+}
+
+/*
+ * reset.css only neutralises `a:not([class])`, and every anchor in this
+ * design carries a class — so without this the chrome's links keep the UA
+ * default blue and, because their child spans set their own colour, that
+ * blue survives as an underline under cream type.
+ */
+.press a,
+.press-bar a,
+.press-index a { text-decoration: none; }
+
+.press a { color: var(--pipe); }
+.press a:hover { color: var(--text); }
+.press-index a { color: inherit; }
+.press a:focus-visible,
+.press-bar a:focus-visible,
+.press-bar button:focus-visible,
+.press-index a:focus-visible {
+  outline: 2px solid var(--pipe);
+  outline-offset: 3px;
+}
+
+/* ------------------------------------------------------------------ *
+ * The hairline strip (#143)
+ *
+ * One component, sticky, inverting over the ink band by taking that
+ * section's ground. It is `position: fixed` rather than `sticky` because
+ * it has to invert against a section it is not a sibling of; the
+ * IntersectionObserver in press.js flips data-ground on it.
+ * ------------------------------------------------------------------ */
+
+.press-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: var(--bar-h);
+  padding: 0 var(--m);
+  /* Opaque, not E's transparent hairline — #143 accepted that cost as
+     the price of the bar belonging to whatever it is over. */
+  background: var(--ground);
+  border-bottom: 1px solid var(--rule);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: background-color 180ms linear, border-color 180ms linear, color 180ms linear;
+}
+
+@media (min-width: 900px) {
+  .press-bar { font-size: 11px; }
+}
+
+.press-bar a { color: inherit; }
+.press-bar a:hover { color: var(--pipe); }
+
+.press-bar__home { white-space: nowrap; }
+/* The context half of the left slot is the first thing to go at 375. */
+.press-bar__context { display: none; }
+@media (min-width: 560px) { .press-bar__context { display: inline; } }
+
+.press-bar__toggle {
+  appearance: none;
+  background: none;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+}
+.press-bar__toggle:hover { color: var(--pipe); }
+
+/* Open/close label swap lives in CSS so the button has one text node. */
+.press-bar__toggle .is-close { display: none; }
+body.index-open .press-bar__toggle .is-open { display: none; }
+body.index-open .press-bar__toggle .is-close { display: inline; }
+
+/* ------------------------------------------------------------------ *
+ * The index overlay (#143)
+ *
+ * Full-screen ink. #138's "ink appears once" survives because the
+ * overlay covers the viewport, so the band and the index are never on
+ * screen together.
+ * ------------------------------------------------------------------ */
+
+.press-index {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  background: var(--ground);
+  color: var(--text);
+  padding: calc(var(--bar-h) + clamp(16px, 2.6vw, 30px)) var(--m) clamp(24px, 3vw, 36px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 160ms ease-out, transform 200ms ease-out, visibility 0s linear 200ms;
+}
+
+body.index-open .press-index {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 160ms ease-out, transform 200ms ease-out, visibility 0s;
+}
+
+body.index-open { overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  .press-index { transition: opacity 1ms linear, visibility 0s linear 1ms; transform: none; }
+  body.index-open .press-index { transition: opacity 1ms linear, visibility 0s; }
+}
+
+.press-index__group + .press-index__group { margin-top: clamp(20px, 2.4vw, 32px); }
+
+.press-index__label {
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/*
+ * #143 left the index's type sizes open, to be settled in a browser rather
+ * than on paper. Settled here at "list, not headline": fourteen rows plus
+ * three group labels have to fit one screen at both 1440x900 and 375x812,
+ * because an index that scrolls is a worse index — you cannot see the shape
+ * of the site in one look, which is the whole point of the thing. That
+ * constraint sets the ceiling; the floor is set by the rows staying
+ * comfortably tappable at 375.
+ */
+.press-index__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  padding: clamp(7px, 0.6vw, 9px) 0;
+  border-bottom: 1px solid var(--rule);
+  /* No ordinals — #143 argued and won that the only numbers in the
+     chrome are real counts. */
+}
+
+.press-index__row-title {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 0.9rem + 0.6vw, 24px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.press-index__row:hover .press-index__row-title { color: var(--pipe); }
+
+.press-index__row-meta {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: clamp(10px, 0.55rem + 0.4vw, 13px);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ------------------------------------------------------------------ *
+ * The pipe rule — the motif as a page-wide element
+ *
+ * Built from divs, not a fixed-width SVG, so it stretches with the page
+ * without distorting stroke weights or round caps. The main runs edge to
+ * edge and is cut off by the frame at both ends (butt); the legs are
+ * round-capped at their free end only.
+ *
+ * #139 owns the real rules for the motif. This is the sketch's usage —
+ * two instances, both as section separators — reproduced fluidly.
+ * ------------------------------------------------------------------ */
+
+.pipe {
+  position: relative;
+  height: var(--pipe-h, 48px);
+  --pipe-w: 4px;
+  --pipe-y: 6px;
+}
+
+@media (min-width: 900px) {
+  .pipe { --pipe-w: 7px; --pipe-y: 8px; }
+}
+
+.pipe::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--pipe-y);
+  height: var(--pipe-w);
+  transform: translateY(-50%);
+  background: var(--pipe);
+}
+
+.pipe__leg {
+  position: absolute;
+  left: var(--x);
+  width: var(--pipe-w);
+  transform: translateX(-50%);
+  background: var(--pipe);
+}
+
+.pipe__leg--dn {
+  top: var(--pipe-y);
+  height: var(--d);
+  border-radius: 0 0 var(--pipe-w) var(--pipe-w);
+}
+
+.pipe__leg--up {
+  bottom: calc(100% - var(--pipe-y));
+  height: var(--d);
+  border-radius: var(--pipe-w) var(--pipe-w) 0 0;
+}
+
+/* The gutter pipe between the two portrait rows: main centred, legs both
+   ways, as C's grid uses it. */
+.pipe--gutter { --pipe-y: 50%; }
+
+/* Legs the sketch only places at 1440; at 375 it uses two. Dropping the
+   crowded pair keeps the spacing, rather than compressing it. */
+@media (max-width: 899px) {
+  .pipe__leg--wide { display: none; }
+}
+
+/* ------------------------------------------------------------------ *
+ * Masthead
+ * ------------------------------------------------------------------ */
+
+.masthead {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(24px, 3vw, 56px) var(--m) clamp(26px, 2.6vw, 40px);
+}
+
+/*
+ * On the canvas this patch is a hard-edged rectangle bleeding off the
+ * artboard's corner. On a real page, where the section has no edge to
+ * bleed past on the left and bottom, those two straight edges read as an
+ * un-loaded image rather than as material — so it is masked away into
+ * the cream on the sides that face the page.
+ */
+.masthead__concrete {
+  position: absolute;
+  top: -16px;
+  right: -30px;
+  width: 180px;
+  opacity: 0.45;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to left, #000 55%, transparent 100%),
+                      linear-gradient(to top, #000 45%, transparent 100%);
+  mask-image: linear-gradient(to left, #000 55%, transparent 100%),
+              linear-gradient(to top, #000 45%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+@media (min-width: 900px) {
+  .masthead__concrete { top: -34px; right: -50px; width: 400px; opacity: 0.5; }
+}
+
+/*
+ * The patch is sized to whatever the mark leaves free, because it must
+ * never end up behind the wordmark. #137's constraint is hard: --m-ground
+ * paints a knockout halo behind the type, and over anything but the flat
+ * cream that halo stops being a clean gap and becomes a visible outline.
+ *
+ * Below 640px the mark runs the full column, so the patch retreats to a
+ * corner it cannot reach; between there and the two-column masthead the
+ * mark is capped at 520px and the patch takes the space to its right.
+ */
+@media (max-width: 639px) {
+  .masthead__concrete { width: 108px; top: -10px; right: -18px; opacity: 0.4; }
+}
+
+@media (min-width: 640px) and (max-width: 1039px) {
+  .masthead__concrete { width: 240px; top: -22px; right: -34px; opacity: 0.45; }
+}
+
+.masthead__inner {
+  position: relative;
+  display: grid;
+  gap: 20px;
+}
+
+@media (min-width: 1040px) {
+  .masthead__inner {
+    grid-template-columns: minmax(0, 1fr) 400px;
+    gap: 60px;
+    align-items: end;
+  }
+}
+
+.masthead__mark { display: block; width: min(100%, 520px); }
+.masthead__mark svg { display: block; width: 100%; height: auto; }
+
+/*
+ * The reduced-leg mark (#137 predicted it, #138 accepted it on canvas).
+ * Both cuts are in the DOM and one is hidden, because the switch has to
+ * happen on width and an <img> swap would refetch. 640px is the
+ * breakpoint: below it the full mark's 18 legs fall closer together than
+ * their own stroke weight and the run reads as a comb.
+ */
+.masthead__mark--reduced { display: block; }
+.masthead__mark--full { display: none; }
+
+@media (min-width: 640px) {
+  .masthead__mark--reduced { display: none; }
+  .masthead__mark--full { display: block; }
+}
+
+.masthead__leader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: clamp(14px, 1.4vw, 22px);
+}
+
+/*
+ * The dimension leader the year hangs from (#137): a dot at the mark, a
+ * rule out to a terminating tick, then 2027 in mono. Drawn in CSS rather
+ * than as a fixed-width SVG so it stretches with the masthead.
+ */
+.leader {
+  display: flex;
+  align-items: center;
+  width: clamp(62px, 8vw, 104px);
+  height: 16px;
+}
+.leader__dot {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--text-muted);
+}
+.leader__line { flex: 1 1 auto; height: 1px; background: var(--text-muted); }
+.leader__tick { flex: none; width: 1px; height: 14px; background: var(--text-muted); }
+
+.masthead__year {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(16px, 0.6rem + 0.8vw, 22px);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: var(--text);
+}
+
+.masthead__meta {
+  font-family: var(--font-mono);
+  font-size: clamp(9px, 0.4rem + 0.3vw, 12px);
+  letter-spacing: 0.13em;
+  line-height: 2.1;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+@media (min-width: 1040px) {
+  .masthead__meta { text-align: right; }
+}
+
+/* ------------------------------------------------------------------ *
+ * Theme block
+ * ------------------------------------------------------------------ */
+
+.theme {
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid var(--rule);
+  padding: clamp(30px, 3.4vw, 64px) var(--m) clamp(30px, 3.2vw, 60px);
+}
+
+.theme__halftone {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: clamp(150px, 32vw, 460px);
+  height: 100%;
+  opacity: 0.45;
+  pointer-events: none;
+  background-image: radial-gradient(
+    circle,
+    rgba(74, 71, 66, 0.55) var(--halftone-dot),
+    transparent calc(var(--halftone-dot) + 0.4px)
+  );
+  background-size: var(--halftone-pitch) var(--halftone-pitch);
+}
+
+@media (min-width: 900px) { .theme__halftone { opacity: 0.5; } }
+
+.theme__inner { position: relative; }
+
+.theme__title {
+  font-family: var(--font-display);
+  font-size: clamp(38px, 1.2rem + 5.4vw, 104px);
+  line-height: 0.94;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin: 0;
+}
+
+.theme__when {
+  margin-top: clamp(16px, 1.6vw, 24px);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(10px, 0.45rem + 0.3vw, 13px);
+  letter-spacing: 0.16em;
+  line-height: 1.9;
+  text-transform: uppercase;
+  color: var(--pipe);
+}
+
+.theme__body {
+  max-width: 880px;
+  margin: clamp(20px, 2vw, 30px) 0 0;
+  font-family: var(--font-mono);
+  font-size: clamp(11px, 0.5rem + 0.35vw, 15px);
+  line-height: 1.85;
+  color: var(--text);
+}
+
+/* The primary action, on a cut-off length of pipe. #143: this slot takes
+   tickets when tickets exist; it is Substack for now. */
+.theme__action {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 1.2vw, 18px);
+  margin-top: clamp(24px, 2.4vw, 34px);
+}
+
+.cut-end {
+  flex: none;
+  width: clamp(28px, 3vw, 54px);
+  height: var(--pipe-cut, 5px);
+  background: var(--pipe);
+}
+
+@media (min-width: 900px) { .cut-end { --pipe-cut: 7px; } }
+
+.action-link {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(11px, 0.5rem + 0.25vw, 14px);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text);
+  border-bottom: 2px solid var(--pipe);
+  padding-bottom: 5px;
+}
+.press .action-link:hover { color: var(--pipe); }
+
+/* ------------------------------------------------------------------ *
+ * Section heads
+ * ------------------------------------------------------------------ */
+
+.sec-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 20px;
+}
+
+.sec-head__title {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 0.7rem + 1.2vw, 30px);
+  text-transform: uppercase;
+  color: var(--text);
+  margin: 0;
+  line-height: 1;
+}
+
+.sec-head__meta,
+.sec-head a {
+  font-family: var(--font-mono);
+  font-size: clamp(9px, 0.4rem + 0.2vw, 11px);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.sec-head__meta { color: var(--text-muted); }
+
+/* ------------------------------------------------------------------ *
+ * Latest dispatches
+ * ------------------------------------------------------------------ */
+
+.latest {
+  border-top: 1px solid var(--rule);
+  padding: clamp(26px, 2.4vw, 44px) var(--m) clamp(30px, 3vw, 56px);
+}
+
+.latest__grid {
+  display: grid;
+  gap: clamp(22px, 1.8vw, 24px);
+  margin-top: clamp(18px, 1.6vw, 28px);
+}
+
+@media (min-width: 760px) {
+  .latest__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.latest__card { display: block; }
+
+.latest__img {
+  display: block;
+  width: 100%;
+  height: clamp(150px, 16vw, 220px);
+  object-fit: cover;
+  background: var(--concrete-100);
+  /*
+   * Warmed, not flat grey (#138), plus a halftone screen. Applied at
+   * runtime rather than baked: this page shows at most 31 photographs
+   * (28 portraits + 3 dispatches), not the full 111, and every one of
+   * them is already a remote Supabase URL that we resize on the query
+   * string — so baking would mean a build-time image pipeline for a
+   * treatment #139 has not finished specifying.
+   */
+  filter: grayscale(1) sepia(0.24) contrast(1.12);
+}
+
+.latest__date {
+  margin-top: clamp(10px, 1vw, 14px);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(9px, 0.4rem + 0.1vw, 10px);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--pipe);
+}
+
+.latest__title {
+  margin: 8px 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(17px, 0.6rem + 0.6vw, 20px);
+  line-height: 1.12;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.latest__card:hover .latest__title { color: var(--pipe); }
+
+/* ------------------------------------------------------------------ *
+ * The 2026 archive grid
+ * ------------------------------------------------------------------ */
+
+.archive-head {
+  display: grid;
+  gap: 8px;
+  padding: clamp(22px, 2.2vw, 34px) var(--m) clamp(16px, 1.4vw, 22px);
+}
+
+@media (min-width: 900px) {
+  .archive-head {
+    grid-template-columns: auto auto;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+}
+
+.faces {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding: 0 var(--m);
+}
+
+@media (min-width: 640px)  { .faces { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; } }
+@media (min-width: 900px)  { .faces { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; } }
+@media (min-width: 1180px) { .faces { grid-template-columns: repeat(7, minmax(0, 1fr)); } }
+
+.faces__cell { display: block; }
+.faces__frame { display: block; position: relative; }
+
+/*
+ * The sketch shows 28 portraits at 1440 and 12 at 375 — a content count
+ * that varies with viewport, which is why the extra faces are rendered
+ * and hidden rather than sliced server-side. The "and N more" figure
+ * changes with them; both numbers are derived, never typed.
+ *
+ * This has to come after .faces__cell's own display, not before: the two
+ * selectors carry the same specificity, so source order is the only thing
+ * deciding which display wins.
+ */
+@media (max-width: 639px) {
+  .faces__cell--overflow { display: none; }
+}
+
+.faces__img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  background: var(--concrete-100);
+  filter: grayscale(1) sepia(0.24) contrast(1.12);
+}
+
+/* #133: halftone below a 12px pitch turns to mud. 13px here. */
+.faces__screen {
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: multiply;
+  opacity: 0.45;
+  pointer-events: none;
+  background-image: radial-gradient(
+    circle,
+    rgba(15, 15, 14, 0.3) 1.5px,
+    transparent 1.9px
+  );
+  background-size: 13px 13px;
+}
+
+.faces__name {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: clamp(7px, 0.3rem + 0.15vw, 9px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.faces__cell:hover .faces__name { color: var(--pipe); }
+
+.faces-gutter { padding: clamp(14px, 1.6vw, 24px) 0; }
+
+.and-more {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: clamp(10px, 2vw, 28px);
+  padding: clamp(32px, 3.6vw, 60px) var(--m) clamp(28px, 3vw, 56px);
+}
+
+.and-more__count {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 1rem + 4.4vw, 88px);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin: 0;
+}
+
+.and-more__link {
+  font-family: var(--font-mono);
+  font-size: clamp(10px, 0.45rem + 0.2vw, 13px);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* The two counts differ because the grid shows a different number of
+   faces at each end of the ladder. */
+.count--wide { display: none; }
+@media (min-width: 640px) {
+  .count--narrow { display: none; }
+  .count--wide { display: inline; }
+}
+
+/* ------------------------------------------------------------------ *
+ * The ink band — the one inversion on the page (#138)
+ * ------------------------------------------------------------------ */
+
+.ink-band {
+  position: relative;
+  overflow: hidden;
+  background: var(--ground);
+  color: var(--text);
+  padding: clamp(30px, 3.4vw, 64px) var(--m) clamp(34px, 3.8vw, 72px);
+}
+
+.ink-band__hatch {
+  position: absolute;
+  inset: 0;
+  opacity: 0.7;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(242, 238, 226, 0.16) 0 1px,
+    transparent 1px var(--hatch-pitch)
+  );
+}
+
+@media (max-width: 899px) { .ink-band__hatch { --hatch-pitch: 6px; } }
+
+.ink-band__grid {
+  position: relative;
+  display: grid;
+  gap: 22px;
+}
+
+@media (min-width: 760px) {
+  .ink-band__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+}
+
+.ink-card { display: block; }
+
+.ink-card__img {
+  display: block;
+  width: 100%;
+  height: clamp(140px, 16vw, 230px);
+  object-fit: cover;
+  background: var(--concrete-500);
+  filter: grayscale(1) sepia(0.24) contrast(1.12);
+}
+
+.ink-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: clamp(12px, 1.2vw, 16px);
+  padding-top: clamp(10px, 1vw, 14px);
+  border-top: 1px solid var(--rule);
+}
+
+.ink-card__title {
+  font-family: var(--font-display);
+  font-size: clamp(16px, 0.6rem + 0.7vw, 22px);
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.ink-card__arrow { font-family: var(--font-mono); font-size: 14px; color: var(--text); }
+
+.ink-card__meta {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: clamp(9px, 0.4rem + 0.15vw, 11px);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.press .ink-card:hover .ink-card__title,
+.press .ink-card:hover .ink-card__arrow { color: var(--pipe); }
+
+/* ------------------------------------------------------------------ *
+ * Next strip + footer
+ * ------------------------------------------------------------------ */
+
+.next-strip {
+  display: grid;
+  gap: 14px;
+  padding: clamp(24px, 2.6vw, 0px) var(--m);
+  min-height: clamp(96px, 8vw, 112px);
+  align-content: center;
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (min-width: 760px) {
+  .next-strip {
+    grid-template-columns: auto auto;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--m);
+  }
+}
+
+.next-strip__label {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(11px, 0.5rem + 0.2vw, 14px);
+  letter-spacing: 0.15em;
+  line-height: 1.9;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.press-footer {
+  display: grid;
+  gap: 12px;
+  padding: clamp(26px, 2.6vw, 36px) var(--m) clamp(30px, 3vw, 44px);
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: clamp(9px, 0.4rem + 0.2vw, 11px);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+@media (min-width: 620px) {
+  .press-footer {
+    grid-template-columns: auto auto;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.press-footer a { color: inherit; }
+.press-footer a:hover { color: var(--pipe); }
+
+/* ------------------------------------------------------------------ *
+ * Empty states
+ *
+ * #141 asks that the page degrade sanely when Supabase returns nothing.
+ * The masthead, the theme block, the pipe rules and the footer are
+ * static and always render; the three data-backed bands drop out
+ * entirely rather than leaving a heading over a void, and the counts
+ * fall back to the section simply not claiming a number.
+ * ------------------------------------------------------------------ */
+
+.is-empty { display: none; }
+
+/* ------------------------------------------------------------------ *
+ * Swup
+ *
+ * global.css defines .transition-fade for the rest of the site; this
+ * document never loads it, so the same two rules live here.
+ * ------------------------------------------------------------------ */
+
+.transition-fade { opacity: 1; transition: opacity 0.4s; }
+html.is-changing .transition-fade { opacity: 0; }

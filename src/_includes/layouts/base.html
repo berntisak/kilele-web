@@ -84,6 +84,18 @@
             document.addEventListener("DOMContentLoaded", () => {
                 const swup = new Swup({
                     containers: ['#swup'],
+                    // The red-pipes prototype (#141) renders "/" through
+                    // layouts/press.html, which uses the same '#swup'
+                    // container id but a completely different head and
+                    // chrome. Without this, navigating home from any archive
+                    // page swaps in the prototype's body while leaving this
+                    // layout's header and global.css around it — a broken
+                    // page that only appears on the client-side path.
+                    // A full page load is correct while two layouts coexist.
+                    // Delete this when #140 unifies them.
+                    ignoreVisit: (url, { el } = {}) =>
+                        new URL(url, location.origin).pathname === '/' ||
+                        !!(el && el.closest('[data-no-swup]')),
                 });
             });
         </script>

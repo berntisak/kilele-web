@@ -71,6 +71,24 @@ module.exports = function(eleventyConfig) {
     }
     });
 
+    /**
+     * Inlines an SVG from src/ into the template.
+     *
+     * The red-pipes marks (#137, #138) colour themselves from three custom
+     * properties and paint a knockout halo behind the type, so they have to be
+     * part of the document to see the page's tokens — an <img src> renders them
+     * in their own isolated document and the halo comes out cream on every
+     * ground. Passthrough-copied files stay on disk for anything that wants the
+     * plain asset; this only adds a way to inline the same file.
+     */
+    eleventyConfig.addShortcode("svg", (relPath) => {
+        const full = path.join(__dirname, "src", relPath);
+        if (!fs.existsSync(full)) {
+            throw new Error(`svg shortcode: no such file src/${relPath}`);
+        }
+        return fs.readFileSync(full, "utf8");
+    });
+
     eleventyConfig.addPlugin(eleventyImageTransformPlugin);
     eleventyConfig.addPassthroughCopy("src/assets/");
     eleventyConfig.addPassthroughCopy("src/scripts/");

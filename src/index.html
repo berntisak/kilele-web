@@ -1,120 +1,206 @@
 ---
-layout: layouts/base.html
-title: Kilele 2026
+layout: layouts/press.html
+title: "Kilele Summit — Common Grounds, 23–27 February 2027"
+description: "East Africa's first and only summit for music, tech and culture. Common Grounds, 23–27 February 2027, The Mall, Westlands, Nairobi."
+barContext: "Nairobi, Kenya"
 ---
 
-<div class="hero__wrapper">
-    <div class="content__container">
-        {% for post in news_latest.hero_video %}
-        {% if post.hero_video %}
-        <div class="hero__video-section">
-            <a href="/news/{{ post.slug }}/">
-                <div class="hero__section-video">
-                    <iframe src="{{ post.video_url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                </div>
+{#
+  E · Press — the landing direction chosen in #138, built in #141.
+
+  Band order is load-bearing, not aesthetic: masthead, theme, latest news, the
+  2026 archive labelled as archive, the ink band, the next/CTA strip. It runs
+  that way because no 2027 artists are announced yet, so the news carries the
+  page and the 2026 grid has to be unmistakably an archive. #142 owns what this
+  order becomes once a lineup exists; today's page is one state of several.
+
+  Every number below is counted in _data/press.js, never typed.
+#}
+
+<header class="masthead">
+    {#
+      Concrete, synthesised rather than photographed (#133). Two blended
+      turbulence fields — 712 bytes of markup against a photograph. It is a
+      400x270 decorative patch, not a full-bleed live filter, which is the
+      case #133 measured at 636ms and ruled out.
+    #}
+    <svg class="masthead__concrete" viewBox="0 0 400 270" aria-hidden="true" focusable="false">
+        <filter id="concrete-fine"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" seed="7"/><feColorMatrix type="saturate" values="0"/></filter>
+        <filter id="concrete-broad"><feTurbulence type="fractalNoise" baseFrequency="0.028" numOctaves="2" seed="3"/><feColorMatrix type="saturate" values="0"/></filter>
+        <rect width="400" height="270" fill="#85807a"/>
+        <rect width="400" height="270" filter="url(#concrete-broad)" opacity="0.38"/>
+        <rect width="400" height="270" filter="url(#concrete-fine)" opacity="0.30"/>
+    </svg>
+
+    <div class="masthead__inner">
+        <div>
+            {#
+              Both cuts of the mark ship and CSS picks one — see press.css.
+              Inlined rather than <img src> because the mark colours itself
+              from --m-ink / --m-red / --m-ground and paints a knockout halo
+              behind the type; in its own document that halo is always cream.
+            #}
+            <div class="masthead__mark masthead__mark--full">
+                {% svg "assets/logos/kilele-mark.prototype.svg" %}
+            </div>
+            <div class="masthead__mark masthead__mark--reduced">
+                {% svg "assets/logos/kilele-mark-reduced.prototype.svg" %}
+            </div>
+
+            {# The year hangs off the mark on a dimension leader, never in it (#137). #}
+            <div class="masthead__leader">
+                <span class="leader" aria-hidden="true">
+                    <span class="leader__dot"></span>
+                    <span class="leader__line"></span>
+                    <span class="leader__tick"></span>
+                </span>
+                <span class="masthead__year">2027</span>
+            </div>
+        </div>
+
+        <div class="masthead__meta">
+            East Africa's first and only summit<br>
+            for music, tech and culture<br>
+            Fourth edition &#183; The Mall, Westlands, Nairobi
+        </div>
+    </div>
+</header>
+
+<section class="theme">
+    <div class="theme__halftone" aria-hidden="true"></div>
+    <div class="theme__inner">
+        <h1 class="theme__title">Common Grounds</h1>
+        <div class="theme__when">23&#8212;27 February 2027 &#183; The Mall, Westlands, Nairobi</div>
+        <p class="theme__body">
+            Common Grounds is where we meet: on the dancefloor, in conversation,
+            in collective action, and in the shared belief that another future is
+            possible.
+        </p>
+        {#
+          One primary action (#143). It is Substack while there is nothing to
+          sell; when tickets exist they take this slot and Substack demotes into
+          the index.
+        #}
+        <div class="theme__action">
+            <span class="cut-end" aria-hidden="true"></span>
+            <a class="action-link" href="https://kilelesummit.substack.com/" target="_blank" rel="noopener noreferrer">
+                Subscribe on Substack &#8594;
             </a>
         </div>
-        {% endif %}
+    </div>
+</section>
+
+{% if press.latestNews.length %}
+<section class="latest">
+    <div class="sec-head">
+        <h2 class="sec-head__title">Latest</h2>
+        <a href="/news/">All {{ press.counts.dispatches }} dispatches &#8594;</a>
+    </div>
+    <div class="latest__grid">
+        {% for post in press.latestNews %}
+        <a class="latest__card" href="/news/{{ post.slug }}/">
+            <img class="latest__img" src="{{ post.thumb }}" alt="" loading="lazy" eleventy:ignore>
+            <div class="latest__date">{{ post.publish_date | postDate }}</div>
+            <h3 class="latest__title">{{ post.title | trim }}</h3>
+        </a>
         {% endfor %}
     </div>
+</section>
+{% endif %}
 
-    <div class="content__container">
-        <div class="hero__carousel">
-            {% for post in news_latest.hero %}
-            {% if not post.hero_video %}
-            <div class="hero__section {% if loop.index == 1 %}active{% endif %}">
-                <a href="/news/{{ post.slug }}/">
-                <div class="hero__section-content">
-                    <div class="hero__section-image">
-                    {% if post.photo_path %}
-                            <img src="{{ post.photo_path }}" alt="{{ post.title }}" eleventy:ignore>
-                    {% endif %}
-                    </div>
-                    <div class="hero__section-text">
-                        <div class="hero__title_text">{{ post.title }}</div>
-                        <span class="hero__info_shout">{{ post.sub_title }}</span>
-                        <div class="hero__info_text">
-                            {{ post.hero_text | markdown | safe }}
-                        </div>
-                    </div>
-                </div>
-                </a>
-            </div>
-            {% endif %}
-            {% endfor %}  
-        </div>
-        <div class="hero__dots">
-            {% for post in news_latest.hero %}
-            {% if not post.hero_video %}
-            <span class="dot {% if loop.index == 1 %}active{% endif %}" data-index="{{ loop.index0 }}"></span>
-            {% endif %}
-            {% endfor %}
-        </div>
-    </div>
-
+{% if press.featured.length %}
+{#
+  The motif as a page rule: a main cut off at both frame edges with
+  round-capped legs dropping off it. Leg positions are the sketch's, as
+  percentages of 1440. #139 owns the real rules for where pipes may go.
+#}
+<div class="pipe" style="--pipe-h: 48px" aria-hidden="true">
+    <span class="pipe__leg pipe__leg--dn" style="--x: 17.6%; --d: 34px"></span>
+    <span class="pipe__leg pipe__leg--dn pipe__leg--wide" style="--x: 43.5%; --d: 20px"></span>
+    <span class="pipe__leg pipe__leg--dn" style="--x: 69.4%; --d: 48px"></span>
+    <span class="pipe__leg pipe__leg--dn pipe__leg--wide" style="--x: 82.4%; --d: 14px"></span>
 </div>
 
+<section>
+    <div class="archive-head">
+        <h2 class="sec-head__title">The 2026 edition</h2>
+        <span class="sec-head__meta">
+            {{ press.counts.artists }} artists &#183;
+            {{ press.counts.programmePoints }} programme points &#183; six days
+        </span>
+    </div>
 
-<div class="content__container">
-    <h2>Latest News</h2>
-    <div class="news__section--hero">
-        {% for post in news_latest.regular %}
-        <div class="hero__pair">
-            <a href="/news/{{ post.slug }}/" >
-            <div class="hero__pair-img-container">
-            {% if post.photo_path %}
-                <img src="{{ post.photo_path }}" alt="{{ post.title }}" eleventy:ignore>
-            {% endif %}
-            </div>
-            <div class="hero__info--below">
-                <span class="sh3">{{ post.publish_date | postDate }}</span>
-                <h3>{{ post.title }}</h3>
-                <span class="sh3">{{ post.excerpt }}</span>
-            </div>
+    {% for row in press.faceRows %}
+    {% if not loop.first %}
+    <div class="faces-gutter" aria-hidden="true">
+        <div class="pipe pipe--gutter" style="--pipe-h: 40px">
+            <span class="pipe__leg pipe__leg--up" style="--x: 17.6%; --d: 12px"></span>
+            <span class="pipe__leg pipe__leg--dn" style="--x: 17.6%; --d: 20px"></span>
+            <span class="pipe__leg pipe__leg--up pipe__leg--wide" style="--x: 43.5%; --d: 20px"></span>
+            <span class="pipe__leg pipe__leg--dn pipe__leg--wide" style="--x: 43.5%; --d: 10px"></span>
+            <span class="pipe__leg pipe__leg--up" style="--x: 69.4%; --d: 10px"></span>
+            <span class="pipe__leg pipe__leg--dn" style="--x: 69.4%; --d: 18px"></span>
+        </div>
+    </div>
+    {% endif %}
+    <div class="faces">
+        {% for artist in row %}
+        <a class="faces__cell {% if artist.overflow %}faces__cell--overflow{% endif %}"
+           href="/2026/lineup/{{ artist.slug }}/">
+            <span class="faces__frame">
+                <img class="faces__img" src="{{ artist.thumb }}" alt="{{ artist.name }}" loading="lazy" eleventy:ignore>
+                <span class="faces__screen" aria-hidden="true"></span>
+            </span>
+            <span class="faces__name">{{ artist.name }}</span>
         </a>
-        </div>
-        {% endfor %}  
+        {% endfor %}
     </div>
+    {% endfor %}
+
+    <div class="and-more">
+        <h3 class="and-more__count">
+            And <span class="count--wide">{{ press.remaining.wide }}</span><span class="count--narrow">{{ press.remaining.narrow }}</span> more
+        </h3>
+        <a class="and-more__link" href="/2026/lineup/">Lineup 2026 &#8594;</a>
+    </div>
+</section>
+{% endif %}
+
+{#
+  The one inversion on the page (#138: ink appears once, as a contained
+  section inside a cream page). data-invert-bar is what press.js watches to
+  flip the hairline strip's ground as it passes over.
+#}
+<section class="ink-band" data-ground="ink" data-invert-bar>
+    <div class="ink-band__hatch" aria-hidden="true"></div>
+    <div class="ink-band__grid">
+        {% for card in press.archiveCards %}
+        <a class="ink-card" href="{{ card.href }}">
+            {% if card.image %}
+            <img class="ink-card__img" src="{{ card.image }}" alt="" loading="lazy" eleventy:ignore>
+            {% endif %}
+            <span class="ink-card__head">
+                <span class="ink-card__title">{{ card.title }}</span>
+                <span class="ink-card__arrow">&#8594;</span>
+            </span>
+            <span class="ink-card__meta">{{ card.meta }}</span>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+
+<div class="next-strip">
+    <span class="next-strip__label">Next &#183; Common Grounds &#183; 23&#8212;27 February 2027</span>
+    <a class="action-link" href="https://kilelesummit.substack.com/" target="_blank" rel="noopener noreferrer">
+        Subscribe on Substack &#8594;
+    </a>
 </div>
 
-<!--div class="content__container">
-    <h2>Calotropis live from Kilele</h2>
-        <div class="radio_player">
-            <b>Stream A</b>
-            <iframe src="https://radio.calotropis.xyz/public/kilelestreamone/embed?theme=light" frameborder="0" allowtransparency="true" style="width: 100%; height: 150px; border: 0;"></iframe>
-            <p>
-            <b>Stream B</b>
-            <iframe src="https://radio.calotropis.xyz/public/calotropis_radio/embed?theme=light" frameborder="0" allowtransparency="true" style="width: 100%; height: 150px; border: 0;"></iframe>
-            </p>
-    </div>
-</div-->
-
-<div class="content__container">
-    <h2>Subscribe to our Substack</h2>
-    <div class="news__section--hero hero__section--newsletter">
-        <div class="newsletter-embed">
-            <iframe src="https://kilelesummit.substack.com/embed" frameborder="0" scrolling="no"></iframe>
-        </div>
-    </div>
-</div>
-
-<div class="content__container">
-    <center><h2>Follow Kilele</h2></center>
-        <div class="social-links">
-            <a href="https://www.youtube.com/@KileleSummit" target="_blank" rel="noopener noreferrer" class="social-link">
-                <span class="social-icon"><img src="/assets/logos/socials/youtube.png" alt="Kilele on Youtube"></span>
-            </a>
-            <a href="https://www.instagram.com/kilelesummit/" target="_blank" rel="noopener noreferrer" class="social-link">
-                <span class="social-icon"><img src="/assets/logos/socials/instagram.png" alt="Kilele on Instagram"></span>
-            </a>
-            <a href="https://discord.gg/5APgU25Rvg" target="_blank" rel="noopener noreferrer" class="social-link">
-                <span class="social-icon"><img src="/assets/logos/socials/discord.png" alt="Kilele Community on Discord"></span>
-            </a>
-            <a href="https://chat.whatsapp.com/GblpqxM5wSJ32IwqzDurGQ" target="_blank" rel="noopener noreferrer" class="social-link">
-                <span class="social-icon"><img src="/assets/logos/socials/whatsapp.png" alt="Kilele Whatsapp Broadcast channel"></span>
-            </a>
-        </div>
-</div>
-
-
-
+<footer class="press-footer">
+    <span>Santuri East Africa</span>
+    <span>
+        <a href="https://www.instagram.com/kilelesummit/" target="_blank" rel="noopener noreferrer">Instagram</a> &#183;
+        <a href="https://www.youtube.com/@KileleSummit" target="_blank" rel="noopener noreferrer">YouTube</a> &#183;
+        <a href="https://kilelesummit.substack.com/" target="_blank" rel="noopener noreferrer">Substack</a>
+    </span>
+</footer>

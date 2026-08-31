@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 366" role="img" aria-label="kilele">
+  <!--
+    Kilele evergreen wordmark, REDUCED-LEG variant — the small-size cut of
+    "H · Downcomer" (#137), called for by #138 and made real in #141.
+
+    Not a scaled-down kilele-mark.prototype.svg. At 375px the full mark's
+    nine up-legs and nine down-legs collapse into a comb: the gaps between
+    them fall below a device pixel and the pipe run reads as a smear. This
+    variant keeps four up-legs and three down-legs — the widest-spaced of
+    the full set, so the silhouette still reads as the same object — drops
+    the blanked-leg flange at x=107 (a 30x6 detail that is sub-pixel here),
+    and keeps every ink fitting, because those are what make it plumbing
+    rather than a line.
+
+    Same viewBox and same geometry as the full mark, so the two are
+    interchangeable at any size; only the leg count differs. Switched at
+    the --mark-reduce breakpoint in press.css.
+
+    Colour comes from the same three custom properties as the full mark,
+    defaulted below to the cream colourway. INLINE this file (not
+    <img src>) and override them for the other contexts:
+      ink ground   --m-ink #f2eee2  --m-red #c74240  --m-ground #0f0f0e
+      one colour   --m-red = --m-ink
+    --m-ground paints the knockout halo behind the type, so this cannot
+    sit on a photograph or a transparent ground.
+
+    Type is live Archivo Black, so this still depends on the webfont.
+    Convert to outlines before it is used as a real logo asset.
+
+    Palette: src/css/tokens.prototype.css (#136).
+  -->
+  <style>
+    svg { --m-ink: #0f0f0e; --m-red: #b61212; --m-ground: #f2eee2; }
+  </style>
+  <g stroke="var(--m-red)" stroke-width="17" fill="none">
+    <line x1="0" y1="116" x2="612" y2="116" stroke-linecap="butt"/>
+    <g stroke-linecap="round">
+      <line x1="84" y1="116" x2="84" y2="36"/>
+      <line x1="252" y1="116" x2="252" y2="12"/>
+      <line x1="434" y1="116" x2="434" y2="20"/>
+      <line x1="578" y1="116" x2="578" y2="42"/>
+      <line x1="202" y1="116" x2="202" y2="130"/>
+      <line x1="360" y1="116" x2="360" y2="348"/>
+      <line x1="530" y1="116" x2="530" y2="194"/>
+    </g>
+  </g>
+  <circle cx="202" cy="176.25" r="19.6" fill="none" stroke="var(--m-red)" stroke-width="15.5"/>
+  <g fill="var(--m-ink)" stroke="var(--m-ink)">
+    <rect x="167" y="103" width="6" height="26"/>
+    <rect x="497" y="103" width="6" height="26"/>
+    <rect x="421" y="53" width="26" height="6"/><rect x="447" y="54.5" width="16" height="3"/><circle cx="470" cy="56" r="7" fill="none" stroke-width="3.5"/>
+    <rect x="609" y="100" width="7" height="32"/>
+  </g>
+  <g font-family="'Archivo Black','Arial Black',sans-serif" font-size="210" letter-spacing="-6"
+     fill="var(--m-ink)" paint-order="stroke fill" stroke="var(--m-ground)" stroke-width="17" stroke-linejoin="round">
+    <text x="330" y="326" text-anchor="middle">k&#305;lele</text>
+  </g>
+</svg>
