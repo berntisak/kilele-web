@@ -17,7 +17,12 @@
     collapses and the crossing turns to mush.
 
     Type is live Archivo Black, so this still depends on the webfont.
-    Convert to outlines before it is used as a real logo asset.
+
+    THIS FILE DOES NOT OPEN IN AFFINITY, INKSCAPE OR GIMP, by design —
+    the var() colours above, the live type and paint-order below are all
+    browser-only. Editable masters with literal values and outlined type
+    are at design-refs/marks/ (`npm run marks:editable`); that README
+    explains which of the three breaks which editor.
 
     Palette: src/css/tokens.prototype.css (#136).
     Canvas: https://claude.ai/code/artifact/4f08b447-8841-461c-807d-98a4f608def1
