@@ -34,17 +34,8 @@ barContext: "Nairobi, Kenya"
 
     <div class="masthead__inner">
         <div>
-            {#
-              Both cuts of the mark ship and CSS picks one — see press.css.
-              Inlined rather than <img src> because the mark colours itself
-              from --m-ink / --m-red / --m-ground and paints a knockout halo
-              behind the type; in its own document that halo is always cream.
-            #}
-            <div class="masthead__mark masthead__mark--full">
-                {% svg "assets/logos/kilele-mark.prototype.svg" %}
-            </div>
-            <div class="masthead__mark masthead__mark--reduced">
-                {% svg "assets/logos/kilele-mark-reduced.prototype.svg" %}
+            <div class="masthead__mark">
+                <img class="masthead__mark-img" src="/assets/logos/kilele-2027-logo.png" alt="Kilele" width="660" height="366">
             </div>
 
             {# The year hangs off the mark on a dimension leader, never in it (#137). #}

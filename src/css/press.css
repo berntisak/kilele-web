@@ -38,7 +38,7 @@
   --font-mono: "Space Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* Page gutter: 20px at 375, 72px at 1440. */
-  --m: clamp(20px, 0.8rem + 3.6vw, 72px);
+  --m: clamp(15vw, 0.8rem + 3.6vw, 72px);
 
   /* The hairline strip's height, needed as scroll padding and as the
      overlay's top inset. */
@@ -428,22 +428,7 @@ body.index-open { overflow: hidden; }
 }
 
 .masthead__mark { display: block; width: min(100%, 520px); }
-.masthead__mark svg { display: block; width: 100%; height: auto; }
-
-/*
- * The reduced-leg mark (#137 predicted it, #138 accepted it on canvas).
- * Both cuts are in the DOM and one is hidden, because the switch has to
- * happen on width and an <img> swap would refetch. 640px is the
- * breakpoint: below it the full mark's 18 legs fall closer together than
- * their own stroke weight and the run reads as a comb.
- */
-.masthead__mark--reduced { display: block; }
-.masthead__mark--full { display: none; }
-
-@media (min-width: 640px) {
-  .masthead__mark--reduced { display: none; }
-  .masthead__mark--full { display: block; }
-}
+.masthead__mark-img { display: block; width: 100%; height: auto; }
 
 .masthead__leader {
   display: flex;
