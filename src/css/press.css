@@ -33,9 +33,12 @@
  * ------------------------------------------------------------------ */
 
 :root {
-  --font-display: "Special Gothic Expanded One", "Archivo Black", "Arial Black", sans-serif;
-  --font-wordmark: "Archivo Black", "Arial Black", sans-serif;
-  --font-mono: "Space Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  /* The 2027 deck trio (#177, WIP, superseding #134). Anton drives display
+     only; Space Grotesk carries every aligned figure (it has tabular
+     numerals, which Anton lacks — the `tnum` question is the designer's). */
+  --font-display: "Anton", "Arial Narrow", "Arial Black", sans-serif;
+  --font-body: "Jost", system-ui, -apple-system, Segoe UI, sans-serif;
+  --font-mono: "Space Grotesk", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* Page gutter: 20px at 375, 72px at 1440. */
   --m: clamp(15vw, 0.8rem + 3.6vw, 72px);
@@ -71,6 +74,11 @@ body.press-body {
   background: var(--ground);
   color: var(--text);
   font-family: var(--font-mono);
+  /* Space Grotesk carries tabular numerals; the page's aligned counts (111
+     artists / 70 programme / 26 dispatches) and the index's number column
+     depend on them, so tnum is on by default. Anton has no tnum and ignores
+     this — which is exactly why display numerals aren't trusted to align. */
+  font-feature-settings: "tnum" 1;
   -webkit-font-smoothing: antialiased;
   /* The strip is fixed; anchor jumps and :target must clear it. */
   scroll-padding-top: var(--bar-h);
@@ -535,9 +543,12 @@ body.index-open { overflow: hidden; }
 .theme__body {
   max-width: 880px;
   margin: clamp(20px, 2vw, 30px) 0 0;
-  font-family: var(--font-mono);
-  font-size: clamp(11px, 0.5rem + 0.35vw, 15px);
-  line-height: 1.85;
+  /* Running prose takes Jost, the deck's body face; the mono labels and metas
+     around it stay Space Grotesk. This is the only genuine prose block on the
+     page — the page is otherwise deliberately mono-forward. */
+  font-family: var(--font-body);
+  font-size: clamp(13px, 0.55rem + 0.5vw, 17px);
+  line-height: 1.75;
   color: var(--text);
 }
 
@@ -630,14 +641,14 @@ body.index-open { overflow: hidden; }
   object-fit: cover;
   background: var(--concrete-100);
   /*
-   * Warmed, not flat grey (#138), plus a halftone screen. Applied at
-   * runtime rather than baked: this page shows at most 31 photographs
-   * (28 portraits + 3 dispatches), not the full 111, and every one of
-   * them is already a remote Supabase URL that we resize on the query
-   * string — so baking would mean a build-time image pipeline for a
-   * treatment #139 has not finished specifying.
+   * Strategy B (#177): dispatches are "now / open", so their thumbnails take
+   * the cobalt duotone. Applied at runtime via an SVG filter rather than
+   * baked: this page shows at most 31 photographs (28 portraits + 3
+   * dispatches), each already a remote Supabase URL resized on the query
+   * string, so baking would mean a build-time image pipeline for a treatment
+   * #139 has not finished specifying.
    */
-  filter: grayscale(1) sepia(0.24) contrast(1.12);
+  filter: url("#duo-cobalt");
 }
 
 .latest__date {
@@ -647,7 +658,9 @@ body.index-open { overflow: hidden; }
   font-size: clamp(9px, 0.4rem + 0.1vw, 10px);
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--pipe);
+  /* Dispatches are the "now / open" state (Strategy B) → cobalt. 6.0:1 on
+     cream (AA). Red stays reserved as the brand constant. */
+  color: var(--cobalt);
 }
 
 .latest__title {
@@ -660,6 +673,11 @@ body.index-open { overflow: hidden; }
 }
 
 .latest__card:hover .latest__title { color: var(--pipe); }
+
+/* The one loud link in the "now / open" band is cobalt, not the brand red —
+   it points into the live dispatches. (#177 Strategy B; cobalt 6.0:1 on cream.) */
+.press .latest .sec-head a { color: var(--cobalt); }
+.press .latest .sec-head a:hover { color: var(--text); }
 
 /* ------------------------------------------------------------------ *
  * The 2026 archive grid
@@ -713,7 +731,8 @@ body.index-open { overflow: hidden; }
   aspect-ratio: 1;
   object-fit: cover;
   background: var(--concrete-100);
-  filter: grayscale(1) sepia(0.24) contrast(1.12);
+  /* The 2026 portraits are "past / archived" → green duotone (Strategy B). */
+  filter: url("#duo-green");
 }
 
 /* #133: halftone below a 12px pitch turns to mud. 13px here. */
@@ -825,7 +844,8 @@ body.index-open { overflow: hidden; }
   height: clamp(140px, 16vw, 230px);
   object-fit: cover;
   background: var(--concrete-500);
-  filter: grayscale(1) sepia(0.24) contrast(1.12);
+  /* The ink band is the 2026 archive → green duotone (Strategy B). */
+  filter: url("#duo-green");
 }
 
 .ink-card__head {
@@ -890,6 +910,19 @@ body.index-open { overflow: hidden; }
   line-height: 1.9;
   text-transform: uppercase;
   color: var(--text);
+}
+
+/* "Next · Common Grounds 2027" is the UPCOMING edition — yellow (Strategy B).
+   Yellow is 1.41:1 on cream, so it is a FILL ONLY: a solid tick before the
+   label, never the text colour. The label stays ink. */
+.next-strip__label::before {
+  content: "";
+  display: inline-block;
+  width: clamp(24px, 3vw, 34px);
+  height: 6px;
+  margin-right: 14px;
+  vertical-align: middle;
+  background: var(--yellow);
 }
 
 .press-footer {
