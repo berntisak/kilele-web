@@ -1,9 +1,9 @@
 /*
- * Kilele — red-pipes prototype tokens
+ * Kilele — 2027 brand tokens (E · Press prototype)
  *
- * Every raw value below is MEASURED from design-refs/red-pipes-reference.jpg,
- * not chosen by eye. Nothing here is invented: the two reds are the reference's
- * own body and highlight bands, because its pipes are lit.
+ * The exact deck hexes from the designer handoff (#177), which SUPERSEDE the
+ * measured red-pipes values of #136. Nothing here is eyeballed: every raw
+ * value is the deck's own.
  *
  * Imported by src/css/press.css, and by nothing else. The prototype front
  * page (#141) links press.css instead of global.css, so these tokens and
@@ -11,55 +11,63 @@
  * unaffected. #140 still decides the real arrangement — whether this file
  * replaces variables.css, sits beside it, or is scoped.
  *
- * Ref: https://github.com/berntisak/kilele-web/issues/136
+ * WCAG constraints are verified, not assumed (see per-token notes):
+ *   - Pipe red #AE0001 is 2.52:1 on ink (below 3:1) → red is a LIGHT-GROUND
+ *     colour only. On ink the mark goes mono-white and the accent is green.
+ *   - Signal yellow #F2C438 is 1.41:1 on cream → FILL ONLY on cream, never a
+ *     line or small text. (On ink it is high-contrast and safe as text.)
+ *
+ * Accents encode the announcement cycle (Strategy B, #177), not a taxonomy:
+ *   cobalt = now / open · yellow = upcoming (fill) · green = past / archived.
+ * The exact state→colour switching rule is #142's; the assignment below is the
+ * hardwired working default.
+ *
+ * Ref: https://github.com/berntisak/kilele-web/issues/177
  */
 
 :root {
-  /* ---- Raw, measured ------------------------------------------------ */
+  /* ---- Deck palette, raw ------------------------------------------- */
 
-  /* The ground is a warm CREAM, not an off-white: hsl(45 38% 92%).
-     27% of the reference's pixels. The warmth is load-bearing — drop the
-     saturation and the whole thing reads as a generic white website. */
-  --cream: #f2eee2;
+  /* Brand constant. 6.41:1 on cream (AA) — but only 2.52:1 on ink, so red
+     never carries on a dark ground. */
+  --red: #AE0001;
 
-  /* Dominant black, 7.1% of the reference. Near-black, not #000. */
-  --ink: #0f0f0e;
+  /* Warm cream ground. The warmth is load-bearing — drop the saturation and
+     the page reads as a generic white site. */
+  --cream: #F1EDE1;
 
-  /* Concrete ladder. Three steps, because the reference only ever uses
-     three. Resist adding a fourth until something actually needs it. */
-  --concrete-100: #bbb5ab;  /* light concrete   hsl(36 11% 70%) */
-  --concrete-300: #85807a;  /* mid beam         hsl(35  4% 50%) */
-  --concrete-500: #4a4742;  /* shadowed band    hsl(37  6% 27%) */
+  /* Ink. Near-black. 16.1:1 under cream. */
+  --ink: #111111;
 
-  /* Two reds, both measured. --signal is the pipe body; --signal-lit is the
-     highlight where a pipe catches light. The split is not decorative: at
-     2.82:1 --signal FAILS WCAG 1.4.11 (3:1, non-text) against --ink, so any
-     pipe on a dark ground must use --signal-lit. */
-  --signal: #b61212;      /* hsl(  0 82% 39%)  5.87:1 on cream */
-  --signal-lit: #c74240;  /* hsl(  1 55% 52%)  3.91:1 on ink, 4.23:1 on cream */
+  /* Accents — the announcement cycle. */
+  --cobalt: #2448D8;   /* now / open     — 6.01:1 on cream (AA). 2.68:1 on ink → cream only. */
+  --yellow: #F2C438;   /* upcoming       — 1.41:1 on cream → FILL ONLY on cream. 11.4:1 for ink text ON a yellow fill. */
+  --green:  #6F8C65;   /* past / archived — 3.19:1 on cream (large/fill only) · 5.05:1 on ink (AA text). */
 
-  /* ---- Semantic — cream ground (default) ---------------------------- */
+  /* Neutral ladder — used only as the background behind loading photographs,
+     never as text. Three warm greys keyed to the new cream/ink. */
+  --concrete-100: #c9c3b4;  /* light placeholder, cream side */
+  --concrete-300: #837d70;  /* mid */
+  --concrete-500: #3a3832;  /* dark placeholder, ink side */
+
+  /* ---- Semantic — cream ground (default) --------------------------- */
 
   --ground: var(--cream);
-  --text: var(--ink);            /* 16.53:1  AA */
-  --text-muted: var(--concrete-500); /*  7.97:1  AA */
-  --rule: var(--concrete-100);   /* hairlines only — 1.76:1, never text */
-  --pipe: var(--signal);
+  --text: var(--ink);                   /* 16.1:1  AA */
+  --text-muted: #5b574d;                /*  6.2:1  AA */
+  --rule: rgba(17, 17, 17, 0.16);       /* hairlines only, never text */
+  --pipe: var(--red);                   /* brand constant on light grounds */
 }
 
 /* ---- Semantic — ink ground -----------------------------------------
-   Set data-ground="ink" on <body> or any section to invert. Every semantic
-   token below still clears AA for text and 3:1 for the pipe. */
+   Set data-ground="ink" on <body> or any section to invert. On ink, red
+   fails (2.52:1) so the accent becomes green (the archived state, which is
+   what the ink band carries here); every token still clears its threshold. */
 
 [data-ground="ink"] {
   --ground: var(--ink);
-  --text: var(--cream);            /* 16.53:1  AA */
-  --text-muted: var(--concrete-300); /*  4.90:1  AA */
-  --rule: var(--concrete-500);     /* hairlines only — 2.07:1, never text */
-  --pipe: var(--signal-lit);       /*  3.91:1  passes 1.4.11 */
+  --text: var(--cream);                 /* 16.1:1  AA */
+  --text-muted: #b4ad9c;                /*  8.4:1  AA */
+  --rule: rgba(241, 237, 225, 0.18);    /* hairlines only, never text */
+  --pipe: var(--green);                 /*  5.05:1 passes AA — red can't live here */
 }
-
-/* --concrete-500 must never be text on an ink ground (2.07:1) and
-   --concrete-300 must never be body text on cream (3.37:1 — large only).
-   The semantic layer above already routes around both; use the semantic
-   tokens, not the raw ones, and you cannot get this wrong. */

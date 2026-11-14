@@ -35,10 +35,15 @@ barContext: "Nairobi, Kenya"
     <div class="masthead__inner">
         <div>
             <div class="masthead__mark">
-                <img class="masthead__mark-img" src="/assets/logos/kilele-2027-logo.png" alt="Kilele" width="660" height="366">
+                {# The locked 2027 mark (#177), Primary colourway on the cream
+                   ground. A plain <img>: the new mark drops #137's knockout-halo
+                   constraint, so no inline-SVG / --m-ground handling is needed. #}
+                <img class="masthead__mark-img" src="/assets/logos/Kilele-2027-Logo_Primary.png"
+                     alt="Kilele Summit — Nairobi's summit for music, tech and culture"
+                     width="3642" height="2263">
             </div>
 
-            {# The year hangs off the mark on a dimension leader, never in it (#137). #}
+            {# The year on a dimension leader beside the mark. #}
             <div class="masthead__leader">
                 <span class="leader" aria-hidden="true">
                     <span class="leader__dot"></span>
