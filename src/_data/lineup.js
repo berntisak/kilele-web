@@ -8,9 +8,17 @@ module.exports = async function() {
     process.env.NEXT_PUBLIC_SUPABASE_PUBLIC_KEY
   );
 
+  // Explicit column list, never select('*'): the anon role only has SELECT on
+  // the artists' public columns (contact details such as email and WhatsApp are
+  // staff-only, kilele-cms#246), and PostgREST answers select=* with
+  // "permission denied" when any column is withheld. A column added here must
+  // also be granted to anon in the CMS migrations, or this query fails.
   const { data: artists, error } = await supabase
     .from('artists')
-    .select('*')
+    .select(`
+      id, name, slug, bio, photo_path,
+      website, bandcamp, soundcloud, youtube, apple_music, spotify, instagram, tiktok
+    `)
     .eq('public', true)
     .order('name', { ascending: true });
 
