@@ -38,3 +38,9 @@ _Avoid:_ band — at a music festival it reads as a musical act.
 ## Lead section
 
 The top Section of the front page — the part that changes with the Stage, so the page leads with what matters at that point in the Edition's life.
+
+## Ground
+
+The surface colour a Section is set on: **cream** (the warm off-white, the default) or **ink** (the near-black). Everything on a Section takes its colours from its Ground, so an ink Section flips to light text by itself.
+
+_Avoid:_ background (too general), theme, dark mode.
