@@ -117,8 +117,9 @@ module.exports = function(eleventyConfig) {
      *   become real numbers, and nesting is flattened for older browsers.
      * - Files in src/css/kit/ and src/css/pages/ are written nowhere. They
      *   only reach the browser inside site.css.
-     * - The old stylesheets in src/css/ are copied as they are, until the
-     *   pages that use them are rebuilt on the kit.
+     * - Everything else is copied as it is: the old stylesheets, until their
+     *   pages are rebuilt on the kit, and the stored prototype in
+     *   src/css/prototype/ (shown at /prototype/).
      */
     eleventyConfig.addTemplateFormats("css");
     eleventyConfig.addExtension("css", {
@@ -139,7 +140,7 @@ module.exports = function(eleventyConfig) {
                 };
             }
 
-            if (relPath.includes(path.sep)) return;
+            if (relPath.startsWith("kit" + path.sep) || relPath.startsWith("pages" + path.sep)) return;
 
             return () => content;
         },

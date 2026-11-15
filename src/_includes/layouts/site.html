@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {#
-      The shared layout for pages rebuilt on the kit (#140). It links only the
-      built /css/site.css. Pages not yet rebuilt still use base.html and
-      global.css.
-    #}
     {% set pageTitle = title or site.name %}
     {% set pageDescription = description or site.description %}
     {% set canonicalUrl = site.url ~ page.url %}
@@ -16,11 +11,9 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    {# The 2027 deck's fonts (#177). Google serves latin-ext as a separate subset, loaded only when a page needs it. #}
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Anton&family=Jost:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap">
 
-    <link rel="icon" type="image/svg+xml" href="/assets/logos/kilele-favicon.prototype.svg">
     <link rel="icon" type="image/x-icon" href="/assets/logos/favicon_2026.ico">
 
     <title>{{ pageTitle }}</title>
@@ -39,145 +32,10 @@
     <meta name="twitter:image" content="{{ pageImage }}">
 
     <link rel="stylesheet" href="/css/site.css">
-    {% block head %} {% endblock %}
 </head>
 <body>
-
-    {#
-      Duotone filters for photos (#177): cobalt for "now", green for "past".
-      Each turns the photo grey, then maps dark-to-light onto a ramp of that
-      colour. The CSS points at them by id.
-    #}
-    <svg class="duotone-defs" width="0" height="0" aria-hidden="true" focusable="false">
-        <defs>
-            <filter id="duo-cobalt" color-interpolation-filters="sRGB">
-                <feColorMatrix type="matrix" values="0.2126 0.7152 0.0722 0 0  0.2126 0.7152 0.0722 0 0  0.2126 0.7152 0.0722 0 0  0 0 0 1 0"/>
-                <feComponentTransfer>
-                    <feFuncR type="table" tableValues="0.09 0.74"/>
-                    <feFuncG type="table" tableValues="0.13 0.86"/>
-                    <feFuncB type="table" tableValues="0.28 1.00"/>
-                </feComponentTransfer>
-            </filter>
-            <filter id="duo-green" color-interpolation-filters="sRGB">
-                <feColorMatrix type="matrix" values="0.2126 0.7152 0.0722 0 0  0.2126 0.7152 0.0722 0 0  0.2126 0.7152 0.0722 0 0  0 0 0 1 0"/>
-                <feComponentTransfer>
-                    <feFuncR type="table" tableValues="0.10 0.68"/>
-                    <feFuncG type="table" tableValues="0.18 0.94"/>
-                    <feFuncB type="table" tableValues="0.10 0.66"/>
-                </feComponentTransfer>
-            </filter>
-        </defs>
-    </svg>
-
-    {# The header bar (#143). The left link is the only way home: the logo never appears in the bar. #}
-    <div class="header-bar" id="header-bar">
-        <span class="header-bar__home">
-            <a class="header-bar__link" href="/">Kilele Summit</a><span class="header-bar__context"> — {{ barContext or "Nairobi, Kenya" }}</span>
-        </span>
-        <button class="header-bar__toggle" type="button"
-                id="index-toggle"
-                aria-expanded="false" aria-controls="site-index">
-            <span class="header-bar__open-label">Index</span><span class="header-bar__close-label">Close</span>
-        </button>
-    </div>
-
-    {#
-      The index (#143). Written by hand, not generated from staticPages, so
-      new pages have to be added here. The numbers are real counts from
-      _data/press.js; rows are never numbered.
-    #}
-    <nav class="index" id="site-index" data-ground="ink" aria-label="Site index">
-        <div class="index__group">
-            <div class="index__label">The festival</div>
-            <a class="index__row" href="/2027/theme-2027/">
-                <span class="index__row-title">Common Grounds</span>
-                <span class="index__row-meta">2027</span>
-            </a>
-            <a class="index__row" href="/about/what-is-kilele/">
-                <span class="index__row-title">What is Kilele</span>
-                <span class="index__row-meta"></span>
-            </a>
-            <a class="index__row" href="/about/practical/">
-                <span class="index__row-title">Practical</span>
-                <span class="index__row-meta"></span>
-            </a>
-            <a class="index__row" href="/about/code-of-conduct/">
-                <span class="index__row-title">Code of Conduct</span>
-                <span class="index__row-meta"></span>
-            </a>
-            <a class="index__row" href="/about/faq/">
-                <span class="index__row-title">FAQ</span>
-                <span class="index__row-meta"></span>
-            </a>
-            <a class="index__row" href="/about/contact/">
-                <span class="index__row-title">Contact</span>
-                <span class="index__row-meta"></span>
-            </a>
-            <a class="index__row" href="/about/partners/">
-                <span class="index__row-title">Partners</span>
-                <span class="index__row-meta"></span>
-            </a>
-        </div>
-
-        <div class="index__group">
-            <div class="index__label">Dispatches</div>
-            <a class="index__row" href="/news/">
-                <span class="index__row-title">News</span>
-                <span class="index__row-meta">{% if press.counts.dispatches %}{{ press.counts.dispatches }}{% endif %}</span>
-            </a>
-            <a class="index__row" href="https://kilelesummit.substack.com/" target="_blank" rel="noopener noreferrer">
-                <span class="index__row-title">Substack</span>
-                <span class="index__row-meta">&#8599;</span>
-            </a>
-        </div>
-
-        <div class="index__group">
-            <div class="index__label">Archive 2026</div>
-            <a class="index__row" href="/2026/lineup/">
-                <span class="index__row-title">Lineup</span>
-                <span class="index__row-meta">{% if press.counts.artists %}{{ press.counts.artists }}{% endif %}</span>
-            </a>
-            <a class="index__row" href="/2026/schedule/">
-                <span class="index__row-title">Schedule</span>
-                <span class="index__row-meta">{% if press.counts.programmePoints %}{{ press.counts.programmePoints }}{% endif %}</span>
-            </a>
-            <a class="index__row" href="/2026/gallery/">
-                <span class="index__row-title">Gallery</span>
-                <span class="index__row-meta">{% if press.counts.photographs %}{{ press.counts.photographs }}{% endif %}</span>
-            </a>
-            <a class="index__row" href="/2026/projects/">
-                <span class="index__row-title">Projects</span>
-                <span class="index__row-meta">{% if press.counts.projects %}{{ press.counts.projects }}{% endif %}</span>
-            </a>
-            <a class="index__row" href="/2026/theme-2026/">
-                <span class="index__row-title">Theme 2026</span>
-                <span class="index__row-meta"></span>
-            </a>
-        </div>
-    </nav>
-
-    <div id="swup" class="page page--{{ pageName }} transition-fade">
+    <div id="swup" class="page page--{{ pageName }}">
         {{ content | safe }}
-
-        <footer class="footer">
-            <span>Santuri East Africa</span>
-            <span>
-                <a class="footer__link" href="https://www.instagram.com/kilelesummit/" target="_blank" rel="noopener noreferrer">Instagram</a> &#183;
-                <a class="footer__link" href="https://www.youtube.com/@KileleSummit" target="_blank" rel="noopener noreferrer">YouTube</a> &#183;
-                <a class="footer__link" href="https://kilelesummit.substack.com/" target="_blank" rel="noopener noreferrer">Substack</a>
-            </span>
-        </footer>
-
-        <div class="grain"></div>
     </div>
-
-    <script defer src="/_vercel/insights/script.js"></script>
-    <script src="/scripts/press.js" defer></script>
-
-    {#
-      No Swup yet. Swup can't move between two different layouts (#141), and
-      base.html still serves every other page, so links from here do full
-      page loads until those pages move onto this layout.
-    #}
 </body>
 </html>

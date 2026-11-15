@@ -58,7 +58,7 @@ const RETIRED_SLUGS = new Set([
   "kilele-summit-2027-open-call",
 ]);
 
-/** Portraits per grid row on phones, below the --small cutoff (600px). Mirrors pages/home.css. */
+/** Portraits per grid row below the 640px breakpoint. Mirrors press.css. */
 const NARROW_PER_ROW = 6;
 
 /**
@@ -152,7 +152,7 @@ module.exports = async function () {
      * shows a different number of faces at each end of the scale: 28 at 1440
      * (7 columns x 2 rows, twice) and 12 at 375 (3 x 2, twice). Every face is
      * rendered and the surplus is hidden in CSS, so `overflow` here and the
-     * .faces__cell--overflow rule in pages/home.css are the same fact stated twice
+     * .faces__cell--overflow rule in press.css are the same fact stated twice
      * — change one and the "and N more" count below stops being true.
      */
     faceRows: [featured.slice(0, 14), featured.slice(14, 28)].map((row) =>
