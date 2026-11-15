@@ -1,0 +1,601 @@
+/*
+ * The front page (#141, "E · Press" from #138). From the top: masthead,
+ * theme, latest news, the 2026 archive, the ink Section, the next-edition
+ * strip.
+ */
+
+.page--home {
+    /* Halftone dot spacing and size. Below a 12px pitch the dots turn to mud (#133). */
+    --halftone-pitch: 14px;
+    --halftone-dot: 2.1px;
+
+    /* Masthead */
+
+    .masthead {
+        position: relative;
+        overflow: hidden;
+        padding: var(--space-5) var(--gutter);
+
+        @media (--large) {
+            padding: var(--space-7) var(--gutter) var(--space-6);
+        }
+    }
+
+    /* A patch of concrete in the top-right corner, faded into the cream on
+       the two sides that face the page. It must never sit behind the logo. */
+    .masthead__concrete {
+        position: absolute;
+        top: -10px;
+        right: -18px;
+        width: 108px;
+        opacity: 0.4;
+        pointer-events: none;
+        mask-image:
+            linear-gradient(to left, black 55%, transparent 100%),
+            linear-gradient(to top, black 45%, transparent 100%);
+        mask-composite: intersect;
+
+        @media (--small) {
+            top: -22px;
+            right: -34px;
+            width: 240px;
+            opacity: 0.45;
+        }
+
+        @media (--large) {
+            top: -34px;
+            right: -50px;
+            width: 400px;
+            opacity: 0.5;
+        }
+    }
+
+    .masthead__inner {
+        position: relative;
+        display: grid;
+        gap: var(--space-5);
+
+        @media (--large) {
+            grid-template-columns: minmax(0, 1fr) 400px;
+            align-items: end;
+            gap: var(--space-7);
+        }
+    }
+
+    .masthead__mark {
+        width: min(100%, 520px);
+    }
+
+    .masthead__mark-image {
+        width: 100%;
+        height: auto;
+    }
+
+    .masthead__leader {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        margin-top: var(--space-3);
+
+        @media (--large) {
+            margin-top: var(--space-5);
+        }
+    }
+
+    .masthead__year {
+        font-family: var(--font-mono);
+        font-size: var(--text-5);
+        font-weight: var(--weight-bold);
+        line-height: var(--line-height-tight);
+        letter-spacing: 0.02em;
+        color: var(--text);
+    }
+
+    .masthead__meta {
+        font-family: var(--font-mono);
+        font-size: var(--text-1);
+        line-height: var(--line-height-loose);
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+
+        @media (--large) {
+            font-size: var(--text-2);
+            text-align: right;
+        }
+    }
+
+    /* The year hangs off the logo on a dimension line, like a technical drawing (#137). */
+    .leader {
+        display: flex;
+        align-items: center;
+        width: clamp(62px, 8vw, 104px);
+        height: 16px;
+    }
+
+    .leader__dot {
+        flex: none;
+        width: 7px;
+        height: 7px;
+        background: var(--text-muted);
+        border-radius: 50%;
+    }
+
+    .leader__line {
+        flex: 1 1 auto;
+        height: 1px;
+        background: var(--text-muted);
+    }
+
+    .leader__tick {
+        flex: none;
+        width: 1px;
+        height: 14px;
+        background: var(--text-muted);
+    }
+
+    /* Theme */
+
+    .theme {
+        position: relative;
+        overflow: hidden;
+        padding: var(--space-6) var(--gutter);
+        border-top: 1px solid var(--rule);
+
+        @media (--large) {
+            padding: var(--space-7) var(--gutter);
+        }
+    }
+
+    .theme__halftone {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: clamp(150px, 32vw, 460px);
+        height: 100%;
+        background-image: radial-gradient(
+            circle,
+            var(--halftone) var(--halftone-dot),
+            transparent calc(var(--halftone-dot) + 0.4px)
+        );
+        background-size: var(--halftone-pitch) var(--halftone-pitch);
+        opacity: 0.45;
+        pointer-events: none;
+
+        @media (--medium) {
+            opacity: 0.5;
+        }
+    }
+
+    .theme__inner {
+        position: relative;
+    }
+
+    .theme__title {
+        font-family: var(--font-display);
+        font-size: var(--text-8);
+        line-height: var(--line-height-tight);
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+        color: var(--text);
+    }
+
+    .theme__when {
+        margin-top: var(--space-4);
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        font-weight: var(--weight-bold);
+        line-height: var(--line-height-loose);
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--pipe);
+
+        @media (--large) {
+            margin-top: var(--space-5);
+        }
+    }
+
+    /* The page's only running text, so the only place the body font appears. */
+    .theme__body {
+        max-width: 880px;
+        margin-top: var(--space-5);
+        font-family: var(--font-body);
+        font-size: var(--text-3);
+        line-height: var(--line-height-loose);
+        color: var(--text);
+
+        @media (--large) {
+            margin-top: var(--space-6);
+            font-size: var(--text-4);
+        }
+    }
+
+    /* Substack for now; tickets take this place once they are on sale (#143). */
+    .theme__action {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        margin-top: var(--space-5);
+
+        @media (--large) {
+            gap: var(--space-4);
+            margin-top: var(--space-6);
+        }
+    }
+
+    .theme__pipe-end {
+        flex: none;
+        width: clamp(28px, 3vw, 54px);
+        height: 5px;
+        background: var(--pipe);
+
+        @media (--medium) {
+            height: 7px;
+        }
+    }
+
+    .action-link {
+        padding-bottom: var(--space-1);
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        font-weight: var(--weight-bold);
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--pipe);
+        border-bottom: 2px solid var(--pipe);
+
+        &:hover {
+            color: var(--pipe);
+        }
+    }
+
+    /* Latest news */
+
+    .latest {
+        padding: var(--space-5) var(--gutter) var(--space-6);
+        border-top: 1px solid var(--rule);
+
+        @media (--large) {
+            padding: var(--space-6) var(--gutter) var(--space-7);
+        }
+    }
+
+    /* News is happening now, so it takes the "now" colour rather than red (#177). */
+    .latest__all-link {
+        color: var(--status-now);
+
+        &:hover {
+            color: var(--text);
+        }
+    }
+
+    .latest__grid {
+        display: grid;
+        gap: var(--space-5);
+        margin-top: var(--space-4);
+
+        @media (--medium) {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        @media (--large) {
+            margin-top: var(--space-5);
+        }
+    }
+
+    .latest__card {
+        display: block;
+    }
+
+    /* The filters are defined in the layout (#177). */
+    .latest__image {
+        width: 100%;
+        height: clamp(150px, 16vw, 220px);
+        object-fit: cover;
+        background: var(--placeholder);
+        filter: url("#duo-cobalt");
+    }
+
+    .latest__date {
+        margin-top: var(--space-3);
+        font-family: var(--font-mono);
+        font-size: var(--text-1);
+        font-weight: var(--weight-bold);
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--status-now);
+
+        @media (--large) {
+            margin-top: var(--space-4);
+        }
+    }
+
+    .latest__title {
+        margin-top: var(--space-2);
+        font-family: var(--font-display);
+        font-size: var(--text-5);
+        line-height: var(--line-height-snug);
+        text-transform: uppercase;
+        color: var(--text);
+    }
+
+    .latest__card:hover .latest__title {
+        color: var(--pipe);
+    }
+
+    /* The 2026 archive */
+
+    .archive__heading {
+        padding: var(--space-5) var(--gutter) var(--space-4);
+
+        @media (--large) {
+            padding-top: var(--space-6);
+        }
+    }
+
+    .faces {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-2);
+        padding: 0 var(--gutter);
+
+        @media (--small) {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: var(--space-3);
+        }
+
+        @media (--medium) {
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+        }
+
+        @media (--large) {
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+        }
+    }
+
+    .faces__cell {
+        display: block;
+    }
+
+    /* Phones show fewer faces. _data/press.js counts the hidden ones into
+       "and N more", so the two must change together. */
+    .faces__cell--overflow {
+        display: none;
+
+        @media (--small) {
+            display: block;
+        }
+    }
+
+    .faces__frame {
+        position: relative;
+        display: block;
+    }
+
+    .faces__image {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+        background: var(--placeholder);
+        filter: url("#duo-green");
+    }
+
+    .faces__screen {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(circle, var(--screen) 1.5px, transparent 1.9px);
+        background-size: 13px 13px;
+        opacity: 0.45;
+        mix-blend-mode: multiply;
+        pointer-events: none;
+    }
+
+    .faces__name {
+        display: block;
+        margin-top: var(--space-2);
+        overflow: hidden;
+        font-family: var(--font-mono);
+        font-size: var(--text-1);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: var(--text-muted);
+    }
+
+    .faces__cell:hover .faces__name {
+        color: var(--pipe);
+    }
+
+    .faces-gutter {
+        padding: var(--space-4) 0;
+
+        @media (--large) {
+            padding: var(--space-5) 0;
+        }
+    }
+
+    .and-more {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: var(--space-3);
+        padding: var(--space-6) var(--gutter);
+
+        @media (--medium) {
+            gap: var(--space-4);
+        }
+
+        @media (--large) {
+            gap: var(--space-6);
+            padding: var(--space-7) var(--gutter);
+        }
+    }
+
+    .and-more__count {
+        font-family: var(--font-display);
+        font-size: var(--text-7);
+        line-height: var(--line-height-tight);
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+        color: var(--text);
+    }
+
+    /* Two numbers, because phones show fewer faces above them. */
+    .and-more__number--wide {
+        display: none;
+
+        @media (--small) {
+            display: inline;
+        }
+    }
+
+    .and-more__number--narrow {
+        @media (--small) {
+            display: none;
+        }
+    }
+
+    .and-more__link {
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+    }
+
+    /* The ink Section: the only ink on the page (#138). */
+
+    .ink-band {
+        position: relative;
+        overflow: hidden;
+        padding: var(--space-6) var(--gutter);
+        color: var(--text);
+        background: var(--ground);
+
+        @media (--large) {
+            padding: var(--space-7) var(--gutter);
+        }
+    }
+
+    .ink-band__hatch {
+        --hatch-pitch: 6px;
+
+        position: absolute;
+        inset: 0;
+        background-image: repeating-linear-gradient(
+            45deg,
+            var(--rule) 0 1px,
+            transparent 1px var(--hatch-pitch)
+        );
+        opacity: 0.7;
+        pointer-events: none;
+
+        @media (--medium) {
+            --hatch-pitch: 7px;
+        }
+    }
+
+    .ink-band__grid {
+        position: relative;
+        display: grid;
+        gap: var(--space-5);
+
+        @media (--medium) {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+
+    .ink-card {
+        display: block;
+    }
+
+    .ink-card__image {
+        width: 100%;
+        height: clamp(140px, 16vw, 230px);
+        object-fit: cover;
+        background: var(--placeholder);
+        filter: url("#duo-green");
+    }
+
+    .ink-card__head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: var(--space-3);
+        margin-top: var(--space-3);
+        padding-top: var(--space-3);
+        border-top: 1px solid var(--rule);
+
+        @media (--large) {
+            margin-top: var(--space-4);
+        }
+    }
+
+    .ink-card__title {
+        font-family: var(--font-display);
+        font-size: var(--text-5);
+        text-transform: uppercase;
+        color: var(--text);
+    }
+
+    .ink-card__arrow {
+        font-family: var(--font-mono);
+        font-size: var(--text-3);
+        color: var(--text);
+    }
+
+    .ink-card__meta {
+        display: block;
+        margin-top: var(--space-2);
+        font-family: var(--font-mono);
+        font-size: var(--text-1);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+    }
+
+    .ink-card:hover .ink-card__title,
+    .ink-card:hover .ink-card__arrow {
+        color: var(--pipe);
+    }
+
+    /* Next edition */
+
+    .next-strip {
+        display: grid;
+        align-content: center;
+        gap: var(--space-4);
+        min-height: clamp(96px, 8vw, 112px);
+        padding: var(--space-5) var(--gutter);
+        border-bottom: 1px solid var(--rule);
+
+        @media (--medium) {
+            grid-template-columns: auto auto;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 var(--gutter);
+        }
+    }
+
+    .next-strip__label {
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        font-weight: var(--weight-bold);
+        line-height: var(--line-height-loose);
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--text);
+    }
+
+    /* The next edition is "upcoming", so it gets a yellow tick. Yellow is too
+       light to read as text on cream, so it is only ever a filled shape. */
+    .next-strip__label::before {
+        content: "";
+        display: inline-block;
+        width: clamp(24px, 3vw, 34px);
+        height: 6px;
+        margin-right: var(--space-3);
+        vertical-align: middle;
+        background: var(--status-upcoming);
+    }
+}

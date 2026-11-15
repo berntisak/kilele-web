@@ -12,8 +12,8 @@
  *
  * Everything here is idempotent and re-bindable: Swup replaces #swup wholesale
  * on every client-side navigation, which silently kills any observer watching
- * an element inside it. layouts/press.html calls rebind() from Swup's
- * content:replace hook.
+ * an element inside it, so rebind() is there for Swup's content:replace hook
+ * once layouts/site.html loads Swup.
  */
 (function () {
   "use strict";
@@ -23,6 +23,10 @@
   var index = null;
   var observer = null;
   var lastFocus = null;
+
+  function isOpen() {
+    return !!index && index.classList.contains("is-open");
+  }
 
   var FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
@@ -37,7 +41,7 @@
   function setBarGround(ground) {
     if (!bar) return;
     bar.dataset.pageGround = ground;
-    if (document.body.classList.contains("index-open")) return;
+    if (isOpen()) return;
     applyGround(ground);
   }
 
@@ -96,7 +100,7 @@
   function openIndex() {
     if (!index || !toggle) return;
     lastFocus = document.activeElement;
-    document.body.classList.add("index-open");
+    index.classList.add("is-open");
     toggle.setAttribute("aria-expanded", "true");
     applyGround("ink");
     var first = index.querySelector(FOCUSABLE);
@@ -105,8 +109,8 @@
 
   function closeIndex(restoreFocus) {
     if (!index || !toggle) return;
-    if (!document.body.classList.contains("index-open")) return;
-    document.body.classList.remove("index-open");
+    if (!isOpen()) return;
+    index.classList.remove("is-open");
     toggle.setAttribute("aria-expanded", "false");
     applyGround(bar && bar.dataset.pageGround === "ink" ? "ink" : "cream");
 
@@ -126,7 +130,7 @@
   }
 
   function onKeydown(event) {
-    if (!document.body.classList.contains("index-open")) return;
+    if (!isOpen()) return;
 
     if (event.key === "Escape") {
       event.preventDefault();
@@ -161,9 +165,9 @@
    * ---------------------------------------------------------------- */
 
   function rebind() {
-    bar = document.getElementById("press-bar");
-    toggle = document.getElementById("press-index-toggle");
-    index = document.getElementById("press-index");
+    bar = document.getElementById("header-bar");
+    toggle = document.getElementById("index-toggle");
+    index = document.getElementById("site-index");
     bindObserver();
   }
 
@@ -172,7 +176,7 @@
     if (!toggle) return;
 
     toggle.addEventListener("click", function () {
-      if (document.body.classList.contains("index-open")) closeIndex(true);
+      if (isOpen()) closeIndex(true);
       else openIndex();
     });
 

@@ -1,0 +1,92 @@
+/*
+ * The thin strip fixed to the top of every page (#143): the way home on the
+ * left, the index button on the right. scripts/press.js sets data-ground="ink"
+ * on it while it is over an ink Section, so it takes that Section's colours.
+ */
+
+:root {
+    --bar-height: 38px;
+
+    @media (--medium) {
+        --bar-height: 46px;
+    }
+}
+
+.header-bar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-height: var(--bar-height);
+    padding: 0 var(--gutter);
+    font-family: var(--font-mono);
+    font-size: var(--text-1);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: var(--ground);
+    border-bottom: 1px solid var(--rule);
+    transition:
+        background-color 180ms linear,
+        border-color 180ms linear,
+        color 180ms linear;
+
+    @media (--medium) {
+        font-size: var(--text-2);
+    }
+}
+
+.header-bar__home {
+    white-space: nowrap;
+}
+
+.header-bar__link {
+    color: inherit;
+
+    &:hover {
+        color: var(--pipe);
+    }
+}
+
+/* The place name is the first thing to go on a phone. */
+.header-bar__context {
+    display: none;
+
+    @media (--small) {
+        display: inline;
+    }
+}
+
+.header-bar__toggle {
+    padding: 0;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    appearance: none;
+
+    &:hover {
+        color: var(--pipe);
+    }
+}
+
+/* The button reads INDEX when the index is closed and CLOSE when it is open. */
+.header-bar__close-label {
+    display: none;
+}
+
+.header-bar__toggle[aria-expanded="true"] .header-bar__open-label {
+    display: none;
+}
+
+.header-bar__toggle[aria-expanded="true"] .header-bar__close-label {
+    display: inline;
+}

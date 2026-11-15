@@ -1,0 +1,15 @@
+/*
+ * The print grain over the whole page. A small tile repeated, never a live
+ * filter, because a full-screen filter is slow (#133). It scrolls with the
+ * page so it reads as paper rather than as a screen effect.
+ */
+
+.grain {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    background-image: url("/assets/textures/grain.png");
+    background-repeat: repeat;
+    opacity: 0.35;
+    pointer-events: none;
+}

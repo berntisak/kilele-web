@@ -84,8 +84,8 @@
             document.addEventListener("DOMContentLoaded", () => {
                 const swup = new Swup({
                     containers: ['#swup'],
-                    // The red-pipes prototype (#141) renders "/" through
-                    // layouts/press.html, which uses the same '#swup'
+                    // The front page renders through
+                    // layouts/site.html, which uses the same '#swup'
                     // container id but a completely different head and
                     // chrome. Without this, navigating home from any archive
                     // page swaps in the prototype's body while leaving this

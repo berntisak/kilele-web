@@ -1,29 +1,23 @@
 ---
-layout: layouts/press.html
+layout: layouts/site.html
+pageName: home
 title: "Kilele Summit — Common Grounds, 23–27 February 2027"
 description: "East Africa's first and only summit for music, tech and culture. Common Grounds, 23–27 February 2027, The Mall, Westlands, Nairobi."
 barContext: "Nairobi, Kenya"
 ---
 
 {#
-  E · Press — the landing direction chosen in #138, built in #141.
+  E · Press, the landing direction chosen in #138 and built in #141.
 
-  Band order is load-bearing, not aesthetic: masthead, theme, latest news, the
-  2026 archive labelled as archive, the ink band, the next/CTA strip. It runs
-  that way because no 2027 artists are announced yet, so the news carries the
-  page and the 2026 grid has to be unmistakably an archive. #142 owns what this
-  order becomes once a lineup exists; today's page is one state of several.
+  The Section order matters: no 2027 artists are announced yet, so the news
+  carries the page and the 2026 grid has to read clearly as an archive. This
+  is the Announcement Stage's layout (#142).
 
   Every number below is counted in _data/press.js, never typed.
 #}
 
 <header class="masthead">
-    {#
-      Concrete, synthesised rather than photographed (#133). Two blended
-      turbulence fields — 712 bytes of markup against a photograph. It is a
-      400x270 decorative patch, not a full-bleed live filter, which is the
-      case #133 measured at 636ms and ruled out.
-    #}
+    {# Concrete made from SVG noise rather than a photograph (#133). A small patch, not a full-screen filter. #}
     <svg class="masthead__concrete" viewBox="0 0 400 270" aria-hidden="true" focusable="false">
         <filter id="concrete-fine"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" seed="7"/><feColorMatrix type="saturate" values="0"/></filter>
         <filter id="concrete-broad"><feTurbulence type="fractalNoise" baseFrequency="0.028" numOctaves="2" seed="3"/><feColorMatrix type="saturate" values="0"/></filter>
@@ -35,15 +29,12 @@ barContext: "Nairobi, Kenya"
     <div class="masthead__inner">
         <div>
             <div class="masthead__mark">
-                {# The locked 2027 mark (#177), Primary colourway on the cream
-                   ground. A plain <img>: the new mark drops #137's knockout-halo
-                   constraint, so no inline-SVG / --m-ground handling is needed. #}
-                <img class="masthead__mark-img" src="/assets/logos/Kilele-2027-Logo_Primary.png"
+                {# The 2027 mark (#177), Primary colourway. #}
+                <img class="masthead__mark-image" src="/assets/logos/Kilele-2027-Logo_Primary.png"
                      alt="Kilele Summit — Nairobi's summit for music, tech and culture"
                      width="3642" height="2263">
             </div>
 
-            {# The year on a dimension leader beside the mark. #}
             <div class="masthead__leader">
                 <span class="leader" aria-hidden="true">
                     <span class="leader__dot"></span>
@@ -72,13 +63,9 @@ barContext: "Nairobi, Kenya"
             in collective action, and in the shared belief that another future is
             possible.
         </p>
-        {#
-          One primary action (#143). It is Substack while there is nothing to
-          sell; when tickets exist they take this slot and Substack demotes into
-          the index.
-        #}
+        {# The one main action (#143): Substack until tickets are on sale. #}
         <div class="theme__action">
-            <span class="cut-end" aria-hidden="true"></span>
+            <span class="theme__pipe-end" aria-hidden="true"></span>
             <a class="action-link" href="https://kilelesummit.substack.com/" target="_blank" rel="noopener noreferrer">
                 Subscribe on Substack &#8594;
             </a>
@@ -88,14 +75,14 @@ barContext: "Nairobi, Kenya"
 
 {% if press.latestNews.length %}
 <section class="latest">
-    <div class="sec-head">
-        <h2 class="sec-head__title">Latest</h2>
-        <a href="/news/">All {{ press.counts.dispatches }} dispatches &#8594;</a>
+    <div class="section-heading">
+        <h2 class="section-heading__title">Latest</h2>
+        <a class="section-heading__link latest__all-link" href="/news/">All {{ press.counts.dispatches }} dispatches &#8594;</a>
     </div>
     <div class="latest__grid">
         {% for post in press.latestNews %}
         <a class="latest__card" href="/news/{{ post.slug }}/">
-            <img class="latest__img" src="{{ post.thumb }}" alt="" loading="lazy" eleventy:ignore>
+            <img class="latest__image" src="{{ post.thumb }}" alt="" loading="lazy" eleventy:ignore>
             <div class="latest__date">{{ post.publish_date | postDate }}</div>
             <h3 class="latest__title">{{ post.title | trim }}</h3>
         </a>
@@ -105,22 +92,18 @@ barContext: "Nairobi, Kenya"
 {% endif %}
 
 {% if press.featured.length %}
-{#
-  The motif as a page rule: a main cut off at both frame edges with
-  round-capped legs dropping off it. Leg positions are the sketch's, as
-  percentages of 1440. #139 owns the real rules for where pipes may go.
-#}
-<div class="pipe" style="--pipe-h: 48px" aria-hidden="true">
-    <span class="pipe__leg pipe__leg--dn" style="--x: 17.6%; --d: 34px"></span>
-    <span class="pipe__leg pipe__leg--dn pipe__leg--wide" style="--x: 43.5%; --d: 20px"></span>
-    <span class="pipe__leg pipe__leg--dn" style="--x: 69.4%; --d: 48px"></span>
-    <span class="pipe__leg pipe__leg--dn pipe__leg--wide" style="--x: 82.4%; --d: 14px"></span>
+{# Leg positions are the sketch's, as percentages of 1440px. #}
+<div class="pipe" style="--pipe-height: 48px" aria-hidden="true">
+    <span class="pipe__leg pipe__leg--down" style="--x: 17.6%; --length: 34px"></span>
+    <span class="pipe__leg pipe__leg--down pipe__leg--wide-only" style="--x: 43.5%; --length: 20px"></span>
+    <span class="pipe__leg pipe__leg--down" style="--x: 69.4%; --length: 48px"></span>
+    <span class="pipe__leg pipe__leg--down pipe__leg--wide-only" style="--x: 82.4%; --length: 14px"></span>
 </div>
 
-<section>
-    <div class="archive-head">
-        <h2 class="sec-head__title">The 2026 edition</h2>
-        <span class="sec-head__meta">
+<section class="archive">
+    <div class="section-heading archive__heading">
+        <h2 class="section-heading__title">The 2026 edition</h2>
+        <span class="section-heading__meta">
             {{ press.counts.artists }} artists &#183;
             {{ press.counts.programmePoints }} programme points &#183; six days
         </span>
@@ -129,13 +112,13 @@ barContext: "Nairobi, Kenya"
     {% for row in press.faceRows %}
     {% if not loop.first %}
     <div class="faces-gutter" aria-hidden="true">
-        <div class="pipe pipe--gutter" style="--pipe-h: 40px">
-            <span class="pipe__leg pipe__leg--up" style="--x: 17.6%; --d: 12px"></span>
-            <span class="pipe__leg pipe__leg--dn" style="--x: 17.6%; --d: 20px"></span>
-            <span class="pipe__leg pipe__leg--up pipe__leg--wide" style="--x: 43.5%; --d: 20px"></span>
-            <span class="pipe__leg pipe__leg--dn pipe__leg--wide" style="--x: 43.5%; --d: 10px"></span>
-            <span class="pipe__leg pipe__leg--up" style="--x: 69.4%; --d: 10px"></span>
-            <span class="pipe__leg pipe__leg--dn" style="--x: 69.4%; --d: 18px"></span>
+        <div class="pipe pipe--centred" style="--pipe-height: 40px">
+            <span class="pipe__leg pipe__leg--up" style="--x: 17.6%; --length: 12px"></span>
+            <span class="pipe__leg pipe__leg--down" style="--x: 17.6%; --length: 20px"></span>
+            <span class="pipe__leg pipe__leg--up pipe__leg--wide-only" style="--x: 43.5%; --length: 20px"></span>
+            <span class="pipe__leg pipe__leg--down pipe__leg--wide-only" style="--x: 43.5%; --length: 10px"></span>
+            <span class="pipe__leg pipe__leg--up" style="--x: 69.4%; --length: 10px"></span>
+            <span class="pipe__leg pipe__leg--down" style="--x: 69.4%; --length: 18px"></span>
         </div>
     </div>
     {% endif %}
@@ -144,7 +127,7 @@ barContext: "Nairobi, Kenya"
         <a class="faces__cell {% if artist.overflow %}faces__cell--overflow{% endif %}"
            href="/2026/lineup/{{ artist.slug }}/">
             <span class="faces__frame">
-                <img class="faces__img" src="{{ artist.thumb }}" alt="{{ artist.name }}" loading="lazy" eleventy:ignore>
+                <img class="faces__image" src="{{ artist.thumb }}" alt="{{ artist.name }}" loading="lazy" eleventy:ignore>
                 <span class="faces__screen" aria-hidden="true"></span>
             </span>
             <span class="faces__name">{{ artist.name }}</span>
@@ -155,7 +138,7 @@ barContext: "Nairobi, Kenya"
 
     <div class="and-more">
         <h3 class="and-more__count">
-            And <span class="count--wide">{{ press.remaining.wide }}</span><span class="count--narrow">{{ press.remaining.narrow }}</span> more
+            And <span class="and-more__number--wide">{{ press.remaining.wide }}</span><span class="and-more__number--narrow">{{ press.remaining.narrow }}</span> more
         </h3>
         <a class="and-more__link" href="/2026/lineup/">Lineup 2026 &#8594;</a>
     </div>
@@ -163,9 +146,8 @@ barContext: "Nairobi, Kenya"
 {% endif %}
 
 {#
-  The one inversion on the page (#138: ink appears once, as a contained
-  section inside a cream page). data-invert-bar is what press.js watches to
-  flip the hairline strip's ground as it passes over.
+  The only ink on the page (#138). data-invert-bar tells press.js to turn the
+  header bar ink while it passes over this Section.
 #}
 <section class="ink-band" data-ground="ink" data-invert-bar>
     <div class="ink-band__hatch" aria-hidden="true"></div>
@@ -173,7 +155,7 @@ barContext: "Nairobi, Kenya"
         {% for card in press.archiveCards %}
         <a class="ink-card" href="{{ card.href }}">
             {% if card.image %}
-            <img class="ink-card__img" src="{{ card.image }}" alt="" loading="lazy" eleventy:ignore>
+            <img class="ink-card__image" src="{{ card.image }}" alt="" loading="lazy" eleventy:ignore>
             {% endif %}
             <span class="ink-card__head">
                 <span class="ink-card__title">{{ card.title }}</span>
@@ -191,12 +173,3 @@ barContext: "Nairobi, Kenya"
         Subscribe on Substack &#8594;
     </a>
 </div>
-
-<footer class="press-footer">
-    <span>Santuri East Africa</span>
-    <span>
-        <a href="https://www.instagram.com/kilelesummit/" target="_blank" rel="noopener noreferrer">Instagram</a> &#183;
-        <a href="https://www.youtube.com/@KileleSummit" target="_blank" rel="noopener noreferrer">YouTube</a> &#183;
-        <a href="https://kilelesummit.substack.com/" target="_blank" rel="noopener noreferrer">Substack</a>
-    </span>
-</footer>

@@ -1,0 +1,69 @@
+/*
+ * A red pipe across the page with legs dropping off it: the motif, used as a
+ * divider between Sections. The HTML sets each leg's position (--x) and
+ * length (--length), and the pipe's overall height (--pipe-height).
+ *
+ * Built from plain boxes rather than an SVG so it can stretch to any width
+ * without the pipe getting thicker.
+ */
+
+.pipe {
+    --pipe-width: 4px;
+    /* How far down the box the main pipe runs. */
+    --pipe-y: 6px;
+
+    position: relative;
+    height: var(--pipe-height, 48px);
+
+    @media (--medium) {
+        --pipe-width: 7px;
+        --pipe-y: 8px;
+    }
+}
+
+/* The main pipe. The page edges cut it off, so it has square ends. */
+.pipe::before {
+    content: "";
+    position: absolute;
+    top: var(--pipe-y);
+    right: 0;
+    left: 0;
+    height: var(--pipe-width);
+    background: var(--pipe);
+    transform: translateY(-50%);
+}
+
+/* Main pipe through the middle, legs going both up and down. */
+.pipe--centred {
+    --pipe-y: 50%;
+}
+
+.pipe__leg {
+    position: absolute;
+    left: var(--x);
+    width: var(--pipe-width);
+    background: var(--pipe);
+    transform: translateX(-50%);
+}
+
+/* Legs have a rounded end where they stop, and a square one where they meet the pipe. */
+.pipe__leg--down {
+    top: var(--pipe-y);
+    height: var(--length);
+    border-radius: 0 0 var(--pipe-width) var(--pipe-width);
+}
+
+.pipe__leg--up {
+    bottom: calc(100% - var(--pipe-y));
+    height: var(--length);
+    border-radius: var(--pipe-width) var(--pipe-width) 0 0;
+}
+
+/* Too crowded on a phone: drop these legs rather than squeeze them all in. */
+.pipe__leg--wide-only {
+    display: none;
+
+    @media (--medium) {
+        display: block;
+    }
+}

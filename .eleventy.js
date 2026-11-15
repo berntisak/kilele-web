@@ -5,6 +5,8 @@ const path = require("path");
 const { eleventyImageTransformPlugin } = require("@11ty/eleventy-img");
 const markdownIt = require("markdown-it");
 const { DateTime } = require("luxon");
+const { bundle, browserslistToTargets } = require("lightningcss");
+const browserslist = require("browserslist");
 
 /**
  * Picks the first candidate path that actually exists inside node_modules.
@@ -106,7 +108,42 @@ module.exports = function(eleventyConfig) {
         [resolveVendorScript(["node_modules/dompurify/dist/purify.min.js"])]: "scripts/purify.min.js",
     });
     
-    eleventyConfig.addPassthroughCopy("src/css/");
+    /**
+     * CSS goes through Eleventy as a template format, so each file can be
+     * handled on its own (docs/css-rules.md, rule 28):
+     *
+     * - src/css/site.css is bundled by LightningCSS: its @imports are pulled
+     *   into one minified file, the named screen cutoffs (@custom-media)
+     *   become real numbers, and nesting is flattened for older browsers.
+     * - Files in src/css/kit/ and src/css/pages/ are written nowhere. They
+     *   only reach the browser inside site.css.
+     * - The old stylesheets in src/css/ are copied as they are, until the
+     *   pages that use them are rebuilt on the kit.
+     */
+    eleventyConfig.addTemplateFormats("css");
+    eleventyConfig.addExtension("css", {
+        outputFileExtension: "css",
+        compileOptions: { cache: false },
+        compile: function (content, inputPath) {
+            const relPath = path.relative(path.join(__dirname, "src/css"), path.resolve(inputPath));
+
+            if (relPath === "site.css") {
+                return () => {
+                    const { code } = bundle({
+                        filename: path.resolve(inputPath),
+                        minify: true,
+                        targets: browserslistToTargets(browserslist()),
+                        drafts: { customMedia: true },
+                    });
+                    return code.toString();
+                };
+            }
+
+            if (relPath.includes(path.sep)) return;
+
+            return () => content;
+        },
+    });
     eleventyConfig.addWatchTarget("src/css/");
 
     
@@ -117,7 +154,7 @@ module.exports = function(eleventyConfig) {
             includes: "_includes",
             output: "_site",
         },
-        templateFormats: ['md', 'njk', 'html'],
+        templateFormats: ['md', 'njk', 'html', 'css'],
         markdownTemplateEngine: 'njk',
         htmlTemplateEngine: 'njk',
         dataTemplateEngine: 'njk',
