@@ -1,0 +1,10 @@
+/*
+ * Section: one full-width part of a page (see GLOSSARY.md). The padding sits
+ * inside the Section, so its ground fills it from edge to edge.
+ */
+
+.section {
+    padding: var(--space-8) var(--gutter);
+    background: var(--ground);
+    color: var(--text);
+}

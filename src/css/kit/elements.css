@@ -1,0 +1,9 @@
+/*
+ * Bare HTML tags (docs/css-rules.md). Only what the pages need so far.
+ */
+
+body {
+    background: var(--ground);
+    color: var(--text);
+    font-family: var(--font-body);
+}

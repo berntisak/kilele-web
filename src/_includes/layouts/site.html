@@ -34,8 +34,23 @@
     <link rel="stylesheet" href="/css/site.css">
 </head>
 <body>
+    {# The frame stays outside #swup, so it isn't swapped between pages. #}
+    <header class="header-bar">
+        <a class="header-bar__home" href="/">Kilele Summit<span class="header-bar__context"> — {{ headerContext or "Nairobi, Kenya" }}</span></a>
+        <button class="header-bar__index" type="button">Index</button>
+    </header>
+
     <div id="swup" class="page page--{{ pageName }}">
         {{ content | safe }}
     </div>
+
+    <footer class="footer-bar">
+        <span>Kilele {{ edition.year }}</span>
+        <span>
+            <a href="https://www.instagram.com/kilelesummit/" target="_blank" rel="noopener noreferrer">Instagram</a> ·
+            <a href="https://www.youtube.com/@KileleSummit" target="_blank" rel="noopener noreferrer">YouTube</a> ·
+            <a href="https://kilelesummit.substack.com/" target="_blank" rel="noopener noreferrer">Substack</a>
+        </span>
+    </footer>
 </body>
 </html>

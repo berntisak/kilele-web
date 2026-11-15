@@ -16,6 +16,12 @@ The Kit/Edition split is the spine of the design architecture: change the look =
 
 The per-Edition material authored by people and stored in Supabase via the CMS: artists, programme points / schedule, news, gallery, and the text of static pages. Content is the CMS's domain; design is not.
 
+## News
+
+The articles Kilele publishes on the site, newest first. The front page shows the newest few in its **Latest news** Section.
+
+_Avoid:_ dispatches, posts.
+
 ## Stage
 
 Where an Edition is in its yearly life, as far as the front page is concerned. Every Edition passes through four Stages, in order:
@@ -35,12 +41,40 @@ One full-width horizontal part of a page, stacked top to bottom (e.g. the theme,
 
 _Avoid:_ band — at a music festival it reads as a musical act.
 
+## Edition title
+
+The Section at the top of the front page that shows the logo with the current Edition's year. It is the same in every Stage; the Lead section below it is what changes.
+
+_Avoid:_ masthead, hero.
+
 ## Lead section
 
 The top Section of the front page — the part that changes with the Stage, so the page leads with what matters at that point in the Edition's life.
+
+## Previous edition
+
+The Section of the front page that points back to the Edition before the current one: its lineup, schedule and gallery.
+
+## Upcoming edition
+
+The Section of the front page that presents the current Edition's theme while its festival is still ahead. Once the festival has happened, it disappears.
+
+_Avoid:_ next edition (the current Edition is meant, not the one after it).
 
 ## Ground
 
 The surface colour a Section is set on: **cream** (the warm off-white, the default) or **ink** (the near-black). Everything on a Section takes its colours from its Ground, so an ink Section flips to light text by itself.
 
 _Avoid:_ background (too general), theme, dark mode.
+
+## Header bar
+
+The thin strip at the top of every page: the way home on the left, with a few words saying where you are, and the button that opens the index on the right. One of only two things every page shares.
+
+_Avoid:_ press bar, nav, menu bar.
+
+## Footer bar
+
+The strip at the bottom of every page, the other thing every page shares.
+
+_Avoid:_ press footer.

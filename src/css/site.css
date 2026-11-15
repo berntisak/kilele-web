@@ -8,3 +8,10 @@
 @import "kit/type.css";
 @import "kit/spacing.css";
 @import "kit/reset.css";
+@import "kit/elements.css";
+
+@import "kit/components/header-bar.css";
+@import "kit/components/footer-bar.css";
+@import "kit/components/section.css";
+
+@import "pages/home.css";
