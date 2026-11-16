@@ -96,3 +96,15 @@ _Avoid:_ menu, nav, hamburger.
 The Section at the foot of every page, just above the footer bar, showing the logos of the festival's partners and funders. Not shown on the Partners page itself.
 
 _Avoid:_ partners footer (it is a Section, not part of the footer bar).
+
+## Title block
+
+The part of a text page that introduces it: the logo, the page title and, when the page has sections, the contents list. On a phone it sits above the text; on a wide screen it is the left column and stays in view while the text scrolls.
+
+_Avoid:_ rail, masthead, sidebar (each describes only one of its two positions, or is unclear).
+
+## Contents list
+
+The numbered list of a text page's sections, inside the title block, each line a link that jumps to that section. Only section headings appear in it, never the smaller lead-ins.
+
+_Avoid:_ table of contents, TOC, menu.

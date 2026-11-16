@@ -1,0 +1,163 @@
+/*
+ * The CMS text pages (src/pages/static.html): What is Kilele, Practical,
+ * Code of Conduct, FAQ, Contact, the Themes and Proposal Guidelines.
+ */
+
+.page--static {
+    /* Wide screens: the title block on the left, the text on the right. */
+    .static-page {
+        @media (--large) {
+            display: grid;
+            grid-template-columns: 24rem minmax(0, 65ch);
+            column-gap: var(--space-7);
+            align-items: start;
+        }
+    }
+
+    /* PLACEHOLDER: a stand-in size until the designer delivers proper logo sizes. */
+    .static-page__logo {
+        width: 9rem;
+    }
+
+    /* Wide screens: the logo and title stay in view beside a long text. */
+    .static-page__title-block {
+        margin-bottom: var(--space-7);
+
+        @media (--large) {
+            position: sticky;
+            top: var(--space-6);
+        }
+    }
+
+    /* Anton has one weight; asking for bold would make the browser fake it. */
+    .static-page__title {
+        font-family: var(--font-display);
+        font-size: var(--text-7);
+        font-weight: var(--weight-normal);
+        line-height: var(--line-height-tight);
+        margin-top: var(--space-6);
+    }
+
+    /* The contents list: numbered links to the page's sections. */
+    .static-page__contents {
+        margin-top: var(--space-6);
+    }
+
+    .static-page__contents ol {
+        margin: 0;
+        padding: var(--space-4) 0 0;
+        border-top: 1px solid var(--rule);
+        list-style: none;
+        counter-reset: section;
+        font-family: var(--font-mono);
+        font-size: var(--text-3);
+        text-transform: uppercase;
+    }
+
+    .static-page__contents li {
+        display: grid;
+        grid-template-columns: 2.5rem 1fr;
+        padding-block: var(--space-1);
+        counter-increment: section;
+    }
+
+    .static-page__contents li::before {
+        content: counter(section, decimal-leading-zero);
+        color: var(--pipe);
+        font-variant-numeric: tabular-nums;
+    }
+
+    .static-page__contents a {
+        color: inherit;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    /* Lines stay near 65 characters, a comfortable reading length.
+       The left border is the main pipe (PLACEHOLDER, see kit/pipes.css). */
+    .static-page__body {
+        position: relative;
+        max-width: 65ch;
+        font-size: var(--text-4);
+        line-height: var(--line-height-normal);
+        padding-left: var(--space-6);
+        border-left: var(--pipe-width) solid var(--pipe);
+    }
+
+    /* The CMS text has no classes, so every block after the first gets the same gap. */
+    .static-page__body > * + * {
+        margin-top: var(--space-5);
+    }
+
+    /* Headings sit closer to the text they introduce than to the text before them. */
+    .static-page__body > * + h2 {
+        margin-top: var(--space-7);
+    }
+
+    .static-page__body > * + h3 {
+        margin-top: var(--space-6);
+    }
+
+    .static-page__body > :is(h2, h3) + * {
+        margin-top: var(--space-2);
+    }
+
+    .static-page__body h2 {
+        font-family: var(--font-display);
+        font-size: var(--text-6);
+        font-weight: var(--weight-normal);
+        line-height: var(--line-height-snug);
+        scroll-margin-top: var(--space-6);
+    }
+
+    /* A bold lead-in at text size: the FAQ's questions and Code of Conduct's sub-points. */
+    .static-page__body h3 {
+        font-size: var(--text-5);
+        font-weight: var(--weight-bold);
+    }
+
+    /* A tee: a short pipe from the main pipe into each heading.
+       PLACEHOLDER pipe graphics, see kit/pipes.css. */
+    .static-page__body :is(h2, h3) {
+        position: relative;
+    }
+
+    .static-page__body :is(h2, h3)::before {
+        content: "";
+        position: absolute;
+        top: calc(0.5lh - var(--pipe-width) / 2);
+        left: calc(-1 * var(--space-6));
+        width: var(--space-5);
+        height: var(--pipe-width);
+        background: var(--pipe);
+    }
+
+    /* A flange caps each section heading's tee, like the collars on the logo's pipes.
+       PLACEHOLDER: likely replaced by the designer's own graphic. */
+    .static-page__body h2::after {
+        content: "";
+        position: absolute;
+        top: calc(0.5lh - var(--pipe-width) / 2 - var(--flange-overhang));
+        left: calc(-1 * var(--space-6) + var(--space-5) - var(--flange-width));
+        width: var(--flange-width);
+        height: calc(var(--pipe-width) + 2 * var(--flange-overhang));
+        background: var(--pipe);
+    }
+
+    /* A valve wheel closes the pipe at the end of the text, like the logo's tittle.
+       PLACEHOLDER: likely replaced by the designer's own graphic. */
+    .static-page__body::after {
+        content: "";
+        position: absolute;
+        bottom: calc(-1 * var(--valve-size) / 2);
+        left: calc(-1 * (var(--pipe-width) + var(--valve-size)) / 2);
+        width: var(--valve-size);
+        height: var(--valve-size);
+        border: var(--flange-width) solid var(--pipe);
+        border-radius: 50%;
+        background: var(--ground);
+    }
+}

@@ -13,5 +13,5 @@
     --space-8: 5rem; /* 80px */
 
     /* The left and right margin of every Section. */
-    --gutter: 15vw;
+    --gutter: clamp(1.5rem, 8vw, 10rem);
 }

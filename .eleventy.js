@@ -45,6 +45,20 @@ module.exports = function(eleventyConfig) {
         html = html.replace(/<p>\s*((?:<img[^>]*>\s*)+)<\/p>/gi, '$1');
         return html;
     });
+    // Gives every h2 an id made from its text ("Visa (eTA)" becomes "visa-eta"),
+    // so the contents list, and anyone sharing a link, can jump straight to it.
+    eleventyConfig.addFilter("sectionIds", (html) => {
+        const slugify = eleventyConfig.getFilter("slugify");
+        return (html || "").replace(/<h2>(.*?)<\/h2>/g, (match, text) => {
+            const id = slugify(text.replace(/<[^>]+>/g, ""));
+            return `<h2 id="${id}">${text}</h2>`;
+        });
+    });
+    // Lists a page's sections (each h2 and its id) for the contents list.
+    eleventyConfig.addFilter("sections", (html) => {
+        const found = (html || "").matchAll(/<h2 id="(.*?)">(.*?)<\/h2>/g);
+        return [...found].map(([match, id, text]) => ({ id, text: text.replace(/<[^>]+>/g, "") }));
+    });
     eleventyConfig.addFilter("postDate", (dateObj) => {
         return DateTime.fromISO(dateObj).toLocaleString(DateTime.DATE_MED);
     });
