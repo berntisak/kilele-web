@@ -55,6 +55,14 @@ select {
     font-size: inherit;
 }
 
+button {
+    padding: 0;
+    border: none;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+}
+
 textarea:not([rows]) {
     min-height: 10em;
 }

@@ -12,6 +12,7 @@
 
 @import "kit/components/header-bar.css";
 @import "kit/components/footer-bar.css";
+@import "kit/components/site-index.css";
 @import "kit/components/section.css";
 
 @import "pages/home.css";

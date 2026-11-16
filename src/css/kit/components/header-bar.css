@@ -1,7 +1,11 @@
 /*
  * Header bar: the strip at the top of every page. Home link and page
- * context on the left, the index button on the right (#143). Bare for now;
- * the index and how the bar behaves are decided in the Site frame ticket (#184).
+ * context on the left, the index button on the right (#143).
+ *
+ * It scrolls away with the page: it is not pinned and never turns ink (#184).
+ * Revisit this when the pages are closer to finished. If scrolling back
+ * up to reach INDEX feels like a chore on long pages, pin it by adding
+ * `position: sticky; top: 0;` to .header-bar below.
  */
 
 .header-bar {
@@ -30,5 +34,4 @@
 .header-bar__index {
     font: inherit;
     text-transform: inherit;
-    color: inherit;
 }

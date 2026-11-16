@@ -40,9 +40,17 @@
         <button class="header-bar__index" type="button">Index</button>
     </header>
 
+    {% include "site-index.html" %}
+
     <div id="swup" class="page page--{{ pageName }}">
         {{ content | safe }}
     </div>
+
+    {% if not hidePartnersFooter %}
+    <section class="section partners">
+        <p>Partners: the logos of the festival's partners and funders</p>
+    </section>
+    {% endif %}
 
     <footer class="footer-bar">
         <span>Kilele {{ edition.year }}</span>
@@ -52,5 +60,8 @@
             <a href="https://kilelesummit.substack.com/" target="_blank" rel="noopener noreferrer">Substack</a>
         </span>
     </footer>
+
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script src="/scripts/site-index.js" defer></script>
 </body>
 </html>

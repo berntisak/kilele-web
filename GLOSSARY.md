@@ -69,12 +69,30 @@ _Avoid:_ background (too general), theme, dark mode.
 
 ## Header bar
 
-The thin strip at the top of every page: the way home on the left, with a few words saying where you are, and the button that opens the index on the right. One of only two things every page shares.
+The thin strip at the top of every page: the way home on the left, with a few words saying where you are, and the button that opens the index on the right. Part of the **frame** every page shares.
 
 _Avoid:_ press bar, nav, menu bar.
 
 ## Footer bar
 
-The strip at the bottom of every page, the other thing every page shares.
+The strip at the bottom of every page: the Edition's year and Kilele's social channels. Part of the frame.
 
 _Avoid:_ press footer.
+
+## Frame
+
+What every page shares, around its own content: the header bar, the index, the Partners section and the footer bar.
+
+_Avoid:_ chrome, shell, template.
+
+## Index
+
+The full-screen list of the site's pages that opens from the header bar's INDEX button, in groups, with the real number of items behind some of them.
+
+_Avoid:_ menu, nav, hamburger.
+
+## Partners section
+
+The Section at the foot of every page, just above the footer bar, showing the logos of the festival's partners and funders. Not shown on the Partners page itself.
+
+_Avoid:_ partners footer (it is a Section, not part of the footer bar).
