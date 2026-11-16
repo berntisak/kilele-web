@@ -1,0 +1,439 @@
+/*
+ * PROTOTYPE — throwaway (#190). Rough styles for the three static-page
+ * variants in _includes/static-variants.prototype.html. Not part of the kit.
+ */
+
+.pv[hidden] {
+    display: none !important;
+}
+
+.pv {
+    --pipe-w: 12px;
+    font-size: var(--text-4);
+    line-height: var(--line-height-normal);
+}
+
+/* Shared rough body text, same as the real page so far. */
+.pv [data-body] > * + * {
+    margin-top: var(--space-5);
+}
+.pv [data-body] > * + h2 {
+    margin-top: var(--space-7);
+}
+.pv [data-body] > * + h3 {
+    margin-top: var(--space-6);
+}
+.pv [data-body] > :is(h2, h3) + * {
+    margin-top: var(--space-2);
+}
+.pv [data-body] h2 {
+    font-family: var(--font-display);
+    font-size: var(--text-6);
+    font-weight: 400;
+    line-height: var(--line-height-snug);
+}
+.pv [data-body] h3 {
+    font-size: var(--text-5);
+    font-weight: 700;
+}
+.pv img {
+    height: auto;
+}
+
+.pv [data-body] iframe {
+    max-width: 100%;
+}
+
+/* ---------- A · Riser ---------- */
+
+.pv-a {
+    display: grid;
+    gap: var(--space-7);
+    padding: var(--space-7) var(--space-5) var(--space-8);
+}
+
+.pv-a__logo {
+    width: 9rem;
+}
+
+.pv-a__title {
+    margin-top: var(--space-6);
+    font-family: var(--font-display);
+    font-size: var(--text-7);
+    font-weight: 400;
+    line-height: var(--line-height-tight);
+}
+
+.pv-a__toc {
+    display: none;
+}
+
+/* The pipe is the body's left border; each heading tees off it. */
+.pv-a__body {
+    position: relative;
+    max-width: 65ch;
+    padding-left: var(--space-6);
+    padding-bottom: var(--space-7);
+    border-left: var(--pipe-w) solid var(--red);
+}
+
+.pv-a__body :is(h2, h3) {
+    position: relative;
+}
+
+.pv-a__body :is(h2, h3)::before {
+    content: "";
+    position: absolute;
+    top: 0.45em;
+    left: calc(-1 * var(--space-6));
+    width: calc(var(--space-6) - var(--space-3));
+    height: var(--pipe-w);
+    background: var(--red);
+}
+
+.pv-a__body h2::after {
+    content: "";
+    position: absolute;
+    top: calc(0.45em - 6px);
+    left: calc(-1 * var(--space-3) - 6px);
+    width: 6px;
+    height: calc(var(--pipe-w) + 12px);
+    background: var(--red);
+}
+
+/* A valve wheel closes the pipe at the bottom, like the logo's tittle. */
+.pv-a__body::after {
+    content: "";
+    position: absolute;
+    bottom: -14px;
+    left: calc(-1 * var(--pipe-w) / 2 - 14px);
+    width: 28px;
+    height: 28px;
+    border: 5px solid var(--red);
+    border-radius: 50%;
+    background: var(--cream);
+}
+
+@media (min-width: 900px) {
+    .pv-a {
+        grid-template-columns: minmax(14rem, 22rem) minmax(0, 65ch);
+        gap: var(--space-8);
+        padding: var(--space-8) var(--space-7);
+    }
+
+    .pv-a__rail {
+        position: sticky;
+        top: var(--space-6);
+        align-self: start;
+    }
+
+    .pv-a__title {
+        font-size: var(--text-7);
+    }
+
+    .pv-a__toc {
+        display: block;
+        margin: var(--space-6) 0 0;
+        padding: var(--space-4) 0 0;
+        border-top: 1px solid var(--rule);
+        list-style: none;
+        counter-reset: toc;
+        font-family: var(--font-mono);
+        font-size: var(--text-3);
+        text-transform: uppercase;
+    }
+
+    .pv-a__toc li {
+        counter-increment: toc;
+        display: grid;
+        grid-template-columns: 2.5rem 1fr;
+        padding: var(--space-1) 0;
+    }
+
+    .pv-a__toc li::before {
+        content: counter(toc, decimal-leading-zero);
+        color: var(--red);
+        font-variant-numeric: tabular-nums;
+    }
+
+    .pv-a__toc a {
+        color: inherit;
+        text-decoration: none;
+    }
+}
+
+/* ---------- B · Document ---------- */
+
+.pv-b {
+    position: relative;
+    padding: var(--space-6) var(--space-5) var(--space-8);
+    counter-reset: h2;
+}
+
+.pv-b__meta {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 0;
+    border-top: 2px solid var(--ink);
+    font-family: var(--font-mono);
+    font-size: var(--text-2);
+    text-transform: uppercase;
+}
+
+.pv-b__meta div {
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--ink);
+}
+
+.pv-b__meta dt {
+    color: var(--text-muted);
+}
+
+.pv-b__meta dd {
+    margin: 0;
+    font-weight: 700;
+}
+
+.pv-b__title {
+    margin-top: var(--space-6);
+    font-family: var(--font-display);
+    font-size: var(--text-8);
+    font-weight: 400;
+    line-height: 0.88;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+}
+
+/* The main pipe runs under the title, with a flange every 160px, and meets
+   the downcomer (the sheet's right border) on wide screens. */
+.pv-b__main {
+    position: relative;
+    height: var(--pipe-w);
+    margin: var(--space-6) 0 var(--space-7) calc(-1 * var(--space-5));
+    background: var(--red);
+}
+
+.pv-b__main::before {
+    content: "";
+    position: absolute;
+    inset: -5px 0;
+    background: repeating-linear-gradient(90deg, transparent 0 152px, var(--red) 152px 160px);
+}
+
+.pv-b__body {
+    max-width: 65ch;
+}
+
+.pv-b__body h2 {
+    counter-increment: h2;
+    counter-reset: h3;
+}
+
+.pv-b__body h2::before {
+    content: "§" counter(h2, decimal-leading-zero);
+    display: block;
+    margin-bottom: var(--space-1);
+    color: var(--red);
+    font-family: var(--font-mono);
+    font-size: var(--text-3);
+    font-weight: 700;
+}
+
+.pv-b__body h3 {
+    counter-increment: h3;
+}
+
+.pv-b__body h3::before {
+    content: counter(h2) "." counter(h3) "  ";
+    color: var(--red);
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    white-space: pre;
+}
+
+.pv-b__end {
+    max-width: 65ch;
+    margin-top: var(--space-8);
+    padding-top: var(--space-3);
+    border-top: 2px solid var(--ink);
+    font-family: var(--font-mono);
+    font-size: var(--text-2);
+    text-transform: uppercase;
+}
+
+@media (min-width: 900px) {
+    .pv-b {
+        padding: var(--space-7) var(--space-6) var(--space-8) var(--space-7);
+    }
+
+    .pv-b__meta {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    .pv-b__main {
+        margin-left: calc(-1 * var(--space-7));
+    }
+
+    /* the downcomer: the sheet's right border, fed by the main */
+    .pv-b__sheet {
+        border-right: var(--pipe-w) solid var(--red);
+    }
+
+    /* numbers hang in the left margin */
+    .pv-b__body,
+    .pv-b__end {
+        margin-left: 12rem;
+    }
+
+    .pv-b__body h2::before {
+        position: absolute;
+        margin-left: -12rem;
+        margin-top: 0.4em;
+        font-size: var(--text-4);
+    }
+
+    .pv-b__body h2 {
+        position: relative;
+    }
+
+    .pv-b__body h3::before {
+        position: absolute;
+        margin-left: -5rem;
+    }
+}
+
+/* ---------- C · Masthead ---------- */
+
+.pv-c__mast {
+    display: grid;
+    gap: var(--space-6);
+    padding: var(--space-7) var(--space-5) var(--space-7);
+    background: var(--ground);
+    color: var(--text);
+}
+
+.pv-c__logo {
+    width: 10rem;
+}
+
+.pv-c__kicker {
+    font-family: var(--font-mono);
+    font-size: var(--text-2);
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.pv-c__title {
+    margin-top: var(--space-2);
+    font-family: var(--font-display);
+    font-size: var(--text-6);
+    font-weight: 400;
+    line-height: var(--line-height-snug);
+    text-transform: uppercase;
+}
+
+.pv-c__layout {
+    position: relative;
+    display: grid;
+    gap: var(--space-6);
+    padding: var(--space-6) var(--space-5) var(--space-8);
+}
+
+.pv-c__body {
+    position: relative;
+    max-width: 65ch;
+    padding: var(--space-7) 0 0 var(--space-6);
+    border-left: var(--pipe-w) solid var(--red);
+}
+
+/* The main comes in from off the left edge, under the masthead, and
+   elbows down into the text column's left border. */
+.pv-c__body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 100%;
+    width: 100vw;
+    height: var(--pipe-w);
+    background: var(--red);
+}
+
+.pv-c {
+    overflow-x: clip;
+}
+
+.pv-c__sticker {
+    display: none;
+}
+
+@media (min-width: 900px) {
+    .pv-c__mast {
+        grid-template-columns: 1fr 1fr;
+        align-items: end;
+        min-height: 22rem;
+        padding: var(--space-7);
+    }
+
+    .pv-c__logo {
+        width: 18rem;
+    }
+
+    .pv-c__heading {
+        justify-self: end;
+        max-width: 28rem;
+        text-align: right;
+    }
+
+    .pv-c__title {
+        font-size: var(--text-7);
+        line-height: var(--line-height-tight);
+    }
+
+    .pv-c__layout {
+        grid-template-columns: 1fr minmax(0, 65ch);
+        padding: 0 var(--space-7) var(--space-8);
+        column-gap: var(--space-7);
+    }
+
+    .pv-c__sticker {
+        display: block;
+        position: sticky;
+        top: var(--space-6);
+        align-self: start;
+        justify-self: end;
+        margin-top: var(--space-7);
+        padding: var(--space-3) var(--space-4);
+        transform: rotate(-4deg);
+        background: var(--yellow);
+        color: var(--ink);
+        font-family: var(--font-display);
+        font-size: var(--text-6);
+        line-height: var(--line-height-tight);
+        text-transform: uppercase;
+        text-align: center;
+    }
+}
+
+/* ---------- Switcher ---------- */
+
+.pv-switcher {
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 14px;
+    transform: translateX(-50%);
+    border-radius: 999px;
+    background: #ff00aa;
+    color: #fff;
+    font: 600 13px/1 system-ui, sans-serif;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 0.3);
+}
+
+.pv-switcher button {
+    font-size: 18px;
+    color: #fff;
+}

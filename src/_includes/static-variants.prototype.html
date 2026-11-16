@@ -1,0 +1,108 @@
+{#
+  PROTOTYPE — throwaway (#190). Three rough variants of the static page,
+  switched with ?variant=A|B|C and the bar at the bottom. Without a variant
+  the real page shows. Only rendered by the dev server, never by a build.
+#}
+{% if eleventy.env.runMode == "serve" %}
+{% set pvBody = staticPage.content | markdown | sanitize %}
+<link rel="stylesheet" href="/css/prototype/static-variants.css">
+
+{# A · Riser: a rail on the left, a pipe down the text with a tee at every heading #}
+<section class="pv pv-a" data-variant="A" hidden>
+    <aside class="pv-a__rail">
+        <a href="/"><img class="pv-a__logo" src="/assets/logos/Kilele-2027-Logo_Primary.png" alt="Kilele 27"></a>
+        <h1 class="pv-a__title">{{ staticPage.title }}</h1>
+        <ol class="pv-a__toc" data-toc></ol>
+    </aside>
+    <div class="pv-a__body" data-body>{{ pvBody | safe }}</div>
+</section>
+
+{# B · Document: an official, numbered document with a metadata header #}
+<section class="pv pv-b" data-variant="B" hidden>
+    <header class="pv-b__head">
+        <dl class="pv-b__meta">
+            <div><dt>Doc. no.</dt><dd>KS-27/{{ staticPage.slug | upper }}</dd></div>
+            <div><dt>Edition</dt><dd>{{ edition.year }}</dd></div>
+            <div><dt>Sections</dt><dd data-count-sections>—</dd></div>
+            <div><dt>Reading time</dt><dd data-count-minutes>—</dd></div>
+            <div><dt>Status</dt><dd>In force</dd></div>
+        </dl>
+        <h1 class="pv-b__title">{{ staticPage.title }}</h1>
+    </header>
+    <div class="pv-b__sheet">
+        <div class="pv-b__main" aria-hidden="true"></div>
+        <div class="pv-b__body" data-body>{{ pvBody | safe }}</div>
+        <p class="pv-b__end">End of document. <span data-count-words>—</span> words. Kilele Summit, Nairobi.</p>
+    </div>
+</section>
+
+{# C · Masthead: an ink masthead, logo left and a smaller title right; a pipe drops into the text #}
+<section class="pv pv-c" data-variant="C" hidden>
+    <header class="pv-c__mast" data-ground="ink">
+        <a href="/"><img class="pv-c__logo" src="/assets/logos/Kilele-2027-Logo_White.png" alt="Kilele 27"></a>
+        <div class="pv-c__heading">
+            <p class="pv-c__kicker">{{ headerContext }} /</p>
+            <h1 class="pv-c__title">{{ staticPage.title }}</h1>
+        </div>
+    </header>
+    <div class="pv-c__layout">
+        <p class="pv-c__sticker">Please read<br>in full</p>
+        <div class="pv-c__body" data-body>{{ pvBody | safe }}</div>
+    </div>
+</section>
+
+<nav class="pv-switcher" aria-label="Prototype variants">
+    <button type="button" data-step="-1" aria-label="Previous variant">←</button>
+    <span data-label></span>
+    <button type="button" data-step="1" aria-label="Next variant">→</button>
+</nav>
+
+<script>
+(function () {
+    var keys = ["0", "A", "B", "C"];
+    var names = { "0": "Current page", A: "Riser", B: "Document", C: "Masthead" };
+    var real = document.querySelector(".static-page");
+    var label = document.querySelector(".pv-switcher [data-label]");
+
+    // Fill in the counts and the table of contents once.
+    document.querySelectorAll(".pv [data-body]").forEach(function (body) {
+        var heads = body.querySelectorAll("h2");
+        if (!heads.length) heads = body.querySelectorAll("h3");
+        var words = body.textContent.trim().split(/\s+/).length;
+        var pv = body.closest(".pv");
+        var toc = pv.querySelector("[data-toc]");
+        heads.forEach(function (h, i) {
+            var id = pv.dataset.variant + "-" + (i + 1);
+            h.id = id;
+            if (toc) toc.insertAdjacentHTML("beforeend", '<li><a href="#' + id + '">' + h.textContent + "</a></li>");
+        });
+        var set = function (sel, v) { var el = pv.querySelector(sel); if (el) el.textContent = v; };
+        set("[data-count-sections]", String(heads.length).padStart(2, "0"));
+        set("[data-count-minutes]", Math.max(1, Math.round(words / 230)) + " min");
+        set("[data-count-words]", words.toLocaleString("en"));
+    });
+
+    function show(key) {
+        if (keys.indexOf(key) < 0) key = "0";
+        real.hidden = key !== "0";
+        document.querySelectorAll(".pv").forEach(function (v) { v.hidden = v.dataset.variant !== key; });
+        label.textContent = key + " · " + names[key];
+        var url = new URL(location.href);
+        if (key === "0") url.searchParams.delete("variant"); else url.searchParams.set("variant", key);
+        history.replaceState(null, "", url);
+        return key;
+    }
+
+    var current = show(new URLSearchParams(location.search).get("variant") || "0");
+    function step(d) { current = show(keys[(keys.indexOf(current) + d + keys.length) % keys.length]); }
+    document.querySelectorAll(".pv-switcher [data-step]").forEach(function (b) {
+        b.addEventListener("click", function () { step(+b.dataset.step); });
+    });
+    document.addEventListener("keydown", function (e) {
+        if (e.target.closest("input, textarea, [contenteditable]")) return;
+        if (e.key === "ArrowLeft") step(-1);
+        if (e.key === "ArrowRight") step(1);
+    });
+})();
+</script>
+{% endif %}

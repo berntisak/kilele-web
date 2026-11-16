@@ -1,0 +1,53 @@
+/*
+ * The CMS text pages (src/pages/static.html): What is Kilele, Practical,
+ * Code of Conduct, FAQ, Contact, the Themes and Proposal Guidelines.
+ */
+
+.page--static {
+    /* Anton has one weight; asking for bold would make the browser fake it. */
+    .static-page__title {
+        font-family: var(--font-display);
+        font-size: var(--text-7);
+        font-weight: var(--weight-normal);
+        line-height: var(--line-height-tight);
+        margin-bottom: var(--space-7);
+    }
+
+    /* Keeps lines near 65 characters, a comfortable reading length. */
+    .static-page__body {
+        max-width: 65ch;
+        font-size: var(--text-4);
+        line-height: var(--line-height-normal);
+    }
+
+    /* The CMS text has no classes, so every block after the first gets the same gap. */
+    .static-page__body > * + * {
+        margin-top: var(--space-5);
+    }
+
+    /* Headings sit closer to the text they introduce than to the text before them. */
+    .static-page__body > * + h2 {
+        margin-top: var(--space-7);
+    }
+
+    .static-page__body > * + h3 {
+        margin-top: var(--space-6);
+    }
+
+    .static-page__body > :is(h2, h3) + * {
+        margin-top: var(--space-2);
+    }
+
+    .static-page__body h2 {
+        font-family: var(--font-display);
+        font-size: var(--text-6);
+        font-weight: var(--weight-normal);
+        line-height: var(--line-height-snug);
+    }
+
+    /* A bold lead-in at text size: the FAQ's questions and Code of Conduct's sub-points. */
+    .static-page__body h3 {
+        font-size: var(--text-5);
+        font-weight: var(--weight-bold);
+    }
+}
