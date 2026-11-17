@@ -1,0 +1,53 @@
+/*
+ * PROTOTYPE — throwaway (#192). Rough styles for the two artist-page heads.
+ * Copied as-is (not bundled), so plain media queries: 600 / 900px.
+ * Nothing here enters the kit or the page without discussion.
+ */
+
+.pv[hidden],
+[data-pv-real][hidden] { display: none !important; }
+
+/* ---------- A · Document head ---------- */
+
+/* The head runs across both columns, like the lineup's. */
+.pv-a__head {
+    grid-column: 1 / -1;
+    margin-bottom: var(--space-3);
+}
+
+/* ---------- C · Plumbed portrait ---------- */
+
+/* The main runs across the top of the page, over both columns. */
+.pv-c__main { grid-column: 1 / -1; }
+
+.pv-c__figure {
+    position: relative;
+    margin: 0;
+}
+
+/* A short downcomer from the main into the portrait's top edge. */
+.pv-c__downcomer {
+    position: absolute;
+    bottom: 100%;
+    left: 22%;
+    height: var(--space-6);
+}
+
+/* The collar where the downcomer meets the portrait. */
+.pv-c__downcomer .pipe__collar {
+    bottom: calc(-1 * var(--flange-overhang));
+    left: calc(-1 * var(--flange-overhang));
+}
+
+.pv-c__caption { margin-top: var(--space-2); }
+
+/* ---------- the switcher bar ---------- */
+
+.pv-switcher {
+    position: fixed; bottom: 16px; left: 50%; z-index: 100;
+    display: flex; align-items: center; gap: 12px; padding: 8px 14px;
+    transform: translateX(-50%); border-radius: 999px;
+    background: #ff00aa; color: #fff; font: 600 13px/1 system-ui, sans-serif;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 0.3);
+}
+.pv-switcher button { font-size: 18px; color: #fff; background: none; border: 0; cursor: pointer; }

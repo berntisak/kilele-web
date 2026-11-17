@@ -21,9 +21,12 @@
 @import "kit/components/section-head.css";
 @import "kit/components/stats-bar.css";
 @import "kit/components/page-title.css";
+@import "kit/components/meta.css";
+@import "kit/components/pager.css";
 
 @import "pages/home.css";
 @import "pages/static.css";
 @import "pages/news.css";
 @import "pages/news-article.css";
 @import "pages/lineup.css";
+@import "pages/artist.css";

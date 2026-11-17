@@ -23,7 +23,7 @@ eleventyComputed:
     {% set words = post.content | wordcount %}
     {% set minutes = (words / 230) | round(0, "ceil") %}
     <header class="section news-article__band" data-ground="ink">
-        <p class="news-article__meta">
+        <p class="meta">
             News no. {{ number }} ·
             <time datetime="{{ post.publish_date }}">{{ post.publish_date.slice(0, 10) }}</time> ·
             {{ minutes or 1 }} min
@@ -39,20 +39,20 @@ eleventyComputed:
             <div class="content">
                 {{ post.content | markdown | sanitize | safe }}
             </div>
-            <p class="news-article__end">End of news no. {{ number }}. {{ words }} words.</p>
+            <p class="news-article__end meta">End of news no. {{ number }}. {{ words }} words.</p>
         </div>
         <div class="pipe news-article__return">
             <span class="pipe__collar"></span>
             <span class="pipe__valve"></span>
         </div>
     </div>
-    <nav class="section news-article__pager" aria-label="More news">
+    <nav class="section news-article__pager pager" aria-label="More news">
         {% if pagination.href.previous %}
-        <a class="news-article__newer" href="{{ pagination.href.previous }}">← Newer</a>
+        <a class="pager__previous" href="{{ pagination.href.previous }}">← Newer</a>
         {% endif %}
-        <a class="news-article__all" href="/news/">All news</a>
+        <a class="pager__all" href="/news/">All news</a>
         {% if pagination.href.next %}
-        <a class="news-article__older" href="{{ pagination.href.next }}">Older →</a>
+        <a class="pager__next" href="{{ pagination.href.next }}">Older →</a>
         {% endif %}
     </nav>
 </article>
