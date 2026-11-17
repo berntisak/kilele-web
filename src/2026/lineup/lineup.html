@@ -1,10 +1,12 @@
 ---
-layout: layouts/base.html
+layout: layouts/site.html
+pageName: lineup
+headerContext: Lineup 2026
 title: Line-up
 description: "Line-up"
 ---
 
-<div class="content__container">
+<div class="section" data-pv-real>
     <h1>Lineup Kilele 2026</h1>
 
   <div class="lineup-letter-nav">
@@ -68,6 +70,10 @@ description: "Line-up"
     {% endfor %}
   </div>
 </div>
+
+
+{# PROTOTYPE — throwaway (#192): remove this line with the variants. #}
+{% include "lineup-list-variants.prototype.html" %}
 
 
 <!--

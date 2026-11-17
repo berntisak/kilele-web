@@ -1,0 +1,140 @@
+{#
+  PROTOTYPE — throwaway (#192). Three rough variants of the lineup list, each
+  paired with the artist-page variant of the same letter. Switched with
+  ?variant=A|B|C and the bar at the bottom. Only rendered by the dev server.
+  Artist numbers follow the A–Z order of the data (001 = first), so list and
+  artist page agree. Portraits go through Supabase's resize endpoint
+  (/render/image/), since /object/ ignores ?width= (#141).
+#}
+{% if eleventy.env.runMode == "serve" %}
+<link rel="stylesheet" href="/css/prototype/lineup-variants.css">
+
+{# Group the artists by first letter, keeping each one's number. #}
+{% set groups = [] %}
+{% for artist in lineup %}
+    {% set c = (artist.name | trim)[0] | upper %}
+    {% set letter = c if (c >= "A" and c <= "Z") else "#" %}
+    {% if not groups.length or groups[groups.length - 1].letter != letter %}
+        {% set ignore = groups.push({ letter: letter, artists: [] }) %}
+    {% endif %}
+    {% set ignore = groups[groups.length - 1].artists.push({ artist: artist, no: ("00" ~ loop.index).slice(-3) }) %}
+{% endfor %}
+{% set total = lineup | length %}
+{% set withPhoto = lineup | selectattr("photo_path") | length %}
+{% set resize = "/storage/v1/render/image/public/" %}
+
+{# ---------------------------------------------------------------- #}
+{# A · Contact sheet: faces first, a dense grid of square portraits #}
+<section class="section pv pv-a" data-variant="A" hidden>
+    <header class="pv-head">
+        <dl class="pv-stats">
+            <div><dt>Artists</dt><dd>{{ total }}</dd></div>
+            <div><dt>Portraits</dt><dd>{{ withPhoto }}</dd></div>
+            <div><dt>Edition</dt><dd>2026</dd></div>
+            <div><dt>Order</dt><dd>A–Z</dd></div>
+        </dl>
+        <h1 class="pv-title">Lineup 2026</h1>
+        <div class="pipe" aria-hidden="true"></div>
+    </header>
+    <nav class="pv-letters" aria-label="Jump to letter">
+        {% for g in groups %}<a href="#a-{{ g.letter }}">{{ g.letter }}</a>{% endfor %}
+    </nav>
+    {% for g in groups %}
+    <div class="pv-a__group" id="a-{{ g.letter }}">
+        <h2 class="pv-a__letter">{{ g.letter }} <span class="pv-mono pv-muted">{{ g.artists.length }}</span></h2>
+        <ol class="pv-a__grid">
+            {% for item in g.artists %}
+            <li>
+                <a class="pv-a__tile" href="/2026/lineup/{{ item.artist.slug }}/?variant=A">
+                    <span class="pv-a__frame">
+                        {% if item.artist.photo_path %}
+                        <img class="pv-a__photo" src="{{ item.artist.photo_path | replace('/storage/v1/object/public/', resize) }}?width=480&height=480&resize=cover&quality=70" alt="" loading="lazy" eleventy:ignore>
+                        {% else %}
+                        <span class="pv-a__photo"></span>
+                        {% endif %}
+                        <span class="pv-a__no" aria-hidden="true">{{ item.no }}</span>
+                    </span>
+                    <span class="pv-a__name">{{ item.artist.name }}</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ol>
+    </div>
+    {% endfor %}
+</section>
+
+{# ---------------------------------------------------------------- #}
+{# B · Register: names first, a ruled index, a portrait only on hover #}
+<section class="section pv pv-b" data-variant="B" hidden>
+    <header class="pv-b__head">
+        <dl class="pv-strip">
+            <div><dt>Register</dt><dd>Artists, Kilele 2026</dd></div>
+            <div><dt>Entries</dt><dd>{{ total }}</dd></div>
+            <div><dt>Order</dt><dd>Alphabetical</dd></div>
+            <div><dt>Status</dt><dd>Archived</dd></div>
+        </dl>
+        <h1 class="pv-b__title">Lineup</h1>
+        <div class="pipe" aria-hidden="true"></div>
+    </header>
+    <div class="pv-b__body">
+        <ol class="pv-b__rows">
+            {% for g in groups %}
+            <li class="pv-b__divider" aria-hidden="true"><span>{{ g.letter }}</span><span>{{ g.artists.length }}</span></li>
+            {% for item in g.artists %}
+            {% set photo = (item.artist.photo_path | replace('/storage/v1/object/public/', resize)) ~ "?width=640&height=800&resize=cover&quality=70" if item.artist.photo_path else "" %}
+            <li>
+                <a class="pv-b__row" href="/2026/lineup/{{ item.artist.slug }}/?variant=B"
+                   data-pv-photo="{{ photo }}" data-pv-caption="No. {{ item.no }} — {{ item.artist.name }}">
+                    <span class="pv-mono pv-muted">{{ item.no }}</span>
+                    <span class="pv-b__name">{{ item.artist.name }}</span>
+                    <span class="pv-mono pv-muted pv-b__count">
+                        {{ item.artist.program_points.length }} {{ "appearance" if item.artist.program_points.length == 1 else "appearances" }}
+                    </span>
+                </a>
+            </li>
+            {% endfor %}
+            {% endfor %}
+        </ol>
+        <aside class="pv-b__viewer" data-pv-viewer aria-hidden="true">
+            <img alt="" hidden>
+            <p class="pv-mono" data-pv-caption>Point at a name</p>
+        </aside>
+    </div>
+    <p class="pv-mono pv-muted pv-b__end">End of register. {{ total }} entries.</p>
+</section>
+
+{# ---------------------------------------------------------------- #}
+{# C · Riser: the letters hang off a vertical pipe, names with small thumbnails #}
+<section class="section pv pv-c" data-variant="C" hidden>
+    <header class="pv-c__head">
+        <p class="pv-mono pv-muted">Kilele 2026 · {{ total }} artists · {{ groups.length }} letters</p>
+        <h1 class="pv-title">Lineup</h1>
+    </header>
+    <nav class="pv-letters" aria-label="Jump to letter">
+        {% for g in groups %}<a href="#c-{{ g.letter }}">{{ g.letter }}</a>{% endfor %}
+    </nav>
+    <div class="pv-c__riser">
+        {% for g in groups %}
+        <div class="pv-c__group" id="c-{{ g.letter }}">
+            <h2 class="pv-c__letter">{{ g.letter }}</h2>
+            <ol class="pv-c__names">
+                {% for item in g.artists %}
+                <li>
+                    <a class="pv-c__item" href="/2026/lineup/{{ item.artist.slug }}/?variant=C">
+                        {% if item.artist.photo_path %}
+                        <img class="pv-c__thumb" src="{{ item.artist.photo_path | replace('/storage/v1/object/public/', resize) }}?width=120&height=120&resize=cover&quality=70" alt="" loading="lazy" eleventy:ignore>
+                        {% else %}
+                        <span class="pv-c__thumb"></span>
+                        {% endif %}
+                        <span>{{ item.artist.name }}</span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ol>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% include "lineup-switcher.prototype.html" %}
+{% endif %}

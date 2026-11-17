@@ -1,0 +1,149 @@
+{#
+  PROTOTYPE — throwaway (#192). Three rough variants of an artist page, each
+  paired with the list variant of the same letter. Only rendered by the dev server.
+  The links read `apple_music`, the name the data actually uses (the current
+  page asks for `applemusic`, so Apple Music never shows).
+#}
+{% if eleventy.env.runMode == "serve" %}
+<link rel="stylesheet" href="/css/prototype/lineup-variants.css">
+
+{% set total = lineup | length %}
+{% set no = ("00" ~ (pagination.pageNumber + 1)).slice(-3) %}
+{% set resize = "/storage/v1/render/image/public/" %}
+{% set photo = (artist.photo_path | replace('/storage/v1/object/public/', resize)) if artist.photo_path else "" %}
+{% set links = [
+    ["Website", artist.website], ["Bandcamp", artist.bandcamp], ["SoundCloud", artist.soundcloud],
+    ["YouTube", artist.youtube], ["Apple Music", artist.apple_music], ["Spotify", artist.spotify],
+    ["Instagram", artist.instagram], ["TikTok", artist.tiktok]
+] %}
+{% set shownLinks = [] %}
+{% for l in links %}{% if l[1] %}{% set ignore = shownLinks.push(l) %}{% endif %}{% endfor %}
+{% set points = artist.program_points %}
+
+{# ---------------------------------------------------------------- #}
+{# A · Contact sheet: big portrait beside a ruled spec table #}
+<article class="section pv pv-a-artist" data-variant="A" hidden>
+    <div class="pv-a-artist__grid">
+        <div class="pv-a__frame">
+            {% if photo %}
+            <img class="pv-a__photo" src="{{ photo }}?width=1000&height=1000&resize=cover&quality=75" alt="{{ artist.name }}" eleventy:ignore>
+            {% else %}
+            <span class="pv-a__photo"></span>
+            {% endif %}
+            <span class="pv-a__no pv-a__no--big" aria-hidden="true">{{ no }}</span>
+        </div>
+        <div>
+            <p class="pv-mono pv-muted">Artist no. {{ no }} of {{ total }} · Lineup 2026</p>
+            <h1 class="pv-title pv-a-artist__name">{{ artist.name }}</h1>
+            <dl class="pv-spec">
+                <div><dt>Artist no.</dt><dd>{{ no }}</dd></div>
+                <div><dt>Edition</dt><dd>2026</dd></div>
+                {% if points.length %}
+                <div><dt>Appears at</dt><dd>
+                    {% for p in points %}<a href="/2026/schedule/{{ p.slug }}/">{{ p.short_title or p.title }} →</a>{% endfor %}
+                </dd></div>
+                {% endif %}
+                {% if shownLinks.length %}
+                <div><dt>Links</dt><dd>
+                    {% for l in shownLinks %}<a href="{{ l[1] }}" target="_blank" rel="noopener">{{ l[0] }} ↗</a>{% endfor %}
+                </dd></div>
+                {% endif %}
+            </dl>
+            {% if artist.bio %}
+            <div class="content pv-a-artist__bio">{{ artist.bio | markdown | sanitize | safe }}</div>
+            {% endif %}
+        </div>
+    </div>
+    <nav class="pv-pager pv-mono" aria-label="More artists">
+        {% if pagination.href.previous %}<a href="{{ pagination.href.previous }}?variant=A">← Previous</a>{% else %}<span></span>{% endif %}
+        <a href="/2026/lineup/?variant=A">All {{ total }} artists</a>
+        {% if pagination.href.next %}<a href="{{ pagination.href.next }}?variant=A">Next →</a>{% else %}<span></span>{% endif %}
+    </nav>
+</article>
+
+{# ---------------------------------------------------------------- #}
+{# B · Register: an official entry — metadata strip, huge name, text first #}
+<article class="section pv pv-b-artist" data-variant="B" hidden>
+    <dl class="pv-strip">
+        <div><dt>Entry</dt><dd>No. {{ no }} / {{ total }}</dd></div>
+        <div><dt>Register</dt><dd>Artists, Kilele 2026</dd></div>
+        <div><dt>Appearances</dt><dd>{{ points.length }}</dd></div>
+        <div><dt>Links</dt><dd>{{ shownLinks.length }}</dd></div>
+    </dl>
+    <h1 class="pv-b__title pv-b-artist__name">{{ artist.name }}</h1>
+    <div class="pipe" aria-hidden="true"></div>
+    <div class="pv-b-artist__body">
+        <div class="pv-b-artist__text">
+            {% if artist.bio %}
+            <div class="content">{{ artist.bio | markdown | sanitize | safe }}</div>
+            {% else %}
+            <p class="pv-muted">No biography on file.</p>
+            {% endif %}
+            <p class="pv-mono pv-muted">End of entry no. {{ no }}.</p>
+        </div>
+        <aside class="pv-b-artist__aside">
+            {% if photo %}
+            <img class="pv-b-artist__photo" src="{{ photo }}?width=640&height=800&resize=cover&quality=75" alt="{{ artist.name }}" eleventy:ignore>
+            {% endif %}
+            {% if points.length %}
+            <h2 class="pv-mono pv-muted">Appears at</h2>
+            <ul class="pv-b-artist__list">
+                {% for p in points %}<li><a href="/2026/schedule/{{ p.slug }}/">{{ p.short_title or p.title }}<span>→</span></a></li>{% endfor %}
+            </ul>
+            {% endif %}
+            {% if shownLinks.length %}
+            <h2 class="pv-mono pv-muted">Links</h2>
+            <ul class="pv-b-artist__list">
+                {% for l in shownLinks %}<li><a href="{{ l[1] }}" target="_blank" rel="noopener">{{ l[0] }}<span>↗</span></a></li>{% endfor %}
+            </ul>
+            {% endif %}
+        </aside>
+    </div>
+    <nav class="pv-pager pv-mono" aria-label="More artists">
+        {% if pagination.href.previous %}<a href="{{ pagination.href.previous }}?variant=B">← No. {{ ("00" ~ pagination.pageNumber).slice(-3) }}</a>{% else %}<span></span>{% endif %}
+        <a href="/2026/lineup/?variant=B">Register</a>
+        {% if pagination.href.next %}<a href="{{ pagination.href.next }}?variant=B">No. {{ ("00" ~ (pagination.pageNumber + 2)).slice(-3) }} →</a>{% else %}<span></span>{% endif %}
+    </nav>
+</article>
+
+{# ---------------------------------------------------------------- #}
+{# C · Riser: ink band with the name, then a pipe the bio and links branch off #}
+<article class="pv pv-c-artist" data-variant="C" hidden>
+    <header class="section pv-c-artist__band" data-ground="ink">
+        <div>
+            <p class="pv-mono pv-muted">Artist no. {{ no }} · Kilele 2026 · {{ points.length }} {{ "appearance" if points.length == 1 else "appearances" }}</p>
+            <h1 class="pv-c-artist__name">{{ artist.name }}</h1>
+        </div>
+        {% if photo %}
+        <img class="pv-c-artist__photo" src="{{ photo }}?width=800&height=800&resize=cover&quality=75" alt="{{ artist.name }}" eleventy:ignore>
+        {% endif %}
+    </header>
+    <div class="pipe" aria-hidden="true"></div>
+    <div class="section">
+        <div class="pv-c-artist__column content--piped">
+            {% if artist.bio %}
+            <div class="content">{{ artist.bio | markdown | sanitize | safe }}</div>
+            {% endif %}
+            {% if points.length %}
+            <h2 class="pv-c-artist__tee">Appears at</h2>
+            <ul class="pv-c-artist__list">
+                {% for p in points %}<li><a href="/2026/schedule/{{ p.slug }}/">{{ p.short_title or p.title }} →</a></li>{% endfor %}
+            </ul>
+            {% endif %}
+            {% if shownLinks.length %}
+            <h2 class="pv-c-artist__tee">Links</h2>
+            <ul class="pv-c-artist__list">
+                {% for l in shownLinks %}<li><a href="{{ l[1] }}" target="_blank" rel="noopener">{{ l[0] }} ↗</a></li>{% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <nav class="pv-pager pv-mono" aria-label="More artists">
+            {% if pagination.href.previous %}<a href="{{ pagination.href.previous }}?variant=C">← Previous</a>{% else %}<span></span>{% endif %}
+            <a href="/2026/lineup/?variant=C">All artists</a>
+            {% if pagination.href.next %}<a href="{{ pagination.href.next }}?variant=C">Next →</a>{% else %}<span></span>{% endif %}
+        </nav>
+    </div>
+</article>
+
+{% include "lineup-switcher.prototype.html" %}
+{% endif %}

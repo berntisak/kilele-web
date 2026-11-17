@@ -5,7 +5,9 @@ pagination:
   alias: artist
   resolve: values
 permalink: "/2026/lineup/{{ artist.slug }}/"
-layout: layouts/base.html
+layout: layouts/site.html
+pageName: artist
+headerContext: Lineup 2026
 eleventyComputed:
     title: "{{ artist.name }}"
     description: "{{ (artist.bio or artist.name) | truncate(160, true, '...') }}"
@@ -13,7 +15,7 @@ eleventyComputed:
     og_type: "profile"
 ---
 
-<article class="content__container">
+<article class="section" data-pv-real>
     <div class="content__title">
         <h1>{{artist.name}}</h1>
     </div>
@@ -80,6 +82,9 @@ eleventyComputed:
         </div>
     </div>
 </article>
+
+{# PROTOTYPE — throwaway (#192): remove this line with the variants. #}
+{% include "lineup-artist-variants.prototype.html" %}
 
 {% set canonicalUrl = site.url ~ page.url %}
 

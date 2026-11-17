@@ -1,0 +1,240 @@
+/*
+ * PROTOTYPE — throwaway (#192). Rough styles for the three lineup variants.
+ * Copied as-is (not bundled), so plain media queries instead of the named
+ * cutoffs: 600 / 900 / 1200px. Nothing here enters the kit without discussion.
+ */
+
+/* ---------- shared bits ---------- */
+
+.pv[hidden] { display: none !important; }
+.pv a { color: inherit; text-decoration: none; }
+.pv img { display: block; max-width: 100%; }
+.pv ol, .pv ul { list-style: none; margin: 0; padding: 0; }
+.pv-mono { font-family: var(--font-mono); font-size: var(--text-2); letter-spacing: 0.08em; text-transform: uppercase; }
+.pv-muted { color: var(--text-muted); }
+
+/* The 2026 Edition is archived, so its portraits take the green duotone, like the front page. */
+.pv { --duotone: url(#duotone-green); }
+
+.pv-title {
+    font-family: var(--font-display);
+    font-size: var(--text-8);
+    line-height: var(--line-height-tight);
+    text-transform: uppercase;
+}
+
+/* Ruled stats block, like the news list. */
+.pv-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 0 0 var(--space-6);
+    border-top: 1px solid var(--text);
+}
+.pv-stats div { padding: var(--space-2) 0; border-bottom: 1px solid var(--rule); }
+.pv-stats dt { font-family: var(--font-mono); font-size: var(--text-1); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+.pv-stats dd { margin: 0; font-family: var(--font-display); font-size: var(--text-6); }
+@media (min-width: 600px) { .pv-stats { grid-template-columns: repeat(4, 1fr); } }
+
+.pv-head .pipe, .pv-b__head .pipe { margin-top: var(--space-5); }
+
+/* A–Z jump bar. */
+.pv-letters {
+    position: sticky; top: 0; z-index: 2;
+    display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-3);
+    margin: var(--space-6) 0;
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--rule);
+    background: var(--ground);
+    font-family: var(--font-mono); font-size: var(--text-3); font-weight: var(--weight-bold);
+}
+.pv-letters a:hover { color: var(--pipe); }
+
+.pv-pager {
+    display: grid; grid-template-columns: 1fr auto 1fr; gap: var(--space-4);
+    margin-top: var(--space-8); padding-top: var(--space-4);
+    border-top: 1px solid var(--rule);
+}
+.pv-pager > :last-child { text-align: right; }
+.pv-pager a:hover { color: var(--pipe); }
+
+/* ---------- A · Contact sheet ---------- */
+
+.pv-a__group { scroll-margin-top: var(--space-8); margin-bottom: var(--space-7); }
+.pv-a__letter {
+    display: flex; align-items: baseline; gap: var(--space-3);
+    margin-bottom: var(--space-4); padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--text);
+    font-family: var(--font-display); font-size: var(--text-8); line-height: 1;
+}
+.pv-a__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-5) var(--space-3); }
+@media (min-width: 600px) { .pv-a__grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 900px) { .pv-a__grid { grid-template-columns: repeat(5, 1fr); } }
+@media (min-width: 1200px) { .pv-a__grid { grid-template-columns: repeat(6, 1fr); } }
+
+.pv-a__frame { position: relative; display: block; }
+.pv-a__photo {
+    display: block; width: 100%; aspect-ratio: 1; object-fit: cover;
+    background: var(--placeholder);
+    filter: var(--duotone);
+}
+.pv-a__no {
+    position: absolute; bottom: var(--space-1); left: var(--space-2);
+    color: var(--cream); font-family: var(--font-display); font-size: var(--text-6); line-height: 1;
+}
+.pv-a__tile:hover .pv-a__no { color: var(--pipe); }
+.pv-a__no--big { font-size: var(--text-8); left: var(--space-4); bottom: var(--space-2); }
+.pv-a__name { display: block; margin-top: var(--space-2); font-weight: var(--weight-bold); line-height: var(--line-height-snug); }
+
+.pv-a-artist__grid { display: grid; gap: var(--space-6); }
+@media (min-width: 900px) { .pv-a-artist__grid { grid-template-columns: 5fr 7fr; align-items: start; } }
+.pv-a-artist__name { margin: var(--space-2) 0 var(--space-6); }
+
+.pv-spec { margin: 0 0 var(--space-6); border-top: 1px solid var(--text); }
+.pv-spec div {
+    display: grid; grid-template-columns: 8rem 1fr; gap: var(--space-4);
+    padding: var(--space-3) 0; border-bottom: 1px solid var(--rule);
+}
+.pv-spec dt { font-family: var(--font-mono); font-size: var(--text-2); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.pv-spec dd { margin: 0; display: flex; flex-direction: column; gap: var(--space-1); font-weight: var(--weight-bold); }
+.pv-spec a:hover { color: var(--pipe); }
+.pv-a-artist__bio { max-width: 65ch; }
+
+/* ---------- B · Register ---------- */
+
+.pv-strip {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    margin: 0; border-top: 1px solid var(--text); border-bottom: 1px solid var(--rule);
+    font-family: var(--font-mono); font-size: var(--text-2); text-transform: uppercase; letter-spacing: 0.08em;
+}
+.pv-strip div { padding: var(--space-2) 0; }
+.pv-strip dt { color: var(--text-muted); }
+.pv-strip dd { margin: 0; font-weight: var(--weight-bold); }
+@media (min-width: 900px) { .pv-strip { grid-template-columns: repeat(4, 1fr); } }
+
+.pv-b__title {
+    margin-top: var(--space-5);
+    font-family: var(--font-display); font-size: var(--text-9);
+    line-height: var(--line-height-tight); text-transform: uppercase;
+}
+
+.pv-b__body { display: grid; gap: var(--space-6); margin-top: var(--space-7); }
+@media (min-width: 900px) { .pv-b__body { grid-template-columns: 1fr 22rem; } }
+
+.pv-b__divider {
+    display: flex; justify-content: space-between;
+    margin-top: var(--space-6); padding: var(--space-1) 0;
+    background: var(--text); color: var(--ground);
+    padding-inline: var(--space-2);
+    font-family: var(--font-mono); font-size: var(--text-2); font-weight: var(--weight-bold);
+}
+.pv-b__row {
+    display: grid; grid-template-columns: 3rem 1fr; align-items: baseline; gap: var(--space-3);
+    padding: var(--space-2) 0; border-bottom: 1px solid var(--rule);
+}
+.pv-b__row:hover, .pv-b__row:focus-visible { color: var(--pipe); }
+.pv-b__name { font-family: var(--font-display); font-size: var(--text-6); line-height: var(--line-height-snug); text-transform: uppercase; }
+.pv-b__count { display: none; }
+@media (min-width: 600px) {
+    .pv-b__row { grid-template-columns: 3rem 1fr auto; }
+    .pv-b__count { display: block; }
+}
+@media (min-width: 900px) { .pv-b__name { font-size: var(--text-7); } }
+
+.pv-b__viewer { display: none; }
+@media (min-width: 900px) {
+    .pv-b__viewer { display: block; position: sticky; top: var(--space-6); align-self: start; }
+    .pv-b__viewer img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; filter: var(--duotone); }
+    .pv-b__viewer p { margin-top: var(--space-2); }
+}
+.pv-b__end { margin-top: var(--space-6); }
+
+.pv-b-artist__name { margin-bottom: var(--space-5); overflow-wrap: anywhere; }
+.pv-b-artist__body { display: grid; gap: var(--space-7); margin-top: var(--space-7); }
+@media (min-width: 900px) { .pv-b-artist__body { grid-template-columns: minmax(0, 65ch) 20rem; justify-content: space-between; } }
+.pv-b-artist__text > p { margin-top: var(--space-6); }
+.pv-b-artist__aside { display: flex; flex-direction: column; gap: var(--space-3); }
+.pv-b-artist__photo { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; filter: var(--duotone); margin-bottom: var(--space-4); }
+.pv-b-artist__aside h2 { margin-top: var(--space-4); }
+.pv-b-artist__list { border-top: 1px solid var(--text); }
+.pv-b-artist__list a {
+    display: flex; justify-content: space-between; gap: var(--space-3);
+    padding: var(--space-2) 0; border-bottom: 1px solid var(--rule); font-weight: var(--weight-bold);
+}
+.pv-b-artist__list a:hover { color: var(--pipe); }
+
+/* ---------- C · Riser ---------- */
+
+.pv-c__head .pv-title { font-size: var(--text-9); }
+
+/* The main pipe runs down the left; each letter tees off it with a flange. */
+.pv-c__riser {
+    position: relative;
+    padding-left: var(--space-7);
+    border-left: var(--pipe-width) solid var(--pipe);
+}
+.pv-c__riser::after {
+    content: ""; position: absolute;
+    bottom: calc(-1 * var(--valve-size) / 2);
+    left: calc(-1 * (var(--pipe-width) + var(--valve-size)) / 2);
+    width: var(--valve-size); height: var(--valve-size);
+    border: var(--flange-width) solid var(--pipe); border-radius: 50%;
+    background: var(--ground);
+}
+.pv-c__group { scroll-margin-top: var(--space-8); padding-bottom: var(--space-6); }
+.pv-c__letter {
+    position: relative;
+    margin-bottom: var(--space-3);
+    font-family: var(--font-display); font-size: var(--text-7); line-height: 1;
+}
+.pv-c__letter::before {
+    content: ""; position: absolute;
+    top: calc(0.5lh - var(--pipe-width) / 2);
+    left: calc(-1 * var(--space-7));
+    width: calc(var(--space-7) - var(--space-3));
+    height: var(--pipe-width); background: var(--pipe);
+}
+.pv-c__letter::after {
+    content: ""; position: absolute;
+    top: calc(0.5lh - var(--pipe-width) / 2 - var(--flange-overhang));
+    left: calc(-1 * var(--space-3) - var(--flange-width));
+    width: var(--flange-width); height: calc(var(--pipe-width) + 2 * var(--flange-overhang));
+    background: var(--pipe);
+}
+.pv-c__names { columns: 1; column-gap: var(--space-6); }
+@media (min-width: 600px) { .pv-c__names { columns: 2; } }
+@media (min-width: 1200px) { .pv-c__names { columns: 3; } }
+.pv-c__names li { break-inside: avoid; }
+.pv-c__item {
+    display: flex; align-items: center; gap: var(--space-3);
+    padding: var(--space-1) 0; font-weight: var(--weight-bold);
+}
+.pv-c__item:hover { color: var(--pipe); }
+.pv-c__thumb {
+    flex: none; width: 2.5rem; height: 2.5rem; object-fit: cover;
+    background: var(--placeholder); filter: var(--duotone);
+}
+
+.pv-c-artist__band { display: grid; gap: var(--space-6); align-items: end; }
+@media (min-width: 900px) { .pv-c-artist__band { grid-template-columns: 1fr 22rem; } }
+.pv-c-artist__name {
+    margin-top: var(--space-3);
+    font-family: var(--font-display); font-size: var(--text-8);
+    line-height: var(--line-height-tight); text-transform: uppercase; overflow-wrap: anywhere;
+}
+.pv-c-artist__photo { width: 100%; aspect-ratio: 1; object-fit: cover; filter: var(--duotone); }
+.pv-c-artist__column { max-width: 65ch; margin-inline: auto; }
+.pv-c-artist__tee { margin-top: var(--space-6); font-family: var(--font-mono); font-size: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; }
+.pv-c-artist__list { margin-top: var(--space-2); }
+.pv-c-artist__list a { display: block; padding: var(--space-1) 0; font-weight: var(--weight-bold); }
+.pv-c-artist__list a:hover { color: var(--pipe); }
+
+/* ---------- the switcher bar ---------- */
+
+.pv-switcher {
+    position: fixed; bottom: 16px; left: 50%; z-index: 100;
+    display: flex; align-items: center; gap: 12px; padding: 8px 14px;
+    transform: translateX(-50%); border-radius: 999px;
+    background: #ff00aa; color: #fff; font: 600 13px/1 system-ui, sans-serif;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 0.3);
+}
+.pv-switcher button { font-size: 18px; color: #fff; background: none; border: 0; cursor: pointer; }
