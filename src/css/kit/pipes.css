@@ -9,4 +9,5 @@
     --flange-width: 0.375rem; /* 6px */
     --flange-overhang: 0.25rem; /* 4px above and below the pipe */
     --valve-size: 1.75rem; /* 28px across */
+    --flange-spacing: 10rem; /* 160px between flanges on a straight run */
 }

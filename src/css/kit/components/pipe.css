@@ -1,0 +1,24 @@
+/*
+ * Pipe: a straight horizontal run of the red pipe, with a flange every
+ * --flange-spacing (rule 6).
+ * PLACEHOLDER: plain CSS for now. The designer's own pipe graphics may
+ * replace the pipe, the flanges, or both.
+ */
+
+.pipe {
+    position: relative;
+    height: var(--pipe-width);
+    background: var(--pipe);
+}
+
+/* The flanges: a repeating stripe a little taller than the pipe. */
+.pipe::before {
+    content: "";
+    position: absolute;
+    inset: calc(-1 * var(--flange-overhang)) 0;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent 0 calc(var(--flange-spacing) - var(--flange-width)),
+        var(--pipe) calc(var(--flange-spacing) - var(--flange-width)) var(--flange-spacing)
+    );
+}

@@ -20,6 +20,7 @@
     --text: var(--ink);
     --text-muted: #5b574d;
     --rule: rgb(17 17 17 / 0.16);
+    --surface: color-mix(in srgb, var(--cream), white 40%);
     --pipe: var(--red);
     --placeholder: var(--concrete-light);
     --halftone: rgb(74 71 66 / 0.55);
@@ -38,6 +39,7 @@
     --text: var(--cream);
     --text-muted: #b4ad9c;
     --rule: rgb(241 237 225 / 0.18);
+    --surface: color-mix(in srgb, var(--ink), white 6%);
     --pipe: var(--green);
     --placeholder: var(--concrete-dark);
 }
