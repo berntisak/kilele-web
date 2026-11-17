@@ -3,4 +3,14 @@
  */
 
 .page--home {
+    /* One column on phones, three from --medium: never two, which would leave the third card alone. */
+    .latest-news__list {
+        display: grid;
+        gap: var(--space-5);
+        padding: 0;
+
+        @media (--medium) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
 }

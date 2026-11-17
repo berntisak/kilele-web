@@ -22,9 +22,37 @@ description: "East Africa's first and only summit for music, tech and culture. C
     #}
 </section>
 
+{% set listedNews = news | rejectattr("hero_video") %}
+{% set latestNews = listedNews.slice(0, 3) %}
+{% if latestNews | length %}
 <section class="section latest-news">
-    <p>Latest news: the newest few news items</p>
+    <header class="section-head">
+        <h2 class="section-head__title">Latest news</h2>
+        <a class="section-head__link" href="/news/">All {{ listedNews | length }} <span aria-hidden="true">→</span></a>
+    </header>
+    <ol class="latest-news__list" role="list">
+        {% for post in latestNews %}
+        <li>
+            <a class="card" href="/news/{{ post.slug }}/">
+                {% if post.photo_path %}
+                <img class="card__photo" src="{{ post.photo_path }}" alt="" loading="lazy" eleventy:ignore>
+                {% else %}
+                <div class="card__photo"></div>
+                {% endif %}
+                <div class="card__panel">
+                    <h3 class="card__title">{{ post.title }}</h3>
+                    {% set number = ("00" ~ ((news | length) - news.indexOf(post))).slice(-3) %}
+                    <p class="card__meta">
+                        <time datetime="{{ post.publish_date }}">{{ post.publish_date.slice(0, 10) }}</time>
+                        · No. {{ number }}
+                    </p>
+                </div>
+            </a>
+        </li>
+        {% endfor %}
+    </ol>
 </section>
+{% endif %}
 
 <section class="section previous-edition">
     <p>Previous edition: lineup 2026, schedule 2026, gallery 2026</p>
