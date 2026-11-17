@@ -24,10 +24,13 @@
 }
 
 .site-index__group {
-    margin-top: var(--space-7);
+    margin-top: var(--space-6);
 }
 
+/* Each group's label sits on a rule, like the rows under it. */
 .site-index__label {
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--rule);
     font-family: var(--font-mono);
     font-size: var(--text-4);
     font-weight: var(--weight-normal);
@@ -40,20 +43,32 @@
     padding: 0;
 }
 
+/*
+ * Each row runs the full width of the index, like the red-pipes prototype:
+ * the whole width is the link, the title sits on the left, the count on the
+ * far right, and a rule runs under it.
+ */
 .site-index__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-4);
+    padding-block: var(--space-2);
+    border-bottom: 1px solid var(--rule);
     font-family: var(--font-display);
     font-size: var(--text-6);
+    line-height: var(--line-height-snug);
+    text-transform: uppercase;
     color: inherit;
     text-decoration: none;
 
     &:hover,
     &:focus-visible {
-        text-decoration: underline;
+        color: var(--pipe);
     }
 }
 
 .site-index__count {
-    margin-left: var(--space-2);
     font-family: var(--font-mono);
     font-size: var(--text-4);
     color: var(--text-muted);
