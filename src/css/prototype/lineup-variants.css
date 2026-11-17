@@ -59,6 +59,16 @@
 
 /* ---------- A · Contact sheet ---------- */
 
+/* Phones get B's rows, 600px and up the portrait grid. */
+.pv-a__wide { display: none; }
+.pv-a__rows .pv-b__divider { scroll-margin-top: var(--space-8); }
+@media (min-width: 600px) {
+    .pv-a__wide { display: block; }
+    .pv-letters.pv-a__wide { display: flex; }
+    .pv-a__rows { display: none; }
+}
+.pv-a__title { margin-top: var(--space-5); }
+
 .pv-a__group { scroll-margin-top: var(--space-8); margin-bottom: var(--space-7); }
 .pv-a__letter {
     display: flex; align-items: baseline; gap: var(--space-3);
@@ -134,18 +144,9 @@
 .pv-b__row:hover, .pv-b__row:focus-visible { color: var(--pipe); }
 .pv-b__name { font-family: var(--font-display); font-size: var(--text-6); line-height: var(--line-height-snug); text-transform: uppercase; }
 .pv-b__count { display: none; }
-
-/* Phones: a small square thumbnail at the right end of each row. */
-.pv-b__row { grid-template-columns: 2.5rem 1fr 3rem; align-items: center; }
-.pv-b__thumb {
-    width: 3rem; height: 3rem; object-fit: cover;
-    background: var(--placeholder); filter: var(--duotone);
-}
-
 @media (min-width: 600px) {
-    .pv-b__row { grid-template-columns: 3rem 1fr auto; align-items: baseline; }
+    .pv-b__row { grid-template-columns: 3rem 1fr auto; }
     .pv-b__count { display: block; }
-    .pv-b__thumb { display: none; }
 }
 @media (min-width: 900px) { .pv-b__name { font-size: var(--text-7); } }
 
