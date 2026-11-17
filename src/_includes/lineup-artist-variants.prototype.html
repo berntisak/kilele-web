@@ -36,8 +36,6 @@
             <p class="pv-mono pv-muted">Artist no. {{ no }} of {{ total }} · Lineup 2026</p>
             <h1 class="pv-title pv-a-artist__name">{{ artist.name }}</h1>
             <dl class="pv-spec">
-                <div><dt>Artist no.</dt><dd>{{ no }}</dd></div>
-                <div><dt>Edition</dt><dd>2026</dd></div>
                 {% if points.length %}
                 <div><dt>Appears at</dt><dd>
                     {% for p in points %}<a href="/2026/schedule/{{ p.slug }}/">{{ p.short_title or p.title }} →</a>{% endfor %}

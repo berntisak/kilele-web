@@ -90,6 +90,11 @@
                     <span class="pv-mono pv-muted pv-b__count">
                         {{ item.artist.program_points.length }} {{ "appearance" if item.artist.program_points.length == 1 else "appearances" }}
                     </span>
+                    {% if item.artist.photo_path %}
+                    <img class="pv-b__thumb" src="{{ item.artist.photo_path | replace('/storage/v1/object/public/', resize) }}?width=120&height=120&resize=cover&quality=70" alt="" loading="lazy" eleventy:ignore>
+                    {% else %}
+                    <span class="pv-b__thumb"></span>
+                    {% endif %}
                 </a>
             </li>
             {% endfor %}
