@@ -23,10 +23,11 @@
     --text-3: 0.8125rem; /* 13px */
     --text-4: 1rem; /* 16px */
 
-    /* Steps 5–8 grow from the first size at 375px to the second at 1200px.
+    /* Steps 5–9 grow from the first size at 375px to the second at 1200px.
        The middle term is the straight line between those two points. */
     --text-5: clamp(1.125rem, 1.01rem + 0.48vw, 1.375rem); /* 18 → 22px */
     --text-6: clamp(1.25rem, 1.02rem + 0.97vw, 1.75rem); /* 20 → 28px */
     --text-7: clamp(2.25rem, 1rem + 5.33vw, 5rem); /* 36 → 80px */
     --text-8: clamp(2.5rem, 0.91rem + 6.79vw, 6rem); /* 40 → 96px */
+    --text-9: clamp(3rem, 0.5rem + 10.67vw, 8.5rem); /* 48 → 136px */
 }

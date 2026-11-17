@@ -6,11 +6,62 @@ description: "East Africa's first and only summit for music, tech and culture. C
 ---
 
 <section class="section edition-title">
-    <p>Edition title: kilele27 logo + {{ edition.year }}</p>
+    <div class="edition-title__mark">
+        <img class="edition-title__logo" src="/assets/logos/Kilele-2027-Logo_Primary.png"
+             alt="Kilele Summit" width="2918" height="1525">
+        <div class="edition-title__pipework" aria-hidden="true">
+            <span class="edition-title__run">
+                <span class="edition-title__leg" style="--x: 6rem; --length: 2.2rem"></span>
+                <span class="edition-title__leg" style="--x: 15rem; --length: 1.2rem"></span>
+                <span class="edition-title__marker">Music · Tech · Culture</span>
+                {# A centre-zero voltmeter reading 0 V: in electronics, the shared 0 V reference is the "common ground". #}
+                <span class="edition-title__leg edition-title__gauge" style="--length: 1.25rem">
+                    <span class="edition-title__dial">
+                        <span class="edition-title__needle"></span>
+                        <span class="edition-title__reading">
+                            <span class="edition-title__ground-symbol"></span>
+                            0 V
+                        </span>
+                    </span>
+                </span>
+            </span>
+        </div>
+    </div>
+    <p class="edition-title__year">
+        <span class="edition-title__leader" aria-hidden="true"></span>
+        {{ edition.year }}
+    </p>
+    <p class="edition-title__fig">Fig. 1 — Kilele, fourth edition. Not to scale.</p>
+    <p class="edition-title__fig edition-title__fig--corner">Fig. 2 — Pipe marker and gauge. Reads: 0 V (common ground).</p>
 </section>
 
 <section class="section lead-section">
-    <p>Lead section: Announcement (theme, dates, venue)</p>
+    {#
+      PLACEHOLDER copy, typed in by hand. Switch these for dynamic values from the
+      CMS when Stage setting (#181) reads the active Edition; the fields it needs
+      are added in "CMS fields for the front page's Edition copy" (#202).
+    #}
+    {% set theme = "Common Grounds" %}
+    {% set themeSentence = "Common Grounds is where we meet: on the dancefloor, in conversation, in collective action, and in the shared belief that another future is possible." %}
+    {% set dates = "23–27 February 2027" %}
+    {% set venue = "The Mall, Westlands, Nairobi" %}
+    {% set editionNumber = "04" %}
+    {% set tagline = "A space for adventurous music and culture" %}
+
+    <p class="lead-section__label">Theme, {{ edition.year }}</p>
+    <h1 class="lead-section__theme">{{ theme }}</h1>
+    <dl class="lead-section__spec">
+        <div><dt>Dates</dt><dd>{{ dates }}</dd></div>
+        <div><dt>Venue</dt><dd>{{ venue }}</dd></div>
+        <div><dt>Edition</dt><dd>No. {{ editionNumber }}</dd></div>
+        <div><dt>Description</dt><dd>{{ tagline }}</dd></div>
+    </dl>
+    <p class="lead-section__sentence">{{ themeSentence }}</p>
+    <p class="lead-section__action">
+        <span class="lead-section__stub" aria-hidden="true"></span>
+        <a href="https://kilelesummit.substack.com/" target="_blank" rel="noopener noreferrer">Subscribe on Substack <span aria-hidden="true">→</span></a>
+        <span class="lead-section__note">(1 action available)</span>
+    </p>
 
     {#
       To be added later: the Lead section is the only part of the page that

@@ -3,6 +3,355 @@
  */
 
 .page--home {
+    .edition-title {
+        position: relative;
+        padding-block: var(--space-6) 0;
+        overflow: hidden;
+    }
+
+    /* The logo and the pipework side by side. */
+    .edition-title__mark {
+        display: flex;
+    }
+
+    /* From the logo's right edge to the page's right edge, as tall as the logo. */
+    .edition-title__pipework {
+        position: relative;
+        flex: 1;
+        margin-right: calc(-1 * var(--gutter));
+    }
+
+    /*
+     * PLACEHOLDER pipe drawn in CSS, waiting for a proper graphic from the designer.
+     * The logo's main pipe, continued off the page. Its height and thickness match the pipe in the PNG.
+     */
+    .edition-title__run {
+        position: absolute;
+        top: 32.3%;
+        right: 0;
+        left: 0;
+        height: 2.4%;
+        background: var(--red);
+    }
+
+    /* A leg hanging off the run. Each leg sets its own --x (how far along) and --length (how far down). */
+    .edition-title__leg {
+        position: absolute;
+        top: 0;
+        left: var(--x);
+        width: 0.4rem;
+        height: var(--length);
+        border-radius: 0 0 0.4rem 0.4rem;
+        background: var(--red);
+
+        /* The flange: a short crossbar, slightly wider than the leg. */
+        &::after {
+            content: "";
+            position: absolute;
+            top: 45%;
+            left: -0.15rem;
+            right: -0.15rem;
+            height: 0.18rem;
+            background: var(--red);
+        }
+    }
+
+    /* The pipe marker: its arrow tip on the page content's right edge. Not on phones yet (see Tune the design). */
+    .edition-title__marker {
+        display: none;
+        position: absolute;
+        top: 50%;
+        right: var(--gutter);
+        translate: 0 -50%;
+        height: 1.5rem;
+        padding: 0 1.4rem 0 0.7rem;
+        background: var(--yellow);
+        color: var(--ink);
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        font-weight: var(--weight-bold);
+        line-height: 1.5rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        clip-path: polygon(0 0, calc(100% - 0.75rem) 0, 100% 50%, calc(100% - 0.75rem) 100%, 0 100%);
+
+        @media (--medium) {
+            display: block;
+        }
+
+        /* Where the gauge shows, the pipe marker sits just left of it. */
+        @media (--large) {
+            right: calc(var(--gutter) + 7rem + var(--space-6));
+        }
+    }
+
+    /*
+     * PLACEHOLDER gauge drawn in CSS, waiting for a proper graphic from the designer (see Tune the design).
+     * The stem is a leg; the dial hangs from it, its right edge on the page content's right edge.
+     * Only from --large, like C8 on desktop.
+     */
+    .edition-title__gauge {
+        display: none;
+        right: calc(var(--gutter) + 3.3rem);
+        left: auto;
+
+        @media (--large) {
+            display: block;
+        }
+    }
+
+    /* The dial: a ring, green on the left half and red on the right, meeting at the top. */
+    .edition-title__dial {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        translate: -50% 0;
+        width: 7rem;
+        aspect-ratio: 1;
+        border: 0.25rem solid var(--ink);
+        border-radius: 50%;
+        background: conic-gradient(
+            from -135deg,
+            var(--green) 0 133deg,
+            var(--ground) 133deg 137deg,
+            var(--red) 137deg 270deg,
+            var(--ground) 270deg
+        );
+
+        /* The face: a plain disc over the middle, leaving the colours as a ring. */
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 20%;
+            border-radius: 50%;
+            background: var(--ground);
+        }
+    }
+
+    /* The needle, pointing straight up at 0 V, with a round hub at its foot. */
+    .edition-title__needle {
+        position: absolute;
+        bottom: 50%;
+        left: 50%;
+        translate: -50% 0;
+        width: 0.2rem;
+        height: 44%;
+        background: var(--yellow);
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: -0.35rem;
+            left: 50%;
+            translate: -50% 0;
+            width: 0.7rem;
+            height: 0.7rem;
+            border-radius: 50%;
+            background: var(--yellow);
+        }
+    }
+
+    /* The reading under the hub: the ground symbol over "0 V". */
+    .edition-title__reading {
+        position: absolute;
+        right: 0;
+        bottom: 12%;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.15rem;
+        font-family: var(--font-mono);
+        font-size: var(--text-1);
+        font-weight: var(--weight-bold);
+        line-height: 1.1;
+    }
+
+    /* The electrical ground symbol: a short stem over three shrinking bars, each one a gradient. */
+    .edition-title__ground-symbol {
+        width: 1rem;
+        height: 0.8rem;
+        background:
+            linear-gradient(var(--text), var(--text)) center 0 / 0.12rem 0.3rem no-repeat,
+            linear-gradient(var(--text), var(--text)) center 0.3rem / 100% 0.12rem no-repeat,
+            linear-gradient(var(--text), var(--text)) center 0.48rem / 64% 0.12rem no-repeat,
+            linear-gradient(var(--text), var(--text)) center 0.66rem / 28% 0.12rem no-repeat;
+    }
+
+    /* PLACEHOLDER size until the designer's logo arrives. */
+    .edition-title__logo {
+        flex: none;
+        width: min(20rem, 62vw);
+    }
+
+    /* The year, hanging off a dimension leader under the logo. */
+    .edition-title__year {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        margin-top: var(--space-2);
+        font-family: var(--font-mono);
+        font-weight: var(--weight-bold);
+        font-size: var(--text-4);
+        line-height: 1;
+    }
+
+    /* Captions labelled like figures in a technical manual. */
+    .edition-title__fig {
+        margin-top: var(--space-2);
+        color: var(--text-muted);
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    /* Fig. 2 labels the gauge, so it only shows where the gauge does. */
+    .edition-title__fig--corner {
+        display: none;
+
+        @media (--large) {
+            display: block;
+            position: absolute;
+            top: var(--space-4);
+            right: var(--gutter);
+            margin: 0;
+        }
+    }
+
+    /* The leader: the span is the line, ::before is the dot, ::after is the tick. */
+    .edition-title__leader {
+        display: flex;
+        align-items: center;
+        width: var(--space-8);
+        height: 1px;
+        background: var(--text-muted);
+
+        &::before {
+            content: "";
+            width: var(--space-2);
+            height: var(--space-2);
+            border-radius: 50%;
+            background: var(--text-muted);
+        }
+
+        &::after {
+            content: "";
+            width: 1px;
+            height: var(--space-4);
+            margin-left: auto;
+            background: var(--text-muted);
+        }
+    }
+
+    /*
+     * The Lead section, Announcement Stage. From --medium the theme sentence and
+     * the Substack link share one row; everything else spans the full width.
+     */
+    .lead-section {
+        padding-block: var(--space-6) var(--space-7);
+
+        @media (--medium) {
+            display: grid;
+            grid-template-columns: minmax(0, 52ch) auto;
+            column-gap: var(--space-7);
+            align-items: end;
+
+            & > :not(.lead-section__sentence, .lead-section__action) {
+                grid-column: 1 / -1;
+            }
+        }
+    }
+
+    .lead-section__label {
+        color: var(--pipe);
+        font-family: var(--font-mono);
+        font-size: var(--text-3);
+        font-weight: var(--weight-bold);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .lead-section__theme {
+        margin-top: var(--space-2);
+        font-family: var(--font-display);
+        font-size: var(--text-9);
+        font-weight: var(--weight-normal);
+        line-height: var(--line-height-tight);
+        text-transform: uppercase;
+    }
+
+    /* The facts as a ruled spec sheet: two columns on phones; from --medium, four sized by their content, so each stays on one line. */
+    .lead-section__spec {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 56rem;
+        margin-top: var(--space-4);
+        border-top: 2px solid var(--text);
+        font-family: var(--font-mono);
+        font-size: var(--text-3);
+        text-transform: uppercase;
+
+        @media (--medium) {
+            grid-template-columns: repeat(4, auto);
+        }
+
+        & div {
+            padding: var(--space-2) var(--space-3) var(--space-2) 0;
+            border-bottom: 1px solid var(--text);
+        }
+
+        & dt {
+            color: var(--text-muted);
+            font-size: var(--text-2);
+        }
+
+        & dd {
+            margin: 0;
+            font-weight: var(--weight-bold);
+        }
+    }
+
+    .lead-section__sentence {
+        max-width: 52ch;
+        margin-top: var(--space-4);
+    }
+
+    /* The one action: a red pipe stub leading into the link, and a dry note after it. */
+    .lead-section__action {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--space-3);
+        margin-top: var(--space-4);
+
+        & a {
+            padding-bottom: var(--space-1);
+            border-bottom: 2px solid var(--pipe);
+            color: inherit;
+            font-family: var(--font-mono);
+            font-size: var(--text-3);
+            font-weight: var(--weight-bold);
+            letter-spacing: 0.15em;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+    }
+
+    .lead-section__stub {
+        width: var(--space-7);
+        height: 0.4rem;
+        background: var(--pipe);
+    }
+
+    .lead-section__note {
+        color: var(--text-muted);
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        text-transform: uppercase;
+    }
+
     /* One column on phones, three from --medium: never two, which would leave the third card alone. */
     .latest-news__list,
     .previous-edition__list {

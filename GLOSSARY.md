@@ -49,7 +49,7 @@ _Avoid:_ masthead, hero.
 
 ## Lead section
 
-The top Section of the front page — the part that changes with the Stage, so the page leads with what matters at that point in the Edition's life.
+The Section below the Edition title — the part of the front page that changes with the Stage, so the page leads with what matters at that point in the Edition's life.
 
 ## Previous edition
 
