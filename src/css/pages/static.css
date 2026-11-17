@@ -25,7 +25,7 @@
 
         @media (--large) {
             position: sticky;
-            top: var(--space-6);
+            top: calc(var(--header-bar-height) + var(--space-6));
         }
     }
 

@@ -2,6 +2,11 @@
  * Bare HTML tags (docs/css-rules.md). Only what the pages need so far.
  */
 
+/* In-page jumps stop below the pinned header bar instead of under it. */
+html {
+    scroll-padding-top: var(--header-bar-height);
+}
+
 body {
     background: var(--ground);
     color: var(--text);

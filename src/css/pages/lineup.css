@@ -7,10 +7,10 @@
         margin-bottom: var(--space-7);
     }
 
-    /* The A–Z bar sticks to the top of the screen while the list scrolls under it. */
+    /* The A–Z bar sticks just below the header bar while the list scrolls under it. */
     .lineup__letters {
         position: sticky;
-        top: 0;
+        top: var(--header-bar-height);
         z-index: 1;
         display: flex;
         flex-wrap: wrap;
