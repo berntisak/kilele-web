@@ -34,6 +34,12 @@
         background: var(--red);
     }
 
+    /* The stretch of pipe from the logo to the content's right edge. Everything on the run is placed along it. */
+    .edition-title__track {
+        position: absolute;
+        inset: 0 var(--gutter) 0 0;
+    }
+
     /* A leg hanging off the run. Each leg sets its own --x (how far along) and --length (how far down). */
     .edition-title__leg {
         position: absolute;
@@ -56,13 +62,13 @@
         }
     }
 
-    /* The pipe marker: its arrow tip on the page content's right edge. Not on phones yet (see Tune the design). */
+    /* The pipe marker, centred on its --x, about a third in from the right. Not on phones yet (see Tune the design). */
     .edition-title__marker {
         display: none;
         position: absolute;
         top: 50%;
-        right: var(--gutter);
-        translate: 0 -50%;
+        left: var(--x);
+        translate: -50% -50%;
         height: 1.5rem;
         padding: 0 1.4rem 0 0.7rem;
         background: var(--yellow);
@@ -79,11 +85,6 @@
         @media (--medium) {
             display: block;
         }
-
-        /* Where the gauge shows, the pipe marker sits just left of it. */
-        @media (--large) {
-            right: calc(var(--gutter) + 7rem + var(--space-6));
-        }
     }
 
     /*
@@ -93,40 +94,54 @@
      */
     .edition-title__gauge {
         display: none;
-        right: calc(var(--gutter) + 3.3rem);
+        @media (--large) {
+            display: block;
+        }
+    }
+
+    /* The last gauge: its dial's right edge on the content's right edge. */
+    .edition-title__gauge--end {
         left: auto;
+        right: calc(var(--size) / 2 - 0.2rem);
+    }
+
+    /* A leg standing on the run instead of hanging from it. On a gauge, the dial sits on top. */
+    .edition-title__leg--up {
+        top: auto;
+        bottom: 100%;
+        border-radius: 0.4rem 0.4rem 0 0;
+
+        & .edition-title__dial {
+            top: auto;
+            bottom: 100%;
+        }
+    }
+
+    /* A wide leg: only from --large, where the pipe is long enough. On phones they would crowd together, and at --medium the marker covers their place. */
+    .edition-title__leg--wide {
+        display: none;
 
         @media (--large) {
             display: block;
         }
     }
 
-    /* The dial: a ring, green on the left half and red on the right, meeting at the top. */
+    /* The dial: a red window dot from The Mall's facade, with a pale concrete rim. */
     .edition-title__dial {
         position: absolute;
         top: 100%;
         left: 50%;
         translate: -50% 0;
-        width: 7rem;
+        width: var(--size);
         aspect-ratio: 1;
-        border: 0.25rem solid var(--ink);
+        border: 0.3rem solid var(--concrete-light);
         border-radius: 50%;
-        background: conic-gradient(
-            from -135deg,
-            var(--green) 0 133deg,
-            var(--ground) 133deg 137deg,
-            var(--red) 137deg 270deg,
-            var(--ground) 270deg
-        );
+        background: var(--red);
+        box-shadow: 0 0 0 0.15rem var(--concrete-dark);
 
-        /* The face: a plain disc over the middle, leaving the colours as a ring. */
-        &::before {
-            content: "";
-            position: absolute;
-            inset: 20%;
-            border-radius: 50%;
-            background: var(--ground);
-        }
+        /* Inside the red dot, "text colour" means cream, so everything drawn on it shows up. */
+        --text: var(--cream);
+        color: var(--text);
     }
 
     /* The needle, pointing straight up at 0 V, with a round hub at its foot. */
@@ -135,48 +150,42 @@
         bottom: 50%;
         left: 50%;
         translate: -50% 0;
-        width: 0.2rem;
+        width: calc(var(--size) / 25);
         height: 44%;
-        background: var(--yellow);
+        background: var(--text);
+        transform-origin: 50% 100%;
+        rotate: var(--reading, 0deg);
 
         &::after {
             content: "";
             position: absolute;
-            bottom: -0.35rem;
+            bottom: calc(var(--size) / -14);
             left: 50%;
             translate: -50% 0;
-            width: 0.7rem;
-            height: 0.7rem;
+            width: calc(var(--size) / 7);
+            height: calc(var(--size) / 7);
             border-radius: 50%;
-            background: var(--yellow);
+            background: var(--text);
         }
     }
 
-    /* The reading under the hub: the ground symbol over "0 V". */
-    .edition-title__reading {
-        position: absolute;
-        right: 0;
-        bottom: 12%;
-        left: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.15rem;
-        font-family: var(--font-mono);
-        font-size: var(--text-1);
-        font-weight: var(--weight-bold);
-        line-height: 1.1;
-    }
-
-    /* The electrical ground symbol: a short stem over three shrinking bars, each one a gradient. */
+    /*
+     * The electrical ground symbol, below the hub: a short stem over three shrinking bars, each one a gradient.
+     * Measured in tenths of a 5rem dial's tenth (--unit), so it scales with every dial.
+     */
     .edition-title__ground-symbol {
-        width: 1rem;
-        height: 0.8rem;
+        --unit: calc(var(--size) / 50);
+        position: absolute;
+        bottom: 17%;
+        left: 50%;
+        translate: -50% 0;
+        width: calc(var(--unit) * 10);
+        height: calc(var(--unit) * 8);
         background:
-            linear-gradient(var(--text), var(--text)) center 0 / 0.12rem 0.3rem no-repeat,
-            linear-gradient(var(--text), var(--text)) center 0.3rem / 100% 0.12rem no-repeat,
-            linear-gradient(var(--text), var(--text)) center 0.48rem / 64% 0.12rem no-repeat,
-            linear-gradient(var(--text), var(--text)) center 0.66rem / 28% 0.12rem no-repeat;
+            linear-gradient(var(--text), var(--text)) center 0 / calc(var(--unit) * 1.2) calc(var(--unit) * 3) no-repeat,
+            linear-gradient(var(--text), var(--text)) center calc(var(--unit) * 3) / 100% calc(var(--unit) * 1.2) no-repeat,
+            linear-gradient(var(--text), var(--text)) center calc(var(--unit) * 4.8) / 64% calc(var(--unit) * 1.2) no-repeat,
+            linear-gradient(var(--text), var(--text)) center calc(var(--unit) * 6.6) / 28% calc(var(--unit) * 1.2) no-repeat;
     }
 
     /* PLACEHOLDER size until the designer's logo arrives. */

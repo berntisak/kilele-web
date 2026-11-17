@@ -1,0 +1,74 @@
+{#
+  PROTOTYPE, throwaway. Three takes on the top of the front page using the
+  2027 key art (The Mall, red lines, red window dots), switched with
+  ?variant=A|B|C on the real front page. ?variant=now (or no param) shows the
+  current Edition title, unchanged.
+
+  A · Minimal      no photo; borrows only the key art's angled red line and red dot.
+  B · Figure       the building as a framed figure beside the logo.
+  C · Key art led  the building full-bleed; its black facade becomes the ink Lead section.
+
+  Lives on design/red-pipes-prototype only. Delete this file, keyart.prototype.css,
+  keyart-switcher.prototype.js and the two keyart-*.prototype.jpg once a direction is picked.
+#}
+
+{# A · Minimal: today's layout, marker and gauge swapped for the key art's line and dot. #}
+<section class="section edition-title keyart-variant keyart-variant--A">
+    <div class="edition-title__mark">
+        <img class="edition-title__logo" src="/assets/logos/Kilele-2027-Logo_Primary.png"
+             alt="Kilele Summit" width="2918" height="1525" eleventy:ignore>
+        <div class="edition-title__pipework" aria-hidden="true">
+            <span class="edition-title__run ka-a__run">
+                <span class="edition-title__leg" style="--x: 3rem; --length: 2.2rem"></span>
+                <span class="edition-title__leg" style="--x: 8rem; --length: 1.2rem"></span>
+            </span>
+            <span class="ka-a__rise"></span>
+            <span class="ka-a__drop">
+                <span class="ka-a__dot"></span>
+            </span>
+        </div>
+    </div>
+    <p class="edition-title__year">
+        <span class="edition-title__leader" aria-hidden="true"></span>
+        {{ edition.year }}
+    </p>
+    <p class="edition-title__fig">Fig. 1 — Kilele, fourth edition. Not to scale.</p>
+</section>
+
+{# B · Figure: logo and dates on the left, the building framed like a plate in a manual on the right. #}
+<section class="section ka-b keyart-variant keyart-variant--B">
+    <div class="ka-b__text">
+        <img class="ka-b__logo" src="/assets/logos/Kilele-2027-Logo_Primary.png"
+             alt="Kilele Summit" width="2918" height="1525" eleventy:ignore>
+        <p class="ka-b__dates">22–27 February {{ edition.year }}</p>
+        <p class="ka-b__place">Nairobi, Kenya</p>
+    </div>
+    <figure class="ka-b__figure">
+        <img class="ka-b__photo" src="/assets/images/2027/keyart-square.prototype.jpg"
+             alt="" width="1080" height="1080" eleventy:ignore>
+        <figcaption class="ka-b__caption">Fig. 1 — The Mall, Westlands. Venue, Kilele {{ edition.year }}.</figcaption>
+    </figure>
+</section>
+
+{# C · Key art led: the building fills the width; the logo sits in its sky. #}
+<section class="ka-c keyart-variant keyart-variant--C">
+    <picture>
+        <source media="(min-width: 900px)" srcset="/assets/images/2027/keyart-wide.prototype.jpg" width="1920" height="800">
+        <img class="ka-c__art" src="/assets/images/2027/keyart-square.prototype.jpg"
+             alt="" width="1080" height="1080" eleventy:ignore>
+    </picture>
+    <div class="ka-c__text">
+        <img class="ka-c__logo" src="/assets/logos/Kilele-2027-Logo_Primary.png"
+             alt="Kilele Summit" width="2918" height="1525" eleventy:ignore>
+        <p class="ka-c__dates">22–27 February {{ edition.year }}</p>
+        <p class="ka-c__place">Nairobi, Kenya</p>
+    </div>
+</section>
+
+{# The floating switcher: not part of any design. #}
+<nav class="keyart-switcher" aria-label="Prototype variants" hidden>
+    <button type="button" data-step="-1" aria-label="Previous variant">←</button>
+    <span class="keyart-switcher__label"></span>
+    <button type="button" data-step="1" aria-label="Next variant">→</button>
+</nav>
+<script src="/scripts/keyart-switcher.prototype.js" defer></script>

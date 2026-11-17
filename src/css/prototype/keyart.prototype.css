@@ -1,0 +1,241 @@
+/*
+ * PROTOTYPE, throwaway: the key-art variants for the top of the front page.
+ * See src/_includes/prototype/keyart-variants.prototype.html. Breaks the kit
+ * rules on purpose in places (raw vw sizes to track the photo); rewrite
+ * properly when a direction is picked.
+ */
+
+/* Show only the variant named in <html data-keyart>. No attribute (no JS) shows today's design. */
+html:not([data-keyart="A"]) .keyart-variant--A,
+html:not([data-keyart="B"]) .keyart-variant--B,
+html:not([data-keyart="C"]) .keyart-variant--C,
+html[data-keyart]:not([data-keyart="now"]) .keyart-variant--now {
+    display: none;
+}
+
+.page--home {
+    /* ---------- A · Minimal ---------- */
+
+    /* From --medium the run stops partway and rises at the key art's angle (21°). */
+    .ka-a__rise,
+    .ka-a__drop {
+        display: none;
+    }
+
+    @media (--medium) {
+        .ka-a__run {
+            right: 45%;
+        }
+
+        .ka-a__rise {
+            display: block;
+            position: absolute;
+            top: 32.3%;
+            left: calc(55% - 0.1rem);
+            width: 200vw;
+            height: 2.4%;
+            background: var(--red);
+            transform-origin: 0 50%;
+            rotate: -21deg;
+        }
+
+        /* A leg hanging a window dot off the run, where the gauge used to hang. */
+        .ka-a__drop {
+            display: block;
+            position: absolute;
+            top: 32.3%;
+            left: calc(55% - 4rem);
+            width: 0.4rem;
+            height: 1.25rem;
+            background: var(--red);
+        }
+    }
+
+    /* The red window dot from the facade, with its pale concrete rim. */
+    .ka-a__dot {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        translate: -50% 0;
+        width: 5rem;
+        aspect-ratio: 1;
+        border: 0.3rem solid var(--concrete-light);
+        border-radius: 50%;
+        background: var(--red);
+        box-shadow: 0 0 0 0.15rem var(--concrete-dark);
+    }
+
+    /* ---------- B · Figure ---------- */
+
+    .ka-b {
+        padding-block: var(--space-6);
+
+        @media (--medium) {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: var(--space-7);
+            align-items: end;
+        }
+    }
+
+    .ka-b__logo {
+        width: min(22rem, 70vw);
+    }
+
+    .ka-b__dates,
+    .ka-b__place,
+    .ka-c__dates,
+    .ka-c__place {
+        font-family: var(--font-display);
+        line-height: var(--line-height-tight);
+        text-transform: uppercase;
+    }
+
+    .ka-b__dates,
+    .ka-b__place {
+        font-size: var(--text-7);
+    }
+
+    .ka-b__dates {
+        margin-top: var(--space-5);
+    }
+
+    .ka-b__place,
+    .ka-c__place {
+        color: var(--red);
+    }
+
+    .ka-b__figure {
+        margin: var(--space-6) 0 0;
+    }
+
+    /* The building cropped to a 4:3 plate, its own cream sky inside a ruled frame. */
+    .ka-b__photo {
+        display: block;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        object-position: 50% 100%;
+        border: 2px solid var(--text);
+    }
+
+    .ka-b__caption {
+        margin-top: var(--space-2);
+        color: var(--text-muted);
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    /* ---------- C · Key art led ---------- */
+
+    .ka-c {
+        position: relative;
+        background: var(--cream);
+    }
+
+    .ka-c__art {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    /* Logo and dates set into the photo's sky, sized in vw so they keep their place on the photo. */
+    .ka-c__text {
+        position: absolute;
+        top: 7vw;
+        left: var(--gutter);
+
+        @media (--medium) {
+            top: 3.5vw;
+        }
+    }
+
+    .ka-c__logo {
+        width: 50vw;
+
+        @media (--medium) {
+            width: 27vw;
+        }
+    }
+
+    .ka-c__dates,
+    .ka-c__place {
+        font-size: 6.4vw;
+
+        @media (--medium) {
+            font-size: 3.3vw;
+        }
+    }
+
+    .ka-c__dates {
+        margin-top: 2.5vw;
+
+        @media (--medium) {
+            margin-top: 1.2vw;
+        }
+    }
+}
+
+/* C: the facade's black runs on into the Lead section, which turns ink, and the photo's red line carries on into it. */
+html[data-keyart="C"] .page--home .lead-section {
+    --ground: var(--ink);
+    --text: var(--cream);
+    --text-muted: #b4ad9c;
+    --rule: rgb(241 237 225 / 0.18);
+    --pipe: var(--red);
+    position: relative;
+
+    & .lead-section__label {
+        color: var(--text-muted);
+    }
+
+    /* The photo's vertical red line (43.5–44.3% across) comes down and turns left to the label. */
+    @media (--medium) {
+        padding-top: calc(var(--space-7) + var(--space-6));
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: var(--gutter);
+            box-sizing: border-box;
+            width: calc(44.3% - var(--gutter));
+            height: var(--space-7);
+            border-right: 0.8vw solid var(--red);
+            border-bottom: 0.8vw solid var(--red);
+        }
+    }
+}
+
+/* ---------- The switcher: not part of any design ---------- */
+
+.keyart-switcher:not([hidden]) {
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    z-index: 1000;
+    translate: -50% 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 999px;
+    background: #2b2bff;
+    color: white;
+    font: 600 0.8rem/1 system-ui, sans-serif;
+    white-space: nowrap;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 0.35);
+
+    & button {
+        width: 2rem;
+        height: 2rem;
+        border: 0;
+        border-radius: 50%;
+        background: rgb(255 255 255 / 0.15);
+        color: inherit;
+        font: inherit;
+        cursor: pointer;
+    }
+}

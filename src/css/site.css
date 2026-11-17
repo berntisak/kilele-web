@@ -21,6 +21,7 @@
 @import "kit/components/section-head.css";
 
 @import "pages/home.css";
+@import "prototype/keyart.prototype.css"; /* PROTOTYPE: key-art variants, remove with them */
 @import "pages/static.css";
 @import "pages/news.css";
 @import "pages/news-article.css";

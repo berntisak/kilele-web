@@ -5,22 +5,46 @@ title: "Kilele Summit — Common Grounds, 23–27 February 2027"
 description: "East Africa's first and only summit for music, tech and culture. Common Grounds, 23–27 February 2027, The Mall, Westlands, Nairobi."
 ---
 
-<section class="section edition-title">
+{# PROTOTYPE: keyart-variant classes and the include below flip this top between key-art variants (?variant=). #}
+<section class="section edition-title keyart-variant keyart-variant--now">
     <div class="edition-title__mark">
         <img class="edition-title__logo" src="/assets/logos/Kilele-2027-Logo_Primary.png"
              alt="Kilele Summit" width="2918" height="1525">
         <div class="edition-title__pipework" aria-hidden="true">
             <span class="edition-title__run">
-                <span class="edition-title__leg" style="--x: 6rem; --length: 2.2rem"></span>
-                <span class="edition-title__leg" style="--x: 15rem; --length: 1.2rem"></span>
-                <span class="edition-title__marker">Music · Tech · Culture</span>
-                {# A centre-zero voltmeter reading 0 V: in electronics, the shared 0 V reference is the "common ground". #}
-                <span class="edition-title__leg edition-title__gauge" style="--length: 1.25rem">
-                    <span class="edition-title__dial">
-                        <span class="edition-title__needle"></span>
-                        <span class="edition-title__reading">
+                <span class="edition-title__track">
+                    {# Base legs show at every width; wide legs fill in from --large. 22% and 47% are where the smaller gauges will hang. #}
+                    <span class="edition-title__leg edition-title__leg--wide" style="--x: 4%; --length: 1.6rem"></span>
+                    <span class="edition-title__leg" style="--x: 8%; --length: 2.2rem"></span>
+                    <span class="edition-title__leg edition-title__leg--wide" style="--x: 14%; --length: 1.2rem"></span>
+                    <span class="edition-title__leg edition-title__leg--up edition-title__leg--wide" style="--x: 16%; --length: 2rem"></span>
+                    {# Smaller gauges swing either side of 0 V, settling on the main gauge at the end. #}
+                    <span class="edition-title__leg edition-title__leg--wide edition-title__gauge" style="--x: 22%; --length: 1.2rem; --size: 3.5rem; --reading: -55deg">
+                        <span class="edition-title__dial">
+                            <span class="edition-title__needle"></span>
                             <span class="edition-title__ground-symbol"></span>
-                            0 V
+                        </span>
+                    </span>
+                    <span class="edition-title__leg edition-title__leg--wide" style="--x: 28%; --length: 1.8rem"></span>
+                    <span class="edition-title__leg edition-title__leg--up" style="--x: 30%; --length: 1.6rem"></span>
+                    <span class="edition-title__leg edition-title__leg--wide" style="--x: 35%; --length: 1.2rem"></span>
+                    <span class="edition-title__leg" style="--x: 40%; --length: 2.4rem"></span>
+                    <span class="edition-title__leg edition-title__leg--up edition-title__leg--wide" style="--x: 42%; --length: 1.4rem"></span>
+                    <span class="edition-title__leg edition-title__leg--up edition-title__leg--wide edition-title__gauge" style="--x: 47%; --length: 1.2rem; --size: 2.5rem; --reading: 30deg">
+                        <span class="edition-title__dial">
+                            <span class="edition-title__needle"></span>
+                            <span class="edition-title__ground-symbol"></span>
+                        </span>
+                    </span>
+                    <span class="edition-title__leg edition-title__leg--wide" style="--x: 82%; --length: 1.4rem"></span>
+                    <span class="edition-title__leg edition-title__leg--up edition-title__leg--wide" style="--x: 86%; --length: 1.8rem"></span>
+                    <span class="edition-title__leg edition-title__leg--up" style="--x: 90%; --length: 1.4rem"></span>
+                    <span class="edition-title__marker" style="--x: 67%">Music · Tech · Culture</span>
+                    {# A centre-zero voltmeter reading 0 V: in electronics, the shared 0 V reference is the "common ground". #}
+                    <span class="edition-title__leg edition-title__gauge edition-title__gauge--end" style="--length: 1.25rem; --size: 5rem">
+                        <span class="edition-title__dial">
+                            <span class="edition-title__needle"></span>
+                            <span class="edition-title__ground-symbol"></span>
                         </span>
                     </span>
                 </span>
@@ -32,8 +56,10 @@ description: "East Africa's first and only summit for music, tech and culture. C
         {{ edition.year }}
     </p>
     <p class="edition-title__fig">Fig. 1 — Kilele, fourth edition. Not to scale.</p>
-    <p class="edition-title__fig edition-title__fig--corner">Fig. 2 — Pipe marker and gauge. Reads: 0 V (common ground).</p>
+    <p class="edition-title__fig edition-title__fig--corner">Fig. 2 — Vent Pipes. Gauge Reading: 0 V (approximation).</p>
 </section>
+
+{% include "prototype/keyart-variants.prototype.html" %}
 
 <section class="section lead-section">
     {#
