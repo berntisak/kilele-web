@@ -55,7 +55,43 @@ description: "East Africa's first and only summit for music, tech and culture. C
 {% endif %}
 
 <section class="section previous-edition">
-    <p>Previous edition: lineup 2026, schedule 2026, gallery 2026</p>
+    {# PLACEHOLDER photos, picked at random on each build. Which photos belong here is still to be decided. #}
+    {% set lineupPhoto = (lineup | selectattr("photo_path") | random).photo_path %}
+    {% set schedulePhoto = (lineup | selectattr("photo_path") | random).photo_path %}
+    {% set galleryPhoto = (gallery.photos | selectattr("url") | random).url %}
+
+    <header class="section-head">
+        <h2 class="section-head__title">The {{ edition.previousYear }} edition</h2>
+    </header>
+    <ul class="previous-edition__list" role="list">
+        <li>
+            <a class="card" href="/{{ edition.previousYear }}/lineup/">
+                <img class="card__photo" src="{{ lineupPhoto }}" alt="" loading="lazy" eleventy:ignore>
+                <div class="card__panel">
+                    <h3 class="card__title">Lineup {{ edition.previousYear }} <span aria-hidden="true">→</span></h3>
+                    {% if lineup | length %}<p class="card__meta">{{ lineup | length }} artists</p>{% endif %}
+                </div>
+            </a>
+        </li>
+        <li>
+            <a class="card" href="/{{ edition.previousYear }}/schedule/">
+                <img class="card__photo" src="{{ schedulePhoto }}" alt="" loading="lazy" eleventy:ignore>
+                <div class="card__panel">
+                    <h3 class="card__title">Schedule {{ edition.previousYear }} <span aria-hidden="true">→</span></h3>
+                    {% if schedule_list | length %}<p class="card__meta">{{ schedule_list | length }} programme points</p>{% endif %}
+                </div>
+            </a>
+        </li>
+        <li>
+            <a class="card" href="/{{ edition.previousYear }}/gallery/">
+                <img class="card__photo" src="{{ galleryPhoto }}" alt="" loading="lazy" eleventy:ignore>
+                <div class="card__panel">
+                    <h3 class="card__title">Gallery {{ edition.previousYear }} <span aria-hidden="true">→</span></h3>
+                    {% if gallery.photos | length %}<p class="card__meta">{{ gallery.photos | length }} photographs</p>{% endif %}
+                </div>
+            </a>
+        </li>
+    </ul>
 </section>
 
 <section class="section upcoming-edition" data-ground="ink">

@@ -4,7 +4,8 @@
 
 .page--home {
     /* One column on phones, three from --medium: never two, which would leave the third card alone. */
-    .latest-news__list {
+    .latest-news__list,
+    .previous-edition__list {
         display: grid;
         gap: var(--space-5);
         padding: 0;
