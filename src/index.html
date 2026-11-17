@@ -118,7 +118,7 @@ description: "East Africa's first and only summit for music, tech and culture. C
                     <span class="card__number" aria-hidden="true">{{ number }}</span>
                 </div>
                 <div class="card__panel">
-                    <p class="card__meta">
+                    <p class="meta">
                         No. {{ number }} · Filed <time datetime="{{ post.publish_date }}">{{ post.publish_date.slice(0, 10) }}</time>
                     </p>
                     <h3 class="card__title">{{ post.title }}</h3>
@@ -161,7 +161,7 @@ description: "East Africa's first and only summit for music, tech and culture. C
                 </div>
                 <div class="card__panel">
                     <h3 class="card__title">Lineup {{ edition.previousYear }} <span aria-hidden="true">→</span></h3>
-                    {% if lineup | length %}<p class="card__meta">{{ lineup | length }} artists, counted</p>{% endif %}
+                    {% if lineup | length %}<p class="meta">{{ lineup | length }} artists, counted</p>{% endif %}
                 </div>
             </a>
         </li>
@@ -173,7 +173,7 @@ description: "East Africa's first and only summit for music, tech and culture. C
                 </div>
                 <div class="card__panel">
                     <h3 class="card__title">Schedule {{ edition.previousYear }} <span aria-hidden="true">→</span></h3>
-                    {% if schedule_list | length %}<p class="card__meta">{{ schedule_list | length }} programme points, counted</p>{% endif %}
+                    {% if schedule_list | length %}<p class="meta">{{ schedule_list | length }} programme points, counted</p>{% endif %}
                 </div>
             </a>
         </li>
@@ -185,7 +185,7 @@ description: "East Africa's first and only summit for music, tech and culture. C
                 </div>
                 <div class="card__panel">
                     <h3 class="card__title">Gallery {{ edition.previousYear }} <span aria-hidden="true">→</span></h3>
-                    {% if gallery.photos | length %}<p class="card__meta">{{ gallery.photos | length }} photographs, counted</p>{% endif %}
+                    {% if gallery.photos | length %}<p class="meta">{{ gallery.photos | length }} photographs, counted</p>{% endif %}
                 </div>
             </a>
         </li>

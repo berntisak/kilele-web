@@ -5,7 +5,9 @@ pagination:
   alias: artist
   resolve: values
 permalink: "/2026/lineup/{{ artist.slug }}/"
-layout: layouts/base.html
+layout: layouts/site.html
+pageName: artist
+headerContext: Archive 2026
 eleventyComputed:
     title: "{{ artist.name }}"
     description: "{{ (artist.bio or artist.name) | truncate(160, true, '...') }}"
@@ -13,72 +15,61 @@ eleventyComputed:
     og_type: "profile"
 ---
 
-<article class="content__container">
-    <div class="content__title">
-        <h1>{{artist.name}}</h1>
-    </div>
-    <div class="lineup__section lineup__section--split">
-        <div>
-            <img src="{{ artist.photo_path if artist.photo_path else '/assets/images/placeholder.jpg' }}" alt="{{ artist.name }}" width="1000" loading="lazy" eleventy:ignore/>
+<article class="section artist">
+    <div class="pipe artist__main"></div>
+    <figure class="artist__figure">
+        <div class="artist__portrait">
+            {% if artist.photo_large %}
+            <img class="artist__photo" src="{{ artist.photo_large }}" alt="{{ artist.name }}" width="1000" height="1000" eleventy:ignore>
+            {% else %}
+            <span class="artist__photo"></span>
+            {% endif %}
+            <span class="artist__number" aria-hidden="true">{{ artist.number }}</span>
         </div>
-        <div class="lineup__section-text">
-                <h2>{{artist.name}}</h2>
-            <div class="lineup__info-box">
-                {{ artist.bio | markdown | sanitize | safe }}
-                {% if artist.program_points.length %}
-                <p>
-                Experience <strong>{{ artist.name }}</strong> at  
-                {%- for point in artist.program_points -%}
-                    <a href="/2026/schedule/{{ point.slug }}/"> <u><i>{{ point.short_title or point.title }}</i></u></a>
-                    {%- if not loop.last %}, {% endif -%}
-                {%- endfor -%}
-                </p>
-                {% endif %}
+        <figcaption class="meta artist__caption">Fig. {{ artist.number }} — {{ artist.name }}, Lineup 2026</figcaption>
+    </figure>
+    <div class="artist__text">
+        <p class="meta">Artist no. {{ artist.number }} of {{ lineup | length }} · Lineup 2026</p>
+        <h1 class="page-title artist__name">{{ artist.name }}</h1>
+        {% if artist.program_points.length or artist.links.length %}
+        <dl class="artist__spec">
+            {% if artist.program_points.length %}
+            <div>
+                <dt class="meta">Appears at</dt>
+                <dd class="artist__value">
+                    {% for point in artist.program_points %}
+                    <a href="/2026/schedule/{{ point.slug }}/">{{ point.short_title or point.title }} →</a>
+                    {% endfor %}
+                </dd>
             </div>
-            <div class="lineup__link-list">
-                {% if artist.website %}
-                <div>
-                    <b>Website:</b> <u><a href={{artist.website}} target="_blank">{{artist.website}}</a></u>
-                </div>
-                {% endif %}
-                {% if artist.bandcamp %}
-                <div>
-                    <b>Bandcamp:</b> <u><a href={{artist.bandcamp}} target="_blank">{{artist.bandcamp}}</a></u>
-                </div>
-                {% endif %}
-                {% if artist.soundcloud %}
-                <div>
-                    <b>Soundcloud:</b> <u><a href={{artist.soundcloud}} target="_blank">{{artist.soundcloud}}</a></u>
-                </div>
-                {% endif %}
-                {% if artist.youtube %}
-                <div>
-                    <b>Youtube:</b> <u><a href={{artist.youtube}} target="_blank">{{artist.youtube}}</a></u>
-                </div>
-                {% endif %}
-                {% if artist.applemusic %}
-                <div>
-                    <b>Apple Music:</b> <u><a href={{artist.applemusic}} target="_blank">{{artist.applemusic}}</a></u>
-                </div>
-                {% endif %}
-                {% if artist.spotify %}
-                <div>
-                    <b>Spotify:</b> <u><a href={{artist.spotify}} target="_blank">{{artist.spotify}}</a></u>
-                </div>
-                {% endif %}
-                {% if artist.instagram %}
-                <div>
-                    <b>Instagram:</b> <u><a href={{artist.instagram}} target="_blank">{{artist.instagram}}</a></u>
-                </div>
-                {% endif %}
-                {% if artist.tiktok %}
-                <div>
-                    <b>TikTok:</b> <u><a href={{artist.tiktok}} target="_blank">{{artist.tiktok}}</a></u>
-                </div>
-                {% endif %}
+            {% endif %}
+            {% if artist.links.length %}
+            <div>
+                <dt class="meta">Links</dt>
+                <dd class="artist__value artist__value--inline">
+                    {% for link in artist.links %}
+                    <a href="{{ link.url }}" target="_blank" rel="noopener">{{ link.name }} ↗</a>
+                    {% endfor %}
+                </dd>
             </div>
+            {% endif %}
+        </dl>
+        {% endif %}
+        {% if artist.bio %}
+        <div class="content artist__bio">
+            {{ artist.bio | markdown | sanitize | safe }}
         </div>
+        {% endif %}
     </div>
+    <nav class="pager artist__pager" aria-label="More artists">
+        {% if pagination.href.previous %}
+        <a class="pager__previous" href="{{ pagination.href.previous }}">← Previous</a>
+        {% endif %}
+        <a class="pager__all" href="/2026/lineup/">All {{ lineup | length }} artists</a>
+        {% if pagination.href.next %}
+        <a class="pager__next" href="{{ pagination.href.next }}">Next →</a>
+        {% endif %}
+    </nav>
 </article>
 
 {% set canonicalUrl = site.url ~ page.url %}

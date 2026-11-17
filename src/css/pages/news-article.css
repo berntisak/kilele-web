@@ -16,13 +16,6 @@
         padding-block: var(--space-6);
     }
 
-    .news-article__meta {
-        color: var(--text-muted);
-        font-family: var(--font-mono);
-        font-size: var(--text-2);
-        text-transform: uppercase;
-    }
-
     /* 30ch keeps long titles from breaking at awkward places. */
     .news-article__title {
         max-width: 30ch;
@@ -73,10 +66,6 @@
 
     .news-article__end {
         margin-top: var(--space-7);
-        color: var(--text-muted);
-        font-family: var(--font-mono);
-        font-size: var(--text-2);
-        text-transform: uppercase;
     }
 
     /* Back from the downcomer's foot to where the text starts. */
@@ -108,36 +97,9 @@
 
     /* Under the pipe loop, lined up with the text column. */
     .news-article__pager {
-        display: grid;
-        grid-template-columns: 1fr auto 1fr;
         max-width: calc(65ch + 2 * var(--gutter));
         margin-inline: auto;
         padding-top: 0;
-    }
-
-    .news-article__pager a {
-        color: inherit;
-        font-family: var(--font-mono);
-        font-size: var(--text-2);
-        text-decoration: none;
-        text-transform: uppercase;
-
-        &:hover {
-            text-decoration: underline;
-        }
-    }
-
-    .news-article__newer {
-        grid-column: 1;
-    }
-
-    .news-article__all {
-        grid-column: 2;
-    }
-
-    .news-article__older {
-        grid-column: 3;
-        justify-self: end;
     }
 
     /* The drop cap needs room: a one-line opening paragraph grows to hold it. */
