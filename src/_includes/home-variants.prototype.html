@@ -1,0 +1,389 @@
+{#
+  PROTOTYPE — throwaway (#185). Three front-page layouts on the real data,
+  switched with ?variant=A|B|C and the bar at the bottom. "0" is the real page.
+  Only rendered by the dev server. Nothing here enters the kit without discussion.
+
+  A · Press     — the E · Press prototype (/prototype/) moved onto the kit's fonts and colours.
+  B · Option B  — Option B from design-refs/kilele27-front-page-directions.pdf.
+  C · Press, deadpan — A's structure with an MSCHF treatment: numbered and
+                  labelled like an inventory, oversized type, dry captions.
+#}
+{% if eleventy.env.runMode == "serve" %}
+<link rel="stylesheet" href="/css/prototype/home-variants.css">
+
+{# Shared numbers, counted the same way as the real page. #}
+{% set listedNews = news | rejectattr("hero_video") %}
+{% set latestNews = listedNews.slice(0, 3) %}
+{% set newsCount = listedNews | length %}
+{% set artistCount = lineup | length %}
+{% set pointCount = schedule_list | length %}
+{% set photoCount = gallery.photos | length %}
+{% set prev = edition.previousYear %}
+{% set lineupPhoto = (lineup | selectattr("photo_path") | random).photo_path %}
+{% set schedulePhoto = (lineup | selectattr("photo_path") | random).photo_path %}
+{% set galleryPhoto = (gallery.photos | selectattr("url") | random).url %}
+{% set theme = "Common Grounds" %}
+{% set themeLine = "Common Grounds is where we meet: on the dancefloor, in conversation, in collective action, and in the shared belief that another future is possible." %}
+{% set dates = "23–27 February 2027" %}
+{% set venue = "The Mall, Westlands, Nairobi" %}
+{% set tagline = "East Africa's first and only summit for music, tech and culture." %}
+{% set substack = "https://kilelesummit.substack.com/" %}
+
+{# Duotone filters, as in the E · Press prototype (#177 Strategy B). #}
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <filter id="pv-duo-cobalt" color-interpolation-filters="sRGB">
+        <feColorMatrix type="matrix" values="0.2126 0.7152 0.0722 0 0  0.2126 0.7152 0.0722 0 0  0.2126 0.7152 0.0722 0 0  0 0 0 1 0"/>
+        <feComponentTransfer><feFuncR type="table" tableValues="0.09 0.74"/><feFuncG type="table" tableValues="0.13 0.86"/><feFuncB type="table" tableValues="0.28 1.00"/></feComponentTransfer>
+    </filter>
+    <filter id="pv-duo-green" color-interpolation-filters="sRGB">
+        <feColorMatrix type="matrix" values="0.2126 0.7152 0.0722 0 0  0.2126 0.7152 0.0722 0 0  0.2126 0.7152 0.0722 0 0  0 0 0 1 0"/>
+        <feComponentTransfer><feFuncR type="table" tableValues="0.10 0.68"/><feFuncG type="table" tableValues="0.18 0.94"/><feFuncB type="table" tableValues="0.12 0.66"/></feComponentTransfer>
+    </filter>
+    <filter id="pv-concrete-fine"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" seed="7"/><feColorMatrix type="saturate" values="0"/></filter>
+    <filter id="pv-concrete-broad"><feTurbulence type="fractalNoise" baseFrequency="0.028" numOctaves="2" seed="3"/><feColorMatrix type="saturate" values="0"/></filter>
+</svg>
+
+{# ================================================================== #}
+{# A · Press                                                           #}
+{# ================================================================== #}
+<div class="pv pv-a" data-variant="A" hidden>
+    <section class="section pv-a__title">
+        <svg class="pv-a__concrete" viewBox="0 0 400 270" aria-hidden="true" focusable="false">
+            <rect width="400" height="270" fill="#85807a"/>
+            <rect width="400" height="270" filter="url(#pv-concrete-broad)" opacity="0.38"/>
+            <rect width="400" height="270" filter="url(#pv-concrete-fine)" opacity="0.30"/>
+        </svg>
+        <img class="pv-a__logo" src="/assets/logos/Kilele-2027-Logo_Primary.png" alt="Kilele 27" width="2954" height="1525">
+        <p class="pv-a__leader">
+            <span class="pv-a__leader-line" aria-hidden="true"></span>
+            {{ edition.year }}
+        </p>
+    </section>
+
+    <section class="section pv-a__lead">
+        <div class="pv-a__halftone" aria-hidden="true"></div>
+        <h1 class="pv-a__theme">{{ theme }}</h1>
+        <p class="pv-a__when">{{ dates }} · {{ venue }}</p>
+        <p class="pv-a__body">{{ themeLine }}</p>
+        <p class="pv-a__action">
+            <span class="pv-a__cut" aria-hidden="true"></span>
+            <a href="{{ substack }}">Subscribe on Substack →</a>
+        </p>
+    </section>
+
+    {% if latestNews | length %}
+    <section class="section pv-a__latest">
+        <header class="pv-a__head">
+            <h2>Latest</h2>
+            <a href="/news/">All {{ newsCount }} dispatches →</a>
+        </header>
+        <ol class="pv-a__grid" role="list">
+            {% for post in latestNews %}
+            <li>
+                <a class="pv-a__item" href="/news/{{ post.slug }}/">
+                    {% if post.photo_path %}<img class="pv-a__img pv-duo-cobalt" src="{{ post.photo_path }}" alt="" loading="lazy" eleventy:ignore>{% else %}<div class="pv-a__img"></div>{% endif %}
+                    <p class="pv-a__date">{{ post.publish_date.slice(0, 10) }}</p>
+                    <h3 class="pv-a__item-title">{{ post.title }}</h3>
+                </a>
+            </li>
+            {% endfor %}
+        </ol>
+    </section>
+    {% endif %}
+
+    <div class="pv-a__pipe" aria-hidden="true">
+        <span style="--x: 17.6%; --d: 34px"></span>
+        <span style="--x: 43.5%; --d: 20px"></span>
+        <span style="--x: 69.4%; --d: 48px"></span>
+        <span style="--x: 82.4%; --d: 14px"></span>
+    </div>
+
+    <section class="section pv-a__archive" data-ground="ink">
+        <div class="pv-a__hatch" aria-hidden="true"></div>
+        <header class="pv-a__head">
+            <h2>The {{ prev }} edition</h2>
+            <span>{{ artistCount }} artists · {{ pointCount }} programme points · six days</span>
+        </header>
+        <ul class="pv-a__grid" role="list">
+            {% for card in [
+                { title: "Lineup " ~ prev, href: "/" ~ prev ~ "/lineup/", img: lineupPhoto, meta: artistCount ~ " artists" },
+                { title: "Schedule " ~ prev, href: "/" ~ prev ~ "/schedule/", img: schedulePhoto, meta: pointCount ~ " programme points" },
+                { title: "Gallery " ~ prev, href: "/" ~ prev ~ "/gallery/", img: galleryPhoto, meta: photoCount ~ " photographs" }
+            ] %}
+            <li>
+                <a class="pv-a__item" href="{{ card.href }}">
+                    <img class="pv-a__img pv-duo-green" src="{{ card.img }}" alt="" loading="lazy" eleventy:ignore>
+                    <h3 class="pv-a__ink-title">{{ card.title }} <span aria-hidden="true">→</span></h3>
+                    <p class="pv-a__date">{{ card.meta }}</p>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section class="pv-a__next">
+        <span>Next · {{ theme }} · {{ dates }}</span>
+        <a href="{{ substack }}">Subscribe on Substack →</a>
+    </section>
+</div>
+
+{# ================================================================== #}
+{# B · Option B (the PDF)                                              #}
+{# ================================================================== #}
+<div class="pv pv-b" data-variant="B" hidden>
+    <section class="section pv-b__title">
+        <img class="pv-b__logo" src="/assets/logos/Kilele-2027-Logo_Primary.png" alt="Kilele 27" width="2954" height="1525">
+        <p class="pv-b__year">{{ edition.year }}</p>
+        <p class="pv-b__tagline">{{ tagline }}</p>
+    </section>
+
+    <section class="section pv-b__lead">
+        <h1 class="pv-b__tag pv-b__tag--now">Theme · {{ theme }}</h1>
+        <p class="pv-b__when">{{ dates }} · {{ venue }}</p>
+    </section>
+
+    {% if latestNews | length %}
+    <section class="section pv-b__latest">
+        <header class="pv-b__head pv-b__head--now">
+            <h2>Latest <span class="pv-muted">· {{ newsCount }} dispatches</span></h2>
+            <a href="/news/">All {{ newsCount }} →</a>
+        </header>
+        <ol class="pv-b__grid" role="list">
+            {% for post in latestNews %}
+            <li>
+                <a class="card" href="/news/{{ post.slug }}/">
+                    {% if post.photo_path %}<img class="card__photo pv-duo-cobalt" src="{{ post.photo_path }}" alt="" loading="lazy" eleventy:ignore>{% else %}<div class="card__photo"></div>{% endif %}
+                    <div class="card__panel">
+                        <span class="pv-b__tag pv-b__tag--now pv-b__tag--small">Open now</span>
+                        <h3 class="card__title">{{ post.title }}</h3>
+                        <p class="card__meta">{{ post.publish_date.slice(0, 10) }}</p>
+                    </div>
+                </a>
+            </li>
+            {% endfor %}
+        </ol>
+    </section>
+    {% endif %}
+
+    <section class="section pv-b__previous">
+        <header class="pv-b__head pv-b__head--past">
+            <h2>The {{ prev }} edition</h2>
+            <span class="pv-b__tag pv-b__tag--past-fill">Archived</span>
+        </header>
+        <a href="/{{ prev }}/gallery/">
+            <img class="pv-b__wide pv-duo-green" src="{{ galleryPhoto }}" alt="" loading="lazy" eleventy:ignore>
+        </a>
+        <ul class="pv-b__stats" role="list">
+            <li><a href="/{{ prev }}/lineup/"><b>{{ artistCount }}</b> artists</a></li>
+            <li><a href="/{{ prev }}/schedule/"><b>{{ pointCount }}</b> programme</a></li>
+            <li><a href="/news/"><b>{{ newsCount }}</b> dispatches</a></li>
+        </ul>
+    </section>
+
+    <section class="section pv-b__upcoming" data-ground="ink">
+        <p class="pv-b__label">Next · Upcoming edition</p>
+        <h2 class="pv-b__claim">Common Grounds is where we <mark>meet</mark>.</h2>
+        <p>On the dancefloor, in conversation, in collective action, and in the shared belief that another future is possible.</p>
+    </section>
+</div>
+
+{# ================================================================== #}
+{# C · Press, deadpan: A's structure, MSCHF treatment                  #}
+{# ================================================================== #}
+<div class="pv pv-c" data-variant="C" hidden>
+    <section class="section pv-a__title">
+        {# C4 / C5 · Texture: a halftone field under the pipe run, at the right. #}
+        <div class="pv-c__dots" aria-hidden="true">
+            {# C5: one dot screen per accent ink, each at its own angle, like a print. #}
+            <span style="--ink: var(--cobalt); --angle: 15deg"></span>
+            <span style="--ink: var(--yellow); --angle: 0deg"></span>
+            <span style="--ink: var(--green); --angle: 75deg"></span>
+        </div>
+
+        {# C1 · Pipe: the logo's main pipe carried on off the right edge. #}
+        <div class="pv-c__mark">
+            <img class="pv-a__logo" src="/assets/logos/Kilele-2027-Logo_Primary.png" alt="Kilele 27" width="2954" height="1525">
+            <span class="pv-c__run" aria-hidden="true">
+                <span style="--x: 6rem; --d: 2.2rem"></span>
+                <span style="--x: 15rem; --d: 1.2rem"></span>
+                <span style="--x: 27rem; --d: 3rem"></span>
+                <span style="--x: 41rem; --d: 1.6rem"></span>
+            </span>
+        </div>
+        <p class="pv-c__fig pv-c__only-c1 pv-c__fig--run">Fig. 2 — Main, continued off page.</p>
+
+        {# C6 · Pipe markers: colour bands on the run, with the flow arrow, like real pipe labels. #}
+        <div class="pv-c__markers pv-c__only-c6" aria-hidden="true">
+            <span class="pv-c__marker pv-c__marker--yellow">Music · Tech · Culture</span>
+            <span class="pv-c__marker pv-c__marker--green">Nairobi</span>
+        </div>
+        <p class="pv-c__fig pv-c__fig--corner pv-c__only-c6">Fig. 2 — Pipe marker. Contents as labelled.</p>
+
+        {# C7 · Gauge: hangs off the run and reads the Stage (#142). #}
+        <div class="pv-c__gauge pv-c__only-c7" role="img" aria-label="Stage gauge: 1 of 4, Announcement">
+            <span class="pv-c__gauge-stem"></span>
+            <span class="pv-c__gauge-dial">
+                <span class="pv-c__gauge-needle"></span>
+                <span class="pv-c__gauge-read">Stage<br>1/4</span>
+            </span>
+        </div>
+        <p class="pv-c__fig pv-c__fig--corner pv-c__only-c7">Fig. 2 — Gauge. Reads: Announcement.</p>
+
+        {# C8 · One marker band plus a gauge that reads common ground. #}
+        <div class="pv-c__markers pv-c__markers--c8 pv-c__only-c8" aria-hidden="true">
+            <span class="pv-c__marker pv-c__marker--yellow">Music · Tech · Culture</span>
+        </div>
+        {# A centre-zero voltmeter: the needle rests where the two halves meet,
+           at 0 V. In electronics that shared 0 V reference is the "common ground". #}
+        <div class="pv-c__gauge pv-c__gauge--ground pv-c__only-c8" role="img" aria-label="Voltmeter reading 0 volts: common ground">
+            <span class="pv-c__gauge-stem"></span>
+            <span class="pv-c__gauge-dial">
+                <span class="pv-c__gauge-needle"></span>
+                <span class="pv-c__gauge-read"><span class="pv-c__ground-symbol"></span>0 V</span>
+            </span>
+        </div>
+        <p class="pv-c__fig pv-c__fig--corner pv-c__only-c8">
+            <span class="pv-c__wide-only">Fig. 2 — Pipe marker and gauge. Reads: 0 V (common ground).</span>
+            <span class="pv-c__phone-only">Fig. 2 — Pipe marker. Contents as labelled.</span>
+        </p>
+
+        {# C2 · Key: what each colour on the page means. #}
+        <dl class="pv-c__key pv-c__only-c2">
+            <dt>Fig. 2 — Key to colours</dt>
+            <dd><span style="--swatch: var(--red)"></span>Red — the pipe. Constant.</dd>
+            <dd><span style="--swatch: var(--cobalt)"></span>Cobalt — now / open</dd>
+            <dd><span style="--swatch: var(--yellow)"></span>Yellow — upcoming</dd>
+            <dd><span style="--swatch: var(--green)"></span>Green — archived</dd>
+        </dl>
+
+        <p class="pv-a__leader">
+            <span class="pv-a__leader-line" aria-hidden="true"></span>
+            {{ edition.year }}
+        </p>
+        <p class="pv-c__fig">Fig. 1 — Kilele, fourth edition. Not to scale.</p>
+    </section>
+
+    <section class="section pv-a__lead">
+        {# C3 · Stamp. #}
+        <p class="pv-c__stamp pv-c__only-c3">Stage 1 of 4:<br>Announcement</p>
+        <p class="pv-c__label">Theme, {{ edition.year }}</p>
+        <h1 class="pv-c__theme">{{ theme }}</h1>
+        <dl class="pv-c__spec">
+            <div><dt>Dates</dt><dd>{{ dates }}</dd></div>
+            <div><dt>Venue</dt><dd>{{ venue }}</dd></div>
+            <div><dt>Edition</dt><dd>No. 04</dd></div>
+        </dl>
+        <p class="pv-a__body">{{ themeLine }}</p>
+        <p class="pv-a__action">
+            <span class="pv-a__cut" aria-hidden="true"></span>
+            <a href="{{ substack }}">Subscribe on Substack →</a>
+            <span class="pv-c__note">(1 action available)</span>
+        </p>
+    </section>
+
+    {% if latestNews | length %}
+    <section class="section pv-a__latest">
+        <header class="pv-a__head">
+            <h2>Latest</h2>
+            <span>Showing 3 of {{ newsCount }} · <a href="/news/">See all →</a></span>
+        </header>
+        <ol class="pv-a__grid" role="list">
+            {% for post in latestNews %}
+            {% set number = ("00" ~ ((news | length) - news.indexOf(post))).slice(-3) %}
+            <li>
+                <a class="pv-a__item pv-c__item" href="/news/{{ post.slug }}/">
+                    <span class="pv-c__frame">
+                        {% if post.photo_path %}<img class="pv-a__img pv-duo-cobalt" src="{{ post.photo_path }}" alt="" loading="lazy" eleventy:ignore>{% else %}<span class="pv-a__img"></span>{% endif %}
+                        <span class="pv-c__no">{{ number }}</span>
+                    </span>
+                    <p class="pv-a__date">No. {{ number }} · Filed {{ post.publish_date.slice(0, 10) }}</p>
+                    <h3 class="pv-a__item-title">{{ post.title }}</h3>
+                </a>
+            </li>
+            {% endfor %}
+        </ol>
+    </section>
+    {% endif %}
+
+    <div class="pv-a__pipe" aria-hidden="true">
+        <span style="--x: 17.6%; --d: 34px"></span>
+        <span style="--x: 43.5%; --d: 20px"></span>
+        <span style="--x: 69.4%; --d: 48px"></span>
+        <span style="--x: 82.4%; --d: 14px"></span>
+    </div>
+    <p class="pv-c__fig pv-c__fig--pipe">Fig. 3 — Pipe. Carries nothing.</p>
+
+    <section class="section pv-a__archive" data-ground="ink">
+        <div class="pv-a__hatch" aria-hidden="true"></div>
+        <header class="pv-a__head">
+            <h2>The {{ prev }} edition</h2>
+            <span>Status: archived · Six days · Complete</span>
+        </header>
+        <ul class="pv-a__grid" role="list">
+            {% for card in [
+                { title: "Lineup", href: "/" ~ prev ~ "/lineup/", img: lineupPhoto, count: artistCount, unit: "artists" },
+                { title: "Schedule", href: "/" ~ prev ~ "/schedule/", img: schedulePhoto, count: pointCount, unit: "programme points" },
+                { title: "Gallery", href: "/" ~ prev ~ "/gallery/", img: galleryPhoto, count: photoCount, unit: "photographs" }
+            ] %}
+            <li>
+                <a class="pv-a__item pv-c__item" href="{{ card.href }}">
+                    <span class="pv-c__frame">
+                        <img class="pv-a__img pv-duo-green" src="{{ card.img }}" alt="" loading="lazy" eleventy:ignore>
+                        <span class="pv-c__count">{{ card.count }}</span>
+                    </span>
+                    <h3 class="pv-a__ink-title">{{ card.title }} {{ prev }} <span aria-hidden="true">→</span></h3>
+                    <p class="pv-a__date">{{ card.count }} {{ card.unit }}, counted</p>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section class="pv-a__next">
+        <span>Next · {{ theme }} · {{ dates }}</span>
+        <a href="{{ substack }}">Subscribe on Substack →</a>
+    </section>
+    <p class="pv-c__end">End of front page. Nothing further.</p>
+</div>
+
+{# ------------------------------------------------------------------ #}
+{# Switcher                                                            #}
+{# ------------------------------------------------------------------ #}
+<nav class="pv-switcher" aria-label="Prototype variants">
+    <button type="button" data-step="-1" aria-label="Previous variant">←</button>
+    <span data-label></span>
+    <button type="button" data-step="1" aria-label="Next variant">→</button>
+</nav>
+
+<script>
+(function () {
+    var keys = ["0", "A", "B", "C1", "C6", "C8"];
+    var names = { "0": "Current page", A: "Press", B: "Option B", C1: "Deadpan · pipe", C2: "Deadpan · key", C3: "Deadpan · stamp", C4: "Pipe + grey dots", C5: "Pipe + print halftone", C6: "Pipe + markers", C7: "Pipe + gauge", C8: "Pipe + marker + ground gauge" };
+    var real = document.querySelector("[data-pv-real]");
+    var label = document.querySelector(".pv-switcher [data-label]");
+
+    function show(key) {
+        if (key === "C") key = "C1";
+        if (keys.indexOf(key) < 0 && !names[key]) key = "0";
+        real.hidden = key !== "0";
+        document.querySelectorAll(".pv").forEach(function (v) { v.hidden = v.dataset.variant !== key.charAt(0); v.dataset.top = key; });
+        label.textContent = key + " · " + names[key];
+        var url = new URL(location.href);
+        if (key === "0") url.searchParams.delete("variant"); else url.searchParams.set("variant", key);
+        history.replaceState(null, "", url);
+        return key;
+    }
+
+    var current = show(new URLSearchParams(location.search).get("variant") || "0");
+    function step(d) { var i = keys.indexOf(current); if (i < 0) i = 3; current = show(keys[(i + d + keys.length) % keys.length]); }
+    document.querySelectorAll(".pv-switcher [data-step]").forEach(function (b) {
+        b.addEventListener("click", function () { step(+b.dataset.step); });
+    });
+    document.addEventListener("keydown", function (e) {
+        if (e.target.closest("input, textarea, [contenteditable]")) return;
+        if (e.key === "ArrowLeft") step(-1);
+        if (e.key === "ArrowRight") step(1);
+    });
+})();
+</script>
+{% endif %}

@@ -1,0 +1,793 @@
+/*
+ * PROTOTYPE — throwaway (#185). Rough styles for the three front-page variants.
+ * Copied as-is (not bundled), so plain media queries instead of the named
+ * cutoffs: 600 / 900 / 1200px. Nothing here enters the kit without discussion.
+ */
+
+/* ---------- shared ---------- */
+
+.pv[hidden], [data-pv-real][hidden] { display: none !important; }
+.pv a { color: inherit; text-decoration: none; }
+.pv img { display: block; max-width: 100%; }
+.pv ol, .pv ul { list-style: none; margin: 0; padding: 0; }
+.pv-muted { color: var(--text-muted); }
+.pv-duo-cobalt { filter: url(#pv-duo-cobalt); }
+.pv-duo-green { filter: url(#pv-duo-green); }
+
+.pv-switcher {
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    z-index: 1000;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.4rem 0.6rem;
+    transform: translateX(-50%);
+    border-radius: 999px;
+    background: #ff00aa;
+    color: white;
+    font: 600 13px/1 system-ui, sans-serif;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 0.3);
+}
+.pv-switcher button {
+    border: 0;
+    border-radius: 999px;
+    padding: 0.3rem 0.6rem;
+    background: rgb(255 255 255 / 0.2);
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+}
+
+/* ================================================================ */
+/* A · Press                                                         */
+/* ================================================================ */
+
+.pv-a__title {
+    position: relative;
+    overflow: hidden;
+    padding-block: var(--space-7) var(--space-6);
+}
+.pv-a__concrete {
+    position: absolute;
+    top: -16px;
+    right: -30px;
+    width: clamp(180px, 30vw, 420px);
+    opacity: 0.45;
+    pointer-events: none;
+    mask-image: linear-gradient(to left, #000 55%, transparent 100%), linear-gradient(to top, #000 45%, transparent 100%);
+    mask-composite: intersect;
+}
+.pv-a__logo { position: relative; width: min(34rem, 80vw); }
+.pv-a__leader {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--text-5);
+    font-weight: var(--weight-bold);
+}
+.pv-a__leader-line {
+    width: clamp(62px, 8vw, 104px);
+    height: 14px;
+    background:
+        radial-gradient(circle, var(--text-muted) 3px, transparent 3.5px) left center / 7px 7px no-repeat,
+        linear-gradient(var(--text-muted), var(--text-muted)) center / 100% 1px no-repeat,
+        linear-gradient(var(--text-muted), var(--text-muted)) right center / 1px 100% no-repeat;
+}
+
+.pv-a__lead { position: relative; overflow: hidden; padding-top: var(--space-6); }
+.pv-a__halftone {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: clamp(150px, 32vw, 460px);
+    height: 100%;
+    opacity: 0.45;
+    background-image: radial-gradient(circle, var(--halftone) 2.6px, transparent 3px);
+    background-size: 13px 13px;
+    pointer-events: none;
+}
+.pv-a__theme {
+    position: relative;
+    font-family: var(--font-display);
+    font-size: var(--text-8);
+    font-weight: var(--weight-normal);
+    line-height: var(--line-height-tight);
+    text-transform: uppercase;
+}
+.pv-a__when {
+    position: relative;
+    margin-top: var(--space-4);
+    color: var(--pipe);
+    font-family: var(--font-mono);
+    font-size: var(--text-3);
+    font-weight: var(--weight-bold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+.pv-a__body { position: relative; max-width: 52ch; margin-top: var(--space-5); }
+.pv-a__action { position: relative; display: flex; align-items: center; gap: var(--space-3); margin-top: var(--space-6); }
+.pv-a__cut { width: clamp(28px, 3vw, 54px); height: 7px; background: var(--pipe); }
+.pv-a__action a,
+.pv-a__next a {
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--pipe);
+    font-family: var(--font-mono);
+    font-size: var(--text-3);
+    font-weight: var(--weight-bold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.pv-a__head {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-2) var(--space-4);
+    margin-bottom: var(--space-5);
+    font-family: var(--font-mono);
+    font-size: var(--text-3);
+    text-transform: uppercase;
+}
+.pv-a__head h2 {
+    font-family: var(--font-display);
+    font-size: var(--text-7);
+    font-weight: var(--weight-normal);
+    line-height: var(--line-height-tight);
+}
+.pv-a__grid { position: relative; display: grid; gap: var(--space-5); }
+@media (min-width: 900px) { .pv-a__grid { grid-template-columns: repeat(3, 1fr); } }
+.pv-a__img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--placeholder); }
+.pv-a__date {
+    margin-top: var(--space-3);
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-2);
+    text-transform: uppercase;
+}
+.pv-a__item-title { margin-top: var(--space-1); font-size: var(--text-5); line-height: var(--line-height-snug); }
+.pv-a__ink-title {
+    margin-top: var(--space-3);
+    font-family: var(--font-display);
+    font-size: var(--text-6);
+    font-weight: var(--weight-normal);
+    text-transform: uppercase;
+}
+
+/* A main cut off at both edges, with round-capped legs dropping off it. */
+.pv-a__pipe { position: relative; height: 56px; }
+.pv-a__pipe::before {
+    content: "";
+    position: absolute;
+    inset: 8px 0 auto;
+    height: 7px;
+    background: var(--pipe);
+}
+.pv-a__pipe span {
+    position: absolute;
+    top: 8px;
+    left: var(--x);
+    width: 7px;
+    height: var(--d);
+    border-radius: 0 0 7px 7px;
+    background: var(--pipe);
+}
+
+.pv-a__archive { position: relative; }
+.pv-a__hatch {
+    position: absolute;
+    inset: 0;
+    opacity: 0.7;
+    background-image: repeating-linear-gradient(45deg, rgb(242 238 226 / 0.16) 0 1px, transparent 1px 9px);
+    pointer-events: none;
+}
+
+.pv-a__next {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-5) var(--gutter);
+    border-block: 1px solid var(--rule);
+    font-family: var(--font-mono);
+    font-size: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* ================================================================ */
+/* B · Option B                                                      */
+/* ================================================================ */
+
+.pv-b__title { padding-bottom: 0; }
+.pv-b__logo { width: min(22rem, 70vw); }
+.pv-b__year {
+    margin-top: var(--space-5);
+    font-family: var(--font-display);
+    font-size: var(--text-8);
+    line-height: var(--line-height-tight);
+}
+.pv-b__tagline { max-width: 28ch; margin-top: var(--space-2); font-size: var(--text-5); font-weight: var(--weight-bold); line-height: var(--line-height-snug); }
+
+.pv-b__lead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3) var(--space-5);
+    padding-block: var(--space-5) var(--space-6);
+}
+.pv-b__tag {
+    display: inline-block;
+    padding: 0.35em 0.8em;
+    border: 1px solid currentColor;
+    font-family: var(--font-mono);
+    font-size: var(--text-3);
+    font-weight: var(--weight-bold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+.pv-b__tag--now { color: var(--status-now); }
+.pv-b__tag--small { align-self: flex-start; font-size: var(--text-1); }
+.pv-b__tag--past-fill { border-color: var(--status-past); background: var(--status-past); color: var(--cream); font-size: var(--text-2); }
+.pv-b__when { font-family: var(--font-mono); font-size: var(--text-3); }
+
+.pv-b__latest { padding-top: var(--space-6); border-top: 1px solid var(--rule); margin-inline: var(--gutter); padding-inline: 0; }
+.pv-b__previous { padding-top: 0; }
+.pv-b__head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-2) var(--space-4);
+    margin-bottom: var(--space-5);
+    font-family: var(--font-mono);
+    font-size: var(--text-3);
+    font-weight: var(--weight-bold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+.pv-b__head h2 { font-size: inherit; }
+.pv-b__head h2::before {
+    content: "";
+    display: inline-block;
+    width: 2.5em;
+    height: 0.35em;
+    margin-right: var(--space-3);
+    vertical-align: middle;
+    background: var(--bar);
+}
+.pv-b__head--now { --bar: var(--status-now); }
+.pv-b__head--now a { color: var(--status-now); }
+.pv-b__head--past { --bar: var(--status-past); }
+.pv-b__grid { display: grid; gap: var(--space-5); }
+@media (min-width: 900px) { .pv-b__grid { grid-template-columns: repeat(3, 1fr); } }
+.pv-b__wide { width: 100%; aspect-ratio: 3 / 1; object-fit: cover; }
+@media (max-width: 599px) { .pv-b__wide { aspect-ratio: 4 / 3; } }
+.pv-b__stats { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-6); margin-top: var(--space-4); font-family: var(--font-mono); font-size: var(--text-3); }
+.pv-b__stats b { font-family: var(--font-display); font-size: var(--text-6); font-weight: var(--weight-normal); }
+
+.pv-b__label {
+    color: var(--yellow);
+    font-family: var(--font-mono);
+    font-size: var(--text-3);
+    font-weight: var(--weight-bold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+.pv-b__claim {
+    margin-block: var(--space-4);
+    font-family: var(--font-display);
+    font-size: var(--text-7);
+    font-weight: var(--weight-normal);
+    line-height: var(--line-height-tight);
+    text-transform: uppercase;
+}
+.pv-b__claim mark { padding-inline: 0.1em; background: var(--yellow); color: var(--ink); }
+.pv-b__upcoming p:last-child { max-width: 52ch; }
+
+/* ================================================================ */
+/* C · Press, deadpan (reuses A's classes; these are the changes)    */
+/* ================================================================ */
+
+/* Captions like figure labels in a manual. */
+.pv-c__fig {
+    position: relative;
+    margin-top: var(--space-4);
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+.pv-c__fig--concrete { position: absolute; top: var(--space-4); right: var(--gutter); margin: 0; }
+.pv-c__fig--pipe { margin: var(--space-2) var(--gutter) 0; text-align: right; }
+
+.pv-c__label {
+    position: relative;
+    color: var(--pipe);
+    font-family: var(--font-mono);
+    font-size: var(--text-3);
+    font-weight: var(--weight-bold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+/* Bigger than A: the theme fills the width. */
+.pv-c__theme {
+    position: relative;
+    margin-top: var(--space-2);
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 0.5rem + 13vw, 14rem);
+    font-weight: var(--weight-normal);
+    line-height: 0.85;
+    text-transform: uppercase;
+}
+
+/* The dates line becomes a ruled spec sheet. */
+.pv-c__spec {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 56rem;
+    margin: var(--space-6) 0 0;
+    border-top: 2px solid var(--text);
+    font-family: var(--font-mono);
+    font-size: var(--text-3);
+    text-transform: uppercase;
+}
+@media (min-width: 900px) { .pv-c__spec { grid-template-columns: repeat(4, 1fr); } }
+.pv-c__spec div { padding: var(--space-2) var(--space-3) var(--space-2) 0; border-bottom: 1px solid var(--text); }
+.pv-c__spec dt { color: var(--text-muted); font-size: var(--text-2); }
+.pv-c__spec dd { margin: 0; font-weight: var(--weight-bold); }
+
+.pv-c__note { color: var(--text-muted); font-family: var(--font-mono); font-size: var(--text-2); text-transform: uppercase; }
+
+/* Photos carry an oversized number in the corner. */
+.pv-c__frame { position: relative; display: block; }
+.pv-c__no,
+.pv-c__count {
+    position: absolute;
+    left: var(--space-3);
+    bottom: var(--space-1);
+    color: var(--cream);
+    font-family: var(--font-display);
+    line-height: 1;
+    mix-blend-mode: normal;
+}
+.pv-c__no { font-size: var(--text-7); }
+.pv-c__count { font-size: clamp(3.5rem, 1rem + 6vw, 7rem); }
+.pv-c__item:hover .pv-c__no,
+.pv-c__item:hover .pv-c__count { color: var(--pipe); }
+.pv-c .pv-a__archive .pv-c__item:hover .pv-c__count { color: var(--yellow); }
+
+.pv-c__end {
+    padding: var(--space-5) var(--gutter) 0;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-2);
+    text-transform: uppercase;
+}
+
+/* ---------- C, compacted ---------- */
+
+.pv-c .pv-a__logo { width: min(20rem, 62vw); }
+.pv-c .pv-a__title { padding-block: var(--space-6) 0; }
+.pv-c .pv-a__leader { margin-top: var(--space-2); font-size: var(--text-4); }
+.pv-c .pv-a__title .pv-c__fig { margin-top: var(--space-2); }
+
+.pv-c .pv-a__lead { padding-block: var(--space-6) var(--space-7); }
+.pv-c .pv-c__theme { font-size: clamp(3rem, 0.5rem + 9vw, 9.5rem); }
+.pv-c .pv-c__spec { margin-top: var(--space-4); }
+
+/* Wide screens: the theme sentence and the Substack link share one row. */
+@media (min-width: 900px) {
+    .pv-c .pv-a__lead { display: grid; grid-template-columns: minmax(0, 52ch) auto; column-gap: var(--space-7); align-items: end; }
+    .pv-c .pv-a__lead > :not(.pv-a__body, .pv-a__action) { grid-column: 1 / -1; }
+}
+.pv-c .pv-a__body { margin-top: var(--space-4); }
+.pv-c .pv-a__action { margin-top: var(--space-4); }
+
+.pv-c .pv-a__latest,
+.pv-c .pv-a__archive { padding-block: var(--space-7); }
+.pv-c .pv-a__head { margin-bottom: var(--space-4); }
+.pv-c .pv-a__img { aspect-ratio: 16 / 9; }
+.pv-c .pv-a__item-title { font-size: var(--text-4); }
+.pv-c .pv-c__count { font-size: clamp(3rem, 1rem + 4vw, 5rem); }
+.pv-c .pv-a__pipe { height: 48px; }
+
+/* ---------- C1 / C2 / C3: three tops (dots and concrete dropped) ---------- */
+
+@media (min-width: 900px) { .pv-c .pv-c__spec { grid-template-columns: repeat(3, 1fr); } }
+
+/* Each top graphic only shows in its own sub-variant. */
+.pv-c__only-c1, .pv-c__only-c2, .pv-c__only-c3, .pv-c__run { display: none; }
+.pv-c[data-top="C1"] .pv-c__only-c1 { display: block; }
+.pv-c[data-top="C2"] .pv-c__only-c2 { display: block; }
+.pv-c[data-top="C3"] .pv-c__only-c3 { display: block; }
+
+/* C1 · Pipe. The run starts at the logo's right edge, at the height of the
+   logo's own main pipe (32.3%–34.7% of the image), and the section clips it. */
+.pv-c__mark { position: relative; display: inline-block; vertical-align: top; }
+.pv-c[data-top="C1"] .pv-c__run {
+    display: block;
+    position: absolute;
+    left: 100%;
+    top: 32.3%;
+    width: 100vw;
+    height: 2.4%;
+    background: var(--red);
+}
+.pv-c__run span {
+    position: absolute;
+    top: 0;
+    left: var(--x);
+    width: 0.4rem;
+    height: var(--d);
+    border-radius: 0 0 0.4rem 0.4rem;
+    background: var(--red);
+}
+/* A flange on each leg, like the logo's. */
+.pv-c__run span::after {
+    content: "";
+    position: absolute;
+    top: 45%;
+    left: -0.15rem;
+    right: -0.15rem;
+    height: 0.18rem;
+    background: var(--red);
+}
+.pv-c__fig--run { position: absolute; top: var(--space-4); right: var(--gutter); margin: 0; }
+@media (max-width: 899px) { .pv-c__fig--run { position: static; margin-top: var(--space-2); } .pv-c__run span:nth-child(n+3) { display: none; } }
+
+/* C2 · Key to colours. */
+.pv-c__key {
+    margin: var(--space-4) 0 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-2);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+@media (min-width: 900px) {
+    .pv-c__key { position: absolute; top: var(--space-6); right: var(--gutter); width: 18rem; margin: 0; }
+}
+.pv-c__key dt { padding-bottom: var(--space-2); border-bottom: 2px solid var(--text); color: var(--text-muted); }
+.pv-c__key dd { display: flex; align-items: center; gap: var(--space-3); margin: 0; padding-block: var(--space-2); border-bottom: 1px solid var(--rule); font-weight: var(--weight-bold); }
+.pv-c__key dd span { flex: none; width: 2.5rem; height: 1rem; background: var(--swatch); }
+.pv-c[data-top="C2"] .pv-c__key { display: block; }
+
+/* C3 · Stamp. */
+.pv-c__stamp {
+    position: relative;
+    z-index: 1;
+    width: max-content;
+    margin-bottom: var(--space-4);
+    padding: var(--space-2) var(--space-3);
+    border: 3px solid var(--ink);
+    background: var(--yellow);
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: var(--text-6);
+    line-height: var(--line-height-snug);
+    text-transform: uppercase;
+    transform: rotate(-4deg);
+}
+@media (min-width: 900px) {
+    .pv-c__stamp { position: absolute; top: calc(-1 * var(--space-8) - var(--space-6)); right: var(--gutter); margin: 0; }
+}
+.pv-c[data-top="C3"] .pv-c__label { color: var(--cobalt); }
+.pv-c .pv-a__lead { overflow: visible; }
+
+/* ---------- C4 / C5: pipe + a halftone field under the run ---------- */
+
+/* C4 and C5 keep C1's pipe and its caption. */
+.pv-c[data-top="C4"] .pv-c__run,
+.pv-c[data-top="C5"] .pv-c__run { display: block; position: absolute; left: 100%; top: 32.3%; width: 100vw; height: 2.4%; background: var(--red); }
+.pv-c[data-top="C4"] .pv-c__fig--run,
+.pv-c[data-top="C5"] .pv-c__fig--run { display: block; }
+
+/* The field starts just under the pipe and fades out towards the logo and the bottom. */
+.pv-c__dots {
+    display: none;
+    position: absolute;
+    top: 5.5rem;
+    right: 0;
+    bottom: 0;
+    left: 40%;
+    --dot: var(--halftone);
+    background-image: radial-gradient(circle, var(--dot) 2.6px, transparent 3px);
+    background-size: 13px 13px;
+    mask-image: radial-gradient(ellipse at 85% 0%, #000 25%, transparent 72%);
+    pointer-events: none;
+}
+/* Phones: the logo takes most of the width, so the field starts below it. */
+@media (max-width: 899px) { .pv-c__dots { top: calc(var(--space-6) + 32vw); left: 50%; } }
+.pv-c[data-top="C4"] .pv-c__dots,
+.pv-c[data-top="C5"] .pv-c__dots { display: block; }
+.pv-c[data-top="C5"] .pv-c__dots { --dot: var(--cobalt); }
+
+/* ---------- Dots, sharp: no fade, a hard-edged field that runs off the right edge ---------- */
+.pv-c__dots { mask-image: none; left: 55%; background-position: right top; }
+.pv-c[data-top="C5"] .pv-c__dots { --dot: var(--green); }
+/* Phones: a small block right of the logo, under the pipe run, clear of the captions.
+   The logo is 62vw wide and 32vw tall; its main pipe sits 33% down. */
+@media (max-width: 899px) {
+    .pv-c__dots {
+        top: calc(var(--space-6) + 12vw);
+        bottom: auto;
+        left: calc(var(--gutter) + 62vw + var(--space-2));
+        height: 20vw;
+    }
+}
+
+/* ---------- C5: a compact printed-halftone block in the three accent inks ---------- */
+.pv-c__dots span { display: none; }
+.pv-c[data-top="C5"] .pv-c__dots {
+    left: auto;
+    right: var(--gutter);
+    bottom: auto;
+    width: 14rem;
+    height: 10rem;
+    overflow: hidden;
+    isolation: isolate;
+    background: none;
+}
+/* Each screen is bigger than the block so it still covers it when turned. */
+.pv-c[data-top="C5"] .pv-c__dots span {
+    display: block;
+    position: absolute;
+    inset: -50%;
+    background-image: radial-gradient(circle, var(--ink) 2.4px, transparent 2.8px);
+    background-size: 10px 10px;
+    transform: rotate(var(--angle));
+    mix-blend-mode: multiply;
+}
+@media (max-width: 899px) {
+    .pv-c[data-top="C5"] .pv-c__dots { right: 0; width: calc(100% - var(--gutter) - 62vw - var(--space-2)); height: 20vw; }
+}
+
+/* ---------- C6 / C7: things on the pipe ---------- */
+
+/* Where the run sits: the title's top padding, plus a third of the way down the logo
+   (logo height = width × 1525 / 2954). */
+.pv-c {
+    --logo-w: min(20rem, 62vw);
+    --pipe-y: calc(var(--space-6) + var(--logo-w) * 0.5163 * 0.335);
+}
+
+/* Both keep C1's run. */
+.pv-c[data-top="C6"] .pv-c__run,
+.pv-c[data-top="C7"] .pv-c__run { display: block; position: absolute; left: 100%; top: 32.3%; width: 100vw; height: 2.4%; background: var(--red); }
+.pv-c__only-c6, .pv-c__only-c7 { display: none; }
+.pv-c[data-top="C6"] .pv-c__only-c6 { display: flex; }
+.pv-c[data-top="C7"] .pv-c__only-c7 { display: flex; }
+.pv-c[data-top="C6"] .pv-c__fig.pv-c__only-c6,
+.pv-c[data-top="C7"] .pv-c__fig.pv-c__only-c7 { display: block; }
+
+.pv-c__fig--corner { position: absolute; top: var(--space-4); right: var(--gutter); margin: 0; }
+@media (max-width: 899px) { .pv-c__fig--corner { position: static; margin-top: var(--space-2); } }
+
+/* C6 · Markers: a solid band around the pipe, its right end cut to an arrow (the flow). */
+.pv-c__markers {
+    position: absolute;
+    top: calc(var(--pipe-y) - 0.75rem);
+    right: var(--gutter);
+    gap: var(--space-7);
+}
+.pv-c__marker {
+    height: 1.5rem;
+    padding: 0 1.4rem 0 0.7rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-2);
+    font-weight: var(--weight-bold);
+    line-height: 1.5rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    clip-path: polygon(0 0, calc(100% - 0.75rem) 0, 100% 50%, calc(100% - 0.75rem) 100%, 0 100%);
+}
+.pv-c__marker--green { background: var(--green); color: var(--ink); } /* cream on green is only ~3.2:1, too low for small text; ink is ~5:1 */
+.pv-c__marker--yellow { background: var(--yellow); color: var(--ink); }
+/* Phones: only the short one fits right of the logo. */
+@media (max-width: 899px) {
+    .pv-c__markers { right: var(--space-4); }
+    .pv-c__marker--yellow { display: none; }
+}
+
+/* C7 · Gauge. */
+.pv-c__gauge {
+    --dial: 7rem;
+    position: absolute;
+    top: var(--pipe-y);
+    right: calc(var(--gutter) + var(--space-6));
+    flex-direction: column;
+    align-items: center;
+}
+@media (max-width: 899px) { .pv-c__gauge { --dial: 4.5rem; right: var(--space-5); } }
+
+/* The tee: a short leg from the run down to the dial, with a flange. */
+.pv-c__gauge-stem {
+    position: relative;
+    width: 0.4rem;
+    height: 1.25rem;
+    background: var(--red);
+}
+.pv-c__gauge-stem::after {
+    content: "";
+    position: absolute;
+    bottom: 0.2rem;
+    left: -0.2rem;
+    right: -0.2rem;
+    height: 0.2rem;
+    background: var(--red);
+}
+
+/* The dial: four Stage segments on a 270° sweep, hard stops, cream gaps between.
+   Current Stage = now (cobalt), the ones still to come = upcoming (yellow). */
+.pv-c__gauge-dial {
+    position: relative;
+    width: var(--dial);
+    height: var(--dial);
+    border: 0.25rem solid var(--ink);
+    border-radius: 50%;
+    background: conic-gradient(
+        from -135deg,
+        var(--cobalt) 0 65deg,
+        var(--cream) 65deg 69deg,
+        var(--yellow) 69deg 133deg,
+        var(--cream) 133deg 137deg,
+        var(--yellow) 137deg 201deg,
+        var(--cream) 201deg 205deg,
+        var(--yellow) 205deg 270deg,
+        var(--cream) 270deg
+    );
+}
+/* The face covers the middle, leaving the segments as a ring. */
+.pv-c__gauge-dial::before {
+    content: "";
+    position: absolute;
+    inset: 20%;
+    border-radius: 50%;
+    background: var(--cream);
+}
+/* The needle points at the middle of segment 1. */
+.pv-c__gauge-needle {
+    position: absolute;
+    left: 50%;
+    bottom: 50%;
+    z-index: 1;
+    width: 0.2rem;
+    height: 44%;
+    background: var(--red);
+    transform-origin: bottom center;
+    transform: translateX(-50%) rotate(-101deg);
+}
+.pv-c__gauge-needle::after {
+    content: "";
+    position: absolute;
+    bottom: -0.35rem;
+    left: 50%;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    background: var(--red);
+    transform: translateX(-50%);
+}
+.pv-c__gauge-read {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 16%;
+    z-index: 1;
+    font-family: var(--font-mono);
+    font-size: var(--text-1);
+    font-weight: var(--weight-bold);
+    line-height: 1.1;
+    text-align: center;
+    text-transform: uppercase;
+}
+@media (max-width: 899px) { .pv-c__gauge-read { display: none; } }
+.pv-c[data-top="C6"] .pv-c__run span:nth-child(4) { display: none; } /* would sit under the long band */
+
+/* ---------- C8: one marker band + a volume gauge ---------- */
+.pv-c__only-c8 { display: none; }
+.pv-c[data-top="C8"] .pv-c__run { display: block; position: absolute; left: 100%; top: 32.3%; width: 100vw; height: 2.4%; background: var(--red); }
+.pv-c[data-top="C8"] .pv-c__only-c8 { display: flex; }
+.pv-c[data-top="C8"] .pv-c__fig.pv-c__only-c8 { display: block; }
+/* Legs that would land under the band or the gauge. */
+.pv-c[data-top="C8"] .pv-c__run span:nth-child(n+3) { display: none; }
+
+/* The band sits on the run, left of the gauge. */
+.pv-c__markers--c8 { right: calc(var(--gutter) + var(--space-6) + 7.5rem + var(--space-7)); }
+
+/* Volume: green (low), yellow (middle), red zone at the top end. Needle in the red. */
+.pv-c__gauge--volume .pv-c__gauge-dial {
+    background: conic-gradient(
+        from -135deg,
+        var(--green) 0 140deg,
+        var(--cream) 140deg 144deg,
+        var(--yellow) 144deg 214deg,
+        var(--cream) 214deg 218deg,
+        var(--red) 218deg 270deg,
+        var(--cream) 270deg
+    );
+}
+.pv-c__gauge--volume .pv-c__gauge-needle { transform: translateX(-50%) rotate(110deg); }
+.pv-c__gauge--volume .pv-c__gauge-read { font-size: var(--text-2); }
+
+/* Phones: no room for the band beside the logo, so only the gauge. */
+@media (max-width: 899px) {
+    .pv-c__markers--c8 { display: none !important; }
+    .pv-c__gauge--volume .pv-c__gauge-read { display: block; bottom: 10%; font-size: var(--text-1); }
+}
+.pv-c__gauge--volume .pv-c__gauge-read { text-transform: none; } /* "dB", not "DB" */
+
+/* ---------- C8, revised: centre-zero voltmeter reading common ground ---------- */
+/* Two halves meet at the top; the needle points straight at the meeting point. */
+.pv-c__gauge--ground .pv-c__gauge-dial {
+    background: conic-gradient(
+        from -135deg,
+        var(--green) 0 133deg,
+        var(--cream) 133deg 137deg,
+        var(--yellow) 137deg 270deg,
+        var(--cream) 270deg
+    );
+}
+.pv-c__gauge--ground .pv-c__gauge-needle { transform: translateX(-50%) rotate(0deg); }
+.pv-c__gauge--ground .pv-c__gauge-read {
+    bottom: 12%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    text-transform: none;
+}
+
+/* The electrical ground symbol: a short stem over three shrinking bars. */
+.pv-c__ground-symbol {
+    position: relative;
+    width: 1rem;
+    height: 0.8rem;
+    background:
+        linear-gradient(var(--ink), var(--ink)) center 0 / 0.12rem 0.3rem no-repeat,
+        linear-gradient(var(--ink), var(--ink)) center 0.3rem / 100% 0.12rem no-repeat,
+        linear-gradient(var(--ink), var(--ink)) center 0.48rem / 64% 0.12rem no-repeat,
+        linear-gradient(var(--ink), var(--ink)) center 0.66rem / 28% 0.12rem no-repeat;
+}
+@media (max-width: 899px) {
+    .pv-c__gauge--ground .pv-c__gauge-read { display: flex; bottom: 8%; font-size: var(--text-1); }
+    .pv-c__gauge--ground .pv-c__ground-symbol { width: 0.75rem; height: 0.6rem; }
+}
+
+/* ---------- C8: green/red gauge; phones get the band, not the gauge ---------- */
+.pv-c__gauge--ground .pv-c__gauge-dial {
+    background: conic-gradient(
+        from -135deg,
+        var(--green) 0 133deg,
+        var(--cream) 133deg 137deg,
+        var(--red) 137deg 270deg,
+        var(--cream) 270deg
+    );
+}
+.pv-c__phone-only { display: none; }
+@media (max-width: 899px) {
+    .pv-c__wide-only { display: none; }
+    .pv-c__phone-only { display: inline; }
+    .pv-c[data-top="C8"] .pv-c__gauge--ground { display: none; }
+    .pv-c__markers--c8 { display: flex !important; right: var(--space-3); }
+    /* Tighter type so the band fits right of the logo. */
+    .pv-c__markers--c8 .pv-c__marker { display: block; padding: 0 1.1rem 0 0.4rem; font-size: var(--text-1); letter-spacing: 0.04em; }
+}
+/* Phones: a slightly smaller logo in C8, so the band fits beside it.
+   --logo-w also moves the band to the pipe's new height. */
+@media (max-width: 899px) {
+    .pv-c[data-top="C8"] { --logo-w: 52vw; }
+    .pv-c[data-top="C8"] .pv-a__logo { width: var(--logo-w); }
+}
+/* C8: a yellow needle and hub. */
+.pv-c__gauge--ground .pv-c__gauge-needle,
+.pv-c__gauge--ground .pv-c__gauge-needle::after { background: var(--yellow); }
