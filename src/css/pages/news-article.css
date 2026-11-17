@@ -1,0 +1,157 @@
+/*
+ * A news article (src/news/[slug].html).
+ */
+
+.page--news-article {
+    /* Edge to edge, cropped to a wide shape, and never taller than most of the screen. */
+    .news-article__photo {
+        width: 100%;
+        max-height: 70vh;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+    }
+
+    /* Tighter than a normal Section, so the band stays a band. */
+    .news-article__band {
+        padding-block: var(--space-6);
+    }
+
+    .news-article__meta {
+        color: var(--text-muted);
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        text-transform: uppercase;
+    }
+
+    /* 30ch keeps long titles from breaking at awkward places. */
+    .news-article__title {
+        max-width: 30ch;
+        margin-top: var(--space-3);
+        font-family: var(--font-display);
+        font-size: var(--text-7);
+        font-weight: var(--weight-normal);
+        line-height: var(--line-height-tight);
+        text-transform: uppercase;
+    }
+
+    /* From --medium the main stops where the downcomer turns down. */
+    .news-article__main {
+        @media (--medium) {
+            margin-right: calc(var(--gutter) / 2);
+        }
+    }
+
+    .news-article__body {
+        position: relative;
+    }
+
+    /* Down the right margin, from the main to the end of the text. */
+    .news-article__downcomer {
+        display: none;
+
+        @media (--medium) {
+            display: block;
+            position: absolute;
+            top: 0;
+            right: calc(var(--gutter) / 2);
+            bottom: var(--space-8);
+        }
+    }
+
+    /* The collar sits on the bend, over the corner where main and downcomer meet. */
+    .news-article__downcomer .pipe__collar {
+        top: calc(-1 * (var(--pipe-width) + var(--flange-overhang)));
+        left: calc(-1 * var(--flange-overhang));
+    }
+
+    /* About 65 characters a line, centred between the margins.
+       Holds the text and the end line, so both share one edge. */
+    .news-article__column {
+        max-width: 65ch;
+        margin-inline: auto;
+    }
+
+    .news-article__end {
+        margin-top: var(--space-7);
+        color: var(--text-muted);
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        text-transform: uppercase;
+    }
+
+    /* Back from the downcomer's foot to where the text starts. */
+    .news-article__return {
+        margin-top: var(--space-7);
+        margin-left: max(0px, 50% - 32.5ch);
+
+        @media (--medium) {
+            margin-right: calc(-1 * var(--gutter) / 2);
+        }
+    }
+
+    /* A collar on the bottom bend; there is no bend on phones. */
+    .news-article__return .pipe__collar {
+        display: none;
+
+        @media (--medium) {
+            display: block;
+            top: calc(-1 * var(--flange-overhang));
+            right: calc(-1 * var(--flange-overhang));
+        }
+    }
+
+    /* The valve closes the return where the text column starts. */
+    .news-article__return .pipe__valve {
+        top: calc((var(--pipe-width) - var(--valve-size)) / 2);
+        left: calc(-1 * var(--valve-size) / 2);
+    }
+
+    /* Under the pipe loop, lined up with the text column. */
+    .news-article__pager {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        max-width: calc(65ch + 2 * var(--gutter));
+        margin-inline: auto;
+        padding-top: 0;
+    }
+
+    .news-article__pager a {
+        color: inherit;
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        text-decoration: none;
+        text-transform: uppercase;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .news-article__newer {
+        grid-column: 1;
+    }
+
+    .news-article__all {
+        grid-column: 2;
+    }
+
+    .news-article__older {
+        grid-column: 3;
+        justify-self: end;
+    }
+
+    /* The drop cap needs room: a one-line opening paragraph grows to hold it. */
+    .news-article__column .content > p:first-child {
+        display: flow-root;
+    }
+
+    /* A big red capital opens the text, three lines tall. */
+    .news-article__column .content > p:first-child::first-letter {
+        float: left;
+        margin: 0.05em 0.1em 0 0;
+        color: var(--pipe);
+        font-family: var(--font-display);
+        font-size: 4.2em;
+        line-height: 0.8;
+    }
+}

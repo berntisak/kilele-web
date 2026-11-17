@@ -5,7 +5,9 @@ pagination:
   alias: post
   resolve: values
 permalink: "/news/{{ post.slug }}/"
-layout: layouts/base.html
+layout: layouts/site.html
+pageName: news-article
+headerContext: News
 eleventyComputed:
     title: "{{ post.title }}"
     description: "{{ post.excerpt or post.sub_title or post.title }}"
@@ -13,28 +15,46 @@ eleventyComputed:
     og_type: "article"
 ---
 
-<article class="content__container">
-    <div class="news__section news__section-content active">
-        <div class="news__section-header">
-            <h3>{{ post.publish_date | postDate }}</h3>
-            <div>
-                {% for tag in post.tags %}
-                <a href="/news/?tag={{ tag.name }}" class="tag" data-no-swup>{{ tag.name }}</a>
-                {% endfor %}
-            </div>
-         </div>
-         <div class="news__section-title"> 
-            {{post.title}}
-         </div>
-        <div class="news-post-image">
-        {% if post.photo_path %}
-            <img src="{{ post.photo_path }}" alt="{{ post.title }}" eleventy:ignore />
-        {% endif %}
+<article class="news-article">
+    {% if post.photo_path %}
+    <img class="news-article__photo" src="{{ post.photo_path }}" alt="" eleventy:ignore>
+    {% endif %}
+    {% set number = ("00" ~ ((news | length) - pagination.pageNumber)).slice(-3) %}
+    {% set words = post.content | wordcount %}
+    {% set minutes = (words / 230) | round(0, "ceil") %}
+    <header class="section news-article__band" data-ground="ink">
+        <p class="news-article__meta">
+            News no. {{ number }} ·
+            <time datetime="{{ post.publish_date }}">{{ post.publish_date.slice(0, 10) }}</time> ·
+            {{ minutes or 1 }} min
+        </p>
+        <h1 class="news-article__title">{{ post.title }}</h1>
+    </header>
+    <div class="pipe news-article__main"></div>
+    <div class="section news-article__body">
+        <div class="pipe pipe--vertical news-article__downcomer">
+            <span class="pipe__collar"></span>
         </div>
-            <div class="news__section-text">
+        <div class="news-article__column">
+            <div class="content">
                 {{ post.content | markdown | sanitize | safe }}
+            </div>
+            <p class="news-article__end">End of news no. {{ number }}. {{ words }} words.</p>
+        </div>
+        <div class="pipe news-article__return">
+            <span class="pipe__collar"></span>
+            <span class="pipe__valve"></span>
         </div>
     </div>
+    <nav class="section news-article__pager" aria-label="More news">
+        {% if pagination.href.previous %}
+        <a class="news-article__newer" href="{{ pagination.href.previous }}">← Newer</a>
+        {% endif %}
+        <a class="news-article__all" href="/news/">All news</a>
+        {% if pagination.href.next %}
+        <a class="news-article__older" href="{{ pagination.href.next }}">Older →</a>
+        {% endif %}
+    </nav>
 </article>
 {% set canonicalUrl = site.url ~ page.url %}
 

@@ -16,7 +16,9 @@
 @import "kit/components/site-index.css";
 @import "kit/components/section.css";
 @import "kit/components/pipe.css";
+@import "kit/components/content.css";
 
 @import "pages/home.css";
 @import "pages/static.css";
 @import "pages/news.css";
+@import "pages/news-article.css";
