@@ -1,0 +1,31 @@
+/*
+ * Stats bar: a row of labelled facts at the head of a page, ruled like a
+ * document's header. Used by the news list and the lineup.
+ */
+
+.stats-bar {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: var(--space-6);
+    border-top: 2px solid var(--text);
+    font-family: var(--font-mono);
+    font-size: var(--text-2);
+    text-transform: uppercase;
+
+    @media (--medium) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.stats-bar div {
+    padding-block: var(--space-2);
+    border-bottom: 1px solid var(--text);
+}
+
+.stats-bar dt {
+    color: var(--text-muted);
+}
+
+.stats-bar dd {
+    font-weight: var(--weight-bold);
+}

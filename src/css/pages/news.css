@@ -7,43 +7,6 @@
         margin-bottom: var(--space-7);
     }
 
-    /* Ruled like a document's header: a heavy line on top, thin ones under each row. */
-    .news-list__stats {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        margin-bottom: var(--space-6);
-        border-top: 2px solid var(--text);
-        font-family: var(--font-mono);
-        font-size: var(--text-2);
-        text-transform: uppercase;
-
-        @media (--medium) {
-            grid-template-columns: repeat(4, 1fr);
-        }
-    }
-
-    .news-list__stats div {
-        padding-block: var(--space-2);
-        border-bottom: 1px solid var(--text);
-    }
-
-    .news-list__stats dt {
-        color: var(--text-muted);
-    }
-
-    .news-list__stats dd {
-        font-weight: var(--weight-bold);
-    }
-
-    .news-list__title {
-        margin-bottom: var(--space-6);
-        font-family: var(--font-display);
-        font-size: var(--text-8);
-        font-weight: var(--weight-normal);
-        line-height: var(--line-height-tight);
-        text-transform: uppercase;
-    }
-
     /* One column on phones, two from --small, three from --large. */
     .news-list__grid {
         display: grid;

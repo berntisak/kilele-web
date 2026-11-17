@@ -9,13 +9,13 @@ description: "Latest news"
 {% set listedNews = news | rejectattr("hero_video") %}
 <section class="section news-list">
     <header class="news-list__head">
-        <dl class="news-list__stats">
+        <dl class="stats-bar">
             <div><dt>News</dt><dd>{{ listedNews | length }}</dd></div>
             <div><dt>Latest</dt><dd>{{ (listedNews | first).publish_date.slice(0, 10) }}</dd></div>
             <div><dt>Earliest</dt><dd>{{ (listedNews | last).publish_date.slice(0, 10) }}</dd></div>
             <div><dt>Edition</dt><dd>{{ edition.year }}</dd></div>
         </dl>
-        <h1 class="news-list__title">News</h1>
+        <h1 class="page-title">News</h1>
         <div class="pipe"></div>
     </header>
 

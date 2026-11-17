@@ -53,10 +53,20 @@ module.exports = async function() {
 
   // Build full image URLs
   const baseUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/artists/`;
+  const renderUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/render/image/public/artists/`;
 
-  return (artists || []).map(artist => ({
+  // Tidy names and sort them here, not in Supabase: a stray space in the CMS
+  // (" mokeyanju") sorts before "A" there.
+  const sorted = (artists || [])
+    .map(artist => ({ ...artist, name: artist.name.trim() }))
+    .sort((a, b) => a.name.localeCompare(b.name, "en", { sensitivity: "base" }));
+
+  return sorted.map((artist, index) => ({
     ...artist,
-      photo_path_small: artist.photo_path ? `${baseUrl}${encodeURIComponent(artist.photo_path)}?width=100&quality=70`: null,
+      number: String(index + 1).padStart(3, "0"),
+      letter: /^[a-z]/i.test(artist.name) ? artist.name[0].toUpperCase() : "#",
+      // A square portrait for the grid. Only /render/ resizes (#141).
+      photo_square: artist.photo_path ? `${renderUrl}${encodeURIComponent(artist.photo_path)}?width=480&height=480&resize=cover&quality=75` : null,
       photo_path: artist.photo_path ? baseUrl + encodeURIComponent(artist.photo_path) : null,
       program_points: programPointMap[artist.id] || []
   }));
