@@ -1,0 +1,315 @@
+/*
+ * PROTOTYPE — throwaway (#191). Rough styles for the three news variants.
+ * Copied as-is (not bundled), so plain media queries instead of the named
+ * cutoffs: 600 / 900 / 1200px. Nothing here enters the kit without discussion.
+ */
+
+/* ---------- shared bits ---------- */
+
+/* Mirrors kit/pipes.css on design/red-pipes-prototype (added after this branch was cut). */
+:root { --flange-spacing: 10rem; }
+
+.pv[hidden] { display: none !important; }
+.pv a { color: inherit; text-decoration: none; }
+.pv img { display: block; max-width: 100%; }
+.pv ol { list-style: none; margin: 0; padding: 0; }
+.pv-logo { width: 9rem; }
+.pv-mono { font-family: var(--font-mono); font-size: var(--text-2); letter-spacing: 0.08em; text-transform: uppercase; }
+.pv-muted { color: var(--text-muted); }
+
+.pv-label {
+    align-self: flex-start;
+    padding: 0.2em 0.6em;
+    border: 1px solid var(--status-now);
+    color: var(--status-now);
+    font-family: var(--font-mono);
+    font-size: var(--text-1);
+    font-weight: var(--weight-bold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+/* The metadata strip from B · Document. */
+.pv-strip {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 0;
+    border-top: 1px solid var(--text);
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--font-mono);
+    font-size: var(--text-2);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+.pv-strip > div { padding: var(--space-2) var(--space-3) var(--space-2) 0; }
+.pv-strip dt { color: var(--text-muted); }
+.pv-strip dd { margin: 0; }
+@media (min-width: 900px) { .pv-strip { grid-template-columns: repeat(4, auto); justify-content: start; column-gap: var(--space-7); } }
+
+/* CMS text, roughly as on the static pages. */
+.pv-text { font-size: var(--text-4); line-height: var(--line-height-normal); }
+.pv-text > * + * { margin-top: var(--space-5); }
+.pv-text > * + :is(h2, h3) { margin-top: var(--space-7); }
+.pv-text > :is(h2, h3) + * { margin-top: var(--space-2); }
+.pv-text h2 { font-family: var(--font-display); font-size: var(--text-6); font-weight: var(--weight-normal); line-height: var(--line-height-snug); }
+.pv-text h3 { font-size: var(--text-5); font-weight: var(--weight-bold); }
+.pv-text a { text-decoration: underline; text-decoration-color: var(--pipe); text-underline-offset: 0.2em; }
+.pv-text ul, .pv-text ol { padding-left: 1.25em; list-style: revert; }
+.pv-text img { margin-inline: 0; }
+.pv-text iframe { width: 100%; aspect-ratio: 16 / 9; height: auto; border: 0; }
+
+/* Riser: a pipe down the left of the text, a tee into each heading, a valve at the end. */
+.pv-riser-pipe { position: relative; padding-left: var(--space-6); border-left: var(--pipe-width) solid var(--pipe); }
+.pv-riser-pipe .pv-text :is(h2, h3) { position: relative; }
+.pv-riser-pipe .pv-text :is(h2, h3)::before {
+    content: ""; position: absolute;
+    top: calc(0.5lh - var(--pipe-width) / 2); left: calc(-1 * var(--space-6));
+    width: var(--space-5); height: var(--pipe-width); background: var(--pipe);
+}
+.pv-riser-pipe::after {
+    content: ""; position: absolute;
+    bottom: calc(-1 * var(--valve-size) / 2); left: calc(-1 * (var(--pipe-width) + var(--valve-size)) / 2);
+    width: var(--valve-size); height: var(--valve-size);
+    border: var(--flange-width) solid var(--pipe); border-radius: 50%; background: var(--ground);
+}
+
+.pv-pager {
+    display: flex; justify-content: space-between; gap: var(--space-4);
+    margin-top: var(--space-8); padding-top: var(--space-4); border-top: 1px solid var(--rule);
+}
+.pv-pager a:hover { color: var(--pipe); }
+
+/* ---------- A · Cards ---------- */
+
+.pv-a__title-block { margin-bottom: var(--space-7); }
+.pv-a__title { margin-top: var(--space-6); font-family: var(--font-display); font-size: var(--text-7); font-weight: var(--weight-normal); line-height: var(--line-height-tight); }
+.pv-a__title + p { margin-top: var(--space-3); }
+
+.pv-a__grid { display: grid; gap: var(--space-5); }
+@media (min-width: 600px) { .pv-a__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1200px) { .pv-a__grid { grid-template-columns: repeat(3, 1fr); } }
+
+.pv-a__card { display: flex; flex-direction: column; height: 100%; border: 1px solid var(--rule); background: color-mix(in srgb, var(--cream), white 35%); }
+.pv-a__card:hover { border-color: var(--text); }
+.pv-a__photo { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.pv-a__photo--none { background: var(--placeholder); }
+.pv-a__panel { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-4); }
+.pv-a__card-title { font-size: var(--text-5); font-weight: var(--weight-bold); line-height: var(--line-height-snug); }
+
+.pv-a__head { max-width: 75rem; }
+.pv-a__headline {
+    margin: var(--space-6) 0 var(--space-6);
+    font-family: var(--font-display); font-size: var(--text-8); font-weight: var(--weight-normal);
+    line-height: var(--line-height-tight); text-transform: uppercase;
+}
+/* The main runs under the title; the riser drops off its left end. */
+.pv-a__riser { position: relative; max-width: 75ch; padding-top: var(--space-6); padding-left: var(--space-6); border-left: var(--pipe-width) solid var(--pipe); }
+.pv-a__riser::before { content: ""; position: absolute; top: 0; left: calc(-1 * var(--pipe-width)); width: min(90vw, 75rem); height: var(--pipe-width); background: var(--pipe); }
+.pv-a__riser .pv-text :is(h2, h3) { position: relative; }
+.pv-a__riser .pv-text :is(h2, h3)::before {
+    content: ""; position: absolute;
+    top: calc(0.5lh - var(--pipe-width) / 2); left: calc(-1 * var(--space-6));
+    width: var(--space-5); height: var(--pipe-width); background: var(--pipe);
+}
+.pv-a__riser::after {
+    content: ""; position: absolute;
+    bottom: calc(-1 * var(--valve-size) / 2); left: calc(-1 * (var(--pipe-width) + var(--valve-size)) / 2);
+    width: var(--valve-size); height: var(--valve-size);
+    border: var(--flange-width) solid var(--pipe); border-radius: 50%; background: var(--ground);
+}
+.pv-a__photo-wide { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; margin-bottom: var(--space-6); }
+.pv-a .pv-pager { max-width: 75ch; }
+
+/* Static variant B · Document's head: a ruled stats block, a big title, a flanged main. */
+.pv-a__head { margin-bottom: var(--space-7); }
+.pv-doc-meta {
+    display: grid; grid-template-columns: repeat(2, 1fr); margin: 0;
+    border-top: 2px solid var(--text);
+    font-family: var(--font-mono); font-size: var(--text-2); text-transform: uppercase; letter-spacing: 0.08em;
+}
+.pv-doc-meta div { padding: var(--space-2) 0; border-bottom: 1px solid var(--text); }
+.pv-doc-meta dt { color: var(--text-muted); }
+.pv-doc-meta dd { margin: 0; font-weight: var(--weight-bold); }
+@media (min-width: 900px) { .pv-doc-meta { grid-template-columns: repeat(5, 1fr); } }
+.pv-doc-title {
+    margin-top: var(--space-6);
+    font-family: var(--font-display); font-size: var(--text-8); font-weight: var(--weight-normal);
+    line-height: 0.88; text-transform: uppercase;
+}
+.pv-flanged-main { position: relative; height: var(--pipe-width); margin-top: var(--space-6); background: var(--pipe); }
+.pv-flanged-main::before {
+    content: ""; position: absolute; inset: calc(-1 * var(--flange-overhang)) 0;
+    background: repeating-linear-gradient(90deg, transparent 0 152px, var(--pipe) 152px 160px);
+}
+
+/* ---------- B · Register ---------- */
+
+.pv-b__title-block { margin-bottom: var(--space-7); }
+.pv-b__title, .pv-b__article-title { margin-top: var(--space-6); font-family: var(--font-display); font-size: var(--text-7); font-weight: var(--weight-normal); line-height: var(--line-height-tight); }
+.pv-b__article-title { font-size: var(--text-6); font-size: clamp(1.75rem, 1rem + 3vw, 3rem); }
+
+.pv-b__contents, .pv-b__meta, .pv-b__nav {
+    margin-top: var(--space-6); padding-top: var(--space-4); border-top: 1px solid var(--rule);
+    font-family: var(--font-mono); font-size: var(--text-3); text-transform: uppercase;
+}
+.pv-b__contents li { display: flex; justify-content: space-between; padding-block: var(--space-1); }
+.pv-b__contents span { color: var(--pipe); font-variant-numeric: tabular-nums; }
+.pv-b__meta div { display: grid; grid-template-columns: 5rem 1fr; padding-block: var(--space-1); }
+.pv-b__meta dt { color: var(--pipe); }
+.pv-b__meta dd { margin: 0; }
+.pv-b__nav { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+.pv-b__nav a:hover { color: var(--pipe); }
+
+@media (min-width: 1200px) {
+    .pv-b[data-variant="B"]:not(article), .pv-b__layout {
+        display: grid; grid-template-columns: 24rem minmax(0, 65ch); column-gap: var(--space-7); align-items: start;
+    }
+    .pv-b__title-block { position: sticky; top: var(--space-6); }
+}
+
+.pv-b__register { position: relative; padding-left: var(--space-6); border-left: var(--pipe-width) solid var(--pipe); }
+.pv-b__year {
+    position: relative; margin-top: var(--space-7);
+    font-family: var(--font-display); font-size: var(--text-6); line-height: var(--line-height-snug);
+}
+.pv-b__year:first-child { margin-top: 0; }
+.pv-b__year::before {
+    content: ""; position: absolute; top: calc(0.5lh - var(--pipe-width) / 2); left: calc(-1 * var(--space-6));
+    width: var(--space-5); height: var(--pipe-width); background: var(--pipe);
+}
+.pv-b__year::after {
+    content: ""; position: absolute;
+    top: calc(0.5lh - var(--pipe-width) / 2 - var(--flange-overhang));
+    left: calc(-1 * var(--space-6) + var(--space-5) - var(--flange-width));
+    width: var(--flange-width); height: calc(var(--pipe-width) + 2 * var(--flange-overhang)); background: var(--pipe);
+}
+.pv-b__row { position: relative; border-bottom: 1px solid var(--rule); }
+.pv-b__row::before {
+    content: ""; position: absolute; top: 50%; left: calc(-1 * var(--space-6));
+    width: var(--space-4); height: 2px; background: var(--pipe);
+}
+.pv-b__row a { display: grid; grid-template-columns: 2.5rem 3.5rem 1fr; gap: var(--space-3); align-items: center; padding-block: var(--space-3); }
+.pv-b__row a:hover .pv-b__row-title { text-decoration: underline; text-decoration-color: var(--pipe); }
+.pv-b__no { font-family: var(--font-mono); font-size: var(--text-3); color: var(--pipe); font-variant-numeric: tabular-nums; }
+.pv-b__thumb { width: 3.5rem; aspect-ratio: 1; object-fit: cover; background: var(--placeholder); filter: grayscale(1); }
+.pv-b__row a:hover .pv-b__thumb { filter: none; }
+.pv-b__text { display: flex; flex-direction: column; gap: var(--space-1); }
+.pv-b__row-title { font-size: var(--text-4); font-weight: var(--weight-bold); line-height: var(--line-height-snug); }
+.pv-b__register::after {
+    content: ""; position: absolute;
+    bottom: calc(-1 * var(--valve-size) / 2); left: calc(-1 * (var(--pipe-width) + var(--valve-size)) / 2);
+    width: var(--valve-size); height: var(--valve-size);
+    border: var(--flange-width) solid var(--pipe); border-radius: 50%; background: var(--ground);
+}
+
+.pv-b__body { position: relative; padding-left: var(--space-6); border-left: var(--pipe-width) solid var(--pipe); }
+.pv-b__body .pv-text :is(h2, h3) { position: relative; }
+.pv-b__body .pv-text :is(h2, h3)::before {
+    content: ""; position: absolute; top: calc(0.5lh - var(--pipe-width) / 2); left: calc(-1 * var(--space-6));
+    width: var(--space-5); height: var(--pipe-width); background: var(--pipe);
+}
+.pv-b__body::after {
+    content: ""; position: absolute;
+    bottom: calc(-1 * var(--valve-size) / 2); left: calc(-1 * (var(--pipe-width) + var(--valve-size)) / 2);
+    width: var(--valve-size); height: var(--valve-size);
+    border: var(--flange-width) solid var(--pipe); border-radius: 50%; background: var(--ground);
+}
+.pv-b__photo { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; margin-bottom: var(--space-6); }
+
+/* ---------- C · Press ---------- */
+
+.pv-c__masthead { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-3); padding-bottom: var(--space-4); border-bottom: var(--pipe-width) solid var(--pipe); }
+.pv-c__title { font-family: var(--font-display); font-size: clamp(4rem, 1rem + 14vw, 12rem); font-weight: var(--weight-normal); line-height: 0.85; text-transform: uppercase; }
+
+.pv-c__lead { display: grid; gap: var(--space-3); margin-top: var(--space-6); padding-bottom: var(--space-7); border-bottom: 1px solid var(--text); }
+.pv-c__lead-photo { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+@media (min-width: 900px) {
+    .pv-c__lead { grid-template-columns: 3fr 2fr; column-gap: var(--space-6); align-content: start; }
+    .pv-c__lead-photo { grid-row: span 4; aspect-ratio: 16 / 10; }
+}
+.pv-c__lead-title { font-family: var(--font-display); font-size: var(--text-7); line-height: var(--line-height-tight); text-transform: uppercase; }
+.pv-c__lead:hover .pv-c__lead-title, .pv-c__item:hover .pv-c__item-title { color: var(--pipe); }
+.pv-c__excerpt { color: var(--text-muted); font-size: var(--text-4); line-height: var(--line-height-normal); }
+
+.pv-c__grid { display: grid; column-gap: var(--space-6); }
+@media (min-width: 900px) { .pv-c__grid { grid-template-columns: repeat(2, 1fr); } }
+.pv-c__item { display: grid; gap: var(--space-2); padding-block: var(--space-6); border-bottom: 1px solid var(--rule); }
+.pv-c__photo { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; margin-bottom: var(--space-2); }
+.pv-c__item-title { font-family: var(--font-display); font-size: var(--text-6); line-height: var(--line-height-snug); text-transform: uppercase; }
+
+.pv-c__hero { width: 100%; max-height: 70vh; aspect-ratio: 16 / 9; object-fit: cover; }
+.pv-c__band { padding-block: var(--space-6); }
+.pv-c__headline { margin-top: var(--space-3); max-width: 30ch; font-family: var(--font-display); font-size: var(--text-7); font-weight: var(--weight-normal); line-height: var(--line-height-tight); text-transform: uppercase; }
+
+/* The pipe run (PLACEHOLDER pipe graphics). Text column 36rem (~65ch), centred.
+   cqw = 1% of the run's width, so tees can reach from the text to the downcomer. */
+.pv-c__run { position: relative; container-type: inline-size; }
+.pv-c__text, .pv-c__end, .pv-c__pager { max-width: 36rem; margin-inline: auto; }
+
+/* Phones: a flanged main straight under the band. */
+.pv-c__main {
+    position: absolute; top: calc(-1 * var(--space-8)); left: calc(-1 * var(--gutter)); right: calc(-1 * var(--gutter));
+    height: var(--pipe-width); background: var(--pipe);
+}
+.pv-c__main::before {
+    content: ""; position: absolute; left: 0; right: 0;
+    top: calc(-1 * var(--flange-overhang)); height: calc(var(--pipe-width) + 2 * var(--flange-overhang));
+    background: repeating-linear-gradient(90deg, transparent 0 calc(var(--flange-spacing) - var(--flange-width)), var(--pipe) calc(var(--flange-spacing) - var(--flange-width)) var(--flange-spacing));
+}
+.pv-c__elbow { display: none; }
+
+/* Wide screens: the main turns down the right edge as a flanged downcomer. */
+@media (min-width: 900px) {
+    .pv-c__main {
+        right: calc(-1 * var(--gutter) / 2); bottom: 0; height: auto;
+        border-top: var(--pipe-width) solid var(--pipe); border-right: var(--pipe-width) solid var(--pipe); background: none;
+    }
+    .pv-c__main::before { top: calc(-1 * var(--pipe-width) - var(--flange-overhang)); }
+    .pv-c__main::after {
+        content: ""; position: absolute; top: 0; bottom: 0;
+        right: calc(-1 * var(--pipe-width) - var(--flange-overhang)); width: calc(var(--pipe-width) + 2 * var(--flange-overhang));
+        background: repeating-linear-gradient(180deg, transparent 0 calc(var(--flange-spacing) - var(--flange-width)), var(--pipe) calc(var(--flange-spacing) - var(--flange-width)) var(--flange-spacing));
+    }
+    /* A collar on the bend, a little fatter than the pipe. */
+    .pv-c__elbow {
+        display: block; position: absolute;
+        top: calc(-1 * var(--pipe-width) - var(--flange-overhang)); right: calc(-1 * var(--pipe-width) - var(--flange-overhang));
+        width: calc(var(--pipe-width) + 2 * var(--flange-overhang)); height: calc(var(--pipe-width) + 2 * var(--flange-overhang));
+        background: var(--pipe);
+    }
+}
+
+.pv-c__text > :first-child::first-letter { float: left; margin: 0.05em 0.1em 0 0; font-family: var(--font-display); font-size: 4.2em; line-height: 0.8; color: var(--pipe); }
+.pv-c__end { margin-top: var(--space-7); color: var(--pipe); }
+
+/* The return: back from the downcomer's foot to the end line, closed by a valve. */
+.pv-c__return {
+    position: relative; height: var(--pipe-width); margin-top: var(--space-7);
+    margin-left: max(0px, calc(50% - 18rem)); background: var(--pipe);
+}
+@media (min-width: 900px) {
+    .pv-c__return { margin-right: calc(-1 * var(--gutter) / 2); }
+    /* A collar on the bottom bend too. */
+    .pv-c__return::before {
+        content: ""; position: absolute; right: calc(-1 * var(--flange-overhang)); top: calc(-1 * var(--flange-overhang));
+        width: calc(var(--pipe-width) + 2 * var(--flange-overhang)); height: calc(var(--pipe-width) + 2 * var(--flange-overhang));
+        background: var(--pipe);
+    }
+}
+.pv-c__return::after {
+    content: ""; position: absolute;
+    top: calc((var(--pipe-width) - var(--valve-size)) / 2); left: calc(-1 * var(--valve-size) / 2);
+    width: var(--valve-size); height: var(--valve-size);
+    border: var(--flange-width) solid var(--pipe); border-radius: 50%; background: var(--ground);
+}
+
+/* ---------- the variant switcher ---------- */
+
+.pv-switcher {
+    position: fixed; bottom: 16px; left: 50%; z-index: 100;
+    display: flex; align-items: center; gap: 12px; padding: 8px 14px;
+    transform: translateX(-50%); border-radius: 999px;
+    background: #ff00aa; color: #fff; font: 600 13px/1 system-ui, sans-serif;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 0.3);
+}
+.pv-switcher button { font-size: 18px; color: #fff; background: none; border: 0; cursor: pointer; }

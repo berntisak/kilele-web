@@ -1,10 +1,12 @@
 ---
-layout: layouts/base.html
+layout: layouts/site.html
+pageName: news
+headerContext: News
 title: Latest news
 description: "Latest news"
 ---
 
-<div class="content__container">
+<section class="section" data-pv-real>
   <h1>Latest News</h1>
 
   <div class="news-filter-container">
@@ -52,6 +54,9 @@ description: "Latest news"
     {% endif %}
     {% endfor %}
 </div>
-</div>
+</section>
 
 <script src="/scripts/newsFilter.js"></script>
+
+{# PROTOTYPE — throwaway (#191): remove this line with the variants. #}
+{% include "news-list-variants.prototype.html" %}

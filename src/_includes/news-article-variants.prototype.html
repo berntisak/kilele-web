@@ -1,0 +1,90 @@
+{#
+  PROTOTYPE — throwaway (#191). Three rough variants of a news article, each
+  paired with the list variant of the same letter. Switched with
+  ?variant=A|B|C and the bar at the bottom. Only rendered by the dev server.
+  news is newest-first, so "previous" in the pagination is the newer post.
+#}
+{% if eleventy.env.runMode == "serve" %}
+<link rel="stylesheet" href="/css/prototype/news-variants.css">
+{% set pvBody = post.content | markdown | sanitize %}
+{% set total = news | length %}
+{% set no = ("000" ~ (total - pagination.pageNumber)).slice(-3) %}
+{% set words = post.content | wordcount %}
+{% set minutes = ((words / 230) | round(0, "ceil")) or 1 %}
+{% set newer = pagination.href.previous %}
+{% set older = pagination.href.next %}
+
+{# A · Cards: B's metadata strip and big title, then A's riser for photo and text #}
+<article class="section pv pv-a" data-variant="A" hidden>
+    <header class="pv-a__head">
+        <dl class="pv-strip">
+            <div><dt>News no.</dt><dd>{{ no }} / {{ total }}</dd></div>
+            <div><dt>Published</dt><dd>{{ post.publish_date.slice(0, 10) }}</dd></div>
+            <div><dt>Reading</dt><dd>{{ minutes }} min</dd></div>
+            <div><dt>Filed under</dt><dd>{% for tag in post.tags %}{{ tag.name }}{% if not loop.last %} · {% endif %}{% else %}—{% endfor %}</dd></div>
+        </dl>
+        <h1 class="pv-a__headline">{{ post.title }}</h1>
+    </header>
+    <div class="pv-a__riser">
+        {% if post.photo_path %}<img class="pv-a__photo-wide" src="{{ post.photo_path }}" alt="" eleventy:ignore>{% endif %}
+        <div class="pv-text">{{ pvBody | safe }}</div>
+    </div>
+    <nav class="pv-pager pv-mono">
+        {% if newer %}<a href="{{ newer }}?variant=A">← Newer</a>{% else %}<span></span>{% endif %}
+        <a href="/news/?variant=A">All news</a>
+        {% if older %}<a href="{{ older }}?variant=A">Older →</a>{% else %}<span></span>{% endif %}
+    </nav>
+</article>
+
+{# B · Register: the static pages' riser, with the metadata where the contents list sits #}
+<article class="section pv pv-b" data-variant="B" hidden>
+    <div class="pv-b__layout">
+        <header class="pv-b__title-block">
+            <a href="/"><img class="pv-logo" src="/assets/logos/Kilele-2027-Logo_Primary.png" alt="Kilele 27" width="2954" height="1525"></a>
+            <h1 class="pv-b__article-title">{{ post.title }}</h1>
+            <dl class="pv-b__meta">
+                <div><dt>No.</dt><dd>{{ no }}</dd></div>
+                <div><dt>Date</dt><dd>{{ post.publish_date.slice(0, 10) }}</dd></div>
+                <div><dt>Reading</dt><dd>{{ minutes }} min</dd></div>
+                {% if post.tags.length %}<div><dt>Tags</dt><dd>{% for tag in post.tags %}{{ tag.name }}{% if not loop.last %}, {% endif %}{% endfor %}</dd></div>{% endif %}
+            </dl>
+            <nav class="pv-b__nav pv-mono">
+                {% if newer %}<a href="{{ newer }}?variant=B">← Newer</a>{% endif %}
+                {% if older %}<a href="{{ older }}?variant=B">Older →</a>{% endif %}
+                <a href="/news/?variant=B">All news</a>
+            </nav>
+        </header>
+        <div class="pv-b__body">
+            {% if post.photo_path %}<img class="pv-b__photo" src="{{ post.photo_path }}" alt="" eleventy:ignore>{% endif %}
+            <div class="pv-text">{{ pvBody | safe }}</div>
+        </div>
+    </div>
+</article>
+
+{# C · Press: full-width photo, title on an ink band, then a flanged main → elbow → downcomer
+   return pipe closed by a valve under the text #}
+<article class="pv pv-c" data-variant="C" hidden>
+    {% if post.photo_path %}<img class="pv-c__hero" src="{{ post.photo_path }}" alt="" eleventy:ignore>{% endif %}
+    <header class="section pv-c__band" data-ground="ink">
+        <p class="pv-mono pv-muted">News no. {{ no }} · {{ post.publish_date.slice(0, 10) }} · {{ minutes }} min{% if post.tags.length %} · {{ post.tags[0].name }}{% endif %}</p>
+        <h1 class="pv-c__headline">{{ post.title }}</h1>
+    </header>
+    <div class="section pv-c__sheet">
+        <div class="pv-c__run">
+            {# The main under the band, an elbow at the right edge, and the downcomer down it #}
+            <div class="pv-c__main"><span class="pv-c__elbow"></span></div>
+            <div class="pv-text pv-c__text">{{ pvBody | safe }}</div>
+            <p class="pv-c__end pv-mono">End of news no. {{ no }}. {{ words }} words.</p>
+            {# The return: from the downcomer's foot back under the text, closed by a valve #}
+            <div class="pv-c__return"></div>
+        </div>
+        <nav class="pv-pager pv-mono pv-c__pager">
+            {% if newer %}<a href="{{ newer }}?variant=C">← Newer</a>{% else %}<span></span>{% endif %}
+            <a href="/news/?variant=A">All news</a>
+            {% if older %}<a href="{{ older }}?variant=C">Older →</a>{% else %}<span></span>{% endif %}
+        </nav>
+    </div>
+</article>
+
+{% include "news-switcher.prototype.html" %}
+{% endif %}

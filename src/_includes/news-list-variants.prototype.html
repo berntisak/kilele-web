@@ -1,0 +1,120 @@
+{#
+  PROTOTYPE — throwaway (#191). Three rough variants of the news list, each
+  paired with the article variant of the same letter. Switched with
+  ?variant=A|B|C and the bar at the bottom. Only rendered by the dev server.
+  Numbers count every post, oldest = 001, so list and article agree.
+#}
+{% if eleventy.env.runMode == "serve" %}
+<link rel="stylesheet" href="/css/prototype/news-variants.css">
+{% set total = news | length %}
+{% set listed = news | rejectattr("hero_video") | length %}
+
+{# A · Cards: title block, then a grid of cards like the front-page PDF #}
+<section class="section pv pv-a" data-variant="A" hidden>
+    {% set shown = news | rejectattr("hero_video") %}
+    <header class="pv-a__head">
+        <dl class="pv-doc-meta">
+            <div><dt>News</dt><dd>{{ listed }}</dd></div>
+            <div><dt>Latest</dt><dd>{{ (shown | first).publish_date.slice(0, 10) }}</dd></div>
+            <div><dt>Earliest</dt><dd>{{ (shown | last).publish_date.slice(0, 10) }}</dd></div>
+            <div><dt>Edition</dt><dd>{{ edition.year }}</dd></div>
+            <div><dt>Order</dt><dd>Newest first</dd></div>
+        </dl>
+        <h1 class="pv-doc-title">News</h1>
+        <div class="pv-flanged-main" aria-hidden="true"></div>
+    </header>
+    <ol class="pv-a__grid">
+        {% for post in news %}{% if not post.hero_video %}
+        {% set no = "000" ~ (total - loop.index0) %}
+        <li>
+            <a class="pv-a__card" href="/news/{{ post.slug }}/?variant=C">
+                {% if post.photo_path %}
+                <img class="pv-a__photo" src="{{ post.photo_path }}" alt="" loading="lazy" eleventy:ignore>
+                {% else %}
+                <span class="pv-a__photo pv-a__photo--none"></span>
+                {% endif %}
+                <span class="pv-a__panel">
+                    {% if post.tags.length %}<span class="pv-label">{{ post.tags[0].name }}</span>{% endif %}
+                    <span class="pv-a__card-title">{{ post.title }}</span>
+                    <span class="pv-mono pv-muted">{{ post.publish_date.slice(0, 10) }} · No. {{ no.slice(-3) }}</span>
+                </span>
+            </a>
+        </li>
+        {% endif %}{% endfor %}
+    </ol>
+</section>
+
+{# B · Register: numbered rows hanging off a pipe, title block like the static pages #}
+<section class="section pv pv-b" data-variant="B" hidden>
+    <header class="pv-b__title-block">
+        <a href="/"><img class="pv-logo" src="/assets/logos/Kilele-2027-Logo_Primary.png" alt="Kilele 27" width="2954" height="1525"></a>
+        <h1 class="pv-b__title">News</h1>
+        <ol class="pv-b__contents" data-years></ol>
+    </header>
+    <ol class="pv-b__register">
+        {% for post in news %}{% if not post.hero_video %}
+        {% set y = post.publish_date.slice(0, 4) %}
+        {% set prev = news[loop.index0 - 1] %}
+        {% if loop.first or prev.publish_date.slice(0, 4) != y %}
+        <li class="pv-b__year" id="year-{{ y }}">{{ y }}</li>
+        {% endif %}
+        {% set no = "000" ~ (total - loop.index0) %}
+        <li class="pv-b__row">
+            <a href="/news/{{ post.slug }}/?variant=B">
+                <span class="pv-b__no">{{ no.slice(-3) }}</span>
+                {% if post.photo_path %}
+                <img class="pv-b__thumb" src="{{ post.photo_path }}" alt="" loading="lazy" eleventy:ignore>
+                {% else %}
+                <span class="pv-b__thumb"></span>
+                {% endif %}
+                <span class="pv-b__text">
+                    <span class="pv-b__row-title">{{ post.title }}</span>
+                    <span class="pv-mono pv-muted">{{ post.publish_date.slice(0, 10) }}{% if post.tags.length %} · {{ post.tags[0].name }}{% endif %}</span>
+                </span>
+            </a>
+        </li>
+        {% endif %}{% endfor %}
+    </ol>
+</section>
+
+{# C · Press: a big lead story, then the rest in two open columns #}
+<section class="section pv pv-c" data-variant="C" hidden>
+    <header class="pv-c__masthead">
+        <h1 class="pv-c__title">News</h1>
+        <p class="pv-mono pv-muted">Kilele Summit · Nairobi · {{ listed }} news</p>
+    </header>
+    {% set lead = (news | rejectattr("hero_video"))[0] %}
+    <a class="pv-c__lead" href="/news/{{ lead.slug }}/?variant=C">
+        {% if lead.photo_path %}<img class="pv-c__lead-photo" src="{{ lead.photo_path }}" alt="" eleventy:ignore>{% endif %}
+        <span class="pv-mono pv-muted">Latest · {{ lead.publish_date.slice(0, 10) }}</span>
+        <span class="pv-c__lead-title">{{ lead.title }}</span>
+        <span class="pv-c__excerpt">{{ lead.excerpt }}</span>
+    </a>
+    <ol class="pv-c__grid">
+        {% for post in news | rejectattr("hero_video") %}{% if not loop.first %}
+        <li>
+            <a class="pv-c__item" href="/news/{{ post.slug }}/?variant=C">
+                {% if post.photo_path %}<img class="pv-c__photo" src="{{ post.photo_path }}" alt="" loading="lazy" eleventy:ignore>{% endif %}
+                <span class="pv-mono pv-muted">{{ post.publish_date.slice(0, 10) }}</span>
+                <span class="pv-c__item-title">{{ post.title }}</span>
+                <span class="pv-c__excerpt">{{ post.excerpt }}</span>
+            </a>
+        </li>
+        {% endif %}{% endfor %}
+    </ol>
+</section>
+
+<script>
+// B's title block: one numbered link per year in the register, with its count.
+(function () {
+    var list = document.querySelector(".pv-b [data-years]");
+    document.querySelectorAll(".pv-b__year").forEach(function (y) {
+        var n = 0, el = y.nextElementSibling;
+        while (el && el.classList.contains("pv-b__row")) { n++; el = el.nextElementSibling; }
+        list.insertAdjacentHTML("beforeend", '<li><a href="#' + y.id + '">' + y.textContent + "</a><span>" + n + "</span></li>");
+    });
+})();
+</script>
+
+{% include "news-switcher.prototype.html" %}
+{% endif %}
