@@ -23,19 +23,21 @@ description: "Latest news"
         {% for post in news %}
         {% if not post.hero_video %}
         <li>
+            {% set number = ("00" ~ ((news | length) - loop.index0)).slice(-3) %}
             <a class="card" href="/news/{{ post.slug }}/">
-                {% if post.photo_path %}
-                <img class="card__photo" src="{{ post.photo_path }}" alt="" loading="lazy" eleventy:ignore>
-                {% else %}
-                <div class="card__photo"></div>
-                {% endif %}
+                <div class="card__frame">
+                    {% if post.photo_path %}
+                    <img class="card__photo" src="{{ post.photo_path }}" alt="" loading="lazy" eleventy:ignore>
+                    {% else %}
+                    <div class="card__photo"></div>
+                    {% endif %}
+                    <span class="card__number" aria-hidden="true">{{ number }}</span>
+                </div>
                 <div class="card__panel">
-                    <h2 class="card__title">{{ post.title }}</h2>
-                    {% set number = ("00" ~ ((news | length) - loop.index0)).slice(-3) %}
                     <p class="card__meta">
-                        <time datetime="{{ post.publish_date }}">{{ post.publish_date.slice(0, 10) }}</time>
-                        · No. {{ number }}
+                        No. {{ number }} · Filed <time datetime="{{ post.publish_date }}">{{ post.publish_date.slice(0, 10) }}</time>
                     </p>
+                    <h2 class="card__title">{{ post.title }}</h2>
                 </div>
             </a>
         </li>

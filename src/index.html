@@ -79,24 +79,26 @@ description: "East Africa's first and only summit for music, tech and culture. C
 <section class="section latest-news">
     <header class="section-head">
         <h2 class="section-head__title">Latest news</h2>
-        <a class="section-head__link" href="/news/">All {{ listedNews | length }} <span aria-hidden="true">→</span></a>
+        <p>Showing {{ latestNews | length }} of {{ listedNews | length }} · <a class="section-head__link" href="/news/">See all <span aria-hidden="true">→</span></a></p>
     </header>
     <ol class="latest-news__list" role="list">
         {% for post in latestNews %}
         <li>
+            {% set number = ("00" ~ ((news | length) - news.indexOf(post))).slice(-3) %}
             <a class="card" href="/news/{{ post.slug }}/">
-                {% if post.photo_path %}
-                <img class="card__photo" src="{{ post.photo_path }}" alt="" loading="lazy" eleventy:ignore>
-                {% else %}
-                <div class="card__photo"></div>
-                {% endif %}
+                <div class="card__frame">
+                    {% if post.photo_path %}
+                    <img class="card__photo" src="{{ post.photo_path }}" alt="" loading="lazy" eleventy:ignore>
+                    {% else %}
+                    <div class="card__photo"></div>
+                    {% endif %}
+                    <span class="card__number" aria-hidden="true">{{ number }}</span>
+                </div>
                 <div class="card__panel">
-                    <h3 class="card__title">{{ post.title }}</h3>
-                    {% set number = ("00" ~ ((news | length) - news.indexOf(post))).slice(-3) %}
                     <p class="card__meta">
-                        <time datetime="{{ post.publish_date }}">{{ post.publish_date.slice(0, 10) }}</time>
-                        · No. {{ number }}
+                        No. {{ number }} · Filed <time datetime="{{ post.publish_date }}">{{ post.publish_date.slice(0, 10) }}</time>
                     </p>
+                    <h3 class="card__title">{{ post.title }}</h3>
                 </div>
             </a>
         </li>
@@ -105,7 +107,18 @@ description: "East Africa's first and only summit for music, tech and culture. C
 </section>
 {% endif %}
 
-<section class="section previous-edition">
+{# PLACEHOLDER pipe drawn in CSS, like the Edition title's, waiting for the designer's graphics. #}
+<div class="archive-pipe" aria-hidden="true">
+    <span class="archive-pipe__run">
+        <span class="archive-pipe__leg" style="--x: 17.6%; --length: 2.1rem"></span>
+        <span class="archive-pipe__leg" style="--x: 43.5%; --length: 1.25rem"></span>
+        <span class="archive-pipe__leg" style="--x: 69.4%; --length: 3rem"></span>
+        <span class="archive-pipe__leg" style="--x: 82.4%; --length: 0.9rem"></span>
+    </span>
+</div>
+<p class="archive-pipe__fig">Fig. 3 — Pipe. Carries nothing.</p>
+
+<section class="section previous-edition" data-ground="ink">
     {# PLACEHOLDER photos, picked at random on each build. Which photos belong here is still to be decided. #}
     {% set lineupPhoto = (lineup | selectattr("photo_path") | random).photo_path %}
     {% set schedulePhoto = (lineup | selectattr("photo_path") | random).photo_path %}
@@ -113,38 +126,49 @@ description: "East Africa's first and only summit for music, tech and culture. C
 
     <header class="section-head">
         <h2 class="section-head__title">The {{ edition.previousYear }} edition</h2>
+        {# PLACEHOLDER status line, C8's copy typed in by hand. #}
+        <p>Status: archived · Six days · Complete</p>
     </header>
     <ul class="previous-edition__list" role="list">
         <li>
             <a class="card" href="/{{ edition.previousYear }}/lineup/">
-                <img class="card__photo" src="{{ lineupPhoto }}" alt="" loading="lazy" eleventy:ignore>
+                <div class="card__frame">
+                    <img class="card__photo" src="{{ lineupPhoto }}" alt="" loading="lazy" eleventy:ignore>
+                    {% if lineup | length %}<span class="card__number" aria-hidden="true">{{ lineup | length }}</span>{% endif %}
+                </div>
                 <div class="card__panel">
                     <h3 class="card__title">Lineup {{ edition.previousYear }} <span aria-hidden="true">→</span></h3>
-                    {% if lineup | length %}<p class="card__meta">{{ lineup | length }} artists</p>{% endif %}
+                    {% if lineup | length %}<p class="card__meta">{{ lineup | length }} artists, counted</p>{% endif %}
                 </div>
             </a>
         </li>
         <li>
             <a class="card" href="/{{ edition.previousYear }}/schedule/">
-                <img class="card__photo" src="{{ schedulePhoto }}" alt="" loading="lazy" eleventy:ignore>
+                <div class="card__frame">
+                    <img class="card__photo" src="{{ schedulePhoto }}" alt="" loading="lazy" eleventy:ignore>
+                    {% if schedule_list | length %}<span class="card__number" aria-hidden="true">{{ schedule_list | length }}</span>{% endif %}
+                </div>
                 <div class="card__panel">
                     <h3 class="card__title">Schedule {{ edition.previousYear }} <span aria-hidden="true">→</span></h3>
-                    {% if schedule_list | length %}<p class="card__meta">{{ schedule_list | length }} programme points</p>{% endif %}
+                    {% if schedule_list | length %}<p class="card__meta">{{ schedule_list | length }} programme points, counted</p>{% endif %}
                 </div>
             </a>
         </li>
         <li>
             <a class="card" href="/{{ edition.previousYear }}/gallery/">
-                <img class="card__photo" src="{{ galleryPhoto }}" alt="" loading="lazy" eleventy:ignore>
+                <div class="card__frame">
+                    <img class="card__photo" src="{{ galleryPhoto }}" alt="" loading="lazy" eleventy:ignore>
+                    {% if gallery.photos | length %}<span class="card__number" aria-hidden="true">{{ gallery.photos | length }}</span>{% endif %}
+                </div>
                 <div class="card__panel">
                     <h3 class="card__title">Gallery {{ edition.previousYear }} <span aria-hidden="true">→</span></h3>
-                    {% if gallery.photos | length %}<p class="card__meta">{{ gallery.photos | length }} photographs</p>{% endif %}
+                    {% if gallery.photos | length %}<p class="card__meta">{{ gallery.photos | length }} photographs, counted</p>{% endif %}
                 </div>
             </a>
         </li>
     </ul>
 </section>
 
-<section class="section upcoming-edition" data-ground="ink">
+<!--section class="section upcoming-edition" data-ground="ink">
     <p>Upcoming edition: the 2027 theme, Common Grounds</p>
-</section>
+</section-->

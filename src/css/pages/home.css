@@ -200,11 +200,6 @@
     /* Captions labelled like figures in a technical manual. */
     .edition-title__fig {
         margin-top: var(--space-2);
-        color: var(--text-muted);
-        font-family: var(--font-mono);
-        font-size: var(--text-2);
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
     }
 
     /* Fig. 2 labels the gauge, so it only shows where the gauge does. */
@@ -350,6 +345,72 @@
         font-family: var(--font-mono);
         font-size: var(--text-2);
         text-transform: uppercase;
+    }
+
+    /*
+     * PLACEHOLDER pipe drawn in CSS, waiting for the designer's graphics (see Tune the design).
+     * A run across the full page width, cut off at both edges, with legs dropping off it.
+     * The box is as tall as the longest leg, so no leg reaches the caption below.
+     */
+    .archive-pipe {
+        height: 3.4rem;
+    }
+
+    .archive-pipe__run {
+        position: relative;
+        display: block;
+        height: 0.4rem;
+        background: var(--pipe);
+    }
+
+    /* Each leg sets its own --x (how far along) and --length (how far down), like the Edition title's legs. */
+    .archive-pipe__leg {
+        position: absolute;
+        top: 0;
+        left: var(--x);
+        width: 0.4rem;
+        height: var(--length);
+        border-radius: 0 0 0.4rem 0.4rem;
+        background: var(--pipe);
+    }
+
+    /* Fig. 3 sits under the pipe's right end, in the same figure style as Fig. 1 and 2. */
+    .archive-pipe__fig {
+        margin: var(--space-2) var(--gutter) var(--space-4);
+        text-align: right;
+    }
+
+    .edition-title__fig,
+    .archive-pipe__fig {
+        color: var(--text-muted);
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    /* The 2026 edition's photos in green, like C8. */
+    .previous-edition {
+        --duotone: url(#duotone-green);
+
+        /*
+         * Fine diagonal hatching over the ink, like C8: a 1px line of the text colour
+         * every 9px, drawn with a repeating gradient. Only the image is set, so the
+         * Section's ground colour stays underneath.
+         */
+        background-image: repeating-linear-gradient(
+            45deg,
+            color-mix(in srgb, var(--text) 11%, transparent) 0 1px,
+            transparent 1px 9px
+        );
+
+        /* Titles in display capitals, like C8: these cards name a whole archive, not one news item. */
+        & .card__title {
+            font-family: var(--font-display);
+            font-size: var(--text-6);
+            font-weight: var(--weight-normal);
+            text-transform: uppercase;
+        }
     }
 
     /* One column on phones, three from --medium: never two, which would leave the third card alone. */
