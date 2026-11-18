@@ -357,9 +357,16 @@
     .pv-pd__cast--many { grid-template-columns: repeat(var(--cols), calc((100% - 4 * var(--space-4)) / 5)); }
 }
 .pv-pd__artist { display: grid; gap: var(--space-2); }
-.pv-pd__portrait { display: grid; }
-.pv-pd__portrait > * { grid-area: 1 / 1; }
-.pv-pd__portrait img, .pv-pd__blank { width: 100%; aspect-ratio: 1; object-fit: cover; background: var(--placeholder); filter: url(#duotone-green); }
+/* Category duotone, in two layers over a square filled with the category colour:
+   1. the photo in black and white, blended with multiply: white becomes the category
+      colour, black stays black;
+   2. a dark shade of the category on top, blended with lighten: it lifts the blacks to
+      that dark shade, so the photo ends up in two tones of the category.
+   isolation keeps both blends inside the square. */
+.pv-pd__portrait { display: grid; background: var(--category); isolation: isolate; }
+.pv-pd__portrait > *, .pv-pd__portrait::after { grid-area: 1 / 1; }
+.pv-pd__portrait img, .pv-pd__blank { width: 100%; aspect-ratio: 1; object-fit: cover; filter: grayscale(1) contrast(1.1); mix-blend-mode: multiply; }
+.pv-pd__portrait::after { content: ""; background: color-mix(in srgb, var(--category), black 70%); mix-blend-mode: lighten; }
 .pv-pd__number { position: relative; align-self: end; margin: 0 0 var(--space-1) var(--space-3); color: var(--cream); font-family: var(--font-display); font-size: var(--text-7); line-height: var(--line-height-tight); }
 .pv-pd__artist:hover .pv-pd__number { color: var(--pipe); }
 .pv-pd__name { font-weight: var(--weight-bold); }
