@@ -1,0 +1,341 @@
+/*
+ * PROTOTYPE — throwaway (#193). Rough styles for the three schedule variants.
+ * Copied as-is (not bundled), so plain media queries instead of the named
+ * cutoffs: 600 / 900 / 1200px. Breaks rule 11 on purpose (palette names
+ * outside colours.css). Nothing here enters the kit without discussion.
+ */
+
+/* ---------- category colours: PLACEHOLDERS mixed from the palette (#193) ---------- */
+:root {
+    --category-performance: var(--red);
+    --category-workshop: var(--cobalt);
+    --category-panel: var(--green);
+    --category-presentation: color-mix(in srgb, var(--cobalt), var(--cream) 50%);
+    --category-sundowner: var(--yellow);
+    --category-networking: color-mix(in srgb, var(--green), var(--cream) 50%);
+    --category-installation: var(--concrete-dark);
+    --category-none: var(--concrete-light);
+}
+
+[data-category] { --category: var(--category-none); }
+[data-category="performance"] { --category: var(--category-performance); }
+[data-category="workshop"] { --category: var(--category-workshop); }
+[data-category="panel"] { --category: var(--category-panel); }
+[data-category="presentation"] { --category: var(--category-presentation); }
+[data-category="sundowner"] { --category: var(--category-sundowner); }
+[data-category="networking"] { --category: var(--category-networking); }
+[data-category="installation"] { --category: var(--category-installation); }
+
+/* ---------- shared bits ---------- */
+.pv[hidden], .pv [hidden] { display: none !important; }
+.pv a { color: inherit; text-decoration: none; }
+.pv ol, .pv ul { list-style: none; margin: 0; padding: 0; }
+.pv img { display: block; max-width: 100%; }
+.pv-head { margin-bottom: var(--space-6); }
+.pv-day { scroll-margin-top: 7rem; }
+
+/* The short_title, shown next to long titles so the dev can compare. */
+.pv-short {
+    margin-left: 0.4em;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-2);
+    font-weight: var(--weight-normal);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0;
+}
+.pv-short::before { content: "short: "; }
+
+.pv-swatch {
+    display: inline-block;
+    width: 0.8em;
+    height: 0.8em;
+    margin-right: 0.5em;
+    vertical-align: -0.05em;
+    background: var(--category);
+}
+
+/* ======================================================= A · Register */
+.pv-a__bar {
+    position: sticky;
+    top: var(--header-bar-height);
+    z-index: 1;
+    display: grid;
+    gap: var(--space-2);
+    padding-block: var(--space-2);
+    border-bottom: 1px solid var(--text);
+    background: var(--ground);
+}
+.pv-a__days {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-4);
+    font-family: var(--font-mono);
+    font-size: var(--text-3);
+    font-weight: var(--weight-bold);
+}
+.pv-a__days a:hover { color: var(--pipe); }
+.pv-a__filter { display: flex; flex-wrap: wrap; gap: var(--space-1); }
+.pv-a__filter button {
+    padding: 0.2em 0.6em;
+    border: 1px solid var(--rule);
+    background: none;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: var(--text-2);
+    text-transform: uppercase;
+    cursor: pointer;
+}
+.pv-a__filter button.is-active { border-color: var(--text); background: var(--text); color: var(--ground); }
+
+.pv-a__day {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--space-6);
+    padding: var(--space-1) var(--space-2);
+    background: var(--text);
+    color: var(--ground);
+    font-family: var(--font-mono);
+    font-size: var(--text-2);
+    font-weight: var(--weight-bold);
+    text-transform: uppercase;
+}
+
+.pv-a__row > a, .pv-a__row > div {
+    display: grid;
+    grid-template-columns: 6px 1fr auto;
+    grid-template-areas:
+        "bar time cat"
+        "bar title title"
+        "bar venue venue";
+    gap: var(--space-1) var(--space-3);
+    padding-block: var(--space-3);
+    border-bottom: 1px solid var(--rule);
+}
+.pv-a__row > a::before, .pv-a__row > div::before {
+    content: "";
+    grid-area: bar;
+    align-self: stretch;
+    background: var(--category);
+}
+/* Multi-day: the bar is hatched, as if the colour runs on past the row. */
+.pv-a__row[data-multi] > a::before {
+    background: repeating-linear-gradient(180deg, var(--category) 0 6px, transparent 6px 10px);
+}
+.pv-a__row > a:hover .pv-a__title { color: var(--pipe); }
+.pv-a__time { grid-area: time; font-family: var(--font-mono); font-size: var(--text-3); font-weight: var(--weight-bold); }
+.pv-a__time em { margin-left: 0.6em; color: var(--text-muted); font-style: normal; font-weight: var(--weight-normal); text-transform: uppercase; font-size: var(--text-2); }
+.pv-a__title { grid-area: title; font-family: var(--font-display); font-size: var(--text-6); line-height: var(--line-height-snug); text-transform: uppercase; }
+.pv-a__venue { grid-area: venue; color: var(--text-muted); font-size: var(--text-3); }
+.pv-a__cat { grid-area: cat; font-family: var(--font-mono); font-size: var(--text-2); text-transform: uppercase; }
+
+@media (min-width: 900px) {
+    .pv-a__row > a, .pv-a__row > div {
+        grid-template-columns: 6px 9rem 1fr 11rem 8rem;
+        grid-template-areas: "bar time title venue cat";
+        align-items: baseline;
+    }
+    .pv-a__time em { display: block; margin: 0; }
+}
+
+/* point page A: like the artist page */
+.pv-pa { display: grid; gap: var(--space-6); }
+.pv-pa__main { grid-column: 1 / -1; }
+.pv-pa__photo { width: 100%; aspect-ratio: 1; object-fit: cover; filter: url(#duotone-green); }
+.pv-pa__figure { margin: 0; display: grid; gap: var(--space-2); }
+.pv-pa__title { margin-top: var(--space-2); }
+.pv-pa__pager { grid-column: 1 / -1; }
+.pv-spec { margin-block: var(--space-6); border-top: 1px solid var(--text); }
+.pv-spec div { display: grid; gap: var(--space-1) var(--space-4); padding-block: var(--space-3); border-bottom: 1px solid var(--rule); }
+.pv-spec dd { margin: 0; display: flex; flex-direction: column; gap: var(--space-1); font-weight: var(--weight-bold); }
+.pv-multi { font-family: var(--font-mono); font-size: var(--text-2); font-style: normal; text-transform: uppercase; color: var(--text-muted); }
+@media (min-width: 600px) { .pv-spec div { grid-template-columns: 8rem 1fr; } }
+@media (min-width: 900px) { .pv-pa { grid-template-columns: 5fr 7fr; align-items: start; } }
+
+/* ======================================================= B · Timesheet */
+.pv-b__bar {
+    position: sticky;
+    top: var(--header-bar-height);
+    z-index: 1;
+    display: grid;
+    gap: var(--space-3);
+    padding-block: var(--space-3);
+    background: var(--ground);
+    box-shadow: 0 1px 0 var(--rule);
+}
+.pv-b__days { display: flex; gap: var(--space-2); overflow-x: auto; }
+.pv-b__days a {
+    display: grid;
+    min-width: 3.5rem;
+    padding: var(--space-1) var(--space-2);
+    border: 1px solid var(--text);
+    font-family: var(--font-mono);
+    font-size: var(--text-2);
+    text-transform: uppercase;
+    text-align: center;
+}
+.pv-b__days a b { font-family: var(--font-display); font-size: var(--text-6); font-weight: normal; line-height: 1; }
+.pv-b__days a:hover { background: var(--text); color: var(--ground); }
+.pv-b__filter { display: flex; gap: var(--space-2); overflow-x: auto; padding-bottom: 2px; }
+.pv-b__filter button {
+    flex: none;
+    padding: 0.35em 0.9em;
+    border: 0;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--category, var(--text)) 18%, var(--ground));
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: var(--text-3);
+    cursor: pointer;
+}
+.pv-b__filter button.is-active { background: var(--category, var(--text)); color: var(--ground); }
+.pv-b__filter button[data-category="sundowner"].is-active { color: var(--ink); }
+
+.pv-b__block { margin-top: var(--space-8); }
+.pv-b__day {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 var(--space-3);
+    margin-bottom: var(--space-4);
+    font-family: var(--font-display);
+    font-size: var(--text-9);
+    font-weight: normal;
+    line-height: var(--line-height-tight);
+    text-transform: uppercase;
+}
+.pv-b__day span { color: var(--pipe); }
+.pv-b__day small { flex-basis: 100%; font-family: var(--font-mono); font-size: var(--text-2); color: var(--text-muted); }
+
+.pv-b__list { display: grid; gap: var(--space-2); }
+.pv-b__row { position: relative; }
+.pv-b__row > a, .pv-b__row > div {
+    display: grid;
+    gap: var(--space-1);
+    padding: var(--space-3) var(--space-4);
+    background: var(--surface);
+}
+.pv-b__row > a, .pv-b__row > div { padding-left: calc(var(--space-4) + var(--space-3)) !important; }
+.pv-b__run { position: absolute; z-index: 1; left: var(--space-2); top: 0; bottom: 0; }
+.pv-b__row > a:hover { outline: 2px solid var(--text); }
+.pv-b__when { font-family: var(--font-mono); font-size: var(--text-3); }
+.pv-b__title { font-size: var(--text-6); font-weight: var(--weight-bold); line-height: var(--line-height-snug); }
+.pv-b__label {
+    justify-self: start;
+    padding: 0.15em 0.6em;
+    background: var(--category);
+    color: var(--cream);
+    font-family: var(--font-mono);
+    font-size: var(--text-2);
+    font-weight: var(--weight-bold);
+    text-transform: uppercase;
+}
+[data-category="sundowner"] .pv-b__label, [data-category="sundowner"].pv-pb .pv-b__label,
+[data-category="presentation"] .pv-b__label, [data-category="networking"] .pv-b__label { color: var(--ink); }
+@media (min-width: 900px) {
+    .pv-b__row > a, .pv-b__row > div { grid-template-columns: 14rem 1fr auto; align-items: baseline; gap: var(--space-4); }
+}
+
+/* point page B: ink band like the news article */
+.pv-pb__band { position: relative; display: grid; gap: var(--space-4); padding-block: var(--space-8); background: var(--ground); color: var(--text); }
+.pv-pb__run { position: absolute; left: calc(var(--gutter) / 2); top: 0; bottom: 0; }
+.pv-pb__when { margin: 0; font-family: var(--font-mono); font-size: var(--text-5); text-transform: uppercase; }
+.pv-pb__title { max-width: 30ch; margin: 0; font-family: var(--font-display); font-size: var(--text-7); font-weight: normal; line-height: var(--line-height-tight); text-transform: uppercase; }
+.pv-pb__body { display: grid; gap: var(--space-6); }
+.pv-pb__photo { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; filter: url(#duotone-cobalt); }
+.pv-pb__aside ul { margin-bottom: var(--space-5); font-weight: var(--weight-bold); }
+@media (min-width: 900px) {
+    .pv-pb__body { grid-template-columns: 1fr 16rem; }
+    .pv-pb__photo { grid-column: 1 / -1; }
+}
+
+/* ======================================================= C · Board */
+.pv-c__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: var(--space-4); }
+.pv-c__select { display: grid; gap: var(--space-1); }
+.pv-c__select select {
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--text);
+    background: var(--ground);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: var(--text-3);
+    text-transform: uppercase;
+}
+.pv-c__days {
+    position: sticky;
+    top: var(--header-bar-height);
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-block: 1px solid var(--text);
+    background: var(--ground);
+    font-family: var(--font-mono);
+    font-size: var(--text-3);
+    font-weight: var(--weight-bold);
+}
+.pv-c__days a { padding: var(--space-2); text-align: center; border-right: 1px solid var(--rule); }
+.pv-c__days a:hover { background: var(--pipe); color: var(--cream); }
+@media (min-width: 600px) { .pv-c__days { grid-template-columns: repeat(6, 1fr); } }
+
+.pv-c__day {
+    margin: var(--space-7) 0 var(--space-3);
+    font-family: var(--font-display);
+    font-size: var(--text-7);
+    font-weight: normal;
+    line-height: var(--line-height-tight);
+    text-transform: uppercase;
+}
+.pv-c__grid { display: grid; gap: var(--space-4); }
+.pv-c__card > a, .pv-c__card > div {
+    display: grid;
+    grid-template-columns: 1fr;
+    height: 100%;
+    border-top: 6px solid var(--category);
+    background: var(--surface);
+}
+/* Multi-day: a doubled top edge. */
+.pv-c__card[data-multi] > a { border-top-style: double; border-top-width: 10px; }
+.pv-c__card > a:hover .pv-c__title { color: var(--pipe); }
+.pv-c__thumb { display: none !important; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; filter: url(#duotone-green); }
+.pv-c__text { display: grid; align-content: start; gap: var(--space-2); padding: var(--space-3) var(--space-4) var(--space-4); }
+.pv-c__title { font-size: var(--text-5); font-weight: var(--weight-bold); line-height: var(--line-height-snug); }
+.pv-c__cat { justify-self: start; font-family: var(--font-mono); font-size: var(--text-2); text-transform: uppercase; border-bottom: 2px solid var(--category); }
+@media (min-width: 600px) { .pv-c__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px) {
+    .pv-c__grid { grid-template-columns: repeat(3, 1fr); }
+    .pv-c__thumb { display: block !important; }
+}
+
+/* point page C: photo-led */
+.pv-pc__hero { border-bottom: 10px solid var(--category); }
+.pv-pc__photo { width: 100%; height: min(70vh, 40rem); object-fit: cover; filter: url(#duotone-cobalt); }
+.pv-pc__body { display: grid; gap: var(--space-6); }
+.pv-pc__panel { display: grid; gap: var(--space-3); padding: var(--space-5); background: var(--surface); }
+.pv-pc__title { margin: 0; font-size: var(--text-7); font-family: var(--font-display); font-weight: normal; line-height: var(--line-height-tight); text-transform: uppercase; }
+.pv-pc__with { margin: 0; font-weight: var(--weight-bold); }
+.pv-pc__with a { text-decoration: underline; }
+@media (min-width: 900px) {
+    .pv-pc__body { grid-template-columns: 5fr 7fr; align-items: start; margin-top: calc(-1 * var(--space-8)); }
+    .pv-pc__panel { position: relative; }
+}
+
+/* ---------- the switcher bar ---------- */
+.pv-switcher {
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 999px;
+    background: #ff00aa;
+    color: #fff;
+    font: 600 13px/1 system-ui, sans-serif;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 0.3);
+    transform: translateX(-50%);
+}
+.pv-switcher button { border: 0; background: rgb(255 255 255 / 0.2); color: inherit; font: inherit; width: 2rem; height: 2rem; border-radius: 50%; cursor: pointer; }
+.pv-switcher span { min-width: 9rem; text-align: center; }

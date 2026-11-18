@@ -4,7 +4,9 @@ pagination:
   size: 1
   alias: point
 permalink: "/2026/schedule/{{ point.slug }}/index.html"
-layout: layouts/base.html
+layout: layouts/site.html
+pageName: schedule-point
+headerContext: Archive 2026
 eleventyComputed:
     title: "{{ point.title }}"
     description: "{{ (point.description or point.title) | truncate(160, true, '...') }}"
@@ -12,7 +14,7 @@ eleventyComputed:
     og_type: "event"
 ---
 
-<article class="content__container">
+<article class="content__container" data-pv-real>
     <div class="content__title">
         <h1>{{ point.short_title or point.title }}</h1>
     </div>
@@ -42,6 +44,9 @@ eleventyComputed:
             </div>
         </div>
 </article>
+
+{# PROTOTYPE — throwaway (#193): remove this line with the variants. #}
+{% include "schedule-point-variants.prototype.html" %}
 
 {% set canonicalUrl = site.url ~ page.url %}
 

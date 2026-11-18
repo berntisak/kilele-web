@@ -1,13 +1,13 @@
 ---
-layout: layouts/base.html
+layout: layouts/site.html
+pageName: schedule
+headerContext: Archive 2026
 title: Schedule
 description: "Schedule"
 permalink: /2026/schedule/index.html
 ---
 
-<link rel="stylesheet" href="/css/calendar.css">
-
-<div class="content__container">
+<div class="content__container" data-pv-real>
       <h1>Schedule Kilele 2026</h1>
 
     <!-- View Toggle -->
@@ -130,3 +130,6 @@ permalink: /2026/schedule/index.html
     <!-- End Calendar View -->
 
 </div>
+
+{# PROTOTYPE — throwaway (#193): remove this line with the variants. #}
+{% include "schedule-list-variants.prototype.html" %}

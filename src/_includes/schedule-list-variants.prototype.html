@@ -1,0 +1,143 @@
+{#
+  PROTOTYPE — throwaway (#193). Three rough variants of the 2026 List view,
+  each paired with the program point page variant of the same letter.
+  Switched with ?variant=A|B|C and the bar at the bottom. Only rendered by
+  the dev server. Data: _data/scheduleVariants.js (2026 only, as #193 decided).
+#}
+{% if eleventy.env.runMode == "serve" %}
+<link rel="stylesheet" href="/css/prototype/schedule-variants.css">
+{% set y = scheduleVariants["2026"] %}
+
+{# ---------------------------------------------------------------- A · Register #}
+<section class="section pv pv-a" data-variant="A" hidden>
+    <header class="pv-head">
+        <dl class="stats-bar">
+            <div><dt>Register</dt><dd>Program, Kilele 2026</dd></div>
+            <div><dt>Entries</dt><dd>{{ y.mainCount }}</dd></div>
+            <div><dt>Days</dt><dd>{{ y.days.length }}</dd></div>
+            <div><dt>Venues</dt><dd>{{ y.venueCount }}</dd></div>
+        </dl>
+        <h1 class="page-title">Schedule 2026</h1>
+        <div class="pipe"></div>
+    </header>
+
+    <div class="pv-a__bar">
+        <nav class="pv-a__days" aria-label="Jump to a day">
+            {% for day in y.days %}<a href="#a-{{ day.id }}">{{ day.short }}</a>{% endfor %}
+            <a href="#a-lead-up">LEAD-UP</a>
+        </nav>
+        <div class="pv-a__filter" data-pv-filter>
+            <button type="button" class="is-active" data-cat="all">All</button>
+            {% for c in y.categories %}<button type="button" data-cat="{{ c.id }}">{{ c.name }}</button>{% endfor %}
+        </div>
+    </div>
+
+    {% macro rowA(p) %}
+    <li class="pv-a__row" data-category="{{ p.category }}" {% if p.multiDay %}data-multi{% endif %}>
+        {% if p.slug %}<a href="/2026/schedule/{{ p.slug }}/?variant=A">{% else %}<div>{% endif %}
+            <span class="pv-a__time">{% if p.multiDay %}{{ p.range | upper }}<em>Multi-day</em>{% else %}{{ p.time }}{% endif %}</span>
+            <span class="pv-a__title">{{ p.title }}{% if p.short_title and p.short_title != p.title %} <s class="pv-short" title="short_title">{{ p.short_title }}</s>{% endif %}</span>
+            <span class="pv-a__venue">{{ p.venue }}</span>
+            <span class="pv-a__cat">{{ p.categoryName }}</span>
+        {% if p.slug %}</a>{% else %}</div>{% endif %}
+    </li>
+    {% endmacro %}
+
+    {% for day in y.days %}
+    <div class="pv-day" id="a-{{ day.id }}">
+        <h2 class="pv-a__day">{{ day.label }} <span>{{ day.points.length }}</span></h2>
+        <ol class="pv-a__list">{% for p in day.points %}{{ rowA(p) }}{% endfor %}</ol>
+    </div>
+    {% endfor %}
+    <div class="pv-day" id="a-lead-up">
+        <h2 class="pv-a__day">Lead-up <span>{{ y.leadUp.length }}</span></h2>
+        <ol class="pv-a__list">{% for p in y.leadUp %}{{ rowA(p) }}{% endfor %}</ol>
+    </div>
+</section>
+
+{# ---------------------------------------------------------------- B · Timesheet #}
+<section class="section pv pv-b" data-variant="B" hidden>
+    <header class="pv-head">
+        <p class="meta">Kilele 2026 · {{ y.mainCount }} program points · {{ y.days.length }} days · Nairobi</p>
+        <h1 class="page-title">Schedule</h1>
+    </header>
+
+    <div class="pv-b__bar">
+        <nav class="pv-b__days" aria-label="Jump to a day">
+            {% for day in y.days %}<a href="#b-{{ day.id }}"><b>{{ day.short.split(" ")[1] }}</b>{{ day.short.split(" ")[0] }}</a>{% endfor %}
+            <a href="#b-lead-up"><b>→</b>Lead-up</a>
+        </nav>
+        <div class="pv-b__filter" data-pv-filter>
+            <button type="button" class="is-active" data-cat="all">All</button>
+            {% for c in y.categories %}<button type="button" data-cat="{{ c.id }}" data-category="{{ c.id }}">{{ c.name }} <small>{{ c.count }}</small></button>{% endfor %}
+        </div>
+    </div>
+
+    {% macro rowB(p) %}
+    <li class="pv-b__row" data-category="{{ p.category }}" {% if p.multiDay %}data-multi{% endif %}>
+        {% if p.multiDay %}<span class="pipe pipe--vertical pv-b__run" aria-hidden="true"></span>{% endif %}
+        {% if p.slug %}<a href="/2026/schedule/{{ p.slug }}/?variant=B">{% else %}<div>{% endif %}
+            <span class="pv-b__when">{% if p.multiDay %}Runs {{ p.range }}{% else %}{{ p.time }}{% endif %} · {{ p.venue }}</span>
+            <span class="pv-b__title">{{ p.title }}{% if p.short_title and p.short_title != p.title %} <s class="pv-short">{{ p.short_title }}</s>{% endif %}</span>
+            {% if p.categoryName %}<span class="pv-b__label">{{ p.categoryName }}</span>{% endif %}
+        {% if p.slug %}</a>{% else %}</div>{% endif %}
+    </li>
+    {% endmacro %}
+
+    {% for day in y.days %}
+    <div class="pv-day pv-b__block" id="b-{{ day.id }}">
+        <h2 class="pv-b__day"><span>{{ day.short.split(" ")[0] }}</span> {{ day.short.split(" ")[1] }}<small>{{ day.label }} · {{ day.points.length }}</small></h2>
+        <ol class="pv-b__list">{% for p in day.points %}{{ rowB(p) }}{% endfor %}</ol>
+    </div>
+    {% endfor %}
+    <div class="pv-day pv-b__block" id="b-lead-up">
+        <h2 class="pv-b__day"><span>Lead-up</span><small>Before the festival · {{ y.leadUp.length }}</small></h2>
+        <ol class="pv-b__list">{% for p in y.leadUp %}{{ rowB(p) }}{% endfor %}</ol>
+    </div>
+</section>
+
+{# ---------------------------------------------------------------- C · Board #}
+<section class="section pv pv-c" data-variant="C" hidden>
+    <header class="pv-head pv-c__head">
+        <h1 class="page-title">Schedule 2026</h1>
+        <label class="pv-c__select">
+            <span class="meta">Show</span>
+            <select data-pv-select>
+                <option value="all">Everything ({{ y.mainCount }})</option>
+                {% for c in y.categories %}<option value="{{ c.id }}">{{ c.name }} ({{ c.count }})</option>{% endfor %}
+            </select>
+        </label>
+    </header>
+
+    <nav class="pv-c__days" aria-label="Jump to a day">
+        {% for day in y.days %}<a href="#c-{{ day.id }}">{{ day.short }}</a>{% endfor %}
+        <a href="#c-lead-up">LEAD-UP</a>
+    </nav>
+
+    {% macro cardC(p) %}
+    <li class="pv-c__card" data-category="{{ p.category }}" {% if p.multiDay %}data-multi{% endif %}>
+        {% if p.slug %}<a href="/2026/schedule/{{ p.slug }}/?variant=C">{% else %}<div>{% endif %}
+            <img class="pv-c__thumb" src="{{ p.photoSmall or "/assets/images/placeholder.jpg" }}" alt="" loading="lazy" eleventy:ignore>
+            <span class="pv-c__text">
+                <span class="meta">{% if p.multiDay %}{{ p.range }} · all week{% else %}{{ p.time }}{% endif %} · {{ p.venue }}</span>
+                <span class="pv-c__title">{{ p.title }}{% if p.short_title and p.short_title != p.title %} <s class="pv-short">{{ p.short_title }}</s>{% endif %}</span>
+                {% if p.categoryName %}<span class="pv-c__cat">{{ p.categoryName }}</span>{% endif %}
+            </span>
+        {% if p.slug %}</a>{% else %}</div>{% endif %}
+    </li>
+    {% endmacro %}
+
+    {% for day in y.days %}
+    <div class="pv-day" id="c-{{ day.id }}">
+        <h2 class="pv-c__day">{{ day.label }}</h2>
+        <ol class="pv-c__grid">{% for p in day.points %}{{ cardC(p) }}{% endfor %}</ol>
+    </div>
+    {% endfor %}
+    <div class="pv-day" id="c-lead-up">
+        <h2 class="pv-c__day">Lead-up</h2>
+        <ol class="pv-c__grid">{% for p in y.leadUp %}{{ cardC(p) }}{% endfor %}</ol>
+    </div>
+</section>
+
+{% include "schedule-switcher.prototype.html" %}
+{% endif %}

@@ -1,0 +1,79 @@
+{#
+  PROTOTYPE — throwaway (#193). Three rough variants of one program point's
+  page, each paired with the List view variant of the same letter. `point`
+  comes from the page's pagination; `v` is the same point from
+  _data/scheduleVariants.js (category word, range, multi-day). Dev server only.
+#}
+{% if eleventy.env.runMode == "serve" %}
+<link rel="stylesheet" href="/css/prototype/schedule-variants.css">
+{% set y = scheduleVariants["2026"] %}
+{% set v = y.bySlug[point.slug] %}
+{% set photo = v.photo or "/assets/images/placeholder.jpg" %}
+{% set when = ("Runs " ~ v.range) if v.multiDay else (v.dayLabel ~ ", " ~ v.time) %}
+
+{# ---------------------------------------------------------------- A · Register #}
+<article class="section pv pv-pa" data-variant="A" data-category="{{ v.category }}" hidden>
+    <div class="pipe pv-pa__main"></div>
+    <figure class="pv-pa__figure">
+        <img class="pv-pa__photo" src="{{ photo }}" alt="{{ point.title }}" eleventy:ignore>
+        <figcaption class="meta">Fig. — {{ point.title }}, Schedule 2026{% if not v.photo %} (key art){% endif %}</figcaption>
+    </figure>
+    <div class="pv-pa__text">
+        <p class="meta"><span class="pv-swatch"></span>{{ v.categoryName or "Program point" }} · Schedule 2026</p>
+        <h1 class="page-title pv-pa__title">{{ point.title }}</h1>
+        <dl class="pv-spec">
+            <div><dt class="meta">When</dt><dd>{{ when }}{% if v.multiDay %} <em class="pv-multi">Multi-day</em>{% endif %}</dd></div>
+            <div><dt class="meta">Where</dt><dd>{{ v.venue }}</dd></div>
+            {% if v.categoryName %}<div><dt class="meta">Category</dt><dd>{{ v.categoryName }}</dd></div>{% endif %}
+            {% if point.artists.length %}<div><dt class="meta">With</dt><dd>{% for a in point.artists %}<a href="/2026/lineup/{{ a.slug }}/">{{ a.name }} →</a>{% endfor %}</dd></div>{% endif %}
+        </dl>
+        <div class="content">{{ point.description | markdown | sanitize | safe }}</div>
+    </div>
+    <nav class="pager pv-pa__pager" aria-label="More program points">
+        {% if pagination.href.previous %}<a class="pager__previous" href="{{ pagination.href.previous }}?variant=A">← Previous</a>{% endif %}
+        <a class="pager__all" href="/2026/schedule/?variant=A">Whole schedule</a>
+        {% if pagination.href.next %}<a class="pager__next" href="{{ pagination.href.next }}?variant=A">Next →</a>{% endif %}
+    </nav>
+</article>
+
+{# ---------------------------------------------------------------- B · Timesheet #}
+<article class="pv pv-pb" data-variant="B" data-category="{{ v.category }}" hidden>
+    <header class="section pv-pb__band" data-ground="ink">
+        {% if v.multiDay %}<div class="pipe pipe--vertical pv-pb__run" aria-hidden="true"></div>{% endif %}
+        <p class="pv-pb__when">{{ when }}<br>{{ v.venue }}</p>
+        <h1 class="pv-pb__title">{{ point.title }}</h1>
+        {% if v.categoryName %}<span class="pv-b__label">{{ v.categoryName }}</span>{% endif %}
+    </header>
+    <div class="section pv-pb__body">
+        <img class="pv-pb__photo" src="{{ photo }}" alt="{{ point.title }}" eleventy:ignore>
+        <div class="content">{{ point.description | markdown | sanitize | safe }}</div>
+        <aside class="pv-pb__aside">
+            {% if point.artists.length %}
+            <p class="meta">With</p>
+            <ul>{% for a in point.artists %}<li><a href="/2026/lineup/{{ a.slug }}/">{{ a.name }} →</a></li>{% endfor %}</ul>
+            {% endif %}
+            <p class="meta">Back to</p>
+            <ul><li><a href="/2026/schedule/?variant=B#b-{{ v.dayId }}">{{ v.dayLabel }} →</a></li></ul>
+        </aside>
+    </div>
+</article>
+
+{# ---------------------------------------------------------------- C · Board #}
+<article class="pv pv-pc" data-variant="C" data-category="{{ v.category }}" hidden>
+    <div class="pv-pc__hero">
+        <img class="pv-pc__photo" src="{{ photo }}" alt="{{ point.title }}" eleventy:ignore>
+    </div>
+    <div class="section pv-pc__body">
+        <div class="pv-pc__panel">
+            <p class="meta">{{ when }} · {{ v.venue }}</p>
+            <h1 class="pv-pc__title">{{ point.title }}</h1>
+            {% if v.categoryName %}<span class="pv-c__cat">{{ v.categoryName }}</span>{% endif %}
+            {% if point.artists.length %}<p class="pv-pc__with">With {% for a in point.artists %}<a href="/2026/lineup/{{ a.slug }}/">{{ a.name }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>{% endif %}
+        </div>
+        <div class="content">{{ point.description | markdown | sanitize | safe }}</div>
+        <a class="meta pv-pc__back" href="/2026/schedule/?variant=C">← Whole schedule</a>
+    </div>
+</article>
+
+{% include "schedule-switcher.prototype.html" %}
+{% endif %}
