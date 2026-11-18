@@ -83,7 +83,7 @@
     }
 
     /* The title turns pipe red while the row is under the pointer. */
-    .schedule__point:hover .schedule__title {
+    a.schedule__point:hover .schedule__title {
         color: var(--pipe);
     }
 
