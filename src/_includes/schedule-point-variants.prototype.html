@@ -83,15 +83,17 @@
 
 {# ---------------------------------------------------------------- D · Cast #}
 {# Test: one duotone filter per category, built like duotones.html (dark shade of the
-   category colour for black, pale tint of it for white). Workshop reuses the cobalt
+   category colour for black, light tint of it for white). Red and yellow get a third
+   step in the middle (dark → full colour → light tint): a strong red or yellow can't
+   also be light, so the middle step holds the colour and the ends keep the contrast. Workshop reuses the cobalt
    numbers and Panel the green ones; other categories fall back to green. #}
 <svg width="0" height="0" aria-hidden="true" focusable="false" style="position: absolute">
     <filter id="duotone-performance" color-interpolation-filters="sRGB">
         <feColorMatrix type="matrix" values="0.2126 0.7152 0.0722 0 0  0.2126 0.7152 0.0722 0 0  0.2126 0.7152 0.0722 0 0  0 0 0 1 0"/>
         <feComponentTransfer>
-            <feFuncR type="table" tableValues="0.20 1.00"/>
-            <feFuncG type="table" tableValues="0.03 0.56"/>
-            <feFuncB type="table" tableValues="0.03 0.50"/>
+            <feFuncR type="table" tableValues="0.14 0.80 1.00"/>
+            <feFuncG type="table" tableValues="0.02 0.14 0.84"/>
+            <feFuncB type="table" tableValues="0.03 0.14 0.78"/>
         </feComponentTransfer>
     </filter>
     <filter id="duotone-workshop" color-interpolation-filters="sRGB">
@@ -105,9 +107,9 @@
     <filter id="duotone-sundowner" color-interpolation-filters="sRGB">
         <feColorMatrix type="matrix" values="0.2126 0.7152 0.0722 0 0  0.2126 0.7152 0.0722 0 0  0.2126 0.7152 0.0722 0 0  0 0 0 1 0"/>
         <feComponentTransfer>
-            <feFuncR type="table" tableValues="0.20 1.00"/>
-            <feFuncG type="table" tableValues="0.14 0.86"/>
-            <feFuncB type="table" tableValues="0.02 0.36"/>
+            <feFuncR type="table" tableValues="0.16 0.88 1.00"/>
+            <feFuncG type="table" tableValues="0.10 0.62 0.94"/>
+            <feFuncB type="table" tableValues="0.02 0.08 0.62"/>
         </feComponentTransfer>
     </filter>
     <filter id="duotone-panel" color-interpolation-filters="sRGB">
