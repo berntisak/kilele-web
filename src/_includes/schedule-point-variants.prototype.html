@@ -81,5 +81,53 @@
     </div>
 </article>
 
+{# ---------------------------------------------------------------- D · Cast #}
+{# The involved artists' portraits carry the page; the point's own photo only
+   shows when no artist is linked. Portraits come from the lineup data. #}
+<article class="section pv pv-pd{% if point.artists.length <= 1 %} pv-pd--solo{% endif %}" data-variant="D" data-category="{{ v.category }}" hidden>
+    <div class="pipe"></div>
+    <header class="pv-pd__head">
+        <p class="meta"><span class="pv-swatch"></span>{{ v.categoryName or "Program point" }} · {{ when }} · {{ v.venue }}</p>
+        <h1 class="page-title">{{ headline }}</h1>
+        {% if fullTitle %}<p class="pv-pc__full">{{ fullTitle }}</p>{% endif %}
+    </header>
+
+    {% if point.artists.length %}
+    <ol class="pv-pd__cast pv-pd__cast--{{ 'one' if point.artists.length == 1 else ('few' if point.artists.length <= 4 else 'many') }}">
+        {% for a in point.artists %}{% for l in lineup %}{% if l.slug == a.slug %}
+        <li>
+            <a class="pv-pd__artist" href="/2026/lineup/{{ l.slug }}/">
+                <span class="pv-pd__portrait">
+                    {% if l.photo_square %}<img src="{{ l.photo_square }}" alt="" loading="lazy" eleventy:ignore>{% else %}<span class="pv-pd__blank"></span>{% endif %}
+                    <span class="pv-pd__number">{{ l.number }}</span>
+                </span>
+                <span class="pv-pd__name">{{ l.name }} →</span>
+            </a>
+        </li>
+        {% endif %}{% endfor %}{% endfor %}
+    </ol>
+    <p class="meta pv-pd__caption">Fig. — {{ point.artists.length }} {{ "artist" if point.artists.length == 1 else "artists" }} at {{ headline }}, Schedule 2026</p>
+    {% else %}
+    <figure class="pv-pd__photo">
+        <img src="{{ photo }}" alt="{{ point.title }}" eleventy:ignore>
+        <figcaption class="meta">Fig. — {{ headline }}, Schedule 2026{% if not v.photo %} (key art){% endif %}</figcaption>
+    </figure>
+    {% endif %}
+
+    <div class="pv-pd__body">
+        <dl class="pv-spec">
+            <div><dt class="meta">When</dt><dd>{{ when }}{% if v.multiDay %} <em class="pv-multi">Multi-day</em>{% endif %}</dd></div>
+            <div><dt class="meta">Where</dt><dd>{{ v.venue }}</dd></div>
+            {% if v.categoryName %}<div><dt class="meta">What</dt><dd><span class="pv-b__label">{{ v.categoryName }}</span></dd></div>{% endif %}
+        </dl>
+        <div class="content">{{ point.description | markdown | sanitize | safe }}</div>
+    </div>
+    <nav class="pager" aria-label="More program points">
+        {% if pagination.href.previous %}<a class="pager__previous" href="{{ pagination.href.previous }}?variant=D">← Previous</a>{% endif %}
+        <a class="pager__all" href="/2026/schedule/?variant=D">Whole schedule</a>
+        {% if pagination.href.next %}<a class="pager__next" href="{{ pagination.href.next }}?variant=D">Next →</a>{% endif %}
+    </nav>
+</article>
+
 {% include "schedule-switcher.prototype.html" %}
 {% endif %}

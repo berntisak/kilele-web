@@ -342,6 +342,39 @@
     .pv-pc__panel { position: relative; }
 }
 
+/* ======================================================= D · Cast (point page only) */
+.pv-pd { display: grid; gap: var(--space-6); }
+.pv-pd__head { display: grid; gap: var(--space-3); }
+.pv-pd__cast { display: grid; gap: var(--space-4); grid-template-columns: repeat(2, 1fr); }
+.pv-pd__cast--one { grid-template-columns: minmax(0, 28rem); }
+@media (min-width: 600px) {
+    .pv-pd__cast--few { grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); }
+    .pv-pd__cast--many { grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); }
+}
+@media (min-width: 900px) { .pv-pd__cast--few { grid-template-columns: repeat(4, 1fr); } .pv-pd__cast--many { grid-template-columns: repeat(5, 1fr); } }
+.pv-pd__artist { display: grid; gap: var(--space-2); }
+.pv-pd__portrait { display: grid; }
+.pv-pd__portrait > * { grid-area: 1 / 1; }
+.pv-pd__portrait img, .pv-pd__blank { width: 100%; aspect-ratio: 1; object-fit: cover; background: var(--placeholder); filter: url(#duotone-green); }
+.pv-pd__number { position: relative; align-self: end; margin: 0 0 var(--space-1) var(--space-3); color: var(--cream); font-family: var(--font-display); font-size: var(--text-7); line-height: var(--line-height-tight); }
+.pv-pd__artist:hover .pv-pd__number { color: var(--pipe); }
+.pv-pd__name { font-weight: var(--weight-bold); }
+.pv-pd__caption { margin-top: calc(-1 * var(--space-4)); }
+.pv-pd__photo { margin: 0; display: grid; gap: var(--space-2); }
+.pv-pd__photo img { width: 100%; max-height: 32rem; object-fit: cover; filter: url(#duotone-green); }
+.pv-pd__body { display: grid; gap: var(--space-6); }
+.pv-pd__body .pv-spec { margin: 0; align-self: start; }
+@media (min-width: 900px) { .pv-pd__body { grid-template-columns: 5fr 7fr; } }
+/* One artist (or none): the portrait or photo sits beside the text, as on the artist page. */
+@media (min-width: 900px) {
+    .pv-pd--solo { grid-template-columns: 5fr 7fr; align-items: start; }
+    .pv-pd--solo > .pipe, .pv-pd--solo > .pv-pd__head, .pv-pd--solo > .pager { grid-column: 1 / -1; }
+    .pv-pd--solo .pv-pd__cast--one { grid-template-columns: 1fr; }
+    .pv-pd--solo > .pv-pd__caption { grid-column: 1; margin-top: 0; }
+    .pv-pd--solo > .pv-pd__body { grid-column: 2; grid-row: 3 / span 2; grid-template-columns: 1fr; }
+    .pv-pd--solo > .pv-pd__photo { grid-column: 1; }
+}
+
 /* ---------- the switcher bar ---------- */
 .pv-switcher {
     position: fixed;

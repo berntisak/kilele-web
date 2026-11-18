@@ -12,15 +12,19 @@
 
 <script>
 (function () {
-    var keys = ["0", "A", "B", "C"];
-    var names = { "0": "Current page", A: "Register", B: "Timesheet", C: "Board" };
+    var keys = ["0", "A", "B", "C", "D"];
+    var names = { "0": "Current page", A: "Register", B: "Timesheet", C: "Board", D: "Cast" };
     var real = document.querySelector("[data-pv-real]");
     var label = document.querySelector(".pv-switcher [data-label]");
 
     function show(key) {
         if (keys.indexOf(key) < 0) key = "0";
         if (real) real.hidden = key !== "0";
-        document.querySelectorAll(".pv").forEach(function (v) { v.hidden = v.dataset.variant !== key; });
+        document.querySelectorAll(".pv").forEach(function (v) { v.hidden = v.dataset.variant.split(" ").indexOf(key) < 0; });
+        // Links carry the current variant along (the list's A also stands in for D).
+        if (key !== "0") document.querySelectorAll('a[href*="variant="]').forEach(function (a) {
+            a.href = a.href.replace(/variant=[A-Z]/, "variant=" + key);
+        });
         label.textContent = key + " · " + names[key];
         var url = new URL(location.href);
         if (key === "0") url.searchParams.delete("variant"); else url.searchParams.set("variant", key);
