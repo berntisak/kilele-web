@@ -25,6 +25,27 @@ eleventyComputed:
         </p>
         <h1 class="page-title">{{ point.short_title or point.title }}</h1>
     </header>
+
+    {% if point.artists | length %}
+    <figure class="schedule-point__media">
+        <ol class="schedule-point__cast" role="list">
+            {% for credit in point.artists %}
+            {% for artist in lineup %}{% if artist.slug == credit.slug %}
+            <li>
+                <a class="schedule-point__artist" href="/2026/lineup/{{ artist.slug }}/">
+                    <span class="schedule-point__portrait">
+                        {% if artist.photo_square %}<img src="{{ artist.photo_square }}" alt="" loading="lazy" eleventy:ignore>{% endif %}
+                        <span class="schedule-point__number">{{ artist.number }}</span>
+                    </span>
+                    <span class="schedule-point__name">{{ artist.name }} →</span>
+                </a>
+            </li>
+            {% endif %}{% endfor %}
+            {% endfor %}
+        </ol>
+        <figcaption class="meta">Fig. — {{ point.artists | length }} {{ "artist" if point.artists | length == 1 else "artists" }} at {{ point.short_title or point.title }}</figcaption>
+    </figure>
+    {% endif %}
 </article>
 
 {% set canonicalUrl = site.url ~ page.url %}
