@@ -1,16 +1,32 @@
 ---
-layout: layouts/base.html
-title: Schedule
-description: "Schedule"
+layout: layouts/site.html
+pageName: schedule
+headerContext: Archive 2026
+title: Schedule 2026
+description: "The program of Kilele 2026"
 permalink: /2026/schedule/index.html
 ---
 
 {% set program = schedule["2026"] %}
-{% for day in program.officialDays %}
-  <h2>{{ day.date }}</h2>
-  <ul>
-    {% for point in day.points %}
-      <li>{{ point.start_time_local }} {{ point.short_title or point.title }} · {{ point.venue_name }} · {{ point.category_name }}</li>
+
+<section class="section schedule">
+    <header>
+        <dl class="stats-bar">
+            <div><dt>Register</dt><dd>Program, Kilele 2026</dd></div>
+            <div><dt>Entries</dt><dd>{{ program.points | length }}</dd></div>
+            <div><dt>Days</dt><dd>{{ program.officialDays | length }}</dd></div>
+            <div><dt>Status</dt><dd>Archived</dd></div>
+        </dl>
+        <h1 class="page-title">Schedule 2026</h1>
+        <div class="pipe"></div>
+    </header>
+
+    {% for day in program.officialDays %}
+    <h2>{{ day.date }}</h2>
+    <ul>
+        {% for point in day.points %}
+        <li>{{ point.start_time_local }} {{ point.short_title or point.title }} · {{ point.venue_name }} · {{ point.category_name }}</li>
+        {% endfor %}
+    </ul>
     {% endfor %}
-  </ul>
-{% endfor %}
+</section>
