@@ -43,8 +43,14 @@
 
     /* Each Official day opens with a big heading: the weekday in the pipe colour, then the date. */
     .schedule__day {
-        /* Jumping to a day stops below the stuck jump bar instead of under it. */
-        scroll-margin-top: var(--space-8);
+        /* Jumping to a day stops below the stuck jump bar instead of under it.
+           Phones: the bar wraps to about four lines, so more room. */
+        scroll-margin-top: 10rem;
+
+        @media (--medium) {
+            scroll-margin-top: var(--space-8);
+        }
+
         margin: var(--space-8) 0 var(--space-4);
         font-family: var(--font-display);
         font-size: var(--text-9);
@@ -60,8 +66,7 @@
     /* The black bar under each day heading, holding the column titles. */
     .schedule__columns {
         display: grid;
-        grid-template-columns: var(--schedule-columns);
-        gap: var(--space-3);
+        min-height: var(--space-3);
         padding: var(--space-1) var(--space-2) var(--space-1) calc(var(--schedule-bar) + var(--space-3));
         background: var(--text);
         color: var(--ground);
@@ -69,6 +74,20 @@
         font-size: var(--text-2);
         font-weight: var(--weight-bold);
         text-transform: uppercase;
+
+        /* Phones: an empty strip, since the rows have no columns there. */
+        span {
+            display: none;
+        }
+
+        @media (--medium) {
+            grid-template-columns: var(--schedule-columns);
+            gap: var(--space-3);
+
+            span {
+                display: block;
+            }
+        }
     }
 
     .schedule__list {
