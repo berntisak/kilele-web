@@ -30,7 +30,7 @@ permalink: /2026/schedule/index.html
     </div>
     <ol class="schedule__list" role="list">
         {% for point in day.points %}
-        <li class="schedule__row" data-category="{{ point.category or 'none' }}">
+        <li class="schedule__row{% if point.multi_day %} schedule__row--multi-day{% endif %}" data-category="{{ point.category or 'none' }}">
             <a class="schedule__point" href="/2026/schedule/{{ point.slug }}/">
                 <span class="schedule__time">{{ point.start_time_local }}–{{ point.end_time_local }}</span>
                 <span class="schedule__title">{{ point.short_title or point.title }}</span>

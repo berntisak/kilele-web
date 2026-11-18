@@ -64,6 +64,11 @@
         text-decoration: none;
     }
 
+    /* Multi-day: the bar is dashed, as if the colour runs on past the row. */
+    .schedule__row--multi-day .schedule__point {
+        background-image: repeating-linear-gradient(var(--category) 0 6px, transparent 6px 10px);
+    }
+
     .schedule__time {
         font-family: var(--font-mono);
         font-size: var(--text-3);
