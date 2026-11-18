@@ -9,25 +9,32 @@
         --schedule-bar: 6px;
     }
 
-    /* The category filter: small outlined buttons; the pressed one is filled. */
+    /* The category filter: words like the day links. Grey until pressed;
+       the pressed one is pipe red and underlined. */
     .schedule__filter {
         display: flex;
         flex-wrap: wrap;
-        gap: var(--space-1);
-        margin-top: var(--space-2);
+        gap: var(--space-1) var(--space-3);
+        margin-top: var(--space-1);
+        font-family: var(--font-mono);
+        font-size: var(--text-3);
+        font-weight: var(--weight-bold);
+        text-transform: uppercase;
 
         button {
-            padding: 0.2em 0.6em;
-            border: 1px solid var(--rule);
-            font-family: var(--font-mono);
-            font-size: var(--text-2);
-            text-transform: uppercase;
+            font-weight: inherit;
+            text-transform: inherit;
+            color: var(--text-muted);
+
+            &:hover {
+                color: var(--pipe);
+            }
         }
 
         [aria-pressed="true"] {
-            border-color: var(--text);
-            background: var(--text);
-            color: var(--ground);
+            color: var(--pipe);
+            text-decoration: underline;
+            text-underline-offset: 0.25em;
         }
     }
 
