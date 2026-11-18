@@ -46,13 +46,13 @@
     {% for day in y.days %}
     <div class="pv-day" id="a-{{ day.id }}">
         <h2 class="pv-b__day"><span>{{ day.short.split(" ")[0] }}</span> {{ day.short.split(" ")[1] }}</h2>
-        <div class="pv-a__day"><span class="pv-a__span">{{ day.span }}</span><span>Program</span><span>Where</span><span>What</span></div>
+        <div class="pv-a__day"><span>When</span><span>Program</span><span>Where</span><span>What</span></div>
         <ol class="pv-a__list">{% for p in day.points %}{{ rowA(p) }}{% endfor %}</ol>
     </div>
     {% endfor %}
     <div class="pv-day" id="a-lead-up">
         <h2 class="pv-b__day"><span>Lead-up</span></h2>
-        <div class="pv-a__day"><span class="pv-a__span">{{ y.leadUpSpan }}</span><span>Program</span><span>Where</span><span>What</span></div>
+        <div class="pv-a__day"><span>When</span><span>Program</span><span>Where</span><span>What</span></div>
         <ol class="pv-a__list">{% for p in y.leadUp %}{{ rowA(p) }}{% endfor %}</ol>
     </div>
 </section>
