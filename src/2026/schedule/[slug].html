@@ -68,7 +68,7 @@ eleventyComputed:
             <div><dt class="meta">What</dt><dd><span class="category-label">{{ point.category_name }}</span></dd></div>
             {% endif %}
         </dl>
-        <div class="schedule-point__description">
+        <div class="content schedule-point__description">
             {{ point.description | markdown | sanitize | safe }}
         </div>
     </div>

@@ -94,4 +94,37 @@
     .schedule-point__name {
         font-weight: var(--weight-bold);
     }
+
+    /* Phones: the sheet above the description. From --medium: side by side, 5 to 7. */
+    .schedule-point__body {
+        display: grid;
+        gap: var(--space-6);
+        margin-top: var(--space-7);
+
+        @media (--medium) {
+            grid-template-columns: 5fr 7fr;
+            align-items: start;
+        }
+    }
+
+    /* The info sheet: a ruled table of label and value. */
+    .schedule-point__sheet {
+        border-top: 1px solid var(--text);
+
+        div {
+            display: grid;
+            gap: var(--space-1) var(--space-4);
+            padding-block: var(--space-3);
+            border-bottom: 1px solid var(--rule);
+
+            @media (--small) {
+                grid-template-columns: 8rem 1fr;
+                align-items: baseline;
+            }
+        }
+
+        dd {
+            font-weight: var(--weight-bold);
+        }
+    }
 }
