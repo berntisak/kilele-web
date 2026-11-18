@@ -9,6 +9,10 @@
 {% set y = scheduleVariants["2026"] %}
 {% set v = y.bySlug[point.slug] %}
 {% set photo = v.photo or "/assets/images/placeholder.jpg" %}
+{# Headline is the short title when there is one; the full title then shows elsewhere. #}
+{% set short = (point.short_title or "") | trim %}
+{% set headline = short or (point.title | trim) %}
+{% set fullTitle = (point.title | trim) if (short and short != (point.title | trim)) else "" %}
 {% set when = ("Runs " ~ v.range) if v.multiDay else (v.dayLabel ~ ", " ~ v.time) %}
 
 {# ---------------------------------------------------------------- A · Register #}
@@ -20,8 +24,9 @@
     </figure>
     <div class="pv-pa__text">
         <p class="meta"><span class="pv-swatch"></span>{{ v.categoryName or "Program point" }} · Schedule 2026</p>
-        <h1 class="page-title pv-pa__title">{{ point.title }}</h1>
+        <h1 class="page-title pv-pa__title">{{ headline }}</h1>
         <dl class="pv-spec">
+            {% if fullTitle %}<div><dt class="meta">Full title</dt><dd class="pv-pa__full">{{ fullTitle }}</dd></div>{% endif %}
             <div><dt class="meta">When</dt><dd>{{ when }}{% if v.multiDay %} <em class="pv-multi">Multi-day</em>{% endif %}</dd></div>
             <div><dt class="meta">Where</dt><dd>{{ v.venue }}</dd></div>
             {% if v.categoryName %}<div><dt class="meta">Category</dt><dd>{{ v.categoryName }}</dd></div>{% endif %}
@@ -66,7 +71,8 @@
     <div class="section pv-pc__body">
         <div class="pv-pc__panel">
             <p class="meta">{{ when }} · {{ v.venue }}</p>
-            <h1 class="pv-pc__title">{{ point.title }}</h1>
+            <h1 class="pv-pc__title">{{ headline }}</h1>
+            {% if fullTitle %}<p class="pv-pc__full">{{ fullTitle }}</p>{% endif %}
             {% if v.categoryName %}<span class="pv-c__cat">{{ v.categoryName }}</span>{% endif %}
             {% if point.artists.length %}<p class="pv-pc__with">With {% for a in point.artists %}<a href="/2026/lineup/{{ a.slug }}/">{{ a.name }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>{% endif %}
         </div>

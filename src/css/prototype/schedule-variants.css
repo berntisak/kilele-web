@@ -323,6 +323,12 @@
     .pv-c__thumb { display: block !important; }
 }
 
+/* point page A: the full title as a row of the ruled table, in body weight. */
+.pv-pa__full { font-weight: var(--weight-normal) !important; font-size: var(--text-5); line-height: var(--line-height-snug); }
+
+/* point page C: the full title as a subtitle under the headline. */
+.pv-pc__full { margin: 0; max-width: 40ch; font-size: var(--text-5); line-height: var(--line-height-snug); color: var(--text-muted); }
+
 /* point page C: photo-led */
 .pv-pc__hero { border-bottom: 10px solid var(--category); }
 .pv-pc__photo { width: 100%; height: min(70vh, 40rem); object-fit: cover; filter: url(#duotone-cobalt); }
