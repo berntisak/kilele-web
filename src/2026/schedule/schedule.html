@@ -16,7 +16,10 @@ permalink: /2026/schedule/index.html
     {% endif %}
         <span class="schedule__time">{{ point.start_time_local }}–{{ point.end_time_local }}</span>
         <span class="schedule__title">{{ point.short_title or point.title }}</span>
-        <span class="schedule__venue">{{ point.venue_name }}</span>
+        <span class="schedule__venue">
+            {{- point.venue_name }}
+            {%- if point.category %}<span class="schedule__category"> · {{ point.category_name }}</span>{% endif -%}
+        </span>
         <span class="schedule__what">
             {% if point.category %}<span class="category-label">{{ point.category_name }}</span>{% endif %}
         </span>
