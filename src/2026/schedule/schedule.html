@@ -51,4 +51,18 @@ permalink: /2026/schedule/index.html
         {% endfor %}
     </ol>
     {% endfor %}
+
+    {% if program.leadUp | length %}
+    <h2 class="schedule__day">
+        <span class="schedule__weekday">Lead-up</span>
+    </h2>
+    <div class="schedule__columns" aria-hidden="true">
+        <span>When</span><span>Program</span><span>Where</span><span>What</span>
+    </div>
+    <ol class="schedule__list" role="list">
+        {% for point in program.leadUp %}
+        {{ scheduleRow(point) }}
+        {% endfor %}
+    </ol>
+    {% endif %}
 </section>
