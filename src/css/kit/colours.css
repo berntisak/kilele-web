@@ -55,13 +55,15 @@
     --placeholder: var(--concrete-dark);
 }
 
-/* An element's data-category picks its category colour (#193). Everything
-   inside reads var(--category): labels, bars, swatches. */
-[data-category] { --category: var(--category-none); }
-[data-category="performance"] { --category: var(--category-performance); }
-[data-category="workshop"] { --category: var(--category-workshop); }
-[data-category="panel"] { --category: var(--category-panel); }
+/* An element's data-category picks its category colour and duotone (#193).
+   Everything inside reads var(--category) (labels, bars, swatches) and
+   var(--category-duotone) (portraits). Categories without their own duotone
+   get green. */
+[data-category] { --category: var(--category-none); --category-duotone: url(#duotone-green); }
+[data-category="performance"] { --category: var(--category-performance); --category-duotone: url(#duotone-red); }
+[data-category="workshop"] { --category: var(--category-workshop); --category-duotone: url(#duotone-cobalt); }
+[data-category="panel"] { --category: var(--category-panel); --category-duotone: url(#duotone-green); }
 [data-category="presentation"] { --category: var(--category-presentation); }
-[data-category="sundowner"] { --category: var(--category-sundowner); }
+[data-category="sundowner"] { --category: var(--category-sundowner); --category-duotone: url(#duotone-yellow); }
 [data-category="networking"] { --category: var(--category-networking); }
 [data-category="installation"] { --category: var(--category-installation); }
