@@ -51,4 +51,33 @@
         color: inherit;
         text-decoration: none;
     }
+
+    .schedule__time {
+        font-family: var(--font-mono);
+        font-size: var(--text-3);
+        font-weight: var(--weight-bold);
+    }
+
+    .schedule__title {
+        font-family: var(--font-display);
+        font-size: var(--text-6);
+        line-height: var(--line-height-snug);
+        text-transform: uppercase;
+    }
+
+    /* The title turns pipe red while the row is under the pointer. */
+    .schedule__point:hover .schedule__title {
+        color: var(--pipe);
+    }
+
+    .schedule__venue {
+        color: var(--text-muted);
+        font-size: var(--text-3);
+    }
+
+    .schedule__what {
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        text-transform: uppercase;
+    }
 }
