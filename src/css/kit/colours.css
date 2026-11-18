@@ -31,6 +31,17 @@
     --status-now: var(--cobalt);
     --status-upcoming: var(--yellow);
     --status-past: var(--green);
+
+    /* Category of a Program point (#193). PLACEHOLDERS mixed from the palette,
+       until the final colours are set in Tune the design (#201). */
+    --category-performance: var(--red);
+    --category-workshop: var(--cobalt);
+    --category-panel: var(--green);
+    --category-presentation: color-mix(in srgb, var(--cobalt), var(--cream) 50%);
+    --category-sundowner: var(--yellow);
+    --category-networking: color-mix(in srgb, var(--green), var(--cream) 50%);
+    --category-installation: var(--concrete-dark);
+    --category-none: var(--concrete-light);
 }
 
 /* Rule 12. Red is too dark to see on ink (2.5:1), so the pipe turns green. */
