@@ -78,14 +78,24 @@
     /* One row: the four columns, a hairline under it. The whole row is the link. */
     .schedule__point {
         display: grid;
-        grid-template-columns: var(--schedule-columns);
-        gap: var(--space-3);
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            "time  what"
+            "title title"
+            "venue venue";
+        gap: var(--space-1) var(--space-3);
         align-items: baseline;
         padding: var(--space-3) var(--space-2) var(--space-3) calc(var(--schedule-bar) + var(--space-3));
         border-bottom: 1px solid var(--rule);
         background: linear-gradient(var(--category), var(--category)) left / var(--schedule-bar) 100% no-repeat;
         color: inherit;
         text-decoration: none;
+
+        @media (--medium) {
+            grid-template-columns: var(--schedule-columns);
+            grid-template-areas: "time title venue what";
+            gap: var(--space-3);
+        }
     }
 
     /* Multi-day: the bar is dashed, as if the colour runs on past the row. */
@@ -94,12 +104,14 @@
     }
 
     .schedule__time {
+        grid-area: time;
         font-family: var(--font-mono);
         font-size: var(--text-3);
         font-weight: var(--weight-bold);
     }
 
     .schedule__title {
+        grid-area: title;
         font-family: var(--font-display);
         font-size: var(--text-6);
         line-height: var(--line-height-snug);
@@ -112,11 +124,13 @@
     }
 
     .schedule__venue {
+        grid-area: venue;
         color: var(--text-muted);
         font-size: var(--text-3);
     }
 
     .schedule__what {
+        grid-area: what;
         font-family: var(--font-mono);
         font-size: var(--text-2);
         text-transform: uppercase;
