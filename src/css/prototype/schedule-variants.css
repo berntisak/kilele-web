@@ -346,11 +346,9 @@
 .pv-pd { display: grid; gap: var(--space-6); }
 .pv-pd__head { display: grid; gap: var(--space-3); }
 .pv-pd__media { display: grid; gap: var(--space-3); align-content: start; }
-.pv-pd__full { margin-top: var(--space-3); }
 /* Phone: two across. Tablet: up to 3, balanced. Desktop: up to 5, balanced, but each
    portrait keeps the same size (a quarter or a fifth of the width), so rows never stretch. */
 .pv-pd__cast { display: grid; gap: var(--space-4); grid-template-columns: repeat(2, 1fr); }
-.pv-pd__cast--one { grid-template-columns: minmax(0, 28rem); }
 @media (min-width: 600px) {
     .pv-pd__cast--few, .pv-pd__cast--many { grid-template-columns: repeat(var(--cols-mid), calc((100% - 2 * var(--space-4)) / 3)); }
 }
@@ -372,13 +370,6 @@
 /* The category box hugs its word instead of filling the row. */
 .pv-pd .pv-spec dd { align-items: flex-start; }
 @media (min-width: 900px) { .pv-pd__body { grid-template-columns: 5fr 7fr; } }
-/* One artist (or none): the portrait or photo sits beside the text, as on the artist page. */
-@media (min-width: 900px) {
-    .pv-pd--solo { grid-template-columns: 5fr 7fr; align-items: start; }
-    .pv-pd--solo > .pipe, .pv-pd--solo > .pv-pd__head, .pv-pd--solo > .pager { grid-column: 1 / -1; }
-    .pv-pd--solo .pv-pd__cast--one { grid-template-columns: 1fr; }
-    .pv-pd--solo > .pv-pd__body { grid-template-columns: 1fr; }
-}
 
 /* ---------- the switcher bar ---------- */
 .pv-switcher {

@@ -84,7 +84,7 @@
 {# ---------------------------------------------------------------- D · Cast #}
 {# The involved artists' portraits carry the page; the point's own photo only
    shows when no artist is linked. Portraits come from the lineup data. #}
-<article class="section pv pv-pd{% if point.artists.length <= 1 %} pv-pd--solo{% endif %}" data-variant="D" data-category="{{ v.category }}" hidden>
+<article class="section pv pv-pd" data-variant="D" data-category="{{ v.category }}" hidden>
     <div class="pipe"></div>
     <header class="pv-pd__head">
         <p class="meta"><span class="pv-swatch"></span>{{ v.categoryName or "Program point" }} · {{ when }} · {{ v.venue }}</p>
@@ -97,7 +97,7 @@
     {% set n = point.artists.length %}
     {% set cols = (n / ((n / 5) | round(0, "ceil"))) | round(0, "ceil") %}
     {% set colsMid = (n / ((n / 3) | round(0, "ceil"))) | round(0, "ceil") %}
-    <ol class="pv-pd__cast pv-pd__cast--{{ 'one' if n == 1 else ('few' if n <= 4 else 'many') }}" style="--cols: {{ cols }}; --cols-mid: {{ colsMid }}">
+    <ol class="pv-pd__cast pv-pd__cast--{{ 'few' if n <= 4 else 'many' }}" style="--cols: {{ cols }}; --cols-mid: {{ colsMid }}">
         {% for a in point.artists %}{% for l in lineup %}{% if l.slug == a.slug %}
         <li>
             <a class="pv-pd__artist" href="/2026/lineup/{{ l.slug }}/">
@@ -117,11 +117,11 @@
         <figcaption class="meta">Fig. — {{ headline }}, Schedule 2026{% if not v.photo %} (key art){% endif %}</figcaption>
     </figure>
     {% endif %}
-    {% if fullTitle %}<p class="pv-pc__full pv-pd__full">{{ fullTitle }}</p>{% endif %}
     </div>
 
     <div class="pv-pd__body">
         <dl class="pv-spec">
+            {% if fullTitle %}<div><dt class="meta">Full title</dt><dd>{{ fullTitle }}</dd></div>{% endif %}
             <div><dt class="meta">When</dt><dd>{{ when }}{% if v.multiDay %} <em class="pv-multi">Multi-day</em>{% endif %}</dd></div>
             <div><dt class="meta">Where</dt><dd>{{ v.venue }}</dd></div>
             {% if v.categoryName %}<div><dt class="meta">What</dt><dd><span class="pv-b__label">{{ v.categoryName }}</span></dd></div>{% endif %}
