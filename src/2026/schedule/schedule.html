@@ -54,31 +54,35 @@ permalink: /2026/schedule/index.html
     </div>
 
     {% for day in program.officialDays %}
-    <h2 class="schedule__day" id="day-{{ day.date }}">
-        <span class="schedule__weekday">{{ day.weekday }}</span> {{ day.day_number }}
-    </h2>
-    <div class="schedule__columns" aria-hidden="true">
-        <span>When</span><span>Program</span><span>Where</span><span>What</span>
-    </div>
-    <ol class="schedule__list" role="list">
-        {% for point in day.points %}
-        {{ scheduleRow(point) }}
-        {% endfor %}
-    </ol>
+    <section class="schedule__group">
+        <h2 class="schedule__day" id="day-{{ day.date }}">
+            <span class="schedule__weekday">{{ day.weekday }}</span> {{ day.day_number }}
+        </h2>
+        <div class="schedule__columns" aria-hidden="true">
+            <span>When</span><span>Program</span><span>Where</span><span>What</span>
+        </div>
+        <ol class="schedule__list" role="list">
+            {% for point in day.points %}
+            {{ scheduleRow(point) }}
+            {% endfor %}
+        </ol>
+    </section>
     {% endfor %}
 
     {% if program.leadUp | length %}
-    <h2 class="schedule__day" id="lead-up">
-        <span class="schedule__weekday">Lead-up</span>
-    </h2>
-    <div class="schedule__columns" aria-hidden="true">
-        <span>When</span><span>Program</span><span>Where</span><span>What</span>
-    </div>
-    <ol class="schedule__list" role="list">
-        {% for point in program.leadUp %}
-        {{ scheduleRow(point) }}
-        {% endfor %}
-    </ol>
+    <section class="schedule__group">
+        <h2 class="schedule__day" id="lead-up">
+            <span class="schedule__weekday">Lead-up</span>
+        </h2>
+        <div class="schedule__columns" aria-hidden="true">
+            <span>When</span><span>Program</span><span>Where</span><span>What</span>
+        </div>
+        <ol class="schedule__list" role="list">
+            {% for point in program.leadUp %}
+            {{ scheduleRow(point) }}
+            {% endfor %}
+        </ol>
+    </section>
     {% endif %}
 </section>
 
