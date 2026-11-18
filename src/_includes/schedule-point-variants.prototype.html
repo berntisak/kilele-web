@@ -89,11 +89,15 @@
     <header class="pv-pd__head">
         <p class="meta"><span class="pv-swatch"></span>{{ v.categoryName or "Program point" }} · {{ when }} · {{ v.venue }}</p>
         <h1 class="page-title">{{ headline }}</h1>
-        {% if fullTitle %}<p class="pv-pc__full">{{ fullTitle }}</p>{% endif %}
     </header>
 
+    <div class="pv-pd__media">
     {% if point.artists.length %}
-    <ol class="pv-pd__cast pv-pd__cast--{{ 'one' if point.artists.length == 1 else ('few' if point.artists.length <= 4 else 'many') }}">
+    {# Balanced rows: as few rows as fit (max 5 across on desktop, 3 on tablet), then spread evenly. #}
+    {% set n = point.artists.length %}
+    {% set cols = (n / ((n / 5) | round(0, "ceil"))) | round(0, "ceil") %}
+    {% set colsMid = (n / ((n / 3) | round(0, "ceil"))) | round(0, "ceil") %}
+    <ol class="pv-pd__cast pv-pd__cast--{{ 'one' if n == 1 else ('few' if n <= 4 else 'many') }}" style="--cols: {{ cols }}; --cols-mid: {{ colsMid }}">
         {% for a in point.artists %}{% for l in lineup %}{% if l.slug == a.slug %}
         <li>
             <a class="pv-pd__artist" href="/2026/lineup/{{ l.slug }}/">
@@ -113,6 +117,8 @@
         <figcaption class="meta">Fig. — {{ headline }}, Schedule 2026{% if not v.photo %} (key art){% endif %}</figcaption>
     </figure>
     {% endif %}
+    {% if fullTitle %}<p class="pv-pc__full pv-pd__full">{{ fullTitle }}</p>{% endif %}
+    </div>
 
     <div class="pv-pd__body">
         <dl class="pv-spec">
