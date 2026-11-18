@@ -100,7 +100,7 @@
     font-weight: var(--weight-bold);
     text-transform: uppercase;
 }
-.pv-a__day span:first-child { padding-left: var(--space-2); }
+.pv-a__day .pv-a__span { padding-left: var(--space-2); }
 
 .pv-a__row > a, .pv-a__row > div {
     display: grid;
@@ -139,19 +139,21 @@
     .pv-a__time em { display: block; margin: 0; }
 }
 
-/* The black day bar doubles as the column headings from 900px. */
+/* The black day bar: column headings plus the day's first start and last end.
+   Phones: only the span, since the rows have no columns there. */
 .pv-a .pv-b__day { margin: var(--space-8) 0 var(--space-3); }
 .pv-a .pv-day { scroll-margin-top: 13rem; }
-@media (min-width: 900px) { .pv-a .pv-day { scroll-margin-top: 7rem; } }
-.pv-a__day span:not(:first-child) { display: none; }
+.pv-a__day span:not(.pv-a__span) { display: none; }
 @media (min-width: 900px) {
+    .pv-a .pv-day { scroll-margin-top: 7rem; }
     .pv-a__day {
         display: grid;
-        grid-template-columns: 6px 9rem 1fr 11rem 8rem;
+        grid-template-columns: 6px 9rem 1fr auto 11rem 8rem;
         gap: var(--space-3);
     }
-    .pv-a__day span:first-child { grid-column: 1 / 4; }
-    .pv-a__day span:not(:first-child) { display: block; }
+    .pv-a__day span:first-child { grid-column: 2; padding-left: 0; }
+    .pv-a__day span:not(.pv-a__span) { display: block; }
+    .pv-a__span { grid-column: 4; }
 }
 
 /* point page A: like the artist page */

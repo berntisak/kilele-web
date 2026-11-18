@@ -60,10 +60,16 @@ module.exports = async function () {
             const pts = y.points.filter((p) => p.firstDay <= iso && p.lastDay >= iso);
             // Multi-day points first, then by start time.
             pts.sort((a, b) => (b.multiDay - a.multiDay) || a.start.localeCompare(b.start));
-            days.push({ iso, id: d.toFormat('ccc-d').toLowerCase(), short: d.toFormat('ccc d').toUpperCase(), label: d.toFormat('cccc d LLLL'), points: pts });
+            // The day's span, from single-day points only (multi-day ones keep their own hours).
+            const single = pts.filter((p) => !p.multiDay);
+            const span = single.length
+                ? `${DateTime.fromISO(single.map((p) => p.start).sort()[0]).setZone(ZONE).toFormat('HH:mm')}–${DateTime.fromISO(single.map((p) => p.end).sort().slice(-1)[0]).setZone(ZONE).toFormat('HH:mm')}`
+                : '';
+            days.push({ span, iso, id: d.toFormat('ccc-d').toLowerCase(), short: d.toFormat('ccc d').toUpperCase(), label: d.toFormat('cccc d LLLL'), points: pts });
         }
         y.days = days;
         y.leadUp = y.points.filter((p) => p.lastDay < y.officialStart);
+        y.leadUpSpan = y.leadUp.length ? `${DateTime.fromISO(y.leadUp[0].firstDay).toFormat('d')}–${DateTime.fromISO(y.leadUp.map((p) => p.lastDay).sort().slice(-1)[0]).toFormat('d LLL')}` : '';
         y.categories = CATS.filter((c) => y.points.some((p) => p.category === c))
             .map((c) => ({ id: c, name: c[0].toUpperCase() + c.slice(1), count: y.points.filter((p) => p.category === c).length }));
         y.mainCount = y.points.length - y.leadUp.length;
