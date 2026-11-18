@@ -72,6 +72,16 @@ eleventyComputed:
             {{ point.description | markdown | sanitize | safe }}
         </div>
     </div>
+
+    <nav class="pager schedule-point__pager" aria-label="More program points">
+        {% if pagination.href.previous %}
+        <a class="pager__previous" href="{{ pagination.href.previous }}">← Previous</a>
+        {% endif %}
+        <a class="pager__all" href="/2026/schedule/">Full schedule</a>
+        {% if pagination.href.next %}
+        <a class="pager__next" href="{{ pagination.href.next }}">Next →</a>
+        {% endif %}
+    </nav>
 </article>
 
 {% set canonicalUrl = site.url ~ page.url %}
