@@ -24,6 +24,7 @@
 @import "kit/components/meta.css";
 @import "kit/components/pager.css";
 @import "kit/components/jump-bar.css";
+@import "kit/components/category-label.css";
 
 @import "pages/home.css";
 @import "pages/static.css";

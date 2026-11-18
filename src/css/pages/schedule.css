@@ -9,16 +9,6 @@
         --schedule-bar: 6px;
     }
 
-    /* A row's data-category picks its colour. Everything inside reads var(--category). */
-    [data-category] { --category: var(--category-none); }
-    [data-category="performance"] { --category: var(--category-performance); }
-    [data-category="workshop"] { --category: var(--category-workshop); }
-    [data-category="panel"] { --category: var(--category-panel); }
-    [data-category="presentation"] { --category: var(--category-presentation); }
-    [data-category="sundowner"] { --category: var(--category-sundowner); }
-    [data-category="networking"] { --category: var(--category-networking); }
-    [data-category="installation"] { --category: var(--category-installation); }
-
     /* The category filter: small outlined buttons; the pressed one is filled. */
     .schedule__filter {
         display: flex;
@@ -153,21 +143,5 @@
         font-family: var(--font-mono);
         font-size: var(--text-2);
         text-transform: uppercase;
-    }
-
-    /* A category's name on a fill of its colour, only as wide as the word. */
-    .category-label {
-        padding: 0.15em 0.6em;
-        background: var(--category);
-        color: var(--cream);
-        font-family: var(--font-mono);
-        font-size: var(--text-2);
-        font-weight: var(--weight-bold);
-        text-transform: uppercase;
-    }
-
-    /* The pale fills need dark letters to be readable. */
-    :is([data-category="sundowner"], [data-category="presentation"], [data-category="networking"]) .category-label {
-        color: var(--ink);
     }
 }

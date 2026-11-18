@@ -54,3 +54,14 @@
     --pipe: var(--green);
     --placeholder: var(--concrete-dark);
 }
+
+/* An element's data-category picks its category colour (#193). Everything
+   inside reads var(--category): labels, bars, swatches. */
+[data-category] { --category: var(--category-none); }
+[data-category="performance"] { --category: var(--category-performance); }
+[data-category="workshop"] { --category: var(--category-workshop); }
+[data-category="panel"] { --category: var(--category-panel); }
+[data-category="presentation"] { --category: var(--category-presentation); }
+[data-category="sundowner"] { --category: var(--category-sundowner); }
+[data-category="networking"] { --category: var(--category-networking); }
+[data-category="installation"] { --category: var(--category-installation); }
