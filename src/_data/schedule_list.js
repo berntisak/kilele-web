@@ -1,19 +1,11 @@
+// _data/schedule_list.js
+// Every program point with a slug, from every year, once each: one page per point.
 const schedule = require('./schedule.js');
 
 module.exports = async function() {
   const scheduleData = await schedule();
 
-  // Flatten both byDay and multiDay into a single array
-  const byDayList = Object.values(scheduleData.byDay).flat();
-  const flatList = [...byDayList, ...scheduleData.multiDay];
+  const allPoints = Object.values(scheduleData).flatMap(year => year.points);
 
-  // Filter out program points without a valid slug
-  const withSlugs = flatList.filter(point => point.slug && point.slug.trim() !== '');
-
-  // Optional: log to confirm slugs are there
-  //console.log("Program points for slug pages:", withSlugs.map(p => p.slug));
-
-  return withSlugs;
+  return allPoints.filter(point => point.slug && point.slug.trim() !== '');
 };
-
-  
