@@ -117,6 +117,8 @@ async function fetchSchedule() {
         const date = day.toISODate();
         officialDays.push({
           date,
+          weekday: day.toFormat('ccc'),
+          day_number: day.toFormat('d'),
           points: y.points.filter(p => p.first_day <= date && p.last_day >= date),
         });
       }

@@ -1,0 +1,19 @@
+/*
+ * The 2026 schedule list (src/2026/schedule/schedule.html).
+ */
+
+.page--schedule {
+    /* Each Official day opens with a big heading: the weekday in the pipe colour, then the date. */
+    .schedule__day {
+        margin: var(--space-8) 0 var(--space-4);
+        font-family: var(--font-display);
+        font-size: var(--text-9);
+        font-weight: normal;
+        line-height: var(--line-height-tight);
+        text-transform: uppercase;
+    }
+
+    .schedule__weekday {
+        color: var(--pipe);
+    }
+}

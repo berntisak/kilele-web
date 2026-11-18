@@ -22,7 +22,9 @@ permalink: /2026/schedule/index.html
     </header>
 
     {% for day in program.officialDays %}
-    <h2>{{ day.date }}</h2>
+    <h2 class="schedule__day">
+        <span class="schedule__weekday">{{ day.weekday }}</span> {{ day.day_number }}
+    </h2>
     <ul>
         {% for point in day.points %}
         <li>{{ point.start_time_local }} {{ point.short_title or point.title }} · {{ point.venue_name }} · {{ point.category_name }}</li>
