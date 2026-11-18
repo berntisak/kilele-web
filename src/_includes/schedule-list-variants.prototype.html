@@ -36,7 +36,7 @@
     <li class="pv-a__row" data-category="{{ p.category }}" {% if p.multiDay %}data-multi{% endif %}>
         {% if p.slug %}<a href="/2026/schedule/{{ p.slug }}/?variant=A">{% else %}<div>{% endif %}
             <span class="pv-a__time">{% if p.multiDay %}{{ p.range | upper }}<em>Multi-day</em>{% else %}{{ p.time }}{% endif %}</span>
-            <span class="pv-a__title">{{ p.title }}{% if p.short_title and p.short_title != p.title %} <s class="pv-short" title="short_title">{{ p.short_title }}</s>{% endif %}</span>
+            <span class="pv-a__title">{{ p.short_title or p.title }}</span>
             <span class="pv-a__venue">{{ p.venue }}</span>
             <span class="pv-a__cat">{{ p.categoryName }}</span>
         {% if p.slug %}</a>{% else %}</div>{% endif %}
@@ -78,7 +78,7 @@
         {% if p.multiDay %}<span class="pipe pipe--vertical pv-b__run" aria-hidden="true"></span>{% endif %}
         {% if p.slug %}<a href="/2026/schedule/{{ p.slug }}/?variant=B">{% else %}<div>{% endif %}
             <span class="pv-b__when">{% if p.multiDay %}Runs {{ p.range }}{% else %}{{ p.time }}{% endif %} · {{ p.venue }}</span>
-            <span class="pv-b__title">{{ p.title }}{% if p.short_title and p.short_title != p.title %} <s class="pv-short">{{ p.short_title }}</s>{% endif %}</span>
+            <span class="pv-b__title">{{ p.short_title or p.title }}</span>
             {% if p.categoryName %}<span class="pv-b__label">{{ p.categoryName }}</span>{% endif %}
         {% if p.slug %}</a>{% else %}</div>{% endif %}
     </li>
@@ -120,7 +120,7 @@
             <img class="pv-c__thumb" src="{{ p.photoSmall or "/assets/images/placeholder.jpg" }}" alt="" loading="lazy" eleventy:ignore>
             <span class="pv-c__text">
                 <span class="meta">{% if p.multiDay %}{{ p.range }} · all week{% else %}{{ p.time }}{% endif %} · {{ p.venue }}</span>
-                <span class="pv-c__title">{{ p.title }}{% if p.short_title and p.short_title != p.title %} <s class="pv-short">{{ p.short_title }}</s>{% endif %}</span>
+                <span class="pv-c__title">{{ p.short_title or p.title }}</span>
                 {% if p.categoryName %}<span class="pv-c__cat">{{ p.categoryName }}</span>{% endif %}
             </span>
         {% if p.slug %}</a>{% else %}</div>{% endif %}
