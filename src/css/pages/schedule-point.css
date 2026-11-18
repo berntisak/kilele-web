@@ -1,0 +1,22 @@
+/*
+ * One program point's page (src/2026/schedule/[slug].html).
+ */
+
+.page--schedule-point {
+    /* The meta line, then the headline, with a little air between and below the pipe. */
+    .schedule-point__head {
+        display: grid;
+        gap: var(--space-3);
+        margin-top: var(--space-5);
+    }
+
+    /* A small square in the category colour, in front of the category name. */
+    .schedule-point__swatch {
+        display: inline-block;
+        width: 0.8em;
+        height: 0.8em;
+        margin-right: 0.5em;
+        vertical-align: -0.05em;
+        background: var(--category);
+    }
+}
