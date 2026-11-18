@@ -1,0 +1,156 @@
+{#
+  PROTOTYPE — throwaway (#195). Three rough variants of the 2026 gallery page,
+  switched with ?variant=A|B|C, the bar at the bottom, or the arrow keys.
+  No lightbox yet: a photo opens the full image file. Only rendered by the dev server.
+  Thumbnails come through Supabase's /render/image/ endpoint, which does resize.
+#}
+{% if eleventy.env.runMode == "serve" %}
+<link rel="stylesheet" href="/css/prototype/gallery-variants.css">
+
+{% macro thumb(photo, width) -%}
+{{ photo.url | replace("/object/public/", "/render/image/public/") }}?width={{ width }}&quality=70
+{%- endmacro %}
+
+{# Group the photos by category once, so every variant can show counts. #}
+{% set groups = [] %}
+{% set total = [] %}
+{% for category in gallery.categories %}
+    {% set photos = [] %}
+    {% for photo in gallery.photos %}
+        {% if photo.category_slug == category.slug and photo.url %}
+            {% set _ = photos.push(photo) %}{% set _ = total.push(photo) %}
+        {% endif %}
+    {% endfor %}
+    {% set _ = groups.push({ category: category, photos: photos }) %}
+{% endfor %}
+
+{% macro statsBar() %}
+<dl class="stats-bar">
+    <div><dt>Register</dt><dd>Gallery, Kilele 2026</dd></div>
+    <div><dt>Photos</dt><dd>{{ total | length }}</dd></div>
+    <div><dt>Categories</dt><dd>{{ groups | length }}</dd></div>
+    <div><dt>Status</dt><dd>Archived</dd></div>
+</dl>
+{% endmacro %}
+
+{# ---------------------------------------------------------- A · Contact sheet #}
+<section class="section pv pv-a" data-variant="A" hidden>
+    <header>
+        {{ statsBar() }}
+        <h1 class="page-title">Gallery 2026</h1>
+        <div class="pipe"></div>
+    </header>
+    <div class="jump-bar">
+        <nav class="jump-bar__links" aria-label="Jump to a category">
+            {% for g in groups %}<a href="#a-{{ g.category.slug }}">{{ g.category.display_name or g.category.name }}</a>{% endfor %}
+        </nav>
+    </div>
+    {% set n = [] %}
+    {% for g in groups %}
+    <section class="pv-a__group" id="a-{{ g.category.slug }}">
+        <h2 class="pv-a__index">
+            <span>{{ ("0" ~ loop.index).slice(-2) }}</span>
+            <span class="pv-a__name">{{ g.category.display_name or g.category.name }}</span>
+            <span>{{ g.photos | length }} photos</span>
+        </h2>
+        <ol class="pv-a__sheet" role="list">
+            {% for photo in g.photos %}{% set _ = n.push(1) %}
+            <li>
+                <a href="{{ photo.url }}">
+                    <img src="{{ thumb(photo, 400) }}" alt="{{ photo.caption or '' }}" loading="lazy" eleventy:ignore>
+                    <span class="pv-a__num">{{ ("00" ~ (n | length)).slice(-3) }}</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ol>
+    </section>
+    {% endfor %}
+</section>
+
+{# --------------------------------------------------------- B · Natural shapes #}
+<section class="section pv pv-b" data-variant="B" hidden>
+    <header>
+        <h1 class="page-title">Gallery 2026</h1>
+        <p class="pv-b__lede">{{ total | length }} photos from Kilele 2026, Nairobi.</p>
+    </header>
+    {% for g in groups %}
+    <section class="pv-b__group">
+        <h2 class="section-head__title pv-b__title">{{ g.category.display_name or g.category.name }}</h2>
+        <div class="pv-b__columns">
+            {% for photo in g.photos %}
+            <figure>
+                <a href="{{ photo.url }}"><img src="{{ thumb(photo, 800) }}" alt="{{ photo.caption or '' }}" loading="lazy" eleventy:ignore></a>
+                {% if photo.caption or photo.photographer_name %}
+                <figcaption>{{ photo.caption }}{% if photo.photographer_name %} <span>Photo: {{ photo.photographer_name }}</span>{% endif %}</figcaption>
+                {% endif %}
+            </figure>
+            {% endfor %}
+        </div>
+    </section>
+    {% endfor %}
+</section>
+
+{# -------------------------------------------------------- C · Lead and strip #}
+<section class="section pv pv-c" data-variant="C" hidden>
+    <header>
+        {{ statsBar() }}
+        <h1 class="page-title">Gallery 2026</h1>
+        <div class="pipe"></div>
+    </header>
+    {% for g in groups %}
+    {% set lead = g.photos[0] %}
+    <section class="pv-c__group">
+        <div class="pv-c__head">
+            <span class="pv-c__no">{{ ("0" ~ loop.index).slice(-2) }}</span>
+            <h2 class="pv-c__name">{{ g.category.display_name or g.category.name }}</h2>
+            <span class="pv-c__count">{{ g.photos | length }} photos →</span>
+        </div>
+        <div class="pv-c__row">
+            {% if lead %}
+            <a class="pv-c__lead" href="{{ lead.url }}"><img src="{{ thumb(lead, 1200) }}" alt="{{ lead.caption or '' }}" loading="lazy" eleventy:ignore></a>
+            {% endif %}
+            <ol class="pv-c__strip" role="list">
+                {% for photo in g.photos %}{% if not loop.first %}
+                <li><a href="{{ photo.url }}"><img src="{{ thumb(photo, 500) }}" alt="{{ photo.caption or '' }}" loading="lazy" eleventy:ignore></a></li>
+                {% endif %}{% endfor %}
+            </ol>
+        </div>
+    </section>
+    {% endfor %}
+</section>
+
+<nav class="pv-switcher" aria-label="Prototype variants">
+    <button type="button" data-step="-1" aria-label="Previous variant">←</button>
+    <span data-label></span>
+    <button type="button" data-step="1" aria-label="Next variant">→</button>
+</nav>
+
+<script>
+(function () {
+    var keys = ["A", "B", "C"];
+    var names = { A: "Contact sheet", B: "Natural shapes", C: "Lead and strip" };
+    var label = document.querySelector(".pv-switcher [data-label]");
+
+    function show(key) {
+        if (keys.indexOf(key) < 0) key = "A";
+        document.querySelectorAll(".pv").forEach(function (v) { v.hidden = v.dataset.variant !== key; });
+        label.textContent = key + " · " + names[key];
+        var url = new URL(location.href);
+        url.searchParams.set("variant", key);
+        history.replaceState(null, "", url);
+        return key;
+    }
+
+    var current = show(new URLSearchParams(location.search).get("variant") || "A");
+    function step(d) { current = show(keys[(keys.indexOf(current) + d + keys.length) % keys.length]); window.scrollTo(0, 0); }
+    document.querySelectorAll(".pv-switcher [data-step]").forEach(function (b) {
+        b.addEventListener("click", function () { step(+b.dataset.step); });
+    });
+    document.addEventListener("keydown", function (e) {
+        if (e.target.closest("input, textarea, select, [contenteditable]")) return;
+        if (e.key === "ArrowLeft") step(-1);
+        if (e.key === "ArrowRight") step(1);
+    });
+})();
+</script>
+{% endif %}
