@@ -21,6 +21,8 @@
 
     /* Each Official day opens with a big heading: the weekday in the pipe colour, then the date. */
     .schedule__day {
+        /* Jumping to a day stops below the stuck jump bar instead of under it. */
+        scroll-margin-top: var(--space-8);
         margin: var(--space-8) 0 var(--space-4);
         font-family: var(--font-display);
         font-size: var(--text-9);
