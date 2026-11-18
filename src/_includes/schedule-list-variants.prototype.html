@@ -38,7 +38,7 @@
             <span class="pv-a__time">{% if p.multiDay %}{{ p.range | upper }}<em>Multi-day</em>{% else %}{{ p.time }}{% endif %}</span>
             <span class="pv-a__title">{{ p.short_title or p.title }}</span>
             <span class="pv-a__venue">{{ p.venue }}</span>
-            <span class="pv-a__cat">{{ p.categoryName }}</span>
+            <span class="pv-a__cat">{% if p.categoryName %}<span class="pv-b__label">{{ p.categoryName }}</span>{% endif %}</span>
         {% if p.slug %}</a>{% else %}</div>{% endif %}
     </li>
     {% endmacro %}
@@ -46,11 +46,13 @@
     {% for day in y.days %}
     <div class="pv-day" id="a-{{ day.id }}">
         <h2 class="pv-a__day">{{ day.label }} <span>{{ day.points.length }}</span></h2>
+        <div class="pv-a__colhead" aria-hidden="true"><span></span><span></span><span></span><span>Where</span><span>What</span></div>
         <ol class="pv-a__list">{% for p in day.points %}{{ rowA(p) }}{% endfor %}</ol>
     </div>
     {% endfor %}
     <div class="pv-day" id="a-lead-up">
         <h2 class="pv-a__day">Lead-up <span>{{ y.leadUp.length }}</span></h2>
+        <div class="pv-a__colhead" aria-hidden="true"><span></span><span></span><span></span><span>Where</span><span>What</span></div>
         <ol class="pv-a__list">{% for p in y.leadUp %}{{ rowA(p) }}{% endfor %}</ol>
     </div>
 </section>
