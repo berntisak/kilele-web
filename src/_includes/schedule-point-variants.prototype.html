@@ -112,10 +112,11 @@
     </ol>
     <p class="meta pv-pd__caption">Fig. — {{ point.artists.length }} {{ "artist" if point.artists.length == 1 else "artists" }} at {{ headline }}, Schedule 2026</p>
     {% else %}
-    <figure class="pv-pd__photo">
-        <img src="{{ photo }}" alt="{{ point.title }}" eleventy:ignore>
-        <figcaption class="meta">Fig. — {{ headline }}, Schedule 2026{% if not v.photo %} (key art){% endif %}</figcaption>
-    </figure>
+    {# No artists: the point's own photo (or the key art) takes one portrait's place. #}
+    <ol class="pv-pd__cast pv-pd__cast--few" style="--cols: 1; --cols-mid: 1">
+        <li><span class="pv-pd__portrait"><img src="{{ photo }}" alt="{{ point.title }}" eleventy:ignore></span></li>
+    </ol>
+    <p class="meta pv-pd__caption">Fig. — {{ headline }}, Schedule 2026{% if not v.photo %} (key art){% endif %}</p>
     {% endif %}
     </div>
 

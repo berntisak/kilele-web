@@ -363,8 +363,6 @@
 .pv-pd__number { position: relative; align-self: end; margin: 0 0 var(--space-1) var(--space-3); color: var(--cream); font-family: var(--font-display); font-size: var(--text-7); line-height: var(--line-height-tight); }
 .pv-pd__artist:hover .pv-pd__number { color: var(--pipe); }
 .pv-pd__name { font-weight: var(--weight-bold); }
-.pv-pd__photo { margin: 0; display: grid; gap: var(--space-2); }
-.pv-pd__photo img { width: 100%; max-height: 32rem; object-fit: cover; filter: url(#duotone-green); }
 .pv-pd__body { display: grid; gap: var(--space-6); }
 .pv-pd__body .pv-spec { margin: 0; align-self: start; }
 /* The category box hugs its word instead of filling the row. */
