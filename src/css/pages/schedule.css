@@ -9,11 +9,25 @@
         --schedule-bar: 6px;
     }
 
+    /* Phones: each row of the jump bar stays on one line you swipe sideways.
+       From --small there's room, so they wrap again. */
+    .jump-bar__links,
+    .schedule__filter {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+        white-space: nowrap;
+
+        @media (--small) {
+            flex-wrap: wrap;
+            overflow-x: visible;
+        }
+    }
+
     /* The category filter: words like the day links. Grey until pressed;
        the pressed one is pipe red and underlined. */
     .schedule__filter {
         display: flex;
-        flex-wrap: wrap;
         gap: var(--space-1) var(--space-3);
         margin-top: var(--space-1);
         font-family: var(--font-mono);
