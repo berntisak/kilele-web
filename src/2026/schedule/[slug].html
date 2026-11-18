@@ -50,6 +50,28 @@ eleventyComputed:
         <figcaption class="meta">Fig. — {{ point.artists | length }} {{ "artist" if point.artists | length == 1 else "artists" }} at {{ point.short_title or point.title }}</figcaption>
     </figure>
     {% endif %}
+
+    <div class="schedule-point__body">
+        <dl class="schedule-point__sheet">
+            {% if point.short_title and point.short_title != point.title %}
+            <div><dt class="meta">Full title</dt><dd>{{ point.title }}</dd></div>
+            {% endif %}
+            <div>
+                <dt class="meta">When</dt>
+                <dd>
+                    {% if point.multi_day %}{{ point.date_range }}, daily {{ point.start_time_local }}–{{ point.end_time_local }}
+                    {% else %}{{ point.day_label }}, {{ point.start_time_local }}–{{ point.end_time_local }}{% endif %}
+                </dd>
+            </div>
+            <div><dt class="meta">Where</dt><dd>{{ point.venue_name }}</dd></div>
+            {% if point.category %}
+            <div><dt class="meta">What</dt><dd><span class="category-label">{{ point.category_name }}</span></dd></div>
+            {% endif %}
+        </dl>
+        <div class="schedule-point__description">
+            {{ point.description | markdown | sanitize | safe }}
+        </div>
+    </div>
 </article>
 
 {% set canonicalUrl = site.url ~ page.url %}
