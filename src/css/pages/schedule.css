@@ -16,4 +16,17 @@
     .schedule__weekday {
         color: var(--pipe);
     }
+
+    /* The black bar under each day heading, holding the column titles. */
+    .schedule__columns {
+        display: flex;
+        justify-content: space-between;
+        padding: var(--space-1) var(--space-2);
+        background: var(--text);
+        color: var(--ground);
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        font-weight: var(--weight-bold);
+        text-transform: uppercase;
+    }
 }

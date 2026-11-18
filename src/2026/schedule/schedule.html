@@ -25,6 +25,9 @@ permalink: /2026/schedule/index.html
     <h2 class="schedule__day">
         <span class="schedule__weekday">{{ day.weekday }}</span> {{ day.day_number }}
     </h2>
+    <div class="schedule__columns" aria-hidden="true">
+        <span>When</span><span>Program</span><span>Where</span><span>What</span>
+    </div>
     <ul>
         {% for point in day.points %}
         <li>{{ point.start_time_local }} {{ point.short_title or point.title }} · {{ point.venue_name }} · {{ point.category_name }}</li>
