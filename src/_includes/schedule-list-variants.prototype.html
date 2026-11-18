@@ -45,14 +45,14 @@
 
     {% for day in y.days %}
     <div class="pv-day" id="a-{{ day.id }}">
-        <h2 class="pv-a__day">{{ day.label }} <span>{{ day.points.length }}</span></h2>
-        <div class="pv-a__colhead" aria-hidden="true"><span></span><span></span><span></span><span>Where</span><span>What</span></div>
+        <h2 class="pv-b__day"><span>{{ day.short.split(" ")[0] }}</span> {{ day.short.split(" ")[1] }}</h2>
+        <div class="pv-a__day"><span>{{ day.label }} · {{ day.points.length }}</span><span>Where</span><span>What</span></div>
         <ol class="pv-a__list">{% for p in day.points %}{{ rowA(p) }}{% endfor %}</ol>
     </div>
     {% endfor %}
     <div class="pv-day" id="a-lead-up">
-        <h2 class="pv-a__day">Lead-up <span>{{ y.leadUp.length }}</span></h2>
-        <div class="pv-a__colhead" aria-hidden="true"><span></span><span></span><span></span><span>Where</span><span>What</span></div>
+        <h2 class="pv-b__day"><span>Lead-up</span></h2>
+        <div class="pv-a__day"><span>Before the festival · {{ y.leadUp.length }}</span><span>Where</span><span>What</span></div>
         <ol class="pv-a__list">{% for p in y.leadUp %}{{ rowA(p) }}{% endfor %}</ol>
     </div>
 </section>

@@ -92,8 +92,7 @@
 .pv-a__day {
     display: flex;
     justify-content: space-between;
-    margin-top: var(--space-6);
-    padding: var(--space-1) var(--space-2);
+    padding: var(--space-1) var(--space-2) var(--space-1) 0;
     background: var(--text);
     color: var(--ground);
     font-family: var(--font-mono);
@@ -101,6 +100,7 @@
     font-weight: var(--weight-bold);
     text-transform: uppercase;
 }
+.pv-a__day span:first-child { padding-left: var(--space-2); }
 
 .pv-a__row > a, .pv-a__row > div {
     display: grid;
@@ -139,20 +139,19 @@
     .pv-a__time em { display: block; margin: 0; }
 }
 
-/* Column headings, desktop only: the same five columns as the rows. */
-.pv-a__colhead { display: none; }
+/* The black day bar doubles as the column headings from 900px. */
+.pv-a .pv-b__day { margin: var(--space-8) 0 var(--space-3); }
+.pv-a .pv-day { scroll-margin-top: 13rem; }
+@media (min-width: 900px) { .pv-a .pv-day { scroll-margin-top: 7rem; } }
+.pv-a__day span:not(:first-child) { display: none; }
 @media (min-width: 900px) {
-    .pv-a__colhead {
+    .pv-a__day {
         display: grid;
         grid-template-columns: 6px 9rem 1fr 11rem 8rem;
         gap: var(--space-3);
-        padding-block: var(--space-2);
-        border-bottom: 1px solid var(--text);
-        color: var(--text-muted);
-        font-family: var(--font-mono);
-        font-size: var(--text-2);
-        text-transform: uppercase;
     }
+    .pv-a__day span:first-child { grid-column: 1 / 4; }
+    .pv-a__day span:not(:first-child) { display: block; }
 }
 
 /* point page A: like the artist page */
