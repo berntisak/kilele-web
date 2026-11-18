@@ -45,6 +45,12 @@ permalink: /2026/schedule/index.html
             {% endfor %}
             {% if program.leadUp | length %}<a href="#lead-up">Lead-up</a>{% endif %}
         </nav>
+        <div class="schedule__filter" role="group" aria-label="Show one category" hidden>
+            <button type="button" aria-pressed="true" data-filter="all">All</button>
+            {% for category in program.categories %}
+            <button type="button" aria-pressed="false" data-filter="{{ category.category }}">{{ category.category_name }}</button>
+            {% endfor %}
+        </div>
     </div>
 
     {% for day in program.officialDays %}
@@ -75,3 +81,5 @@ permalink: /2026/schedule/index.html
     </ol>
     {% endif %}
 </section>
+
+<script src="/scripts/schedule-filter.js" defer></script>
