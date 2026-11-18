@@ -19,6 +19,28 @@
     [data-category="networking"] { --category: var(--category-networking); }
     [data-category="installation"] { --category: var(--category-installation); }
 
+    /* The category filter: small outlined buttons; the pressed one is filled. */
+    .schedule__filter {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-1);
+        margin-top: var(--space-2);
+
+        button {
+            padding: 0.2em 0.6em;
+            border: 1px solid var(--rule);
+            font-family: var(--font-mono);
+            font-size: var(--text-2);
+            text-transform: uppercase;
+        }
+
+        [aria-pressed="true"] {
+            border-color: var(--text);
+            background: var(--text);
+            color: var(--ground);
+        }
+    }
+
     /* Each Official day opens with a big heading: the weekday in the pipe colour, then the date. */
     .schedule__day {
         /* Jumping to a day stops below the stuck jump bar instead of under it. */
