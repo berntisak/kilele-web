@@ -20,11 +20,13 @@ description: "The artists of Kilele 2026"
 
     {% set groups = lineup | groupby("letter") %}
 
-    <nav class="lineup__letters" aria-label="Jump to a letter">
-        {% for letter, artists in groups %}
-        <a href="#letter-{{ 'other' if letter == '#' else letter | lower }}">{{ letter }}</a>
-        {% endfor %}
-    </nav>
+    <div class="jump-bar">
+        <nav class="jump-bar__links" aria-label="Jump to a letter">
+            {% for letter, artists in groups %}
+            <a href="#letter-{{ 'other' if letter == '#' else letter | lower }}">{{ letter }}</a>
+            {% endfor %}
+        </nav>
+    </div>
 
     {% for letter, artists in groups %}
     <div class="lineup__group" id="letter-{{ 'other' if letter == '#' else letter | lower }}">

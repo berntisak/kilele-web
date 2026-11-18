@@ -7,31 +7,6 @@
         margin-bottom: var(--space-7);
     }
 
-    /* The A–Z bar sticks just below the header bar while the list scrolls under it. */
-    .lineup__letters {
-        position: sticky;
-        top: var(--header-bar-height);
-        z-index: 1;
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--space-1) var(--space-3);
-        padding-block: var(--space-2);
-        border-bottom: 1px solid var(--rule);
-        background: var(--ground);
-        font-family: var(--font-mono);
-        font-size: var(--text-3);
-        font-weight: var(--weight-bold);
-    }
-
-    .lineup__letters a {
-        color: inherit;
-        text-decoration: none;
-
-        &:hover {
-            color: var(--pipe);
-        }
-    }
-
     /* Jumping to a letter stops below the stuck bar instead of under it. */
     .lineup__group {
         scroll-margin-top: var(--space-8);

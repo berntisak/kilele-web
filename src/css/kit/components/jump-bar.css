@@ -1,0 +1,32 @@
+/*
+ * Jump bar: a bar that sticks under the header bar, with links that jump down
+ * the page. Used by the lineup (letters) and the schedule (days, #193).
+ */
+
+.jump-bar {
+    position: sticky;
+    top: var(--header-bar-height);
+    z-index: 1;
+    padding-block: var(--space-2);
+    border-bottom: 1px solid var(--rule);
+    background: var(--ground);
+}
+
+.jump-bar__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--text-3);
+    font-weight: var(--weight-bold);
+    text-transform: uppercase;
+
+    a {
+        color: inherit;
+        text-decoration: none;
+
+        &:hover {
+            color: var(--pipe);
+        }
+    }
+}

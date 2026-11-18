@@ -38,8 +38,17 @@ permalink: /2026/schedule/index.html
         <div class="pipe"></div>
     </header>
 
+    <div class="jump-bar">
+        <nav class="jump-bar__links" aria-label="Jump to a day">
+            {% for day in program.officialDays %}
+            <a href="#day-{{ day.date }}">{{ day.weekday }} {{ day.day_number }}</a>
+            {% endfor %}
+            {% if program.leadUp | length %}<a href="#lead-up">Lead-up</a>{% endif %}
+        </nav>
+    </div>
+
     {% for day in program.officialDays %}
-    <h2 class="schedule__day">
+    <h2 class="schedule__day" id="day-{{ day.date }}">
         <span class="schedule__weekday">{{ day.weekday }}</span> {{ day.day_number }}
     </h2>
     <div class="schedule__columns" aria-hidden="true">
@@ -53,7 +62,7 @@ permalink: /2026/schedule/index.html
     {% endfor %}
 
     {% if program.leadUp | length %}
-    <h2 class="schedule__day">
+    <h2 class="schedule__day" id="lead-up">
         <span class="schedule__weekday">Lead-up</span>
     </h2>
     <div class="schedule__columns" aria-hidden="true">
