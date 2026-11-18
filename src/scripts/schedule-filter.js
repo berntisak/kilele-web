@@ -6,6 +6,7 @@ const filter = document.querySelector(".schedule__filter");
 if (filter) {
     const buttons = filter.querySelectorAll("button");
     const rows = document.querySelectorAll(".schedule__row");
+    const groups = document.querySelectorAll(".schedule__group");
 
     filter.hidden = false;
 
@@ -18,6 +19,11 @@ if (filter) {
         buttons.forEach((button) => button.setAttribute("aria-pressed", button === pressed));
         rows.forEach((row) => {
             row.hidden = category !== "all" && row.dataset.category !== category;
+        });
+
+        // A day with no rows left in this category hides completely.
+        groups.forEach((group) => {
+            group.hidden = !group.querySelector(".schedule__row:not([hidden])");
         });
     });
 }
