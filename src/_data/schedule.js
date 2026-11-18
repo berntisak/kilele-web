@@ -79,8 +79,15 @@ async function fetchSchedule() {
     const end = DateTime.fromISO(row.end_time, { zone: ZONE });
 
     // Before 06:00 counts as the night before
-    const firstDay = (start.hour < 6 ? start.minus({ days: 1 }) : start).toISODate();
-    const lastDay = (end.hour < 6 ? end.minus({ days: 1 }) : end).toISODate();
+    const first = start.hour < 6 ? start.minus({ days: 1 }) : start;
+    const last = end.hour < 6 ? end.minus({ days: 1 }) : end;
+    const firstDay = first.toISODate();
+    const lastDay = last.toISODate();
+
+    // "16–20 Feb", or "28 Feb–2 Mar" across a month boundary
+    const dateRange = first.month === last.month
+      ? `${first.toFormat('d')}–${last.toFormat('d LLL')}`
+      : `${first.toFormat('d LLL')}–${last.toFormat('d LLL')}`;
 
     const categoryName = row.category_id?.name;
     const hasCategory = categoryName && categoryName !== 'Uncategorized';
@@ -97,6 +104,8 @@ async function fetchSchedule() {
       first_day: firstDay,
       last_day: lastDay,
       multi_day: lastDay > firstDay,
+      day_label: first.toFormat('cccc d LLLL'),
+      date_range: lastDay > firstDay ? dateRange : null,
       category: hasCategory ? categoryName.toLowerCase() : null,
       category_name: hasCategory ? categoryName : null,
       venue_name: row.venue_id?.name || null,

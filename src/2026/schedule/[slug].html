@@ -16,6 +16,15 @@ eleventyComputed:
 
 <article class="section schedule-point" data-category="{{ point.category or 'none' }}">
     <div class="pipe"></div>
+    <header class="schedule-point__head">
+        <p class="meta">
+            <span class="schedule-point__swatch"></span>
+            {{- point.category_name or "Program point" }} ·
+            {% if point.multi_day %}Runs {{ point.date_range }}{% else %}{{ point.day_label }}, {{ point.start_time_local }}–{{ point.end_time_local }}{% endif %} ·
+            {{ point.venue_name }}
+        </p>
+        <h1 class="page-title">{{ point.short_title or point.title }}</h1>
+    </header>
 </article>
 
 {% set canonicalUrl = site.url ~ page.url %}
