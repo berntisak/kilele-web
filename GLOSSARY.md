@@ -14,7 +14,7 @@ The Kit/Edition split is the spine of the design architecture: change the look =
 
 ## Content
 
-The per-Edition material authored by people and stored in Supabase via the CMS: artists, programme points / schedule, news, gallery, and the text of static pages. Content is the CMS's domain; design is not.
+The per-Edition material authored by people and stored in Supabase via the CMS: artists, program points / schedule, news, gallery, and the text of static pages. Content is the CMS's domain; design is not.
 
 ## News
 
@@ -108,3 +108,35 @@ _Avoid:_ rail, masthead, sidebar (each describes only one of its two positions, 
 The numbered list of a text page's sections, inside the title block, each line a link that jumps to that section. Only section headings appear in it, never the smaller lead-ins.
 
 _Avoid:_ table of contents, TOC, menu.
+
+## Program point
+
+One thing on an Edition's schedule: a performance, workshop, panel, installation and so on, with a time, a venue and usually artists. Most fall on a single day; a few run over several days.
+
+_Avoid:_ event, session, slot.
+
+## List view
+
+The view of the schedule that shows every Program point grouped by day, read top to bottom.
+
+## Timetable view
+
+The view of the schedule that lays one day's Program points out against the clock, so overlaps and clashes are visible. The schedule's views all show the same Program points, and its filters apply to whichever view is open.
+
+_Avoid:_ calendar, calendar view (suggests a month grid).
+
+## Official days
+
+The days an Edition's festival is actually on, as announced to the outside world. Narrower than the days the schedule may use, which also cover rigging, lead-up events and pack-down.
+
+## Main program
+
+The Program points that fall on any of the Official days, including ones that start earlier and run into them. A Program point that runs over several days belongs to each Official day it runs on.
+
+_Avoid:_ programme (the site uses US spelling, "program", in its copy too).
+
+## Lead-up
+
+The Program points that fall entirely before the Official days.
+
+_Avoid:_ pre-festival, side program. (The name is provisional: "warm-up" is also being considered.)
