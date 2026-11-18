@@ -49,6 +49,18 @@ eleventyComputed:
         </ol>
         <figcaption class="meta">Fig. — {{ point.artists | length }} {{ "artist" if point.artists | length == 1 else "artists" }} at {{ point.short_title or point.title }}</figcaption>
     </figure>
+    {% else %}
+    {# No artists: the point's own photo (or the key art) takes one portrait's place. #}
+    <figure class="schedule-point__media">
+        <ol class="schedule-point__cast" role="list" style="--cols: 1; --cols-mid: 1">
+            <li>
+                <span class="schedule-point__portrait">
+                    <img src="{{ point.photo_path or '/assets/images/placeholder.jpg' }}" alt="" eleventy:ignore>
+                </span>
+            </li>
+        </ol>
+        <figcaption class="meta">Fig. — {{ point.short_title or point.title }}{% if not point.photo_path %} (key art){% endif %}</figcaption>
+    </figure>
     {% endif %}
 
     <div class="schedule-point__body">
