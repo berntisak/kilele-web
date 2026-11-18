@@ -19,4 +19,33 @@
         vertical-align: -0.05em;
         background: var(--category);
     }
+
+    .schedule-point__media {
+        display: grid;
+        gap: var(--space-3);
+        margin-top: var(--space-6);
+    }
+
+    /* Phones: two across. Wider: as many across as balances the rows (--cols-mid, --cols,
+       set by the template), each a fixed third, quarter or fifth of the width. */
+    .schedule-point__cast {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-4);
+        padding: 0;
+
+        @media (--small) {
+            grid-template-columns: repeat(var(--cols-mid), calc((100% - 2 * var(--space-4)) / 3));
+        }
+
+        @media (--medium) {
+            grid-template-columns: repeat(var(--cols), calc((100% - 3 * var(--space-4)) / 4));
+        }
+    }
+
+    .schedule-point__cast--many {
+        @media (--medium) {
+            grid-template-columns: repeat(var(--cols), calc((100% - 4 * var(--space-4)) / 5));
+        }
+    }
 }

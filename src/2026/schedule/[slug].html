@@ -27,8 +27,12 @@ eleventyComputed:
     </header>
 
     {% if point.artists | length %}
+    {# Balanced rows: as few rows as fit (max 5 across, 3 on tablets), shared evenly. #}
+    {% set count = point.artists | length %}
+    {% set cols = (count / ((count / 5) | round(0, "ceil"))) | round(0, "ceil") %}
+    {% set colsMid = (count / ((count / 3) | round(0, "ceil"))) | round(0, "ceil") %}
     <figure class="schedule-point__media">
-        <ol class="schedule-point__cast" role="list">
+        <ol class="schedule-point__cast{% if count > 4 %} schedule-point__cast--many{% endif %}" role="list" style="--cols: {{ cols }}; --cols-mid: {{ colsMid }}">
             {% for credit in point.artists %}
             {% for artist in lineup %}{% if artist.slug == credit.slug %}
             <li>
