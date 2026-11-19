@@ -1,0 +1,144 @@
+/*
+ * The 2026 gallery (src/2026/gallery/gallery.html).
+ */
+
+.page--gallery {
+    /* Jumping to a category stops below the stuck jump bar instead of under it. */
+    .gallery__group {
+        scroll-margin-top: var(--space-8);
+        margin-top: var(--space-7);
+    }
+
+    /* Each category opens with an index line: number, name, count, in fixed columns so the numbers line up. */
+    .gallery__index {
+        display: grid;
+        grid-template-columns: 3rem 1fr auto;
+        align-items: baseline;
+        margin-bottom: var(--space-3);
+        padding-top: var(--space-2);
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        font-weight: var(--weight-normal);
+        text-transform: uppercase;
+        border-top: 2px solid var(--text);
+    }
+
+    .gallery__category {
+        font-family: var(--font-display);
+        font-size: var(--text-5);
+    }
+
+    /* The contact sheet: small square thumbnails, more across as the screen widens. */
+    .gallery__sheet {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-1);
+
+        @media (--small) {
+            grid-template-columns: repeat(5, 1fr);
+        }
+
+        @media (--medium) {
+            grid-template-columns: repeat(8, 1fr);
+        }
+    }
+
+    /* Every thumbnail cropped to a square, so the rows line up whatever shape the photo is. */
+    .gallery__sheet img {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+        background: var(--placeholder);
+    }
+
+    /* The list item is the frame the number is placed in. */
+    .gallery__sheet li {
+        position: relative;
+    }
+
+    /* Each thumbnail's number sits in its bottom-left corner, like a frame number on a contact sheet. */
+    .gallery__number {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        padding: 0 var(--space-1);
+        font-family: var(--font-mono);
+        font-size: var(--text-1);
+        background: var(--ground);
+        color: var(--text);
+    }
+
+    /* The lightbox fills the screen on the ink ground (set in the markup). */
+    .lightbox {
+        width: 100%;
+        max-width: none;
+        height: 100%;
+        max-height: none;
+        margin: 0;
+        padding: var(--space-7) var(--space-4);
+        border: 0;
+        background: var(--ground);
+        color: var(--text);
+
+        /* Open: the photo and its text stacked, the photo taking the room the text leaves. */
+        &[open] {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-3);
+        }
+    }
+
+    /* The lightbox's buttons: a bare mono character, no button chrome. */
+    .lightbox__button {
+        position: absolute;
+        padding: 0;
+        font-family: var(--font-mono);
+        font-size: var(--text-5);
+        line-height: var(--line-height-tight);
+        color: inherit;
+        background: none;
+        border: 0;
+        cursor: pointer;
+    }
+
+    .lightbox__close {
+        top: var(--space-3);
+        right: var(--space-4);
+    }
+
+    /* Previous and next sit in the bottom corners, below the credits. */
+    .lightbox__prev {
+        bottom: var(--space-3);
+        left: var(--space-4);
+    }
+
+    .lightbox__next {
+        bottom: var(--space-3);
+        right: var(--space-4);
+    }
+
+    /* The whole photo always shows, as large as fits: scaled down, never cropped. */
+    .lightbox__photo {
+        flex: 1;
+        min-height: 0;
+        width: 100%;
+        object-fit: contain;
+    }
+
+    /* Caption and credits under the photo. */
+    .lightbox__text {
+        font-size: var(--text-3);
+        text-align: center;
+    }
+
+    .lightbox__credit {
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        text-transform: uppercase;
+        color: var(--text-muted);
+    }
+
+    .lightbox__text a {
+        color: inherit;
+    }
+}

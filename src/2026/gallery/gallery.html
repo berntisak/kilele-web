@@ -1,67 +1,83 @@
 ---
-layout: layouts/base.html
+layout: layouts/site.html
+pageName: gallery
+headerContext: Archive 2026
 title: Gallery 2026
 description: "Gallery from Kilele 2026"
 permalink: /2026/gallery/index.html
 ---
 
-<div class="content__container">
-  <h1>Gallery Kilele 2026</h1>
+<section class="section gallery">
+    <header>
+        <dl class="stats-bar">
+            <div><dt>Register</dt><dd>Gallery, Kilele 2026</dd></div>
+            <div><dt>Photos</dt><dd>{{ gallery.photos | length }}</dd></div>
+            <div><dt>Categories</dt><dd>{{ gallery.categories | length }}</dd></div>
+            <div><dt>Status</dt><dd>Archived</dd></div>
+        </dl>
+        <h1 class="page-title">Gallery 2026</h1>
+        <div class="pipe"></div>
+    </header>
 
-  {% if gallery.categories and gallery.categories.length %}
-  <div class="gallery-filters">
-    <button class="nav__button gallery-filter-button active" data-category="all">All</button>
-    {% for category in gallery.categories %}
-    <button class="nav__button gallery-filter-button" data-category="{{ category.slug }}">{{ category.display_name or category.name }}</button>
-    {% endfor %}
-  </div>
-  {% endif %}
-
-  <div class="gallery-sections">
-    {% for category in gallery.categories %}
-    <div class="gallery-section" data-category-section="{{ category.slug }}">
-      <h2 class="gallery-category-title">{{ category.display_name or category.name }}</h2>
-      <div class="gallery-grid">
-        {% for photo in gallery.photos %}
-        {% if photo.category_slug == category.slug and photo.url %}
-        <a
-          class="gallery-item"
-          data-category="{{ photo.category_slug }}"
-          data-full-src="{{ photo.url }}"
-          data-caption="{{ photo.caption }}"
-          data-photographer="{{ photo.photographer_name }}"
-          data-photographer-link="{{ photo.photographer_link }}"
-          data-artists="{{ photo.artists | dump | escape }}"
-          data-program-point-slug="{{ photo.program_point_slug }}"
-          data-program-point-title="{{ photo.program_point_title }}"
-          href="{{ photo.url }}"
-          aria-label="{{ photo.caption or 'Gallery photo' }}"
-        >
-          <img
-            src="{{ photo.url_thumb or photo.url }}"
-            alt="{{ photo.caption or '' }}"
-            loading="lazy"
-            eleventy:ignore
-          />
-        </a>
-        {% endif %}
-        {% endfor %}
-      </div>
+    <div class="jump-bar">
+        <nav class="jump-bar__links" aria-label="Jump to a category">
+            {% for category in gallery.categories %}
+            <a href="#category-{{ category.slug }}">{{ category.display_name or category.name }}</a>
+            {% endfor %}
+        </nav>
     </div>
-    {% endfor %}
-  </div>
-</div>
 
-<div class="gallery-lightbox" id="gallery-lightbox" role="dialog" aria-modal="true" aria-label="Photo lightbox">
-  <button class="gallery-lightbox__close" aria-label="Close">&times;</button>
-  <div class="gallery-lightbox__inner">
-    <button class="gallery-lightbox__arrow gallery-lightbox__prev" aria-label="Previous photo">&#8249;</button>
-    <img class="gallery-lightbox__img" src="" alt="" />
-    <button class="gallery-lightbox__arrow gallery-lightbox__next" aria-label="Next photo">&#8250;</button>
-  </div>
-  <div class="gallery-lightbox__meta">
-    <p class="gallery-lightbox__caption"></p>
-    <p class="gallery-lightbox__event"></p>
-    <p class="gallery-lightbox__photographer"></p>
-  </div>
-</div>
+    {% for category in gallery.categories %}
+    <section class="gallery__group" id="category-{{ category.slug }}">
+        <h2 class="gallery__index">
+            <span>{{ ("0" ~ loop.index).slice(-2) }}</span>
+            <span class="gallery__category">{{ category.display_name or category.name }}</span>
+            <span>{{ category.photos | length }} photos</span>
+        </h2>
+        <ol class="gallery__sheet" role="list">
+            {% for photo in category.photos %}
+            <li>
+                <a
+                    class="gallery__photo"
+                    href="{{ photo.url }}"
+                    aria-label="{{ photo.caption or 'Gallery photo' }}"
+                >
+                    <img
+                        src="{{ photo.url_thumb }}"
+                        alt="{{ photo.caption or '' }}"
+                        loading="lazy"
+                        eleventy:ignore
+                    />
+                    <span class="gallery__number">{{ ("00" ~ photo.number).slice(-3) }}</span>
+                </a>
+                <template>
+                    {% if photo.caption %}<p>{{ photo.caption }}</p>{% endif %}
+                    {% if photo.program_point_slug or photo.artists | length %}
+                    <p class="lightbox__credit">
+                        {% if photo.program_point_slug %}<a href="/2026/schedule/{{ photo.program_point_slug }}/">{{ photo.program_point_title }}</a>{% endif %}
+                        {% if photo.program_point_slug and photo.artists | length %} — {% endif %}
+                        {% for artist in photo.artists %}<a href="/2026/lineup/{{ artist.slug }}/">{{ artist.name }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+                    </p>
+                    {% endif %}
+                    {% if photo.photographer_name %}
+                    <p class="lightbox__credit">Photo: {% if photo.photographer_link %}<a href="{{ photo.photographer_link }}" target="_blank" rel="noopener">{{ photo.photographer_name }}</a>{% else %}{{ photo.photographer_name }}{% endif %}</p>
+                    {% endif %}
+                </template>
+            </li>
+            {% endfor %}
+        </ol>
+    </section>
+    {% endfor %}
+</section>
+
+<dialog class="lightbox" data-ground="ink" aria-label="Photo">
+    <form method="dialog">
+        <button class="lightbox__button lightbox__close" aria-label="Close">×</button>
+    </form>
+    <button class="lightbox__button lightbox__prev" type="button" aria-label="Previous photo">←</button>
+    <button class="lightbox__button lightbox__next" type="button" aria-label="Next photo">→</button>
+    <img class="lightbox__photo" alt="">
+    <div class="lightbox__text"></div>
+</dialog>
+
+<script src="/scripts/gallery-lightbox.js" defer></script>
