@@ -1,0 +1,16 @@
+---
+layout: layouts/site.html
+pageName: schedule
+headerContext: Archive 2026
+title: Timetable 2026
+description: "The program of Kilele 2026, day by day against the clock"
+permalink: /2026/schedule/timetable/index.html
+---
+
+{% set program = schedule["2026"] %}
+
+<section class="section schedule">
+    {% include "schedule-head.html" %}
+
+    {% include "timetable.html" %}
+</section>

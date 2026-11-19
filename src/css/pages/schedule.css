@@ -35,6 +35,12 @@
         font-weight: var(--weight-bold);
         text-transform: uppercase;
 
+        /* Hidden until the filter script reveals it (the List view only):
+           the display above would otherwise override the hidden attribute. */
+        &[hidden] {
+            display: none;
+        }
+
         button {
             font-weight: inherit;
             text-transform: inherit;
@@ -46,6 +52,47 @@
         }
 
         [aria-pressed="true"] {
+            color: var(--pipe);
+            text-decoration: underline;
+            text-underline-offset: 0.25em;
+        }
+    }
+
+    /* The title with the view switch beside it, on the title's baseline.
+       Where they don't fit side by side, the switch wraps under the title.
+       The title's space before the pipe moves to the pair. */
+    .schedule__title {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: var(--space-2) var(--space-5);
+        margin-bottom: var(--space-6);
+
+        .page-title {
+            margin-bottom: 0;
+        }
+    }
+
+    /* The switch between the List view and the Timetable view (#204):
+       words like the filter's; the open view is pipe red and underlined. */
+    .schedule__views {
+        display: flex;
+        gap: var(--space-3);
+        font-family: var(--font-mono);
+        font-size: var(--text-3);
+        font-weight: var(--weight-bold);
+        text-transform: uppercase;
+
+        a {
+            color: var(--text-muted);
+            text-decoration: none;
+
+            &:hover {
+                color: var(--pipe);
+            }
+        }
+
+        [aria-current="page"] {
             color: var(--pipe);
             text-decoration: underline;
             text-underline-offset: 0.25em;

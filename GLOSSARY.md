@@ -121,7 +121,7 @@ The view of the schedule that shows every Program point grouped by day, read top
 
 ## Timetable view
 
-The view of the schedule that lays one day's Program points out against the clock, so overlaps and clashes are visible. The schedule's views all show the same Program points, and its filters apply to whichever view is open.
+The view of the schedule that lays one day's Program points out against the clock, so overlaps and clashes are visible. The schedule's views all show the same Program points. The category filter belongs to the List view.
 
 _Avoid:_ calendar, calendar view (suggests a month grid).
 

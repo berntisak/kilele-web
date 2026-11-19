@@ -7,6 +7,14 @@ const { DateTime } = require('luxon');
 
 const ZONE = 'Africa/Nairobi';
 
+// The Timetable view's clock (#204): a time as a 15-minute slot counted from
+// 06:00, so 06:00 is slot 1, 14:30 is slot 35 and 00:30 that night is slot 75.
+// Like first_day / last_day below, before 06:00 counts as the night before.
+function slotOf(time) {
+  const minutesSinceSix = (time.hour * 60 + time.minute - 360 + 1440) % 1440;
+  return Math.floor(minutesSinceSix / 15) + 1;
+}
+
 let cachedPromise = null;
 
 module.exports = async function() {
@@ -27,7 +35,7 @@ async function fetchSchedule() {
     .select(`
       id, title, short_title, description, photo_path, start_time, end_time, slug,
       category_id (name),
-      venue_id (name),
+      venue_id (name, sorting_id),
       festival_id (year, official_start_date, official_end_date)
     `)
     .eq('public', true)
@@ -89,6 +97,12 @@ async function fetchSchedule() {
       ? `${first.toFormat('d')}–${last.toFormat('d LLL')}`
       : `${first.toFormat('d LLL')}–${last.toFormat('d LLL')}`;
 
+    // Where the point sits on its day's clock. A multi-day point uses its
+    // daily times. An end at or before the start (only an end at exactly
+    // 06:00) gets one hour, so it's never zero-wide.
+    const startSlot = slotOf(start);
+    const endSlot = slotOf(end) > startSlot ? slotOf(end) : startSlot + 4;
+
     const categoryName = row.category_id?.name;
     const hasCategory = categoryName && categoryName !== 'Uncategorized';
 
@@ -101,6 +115,8 @@ async function fetchSchedule() {
       end_time: row.end_time,
       start_time_local: start.toFormat('HH:mm'),
       end_time_local: end.toFormat('HH:mm'),
+      start_slot: startSlot,
+      end_slot: endSlot,
       first_day: firstDay,
       last_day: lastDay,
       multi_day: lastDay > firstDay,
@@ -109,6 +125,7 @@ async function fetchSchedule() {
       category: hasCategory ? categoryName.toLowerCase() : null,
       category_name: hasCategory ? categoryName : null,
       venue_name: row.venue_id?.name || null,
+      venue_sort: row.venue_id?.sorting_id ?? null,
       artists: artistMap[row.id] || [],
       photo_path: row.photo_path ? baseUrl + encodeURIComponent(row.photo_path) : null,
     });
@@ -124,11 +141,60 @@ async function fetchSchedule() {
       const lastOfficial = DateTime.fromISO(y.officialEnd, { zone: ZONE });
       for (; day <= lastOfficial; day = day.plus({ days: 1 })) {
         const date = day.toISODate();
+        const points = y.points.filter(p => p.first_day <= date && p.last_day >= date);
+
+        // The day's clock for the Timetable view: from the hour its first
+        // point starts to the hour after its last point ends. Hours begin on
+        // slots 1, 5, 9 … so these round out to the nearest of those.
+        const earliest = Math.min(...points.map(p => p.start_slot));
+        const latest = Math.max(...points.map(p => p.end_slot));
+        const firstSlot = points.length ? Math.floor((earliest - 1) / 4) * 4 + 1 : null;
+        const lastSlot = points.length ? Math.ceil((latest - 1) / 4) * 4 + 1 : null;
+
+        // The hour labels along the top: the slot each hour starts on and
+        // its time, "10:00" … "02:00".
+        const hours = [];
+        for (let slot = firstSlot; points.length && slot < lastSlot; slot += 4) {
+          const hour = (6 + (slot - 1) / 4) % 24;
+          hours.push({ slot, label: `${String(hour).padStart(2, '0')}:00` });
+        }
+
+        // The day's venues, each with its points, in the CMS's venue order
+        // (sorting_id, the internal schedule's priority), then by name
+        // where numbers tie. Venues without a number go last.
+        const venues = [];
+        for (const p of points) {
+          let venue = venues.find(v => v.name === p.venue_name);
+          if (!venue) {
+            venue = { name: p.venue_name, sort: p.venue_sort, points: [] };
+            venues.push(venue);
+          }
+          venue.points.push(p);
+        }
+        venues.sort((a, b) =>
+          (a.sort ?? Infinity) - (b.sort ?? Infinity) || (a.name ?? '').localeCompare(b.name ?? ''));
+
+        // A point that starts while an earlier one in its venue is still
+        // running is drawn on top of it, shifted a little (the cascade, #204).
+        // Copies, because a multi-day point is shared with its other days.
+        for (const venue of venues) {
+          venue.points = venue.points
+            .sort((a, b) => a.start_slot - b.start_slot)
+            .map((p, i, all) => ({
+              ...p,
+              overlaps_earlier: all.slice(0, i).some(e => e.end_slot > p.start_slot),
+            }));
+        }
+
         officialDays.push({
           date,
           weekday: day.toFormat('ccc'),
           day_number: day.toFormat('d'),
-          points: y.points.filter(p => p.first_day <= date && p.last_day >= date),
+          points,
+          first_slot: firstSlot,
+          last_slot: lastSlot,
+          hours,
+          venues,
         });
       }
     }

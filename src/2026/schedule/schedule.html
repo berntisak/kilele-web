@@ -30,31 +30,7 @@ permalink: /2026/schedule/index.html
 {% set program = schedule["2026"] %}
 
 <section class="section schedule">
-    <header>
-        <dl class="stats-bar">
-            <div><dt>Register</dt><dd>Program, Kilele 2026</dd></div>
-            <div><dt>Entries</dt><dd>{{ program.points | length }}</dd></div>
-            <div><dt>Days</dt><dd>{{ program.officialDays | length }}</dd></div>
-            <div><dt>Status</dt><dd>Archived</dd></div>
-        </dl>
-        <h1 class="page-title">Schedule 2026</h1>
-        <div class="pipe"></div>
-    </header>
-
-    <div class="jump-bar">
-        <nav class="jump-bar__links" aria-label="Jump to a day">
-            {% for day in program.officialDays %}
-            <a href="#day-{{ day.date }}">{{ day.weekday }} {{ day.day_number }}</a>
-            {% endfor %}
-            {% if program.leadUp | length %}<a href="#lead-up">Lead-up</a>{% endif %}
-        </nav>
-        <div class="schedule__filter" role="group" aria-label="Show one category" hidden>
-            <button type="button" aria-pressed="true" data-filter="all">All</button>
-            {% for category in program.categories %}
-            <button type="button" aria-pressed="false" data-filter="{{ category.category }}">{{ category.category_name }}</button>
-            {% endfor %}
-        </div>
-    </div>
+    {% include "schedule-head.html" %}
 
     {% for day in program.officialDays %}
     <section class="schedule__group">
