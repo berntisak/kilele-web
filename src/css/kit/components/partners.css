@@ -1,0 +1,39 @@
+/*
+ * Partners section: the frame's credit to the partners, just above the footer bar
+ * (site.html). On the front page, the main partners' logos and a link to the rest.
+ * On every other page, a credit line of every partner's short name.
+ */
+
+/* The logos and the link share one row: 3 across on phones, 4 from --small,
+   7 from --medium, so the six logos and the link fit on one line. */
+.partners__row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6) var(--space-5);
+    align-items: center;
+
+    @media (--small) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    @media (--medium) {
+        grid-template-columns: repeat(7, 1fr);
+    }
+}
+
+/* On every other page: every partner's short name in one run of capitals. */
+.partners__credits {
+    max-width: 90ch;
+    margin-bottom: var(--space-3);
+    font-family: var(--font-display);
+    font-size: var(--text-5);
+    line-height: var(--line-height-snug);
+    text-transform: uppercase;
+}
+
+/* The link to the rest, in the section head's small capitals. */
+.partners__more {
+    font-family: var(--font-mono);
+    font-size: var(--text-3);
+    text-transform: uppercase;
+}

@@ -47,9 +47,30 @@
         {{ content | safe }}
     </div>
 
-    {% if not hidePartnersFooter %}
+    {% if partnersSection == "logos" %}
+    {% set mainPartners = (partners | groupby("group")).main %}
     <section class="section partners">
-        <p>Partners: the logos of the festival's partners and funders</p>
+        <header class="section-head">
+            <h2 class="section-head__title">Partners</h2>
+        </header>
+        <ul class="partners__row" role="list">
+            {% for partner in mainPartners %}
+            <li>{% include "partner-logo.html" %}</li>
+            {% endfor %}
+            <li class="partners__more">
+                <a class="section-head__link" href="/about/partners/">And {{ (partners | length) - (mainPartners | length) }} more partners <span aria-hidden="true">→</span></a>
+            </li>
+        </ul>
+    </section>
+    {% elif partnersSection != "none" %}
+    <section class="section partners">
+        <p class="partners__credits">
+            <span class="meta">With</span>
+            {% for partner in partners %}{{ partner.short_name }}{{ " · " if not loop.last }}{% endfor %}
+        </p>
+        <p class="partners__more">
+            <a class="section-head__link" href="/about/partners/">All {{ partners | length }} partners <span aria-hidden="true">→</span></a>
+        </p>
     </section>
     {% endif %}
 

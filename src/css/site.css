@@ -27,6 +27,8 @@
 @import "kit/components/pager.css";
 @import "kit/components/jump-bar.css";
 @import "kit/components/category-label.css";
+@import "kit/components/partner-logo.css";
+@import "kit/components/partners.css";
 
 @import "pages/home.css";
 @import "pages/static.css";
@@ -39,3 +41,4 @@
 @import "pages/gallery.css";
 @import "pages/projects.css";
 @import "pages/project.css";
+@import "pages/partners.css";
