@@ -3,9 +3,14 @@
  * Phones first: venues as lanes, time running left to right.
  */
 .page--schedule {
-    /* A day wider than the screen scrolls sideways. */
+    /* A day wider than the screen scrolls sideways. The strip runs out
+       through the page gutter to the screen's edges, so points slide off
+       the screen instead of stopping short of it; the end padding lets the
+       day's last hour scroll clear of the right edge. */
     .timetable__scroll {
         overflow-x: auto;
+        margin-inline: calc(-1 * var(--gutter));
+        padding-inline-end: var(--gutter);
     }
 
     /* The day headings are smaller here than on the List view, so a day's
@@ -15,11 +20,12 @@
         font-size: var(--text-6);
     }
 
-    /* A column for the venue names, then one per 15 minutes. Row 1 holds
+    /* A column for the venue names (with the gutter in front of them),
+       then one per 15 minutes. Row 1 holds
        the hours; each venue's lane below it fits a point's time and title. */
     .timetable__grid {
         display: grid;
-        grid-template-columns: 6rem repeat(var(--slots), 3rem);
+        grid-template-columns: calc(var(--gutter) + 6rem) repeat(var(--slots), 3rem);
         grid-template-rows: auto;
         grid-auto-rows: minmax(3.5rem, auto);
         width: max-content;
@@ -38,14 +44,16 @@
         font-size: var(--text-2);
     }
 
-    /* A venue's name, pinned to the left edge while the hours scroll past. */
+    /* A venue's name, pinned to the screen's left edge while the hours
+       scroll past. Its left padding is the gutter, so the name lines up
+       with the heading and points pass under the whole strip. */
     .timetable__venue {
         grid-column: 1;
         grid-row: var(--lane);
         position: sticky;
         left: 0;
         z-index: 2;
-        padding: var(--space-2) var(--space-2) var(--space-2) 0;
+        padding: var(--space-2) var(--space-2) var(--space-2) var(--gutter);
         border-top: 1px solid var(--concrete-light);
         background: var(--ground);
         font-family: var(--font-mono);
@@ -61,6 +69,7 @@
         grid-column: calc(var(--from) + 1) / calc(var(--to) + 1);
         display: flex;
         flex-direction: column;
+        align-items: flex-start;
         padding: var(--space-1) var(--space-2);
         border: 1px solid var(--ground);
         background: var(--category);
@@ -99,6 +108,21 @@
         line-height: 1.15;
     }
 
+    /* In the lanes, a long point's time and title stay in view while it
+       scrolls past: pinned just right of the venue names until the
+       point's end arrives. */
+    .timetable__time,
+    .timetable__title {
+        position: sticky;
+        left: calc(var(--gutter) + 6rem);
+    }
+
+    /* A long title wraps at 12rem, so it stays narrower than its box and
+       has room to slide along with it. */
+    .timetable__title {
+        max-width: 12rem;
+    }
+
     /* A point with a page underlines its title on hover, like a link. */
     a.timetable__point:hover .timetable__title {
         text-decoration: underline;
@@ -120,6 +144,8 @@
         .timetable__scroll {
             max-height: 80svh;
             overflow: auto;
+            margin-inline: 0;
+            padding-inline-end: 0;
         }
 
         /* A column for the hours, then one per venue; a header row for the
@@ -159,6 +185,16 @@
         .timetable__point {
             grid-row: calc(var(--from) + 1) / calc(var(--to) + 1);
             grid-column: var(--lane);
+        }
+
+        /* The columns pin nothing inside the points. */
+        .timetable__time,
+        .timetable__title {
+            position: static;
+        }
+
+        .timetable__title {
+            max-width: none;
         }
 
         /* The cascade shifts right here, as in Google Calendar. */
