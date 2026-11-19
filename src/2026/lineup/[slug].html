@@ -17,26 +17,28 @@ eleventyComputed:
 
 <article class="section artist">
     <div class="pipe artist__main"></div>
-    <figure class="artist__figure">
-        <div class="artist__portrait">
-            {% if artist.photo_large %}
-            <img class="artist__photo" src="{{ artist.photo_large }}" alt="{{ artist.name }}" width="1000" height="1000" eleventy:ignore>
-            {% else %}
-            <span class="artist__photo"></span>
-            {% endif %}
-            <span class="artist__number" aria-hidden="true">{{ artist.number }}</span>
-        </div>
-        <figcaption class="meta artist__caption">Fig. {{ artist.number }} — {{ artist.name }}, Lineup 2026</figcaption>
-    </figure>
+    <div class="artist__figure-column">
+        <figure class="figure artist__figure">
+            <div class="figure__frame">
+                {% if artist.photo_large %}
+                <img class="figure__photo" src="{{ artist.photo_large }}" alt="{{ artist.name }}" width="1000" height="1000" eleventy:ignore>
+                {% else %}
+                <span class="figure__photo"></span>
+                {% endif %}
+                <span class="figure__number" aria-hidden="true">{{ artist.number }}</span>
+            </div>
+            <figcaption class="meta figure__caption">Fig. {{ artist.number }} — {{ artist.name }}, Lineup 2026</figcaption>
+        </figure>
+    </div>
     <div class="artist__text">
         <p class="meta">Artist no. {{ artist.number }} of {{ lineup | length }} · Lineup 2026</p>
         <h1 class="page-title artist__name">{{ artist.name }}</h1>
         {% if artist.program_points.length or artist.links.length %}
-        <dl class="artist__spec">
+        <dl class="spec">
             {% if artist.program_points.length %}
             <div>
                 <dt class="meta">Appears at</dt>
-                <dd class="artist__value">
+                <dd class="spec__value">
                     {% for point in artist.program_points %}
                     <a href="/2026/schedule/{{ point.slug }}/">{{ point.short_title or point.title }} →</a>
                     {% endfor %}
@@ -46,7 +48,7 @@ eleventyComputed:
             {% if artist.links.length %}
             <div>
                 <dt class="meta">Links</dt>
-                <dd class="artist__value artist__value--inline">
+                <dd class="spec__value spec__value--inline">
                     {% for link in artist.links %}
                     <a href="{{ link.url }}" target="_blank" rel="noopener">{{ link.name }} ↗</a>
                     {% endfor %}

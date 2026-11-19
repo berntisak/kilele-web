@@ -71,13 +71,22 @@ module.exports = async function() {
 
     // Build full image URLs
   const baseUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/projects/`;
+  const renderUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/render/image/public/projects/`;
 
-  return (projects || []).map(project => ({
+  return (projects || []).map((project, index) => ({
       ...project,
+      title: project.title.trim(),
+      // The project's place in the alphabetical list, for its card and its page.
+      number: String(index + 1).padStart(2, "0"),
       artists: artistMap[project.id] || [],
       programPoints: programMap[project.id] || [],
+      // Each link as its address and a short name to show: the site's domain.
+      links: (project.links || []).map(url => ({ url, name: new URL(url).hostname.replace(/^www\./, "") })),
 
-      photo_path_small: project.image_path ? `${baseUrl}${encodeURIComponent(project.image_path)}?width=100&quality=70`: null,
+      // A wide photo for the card. Only /render/ resizes; /object/ ignores ?width= (#141).
+      // A large square photo for the project's own page.
+      photo_large: project.image_path ? `${renderUrl}${encodeURIComponent(project.image_path)}?width=1000&height=1000&resize=cover&quality=75` : null,
+      photo_card: project.image_path ? `${renderUrl}${encodeURIComponent(project.image_path)}?width=800&height=450&resize=cover&quality=75` : null,
       photo_path: project.image_path ? baseUrl + encodeURIComponent(project.image_path) : null,
   }));
 };

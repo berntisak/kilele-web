@@ -1,0 +1,31 @@
+/*
+ * The 2026 projects list (src/2026/projects/projects.html).
+ */
+
+.page--projects {
+    .projects__head {
+        margin-bottom: var(--space-7);
+    }
+
+    /* One column on phones, two from --small, three from --large. Green: the archive's tint. */
+    .projects__grid {
+        --duotone: url(#duotone-green);
+        display: grid;
+        gap: var(--space-5);
+
+        @media (--small) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (--large) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    /* The kit card has no text below its title; the list is short enough to say what each project is. */
+    .projects__excerpt {
+        margin-top: var(--space-1);
+        font-size: var(--text-3);
+        line-height: var(--line-height-normal);
+    }
+}
