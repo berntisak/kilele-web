@@ -5,21 +5,35 @@
 
 .stats-bar {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    /* One line at every size, so it stays short on phones: three facts
+       there, all four from --small. */
+    grid-template-columns: repeat(3, 1fr);
     margin-bottom: var(--space-6);
     border-top: 2px solid var(--text);
     font-family: var(--font-mono);
     font-size: var(--text-2);
     text-transform: uppercase;
 
-    @media (--medium) {
+    @media (--small) {
         grid-template-columns: repeat(4, 1fr);
     }
 }
 
+/* The space between facts is padding, inside each fact's line,
+   so the lines join into one across the bar. */
 .stats-bar div {
     padding-block: var(--space-2);
+    padding-right: var(--space-2);
     border-bottom: 1px solid var(--text);
+}
+
+/* Phones leave out the fourth fact, the least important on every page. */
+.stats-bar div:nth-child(4) {
+    display: none;
+
+    @media (--small) {
+        display: block;
+    }
 }
 
 .stats-bar dt {

@@ -27,8 +27,11 @@
         text-transform: uppercase;
     }
 
-    /* From --medium the main stops where the downcomer turns down. */
+    /* Above the Section after it, so the lower halves of its flanges show.
+       From --medium the main stops where the downcomer turns down. */
     .news-article__main {
+        z-index: 1;
+
         @media (--medium) {
             margin-right: calc(var(--gutter) / 2);
         }

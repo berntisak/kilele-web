@@ -7,6 +7,8 @@
     position: sticky;
     top: var(--header-bar-height);
     z-index: 1;
+    /* Room for the flanges of a pipe just above it, which it would cover. */
+    margin-top: var(--flange-overhang);
     padding-block: var(--space-2);
     border-bottom: 1px solid var(--rule);
     background: var(--ground);
