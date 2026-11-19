@@ -9,15 +9,9 @@
        day's last hour scroll clear of the right edge. */
     .timetable__scroll {
         overflow-x: auto;
+        margin-block-start: var(--space-5);
         margin-inline: calc(-1 * var(--gutter));
         padding-inline-end: var(--gutter);
-    }
-
-    /* The day headings are smaller here than on the List view, so a day's
-       grid gets the screen: the heading is a label, the grid the content. */
-    .timetable__day .schedule__day {
-        margin: var(--space-7) 0 var(--space-2);
-        font-size: var(--text-6);
     }
 
     /* A column for the venue names (with the gutter in front of them),

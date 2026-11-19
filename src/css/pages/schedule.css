@@ -92,7 +92,7 @@
             }
         }
 
-        [aria-current="page"] {
+        [aria-current] {
             color: var(--pipe);
             text-decoration: underline;
             text-underline-offset: 0.25em;

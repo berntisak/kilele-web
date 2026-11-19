@@ -31,4 +31,12 @@
             color: var(--pipe);
         }
     }
+
+    /* The link to the page you're on (the Timetable view's day picker):
+       pipe red and underlined, like a pressed filter word. */
+    [aria-current="page"] {
+        color: var(--pipe);
+        text-decoration: underline;
+        text-underline-offset: 0.25em;
+    }
 }

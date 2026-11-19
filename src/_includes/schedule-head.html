@@ -8,19 +8,23 @@
     <div class="schedule__title">
         <h1 class="page-title">Schedule 2026</h1>
         <nav class="schedule__views" aria-label="Schedule views">
-            <a href="/2026/schedule/"{% if page.url == "/2026/schedule/" %} aria-current="page"{% endif %}>List</a>
-            <a href="/2026/schedule/timetable/"{% if page.url == "/2026/schedule/timetable/" %} aria-current="page"{% endif %}>Timetable</a>
+            <a href="/2026/schedule/"{% if scheduleView != "timetable" %} aria-current="true"{% endif %}>List</a>
+            <a href="/2026/schedule/timetable/"{% if scheduleView == "timetable" %} aria-current="true"{% endif %}>Timetable</a>
         </nav>
     </div>
     <div class="pipe"></div>
 </header>
 
 <div class="jump-bar">
-    <nav class="jump-bar__links" aria-label="Jump to a day">
-        {% for day in program.officialDays %}
-        <a href="#day-{{ day.date }}">{{ day.weekday }} {{ day.day_number }}</a>
+    <nav class="jump-bar__links" aria-label="{{ 'Pick a day' if scheduleView == 'timetable' else 'Jump to a day' }}">
+        {% for officialDay in program.officialDays %}
+        {% if scheduleView == "timetable" %}
+        <a href="{{ officialDay.timetable_url }}"{% if officialDay.date == day.date %} aria-current="page"{% endif %}>{{ officialDay.weekday }} {{ officialDay.day_number }}</a>
+        {% else %}
+        <a href="#day-{{ officialDay.date }}">{{ officialDay.weekday }} {{ officialDay.day_number }}</a>
+        {% endif %}
         {% endfor %}
-        {% if program.leadUp | length %}<a href="#lead-up">Lead-up</a>{% endif %}
+        {% if program.leadUp | length and scheduleView != "timetable" %}<a href="#lead-up">Lead-up</a>{% endif %}
     </nav>
     <div class="schedule__filter" role="group" aria-label="Show one category" hidden>
         <button type="button" aria-pressed="true" data-filter="all">All</button>

@@ -190,6 +190,10 @@ async function fetchSchedule() {
           date,
           weekday: day.toFormat('ccc'),
           day_number: day.toFormat('d'),
+          // The day's Timetable view page: the first day at the plain
+          // address, the rest at e.g. /2026/schedule/timetable/wed-25/.
+          timetable_url: `/${y.year}/schedule/timetable/` +
+            (officialDays.length ? `${day.toFormat('ccc').toLowerCase()}-${day.toFormat('d')}/` : ''),
           points,
           first_slot: firstSlot,
           last_slot: lastSlot,

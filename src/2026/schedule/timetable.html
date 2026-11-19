@@ -1,10 +1,16 @@
 ---
+pagination:
+  data: schedule.2026.officialDays
+  size: 1
+  alias: day
+permalink: "{{ day.timetable_url }}index.html"
 layout: layouts/site.html
 pageName: schedule
+scheduleView: timetable
 headerContext: Archive 2026
-title: Timetable 2026
 description: "The program of Kilele 2026, day by day against the clock"
-permalink: /2026/schedule/timetable/index.html
+eleventyComputed:
+  title: "Timetable 2026 · {{ day.weekday }} {{ day.day_number }}"
 ---
 
 {% set program = schedule["2026"] %}
