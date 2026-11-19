@@ -1,0 +1,43 @@
+{#
+  PROTOTYPE — throwaway (#196). The A/B/C switcher the partners page uses.
+  The page sets `variantNames` before including it.
+#}
+<nav class="pv-switcher" aria-label="Prototype variants">
+    <button type="button" data-step="-1" aria-label="Previous variant">←</button>
+    <span data-label></span>
+    <button type="button" data-step="1" aria-label="Next variant">→</button>
+</nav>
+
+<script>
+(function () {
+    var names = {{ variantNames | dump | safe }};
+    var keys = Object.keys(names);
+    var label = document.querySelector(".pv-switcher [data-label]");
+
+    function show(key) {
+        if (keys.indexOf(key) < 0) key = keys[0];
+        document.querySelectorAll(".pv").forEach(function (v) { v.hidden = v.dataset.variant !== key; });
+        label.textContent = key + " · " + names[key];
+        var url = new URL(location.href);
+        url.searchParams.set("variant", key);
+        history.replaceState(null, "", url);
+        document.querySelectorAll("a[data-keep-variant]").forEach(function (a) {
+            var u = new URL(a.href, location.href);
+            u.searchParams.set("variant", key);
+            a.href = u.pathname + u.search;
+        });
+        return key;
+    }
+
+    var current = show(new URLSearchParams(location.search).get("variant") || keys[0]);
+    function step(d) { current = show(keys[(keys.indexOf(current) + d + keys.length) % keys.length]); window.scrollTo(0, 0); }
+    document.querySelectorAll(".pv-switcher [data-step]").forEach(function (b) {
+        b.addEventListener("click", function () { step(+b.dataset.step); });
+    });
+    document.addEventListener("keydown", function (e) {
+        if (e.target.closest("input, textarea, select, [contenteditable]")) return;
+        if (e.key === "ArrowLeft") step(-1);
+        if (e.key === "ArrowRight") step(1);
+    });
+})();
+</script>

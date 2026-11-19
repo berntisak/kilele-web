@@ -1,0 +1,117 @@
+{#
+  PROTOTYPE — throwaway (#196). Three rough variants of the Partners page, each
+  followed by a preview of the matching Partners section for the frame.
+  Switched with ?variant=A|B|C, the bar at the bottom, or the arrow keys.
+  Only rendered by the dev server. Reads src/_data/partners.json.
+#}
+{% if eleventy.env.runMode == "serve" %}
+<link rel="stylesheet" href="/css/prototype/partners-variants.css">
+
+{% set groupNames = { main: "Main partners", tech: "Tech partners", other: "Other partners" } %}
+{% set grouped = partners | groupby("group") %}
+
+{% macro pad(n) -%}{{ ("0" + n).slice(-2) }}{%- endmacro %}
+{% macro domain(url) -%}{{ (url | replace("https://", "") | replace("http://", "") | replace("www.", "")).split("/")[0] }}{%- endmacro %}
+
+{% macro logo(p, cls) -%}
+{% if p.url %}<a class="{{ cls }}" href="{{ p.url }}" target="_blank" rel="noopener noreferrer">{% else %}<span class="{{ cls }}">{% endif %}
+<img src="{{ p.logo }}" alt="{{ p.name }}" loading="lazy">
+{% if p.url %}</a>{% else %}</span>{% endif %}
+{%- endmacro %}
+
+{% macro head() %}
+<header class="pv__head">
+    <dl class="stats-bar">
+        <div><dt>Register</dt><dd>Partners, Kilele 2026</dd></div>
+        <div><dt>Partners</dt><dd>{{ partners | length }}</dd></div>
+        <div><dt>Groups</dt><dd>{{ grouped | length }}</dd></div>
+        <div><dt>Status</dt><dd>Archived</dd></div>
+    </dl>
+    <h1 class="page-title">Partners</h1>
+    <div class="pipe"></div>
+</header>
+{% endmacro %}
+
+{# ================================================================ A · Contact sheet, original colours #}
+<section class="section pv pv-a" data-variant="A">
+    {{ head() }}
+    {% for key, items in grouped %}
+    <div class="pv-a__group pv-a__group--{{ key }}">
+        <h2 class="pv-index"><span>{{ pad(loop.index) }}</span><span class="pv-index__name">{{ groupNames[key] }}</span><span>{{ items | length }}</span></h2>
+        <ul class="pv-a__sheet" role="list">
+            {% for p in items %}
+            <li>
+                {{ logo(p, "pv-a__tile") }}
+                <p class="meta">{{ p.short_name }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endfor %}
+</section>
+
+<section class="section pv pv-frame pv-frame-a" data-variant="A">
+    <p class="pv-frame__label">PROTOTYPE · Partners section in the frame, as on every other page</p>
+    <h2 class="pv-index"><span></span><span class="pv-index__name">Partners</span><a href="/about/partners/">All {{ partners | length }} →</a></h2>
+    <ul class="pv-frame-a__strip" role="list">
+        {% for p in partners %}<li>{{ logo(p, "pv-a__tile") }}</li>{% endfor %}
+    </ul>
+</section>
+
+{# ================================================================ B · Wall, greyscale, sized by group #}
+<section class="section pv pv-b" data-variant="B">
+    {{ head() }}
+    {% for key, items in grouped %}
+    <div class="pv-b__group pv-b__group--{{ key }}">
+        <h2 class="pv-b__label">{{ groupNames[key] }}<span class="meta">{{ items | length }}</span></h2>
+        <ul class="pv-b__wall" role="list">
+            {% for p in items %}<li>{{ logo(p, "pv-b__logo") }}</li>{% endfor %}
+        </ul>
+    </div>
+    {% endfor %}
+</section>
+
+<section class="section pv pv-frame pv-frame-b" data-variant="B">
+    <p class="pv-frame__label">PROTOTYPE · Partners section in the frame, as on every other page</p>
+    <header class="section-head">
+        <h2 class="section-head__title">Partners</h2>
+    </header>
+    <ul class="pv-frame-b__row" role="list">
+        {% for p in grouped.main %}<li>{{ logo(p, "pv-b__logo") }}</li>{% endfor %}
+        <li class="pv-frame-b__more"><a class="section-head__link" href="/about/partners/">And {{ (partners | length) - (grouped.main | length) }} more partners <span aria-hidden="true">→</span></a></li>
+    </ul>
+</section>
+
+{# ================================================================ C · Register, greyscale, colour on hover #}
+<section class="section pv pv-c" data-variant="C">
+    {{ head() }}
+    {% for key, items in grouped %}
+    <h2 class="pv-c__group">{{ groupNames[key] }}</h2>
+    <ol class="pv-c__list" role="list">
+        {% for p in items %}
+        <li>
+            {% if p.url %}<a class="pv-c__row" href="{{ p.url }}" target="_blank" rel="noopener noreferrer">{% else %}<div class="pv-c__row">{% endif %}
+                <span class="pv-c__number">{{ pad(partners.indexOf(p) + 1) }}</span>
+                <span class="pv-c__name">{{ p.short_name }}</span>
+                <span class="pv-c__full meta">{{ p.name if p.name != p.short_name else "" }}</span>
+                <span class="pv-c__link meta">{{ domain(p.url) + " ↗" if p.url else "No link" }}</span>
+                <span class="pv-c__logo"><img src="{{ p.logo }}" alt="" loading="lazy"></span>
+            {% if p.url %}</a>{% else %}</div>{% endif %}
+        </li>
+        {% endfor %}
+    </ol>
+    {% endfor %}
+</section>
+
+<section class="section pv pv-frame pv-frame-c" data-variant="C">
+    <p class="pv-frame__label">PROTOTYPE · Partners section in the frame, as on every other page</p>
+    <p class="pv-frame-c__credits">
+        <span class="meta">With</span>
+        {% for p in partners %}{{ p.short_name }}{{ " · " if not loop.last }}{% endfor %}
+    </p>
+    <p class="meta"><a href="/about/partners/">All {{ partners | length }} partners →</a></p>
+</section>
+
+{% set variantNames = { A: "Contact sheet, colour", B: "Wall, greyscale", C: "Register, greyscale" } %}
+{% include "partners-variants-switcher.prototype.html" %}
+{% endif %}

@@ -1,0 +1,174 @@
+/* PROTOTYPE — throwaway (#196). Rough CSS for the three Partners variants and
+   their frame previews. Not kit-clean: raw px cutoffs, because this file is
+   copied as-is, not bundled. */
+
+.pv[hidden] { display: none; }
+.pv__head { margin-bottom: var(--space-6); }
+.pv ul, .pv ol { list-style: none; margin: 0; padding: 0; }
+.pv a { color: inherit; }
+/* The image transform wraps each img in a <picture>; let the img be the box's child. */
+.pv picture { display: contents; }
+
+/* Shared index line, like the gallery's */
+.pv-index {
+    display: grid;
+    grid-template-columns: 3rem 1fr auto;
+    align-items: baseline;
+    margin: var(--space-7) 0 var(--space-3);
+    padding-top: var(--space-2);
+    border-top: 2px solid var(--text);
+    font-family: var(--font-mono);
+    font-size: var(--text-2);
+    font-weight: var(--weight-normal);
+    text-transform: uppercase;
+}
+.pv-index__name { font-family: var(--font-display); font-size: var(--text-5); }
+
+/* The frame previews sit apart from the page, with a loud label */
+.pv-frame { border-top: 1px dashed var(--text-muted); }
+.pv-frame__label {
+    margin-bottom: var(--space-4);
+    color: #ff00aa;
+    font: 600 12px/1.3 system-ui, sans-serif;
+    text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------- A · Contact sheet, colour */
+.pv-a__sheet { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-3) var(--space-1); }
+@media (min-width: 600px) { .pv-a__sheet { grid-template-columns: repeat(6, 1fr); } }
+@media (min-width: 900px) { .pv-a__sheet { grid-template-columns: repeat(8, 1fr); } }
+@media (min-width: 1200px) { .pv-a__sheet { grid-template-columns: repeat(10, 1fr); } }
+.pv-a__tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 3 / 2;
+    padding: 12%;
+    background: white;
+    outline: 1px solid var(--rule);
+    overflow: hidden;
+}
+.pv-a__tile img { width: 100%; height: 100%; object-fit: contain; }
+a.pv-a__tile:hover { outline: 2px solid var(--pipe); }
+.pv-a__sheet .meta { margin-top: var(--space-1); }
+
+.pv-frame-a__strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-1); }
+@media (min-width: 600px) { .pv-frame-a__strip { grid-template-columns: repeat(8, 1fr); } }
+@media (min-width: 1200px) { .pv-frame-a__strip { grid-template-columns: repeat(15, 1fr); } }
+
+/* ---------------------------------------------------------- B · Wall, greyscale */
+/* grayscale removes colour; multiply lets the cream show through white backgrounds,
+   so the .jpg logos lose their white boxes. */
+.pv-b__logo { display: flex; align-items: center; justify-content: center; }
+.pv-b__logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: grayscale(1) contrast(1.1);
+    mix-blend-mode: multiply;
+}
+a.pv-b__logo:hover img { filter: none; }
+
+.pv-b__group {
+    display: grid;
+    gap: var(--space-4);
+    padding-block: var(--space-6);
+    border-top: 1px solid var(--rule);
+}
+@media (min-width: 900px) { .pv-b__group { grid-template-columns: 14rem 1fr; } }
+.pv-b__label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-display);
+    font-size: var(--text-6);
+    text-transform: uppercase;
+}
+@media (min-width: 900px) { .pv-b__label { flex-direction: column; justify-content: start; } }
+
+.pv-b__wall {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6) var(--space-5);
+    align-items: center;
+}
+.pv-b__wall .pv-b__logo { height: 4rem; }
+@media (min-width: 600px) { .pv-b__wall { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 900px) { .pv-b__wall { grid-template-columns: repeat(5, 1fr); } .pv-b__wall .pv-b__logo { height: 5rem; } }
+@media (min-width: 1200px) { .pv-b__wall { grid-template-columns: repeat(6, 1fr); } }
+
+.pv-frame-b__row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+    align-items: center;
+}
+.pv-frame-b__row .pv-b__logo { height: 4rem; }
+.pv-frame-b__more { font-family: var(--font-mono); font-size: var(--text-3); text-transform: uppercase; }
+@media (min-width: 600px) { .pv-frame-b__row { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 900px) { .pv-frame-b__row { grid-template-columns: repeat(7, 1fr); } .pv-frame-b__row .pv-b__logo { height: 5rem; } }
+
+/* ---------------------------------------------------------- C · Register */
+.pv-c__group {
+    margin-top: var(--space-7);
+    padding: var(--space-2) var(--space-3);
+    background: var(--text);
+    color: var(--ground);
+    font-family: var(--font-mono);
+    font-size: var(--text-2);
+    text-transform: uppercase;
+}
+.pv-c__row {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr 5rem;
+    grid-template-areas: "num name logo" "num full logo" "num link logo";
+    gap: 0 var(--space-3);
+    align-items: center;
+    padding-block: var(--space-3);
+    border-bottom: 1px solid var(--rule);
+    text-decoration: none;
+}
+.pv-c__number { grid-area: num; align-self: start; font-family: var(--font-mono); font-size: var(--text-2); }
+.pv-c__name { grid-area: name; font-family: var(--font-display); font-size: var(--text-6); line-height: 1.05; text-transform: uppercase; }
+.pv-c__full { grid-area: full; }
+.pv-c__link { grid-area: link; }
+.pv-c__logo { grid-area: logo; height: 3rem; }
+.pv-c__logo img { width: 100%; height: 100%; object-fit: contain; filter: grayscale(1); mix-blend-mode: multiply; }
+a.pv-c__row:hover .pv-c__name { color: var(--pipe); }
+a.pv-c__row:hover .pv-c__logo img { filter: none; }
+@media (min-width: 900px) {
+    .pv-c__row {
+        grid-template-columns: 3rem 16rem 1fr 14rem 7rem;
+        grid-template-areas: "num name full link logo";
+    }
+    .pv-c__logo { height: 3.5rem; }
+}
+
+.pv-frame-c__credits {
+    max-width: 90ch;
+    margin-bottom: var(--space-3);
+    font-family: var(--font-display);
+    font-size: var(--text-5);
+    line-height: 1.3;
+    text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------- Switcher */
+.pv-switcher {
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 999px;
+    background: #ff00aa;
+    color: #fff;
+    font: 600 13px/1 system-ui, sans-serif;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 0.3);
+    transform: translateX(-50%);
+}
+.pv-switcher button { border: 0; background: rgb(255 255 255 / 0.2); color: inherit; font: inherit; width: 2rem; height: 2rem; border-radius: 50%; cursor: pointer; }
+.pv-switcher span { min-width: 11rem; text-align: center; }
