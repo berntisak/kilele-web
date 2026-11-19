@@ -1,0 +1,175 @@
+{#
+  PROTOTYPE — throwaway (#204). Two rough Timetable views of one 2026 Official
+  day, switched with ?variant=A|B and the bar at the bottom ("0" is the List
+  view). The jump bar's day links pick the day; it opens on Fri 27.
+    A · Columns: one column per venue, time running down.
+    B · Lanes:   one lane per venue, time running left to right.
+  The clock runs 09:00–01:00 in 15-minute slots (64 slots). Multi-day points
+  show at their daily times on each day they run, striped and behind the
+  others. Only rendered by the dev server.
+#}
+{% if eleventy.env.runMode == "serve" %}
+
+{# A time "HH:mm" as minutes after 09:00 on the festival day, in 15-min slots
+   (1 = 09:00). Times before 06:00 belong to the night before, so they count
+   as 24:00 and later. #}
+{% macro slot(hhmm) -%}
+{%- set parts = hhmm.split(":") -%}
+{%- set m = (parts[0] | int) * 60 + (parts[1] | int) -%}
+{%- if m < 360 %}{% set m = m + 1440 %}{% endif -%}
+{%- set s = ((m - 540) / 15) | round(0, "floor") + 1 -%}
+{%- if s < 1 %}{% set s = 1 %}{% endif -%}{%- if s > 65 %}{% set s = 65 %}{% endif -%}
+{{ s }}
+{%- endmacro %}
+
+{% macro pointBox(point, day) %}
+{%- set from = slot(point.start_time_local) -%}
+{%- set to = slot(point.end_time_local) -%}
+{%- if (to | int) <= (from | int) %}{% set to = 65 %}{% endif -%}
+<a class="tt-point{% if point.multi_day %} tt-point--multi{% endif %}" data-category="{{ point.category or 'none' }}"
+   style="--from: {{ from }}; --to: {{ to }};"
+   {% if point.slug %}href="/2026/schedule/{{ point.slug }}/"{% endif %}>
+    <span class="tt-point__time">{{ point.start_time_local }}–{{ point.end_time_local }}</span>
+    <span class="tt-point__title">{{ point.short_title or point.title }}</span>
+</a>
+{% endmacro %}
+
+{% set hours = ["09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","00"] %}
+
+{% for v in ["A", "B"] %}
+<div class="tt tt-{{ v | lower }}" data-tt-variant="{{ v }}" hidden>
+    {% for day in program.officialDays %}
+    {% set byVenue = day.points | groupby("venue_name") %}
+    <section class="tt-day" data-day="day-{{ day.date }}" hidden>
+        <h2 class="schedule__day"><span class="schedule__weekday">{{ day.weekday }}</span> {{ day.day_number }}</h2>
+        <div class="tt-scroll">
+            <div class="tt-grid" style="--venues: {{ byVenue | length }};">
+                {# The hour marks: a row (A) or a column (B) of labels. #}
+                {% for h in hours %}
+                <span class="tt-hour" style="--at: {{ loop.index0 * 4 + 1 }};">{{ h }}:00</span>
+                {% endfor %}
+                {% for venue, points in byVenue %}
+                <div class="tt-venue" style="--venue: {{ loop.index }};">
+                    <span class="tt-venue__name">{{ venue }}</span>
+                    {% for point in points %}{{ pointBox(point, day) }}{% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endfor %}
+</div>
+{% endfor %}
+
+<style>
+/* PROTOTYPE (#204) — rough on purpose. */
+.tt { margin-top: 2rem; }
+.tt-scroll { overflow-x: auto; border-top: 3px solid var(--ink); }
+.tt-point {
+    background: var(--category);
+    color: var(--cream);
+    padding: 0.25rem 0.4rem;
+    font-size: 0.8rem;
+    line-height: 1.2;
+    overflow: hidden;
+    text-decoration: none;
+    border: 1px solid var(--ground);
+    min-width: 0;
+    position: relative;
+    z-index: 1;
+}
+.tt-point--multi { z-index: 0; opacity: 0.6; }
+:is([data-category="sundowner"], [data-category="presentation"], [data-category="networking"], [data-category="none"]).tt-point { color: var(--ink); }
+.tt-point--multi { background: repeating-linear-gradient(45deg, var(--category) 0 8px, color-mix(in srgb, var(--category), white 25%) 8px 16px); }
+.tt-point__time { display: block; font-family: var(--font-mono); font-size: 0.7rem; opacity: 0.85; }
+.tt-point__title { font-weight: 600; }
+.tt-hour { font-family: var(--font-mono); font-size: 0.75rem; color: var(--concrete-dark); }
+.tt-venue__name { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+
+/* A · Columns: column 1 = hours, one column per venue; 64 rows of 15 min. */
+.tt-a .tt-grid {
+    display: grid;
+    grid-template-columns: 3.5rem repeat(var(--venues), minmax(7.5rem, 1fr));
+    grid-template-rows: 2.5rem repeat(64, 0.9rem);
+    min-width: max-content;
+}
+.tt-a .tt-hour { grid-column: 1; grid-row: calc(var(--at) + 1); border-top: 1px solid var(--concrete-light); }
+.tt-a .tt-venue { display: contents; }
+.tt-a .tt-venue__name { grid-column: calc(var(--venue) + 1); grid-row: 1; padding: 0.4rem; border-left: 1px solid var(--concrete-light); position: sticky; top: 0; }
+.tt-a .tt-venue .tt-point { grid-column: calc(var(--venue) + 1); grid-row: calc(var(--from) + 1) / calc(var(--to) + 1); }
+
+/* B · Lanes: row 1 = hours, one row per venue; 64 columns of 15 min. */
+.tt-b .tt-grid {
+    display: grid;
+    grid-template-columns: 9rem repeat(64, 1.6rem);
+    grid-auto-rows: minmax(3.5rem, auto);
+    grid-template-rows: 1.5rem;
+    width: max-content;
+}
+.tt-b .tt-hour { grid-row: 1; grid-column: calc(var(--at) + 1) / span 4; border-left: 1px solid var(--concrete-light); padding-left: 0.25rem; }
+.tt-b .tt-venue { display: contents; }
+.tt-b .tt-venue__name { grid-column: 1; grid-row: calc(var(--venue) + 1); padding: 0.4rem 0.5rem 0.4rem 0; position: sticky; left: 0; background: var(--ground); z-index: 1; border-top: 1px solid var(--concrete-light); }
+.tt-b .tt-venue .tt-point { grid-row: calc(var(--venue) + 1); grid-column: calc(var(--from) + 1) / calc(var(--to) + 1); }
+
+.pv-switcher { position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; align-items: center; gap: 0.75rem; padding: 0.4rem 0.6rem; border-radius: 999px; background: #ff00aa; color: #fff; font: 600 13px/1 system-ui, sans-serif; box-shadow: 0 4px 16px rgb(0 0 0 / 0.25); }
+.pv-switcher button { border: 0; background: rgb(255 255 255 / 0.2); color: inherit; font: inherit; width: 2rem; height: 2rem; border-radius: 50%; cursor: pointer; }
+.pv-switcher span { min-width: 8rem; text-align: center; }
+</style>
+
+<nav class="pv-switcher" aria-label="Prototype variants">
+    <button type="button" data-step="-1" aria-label="Previous variant">←</button>
+    <span data-label></span>
+    <button type="button" data-step="1" aria-label="Next variant">→</button>
+</nav>
+
+<script>
+(function () {
+    var keys = ["0", "A", "B"];
+    var names = { "0": "List view", A: "Columns", B: "Lanes" };
+    var label = document.querySelector(".pv-switcher [data-label]");
+    // Opens on the busiest day (most points) unless the address names one.
+    var day = (location.hash || "").slice(1);
+    if (!document.querySelector('.tt-day[data-day="' + day + '"]')) {
+        var most = 0;
+        document.querySelectorAll(".tt-a .tt-day").forEach(function (d) {
+            var n = d.querySelectorAll(".tt-point").length;
+            if (n > most) { most = n; day = d.dataset.day; }
+        });
+    }
+
+    function showDay() {
+        document.querySelectorAll(".tt-day").forEach(function (d) { d.hidden = d.dataset.day !== day; });
+    }
+    function show(key) {
+        if (keys.indexOf(key) < 0) key = "0";
+        document.querySelectorAll(".schedule__group").forEach(function (g) { g.hidden = key !== "0"; });
+        document.querySelectorAll("[data-tt-variant]").forEach(function (t) { t.hidden = t.dataset.ttVariant !== key; });
+        label.textContent = key + " · " + names[key];
+        var url = new URL(location.href);
+        if (key === "0") url.searchParams.delete("variant"); else url.searchParams.set("variant", key);
+        history.replaceState(null, "", url);
+        return key;
+    }
+    var current = show(new URLSearchParams(location.search).get("variant") || "0");
+    showDay();
+    function step(d) { current = show(keys[(keys.indexOf(current) + d + keys.length) % keys.length]); }
+    document.querySelectorAll(".pv-switcher [data-step]").forEach(function (b) {
+        b.addEventListener("click", function () { step(+b.dataset.step); });
+    });
+    document.addEventListener("keydown", function (e) {
+        if (e.target.closest("input, textarea, select, [contenteditable]")) return;
+        if (e.key === "ArrowLeft") step(-1);
+        if (e.key === "ArrowRight") step(1);
+    });
+    // In a variant, the jump bar's day links pick the day instead of scrolling.
+    document.querySelectorAll(".jump-bar__links a").forEach(function (a) {
+        a.addEventListener("click", function (e) {
+            if (current === "0") return;
+            e.preventDefault();
+            day = a.getAttribute("href").slice(1);
+            showDay();
+        });
+    });
+})();
+</script>
+{% endif %}
