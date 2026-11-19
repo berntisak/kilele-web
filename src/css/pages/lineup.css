@@ -51,8 +51,6 @@
 
     /* Phones: one row under another. From --small: a grid of tiles. */
     .lineup__list {
-        padding: 0;
-
         @media (--small) {
             display: grid;
             grid-template-columns: repeat(3, 1fr);

@@ -427,7 +427,6 @@
     .previous-edition__list {
         display: grid;
         gap: var(--space-5);
-        padding: 0;
 
         @media (--medium) {
             grid-template-columns: repeat(3, 1fr);

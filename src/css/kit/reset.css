@@ -33,6 +33,7 @@ dd {
 /* A list given role="list" is being used for layout, not as a bulleted list. */
 ul[role="list"],
 ol[role="list"] {
+    padding: 0;
     list-style: none;
 }
 

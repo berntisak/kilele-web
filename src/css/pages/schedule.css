@@ -95,10 +95,6 @@
         }
     }
 
-    .schedule__list {
-        padding: 0;
-    }
-
     /* One row: the four columns, a hairline under it. The whole row is the link. */
     .schedule__point {
         display: grid;
