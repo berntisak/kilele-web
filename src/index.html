@@ -56,7 +56,7 @@ description: "East Africa's first and only summit for music, tech and culture. C
         {{ edition.year }}
     </p>
     <p class="edition-title__fig">Fig. 1 — Kilele, fourth edition. Not to scale.</p>
-    <p class="edition-title__fig edition-title__fig--corner">Fig. 2 — Vent Pipes. Gauge Reading: 0 V (approximation).</p>
+    <p class="edition-title__fig edition-title__fig--corner">Fig. 2 — Vent Pipes. GND: 0 V (common).</p>
 </section>
 
 <section class="section lead-section">
@@ -70,7 +70,7 @@ description: "East Africa's first and only summit for music, tech and culture. C
     {% set dates = "23–27 February 2027" %}
     {% set venue = "The Mall, Westlands, Nairobi" %}
     {% set editionNumber = "04" %}
-    {% set tagline = "A space for adventurous music and culture" %}
+    {% set themeTagline = "What can we build together?" %}
 
     <p class="lead-section__label">Theme, {{ edition.year }}</p>
     <h1 class="lead-section__theme">{{ theme }}</h1>
@@ -78,7 +78,7 @@ description: "East Africa's first and only summit for music, tech and culture. C
         <div><dt>Dates</dt><dd>{{ dates }}</dd></div>
         <div><dt>Venue</dt><dd>{{ venue }}</dd></div>
         <div><dt>Edition</dt><dd>No. {{ editionNumber }}</dd></div>
-        <div><dt>Description</dt><dd>{{ tagline }}</dd></div>
+        <div><dt>Question</dt><dd>{{ themeTagline }}</dd></div>
     </dl>
     <p class="lead-section__sentence">{{ themeSentence }}</p>
     <p class="lead-section__action">
