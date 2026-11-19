@@ -4,6 +4,7 @@
   view). The jump bar's day links pick the day; it opens on Fri 27.
     A · Columns: one column per venue, time running down.
     B · Lanes:   one lane per venue, time running left to right.
+    C · Both:    one timetable; B below 900px (--medium), A from 900px up.
   The clock counts 15-minute slots from 06:00 to 06:00 the next morning
   (slot 1 = 06:00). Each day is trimmed to whole hours from its first point's
   start to its last point's end. Multi-day points show at their daily times on
@@ -35,7 +36,7 @@
 </a>
 {% endmacro %}
 
-{% for v in ["A", "B"] %}
+{% for v in ["A", "B", "C"] %}
 <div class="tt tt-{{ v | lower }}" data-tt-variant="{{ v }}" hidden>
     {% for day in program.officialDays %}
     {% set byVenue = day.points | groupby("venue_name") %}
@@ -126,6 +127,39 @@
 .tt-b .tt-venue__name { grid-column: 1; grid-row: calc(var(--venue) + 1); padding: 0.4rem 0.5rem 0.4rem 0; position: sticky; left: 0; background: var(--ground); z-index: 2; border-top: 1px solid var(--concrete-light); }
 .tt-b .tt-venue .tt-point { grid-row: calc(var(--venue) + 1); grid-column: calc(var(--from) + 1) / calc(var(--to) + 1); }
 
+/* C · Both: B's lanes on narrow screens, A's columns from --medium (900px).
+   (An inline <style> isn't bundled, so the kit's --medium is written out.) */
+@media (max-width: 899.98px) {
+    /* B · Lanes: row 1 = hours, one row per venue; a column per 15 min. */
+    .tt-c .tt-grid {
+        display: grid;
+        grid-template-columns: 9rem repeat(var(--slots), 3rem);
+        grid-auto-rows: minmax(3.5rem, auto);
+        grid-template-rows: 1.5rem;
+        width: max-content;
+    }
+    .tt-c .tt-hour { grid-row: 1; grid-column: calc(var(--at) + 1) / span 4; border-left: 1px solid var(--concrete-light); padding-left: 0.25rem; }
+    .tt-c .tt-venue { display: contents; }
+    .tt-c .tt-venue__name { grid-column: 1; grid-row: calc(var(--venue) + 1); padding: 0.4rem 0.5rem 0.4rem 0; position: sticky; left: 0; background: var(--ground); z-index: 2; border-top: 1px solid var(--concrete-light); }
+    .tt-c .tt-venue .tt-point { grid-row: calc(var(--venue) + 1); grid-column: calc(var(--from) + 1) / calc(var(--to) + 1); }
+}
+@media (min-width: 900px) {
+    /* A · Columns: column 1 = hours, one column per venue; a row per 15 min. */
+    .tt-c .tt-grid {
+        display: grid;
+        grid-template-columns: 3.5rem repeat(var(--venues), minmax(6rem, 1fr));
+        grid-template-rows: 2.5rem repeat(var(--slots), 2.25rem);
+    }
+    .tt-c .tt-hour { grid-column: 1; grid-row: calc(var(--at) + 1) / span 4; border-top: 1px solid var(--concrete-light); position: sticky; left: 0; background: var(--ground); z-index: 2; }
+    /* A's box scrolls down inside itself, so the venue row and hours can pin to its edges. */
+    .tt-c .tt-scroll { max-height: 80svh; overflow: auto; }
+    .tt-c .tt-venue { display: contents; }
+    /* The empty top-left corner, pinned both ways so points slide under it. */
+    .tt-c .tt-grid::before { content: ""; grid-row: 1; grid-column: 1; position: sticky; top: 0; left: 0; background: var(--ground); z-index: 4; }
+    .tt-c .tt-venue__name { grid-column: calc(var(--venue) + 1); grid-row: 1; padding: 0.4rem; border-left: 1px solid var(--concrete-light); position: sticky; top: 0; background: var(--ground); z-index: 3; }
+    .tt-c .tt-venue .tt-point { grid-column: calc(var(--venue) + 1); grid-row: calc(var(--from) + 1) / calc(var(--to) + 1); }
+}
+
 .pv-switcher { position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; align-items: center; gap: 0.75rem; padding: 0.4rem 0.6rem; border-radius: 999px; background: #ff00aa; color: #fff; font: 600 13px/1 system-ui, sans-serif; box-shadow: 0 4px 16px rgb(0 0 0 / 0.25); }
 .pv-switcher button { border: 0; background: rgb(255 255 255 / 0.2); color: inherit; font: inherit; width: 2rem; height: 2rem; border-radius: 50%; cursor: pointer; }
 .pv-switcher span { min-width: 8rem; text-align: center; }
@@ -139,8 +173,8 @@
 
 <script>
 (function () {
-    var keys = ["0", "A", "B"];
-    var names = { "0": "List view", A: "Columns", B: "Lanes" };
+    var keys = ["0", "A", "B", "C"];
+    var names = { "0": "List view", A: "Columns", B: "Lanes", C: "Both" };
     var label = document.querySelector(".pv-switcher [data-label]");
     // Opens on the busiest day (most points) unless the address names one.
     var day = (location.hash || "").slice(1);
