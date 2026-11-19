@@ -37,3 +37,8 @@
 .section-head__link {
     color: inherit;
 }
+
+/* A smaller heading, for Sections that shouldn't compete with the page's own content. */
+.section-head--small .section-head__title {
+    font-size: var(--text-6);
+}

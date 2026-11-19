@@ -93,7 +93,7 @@ _Avoid:_ menu, nav, hamburger.
 
 ## Partners section
 
-The Section at the foot of every page, just above the footer bar, crediting the festival's partners and funders. It comes in two versions: on the front page, the main partners' logos with a link to the rest; on every other page, a credit line naming every partner. Not shown on the Partners page itself.
+The Section at the foot of every page, just above the footer bar, crediting the festival's partners and funders. It shows the main partners' logos with a link to the rest, under a larger heading on the front page than on other pages. Not shown on the Partners page itself.
 
 _Avoid:_ partners footer (it is a Section, not part of the footer bar).
 

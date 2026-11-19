@@ -47,10 +47,10 @@
         {{ content | safe }}
     </div>
 
-    {% if partnersSection == "logos" %}
+    {% if partnersSection != "none" %}
     {% set mainPartners = (partners | groupby("group")).main %}
     <section class="section partners">
-        <header class="section-head">
+        <header class="section-head{{ ' section-head--small' if partnersSection != 'large' }}">
             <h2 class="section-head__title">Partners</h2>
         </header>
         <ul class="partners__row" role="list">
@@ -61,16 +61,6 @@
                 <a class="section-head__link" href="/about/partners/">And {{ (partners | length) - (mainPartners | length) }} more partners <span aria-hidden="true">→</span></a>
             </li>
         </ul>
-    </section>
-    {% elif partnersSection != "none" %}
-    <section class="section partners">
-        <p class="partners__credits">
-            <span class="meta">With</span>
-            {% for partner in partners %}{{ partner.short_name }}{{ " · " if not loop.last }}{% endfor %}
-        </p>
-        <p class="partners__more">
-            <a class="section-head__link" href="/about/partners/">All {{ partners | length }} partners <span aria-hidden="true">→</span></a>
-        </p>
     </section>
     {% endif %}
 
