@@ -1,5 +1,6 @@
 <div class="timetable__scroll">
     <div class="timetable__grid" style="--slots: {{ day.last_slot - day.first_slot }}; --venues: {{ day.venues | length }};">
+        <span class="timetable__where">Where</span>
         {% for hour in day.hours %}
         <span class="timetable__hour" style="--at: {{ hour.slot - day.first_slot + 1 }};">{{ hour.label }}</span>
         {% endfor %}

@@ -14,12 +14,15 @@
         padding-inline-end: var(--gutter);
     }
 
-    /* A column for the venue names (with the gutter in front of them),
-       then one per 15 minutes. Row 1 holds
-       the hours; each venue's lane below it fits a point's time and title. */
+    /* A column for the venue names, then one per 15 minutes. Row 1 holds
+       the hours; each venue's lane below it fits a point's time and title.
+       --venue-width is the names' column: a small edge padding plus room
+       for the longest word, so names wrap one word per line. The pinned
+       times and titles stop at the same width. */
     .timetable__grid {
+        --venue-width: calc(var(--space-3) + 4.5rem);
         display: grid;
-        grid-template-columns: calc(var(--gutter) + 6rem) repeat(var(--slots), 3rem);
+        grid-template-columns: var(--venue-width) repeat(var(--slots), 3rem);
         grid-template-rows: auto;
         grid-auto-rows: minmax(3.5rem, auto);
         width: max-content;
@@ -38,16 +41,34 @@
         font-size: var(--text-2);
     }
 
+    /* "Where": the venue names' column header, in the corner left of the
+       hours. Pinned and opaque like the names, so points slide under it;
+       set like the hour labels beside it, muted so the names stay
+       strongest. */
+    .timetable__where {
+        grid-row: 1;
+        grid-column: 1;
+        position: sticky;
+        left: 0;
+        z-index: 2;
+        padding-left: var(--space-3);
+        background: var(--ground);
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        color: var(--text-muted);
+        text-transform: uppercase;
+    }
+
     /* A venue's name, pinned to the screen's left edge while the hours
-       scroll past. Its left padding is the gutter, so the name lines up
-       with the heading and points pass under the whole strip. */
+       scroll past. A small left padding keeps it near the edge, like the
+       strip itself, and points pass under the whole name. */
     .timetable__venue {
         grid-column: 1;
         grid-row: var(--lane);
         position: sticky;
         left: 0;
         z-index: 2;
-        padding: var(--space-2) var(--space-2) var(--space-2) var(--gutter);
+        padding: var(--space-2) var(--space-2) var(--space-2) var(--space-3);
         border-top: 1px solid var(--concrete-light);
         background: var(--ground);
         font-family: var(--font-mono);
@@ -108,7 +129,7 @@
     .timetable__time,
     .timetable__title {
         position: sticky;
-        left: calc(var(--gutter) + 6rem);
+        left: var(--venue-width);
     }
 
     /* A long title wraps at 12rem, so it stays narrower than its box and
@@ -131,43 +152,60 @@
         outline: 2px solid var(--ground);
     }
 
-    /* From --medium the day turns: venues as columns across the top, time
-       running down. The box scrolls inside itself, both ways, so the venue
-       row and the hours can stay pinned to its edges. */
-    @media (--medium) {
+    /* From --small the strip stays inside the gutters, like the rest of
+       the page; only phones run it out to the screen edges. */
+    @media (--small) {
         .timetable__scroll {
-            max-height: 80svh;
-            overflow: auto;
             margin-inline: 0;
             padding-inline-end: 0;
         }
 
+        .timetable__venue,
+        .timetable__where {
+            padding-left: 0;
+        }
+    }
+
+    /* From --medium the day turns: venues as columns across the top, time
+       running down. The page scrolls the day (a box scrolling by itself
+       would catch the wheel, and the page above it would never move), and
+       every venue column fits across, so nothing scrolls sideways. */
+    @media (--medium) {
+        .timetable__scroll {
+            overflow: visible;
+        }
+
         /* A column for the hours, then one per venue; a header row for the
-           venue names, then one row per 15 minutes. */
+           venue names, then one row per 15 minutes. At 5rem a venue column
+           is narrow enough for 8 venues to fit inside the gutters at 900px. */
         .timetable__grid {
-            grid-template-columns: 3.5rem repeat(var(--venues), minmax(6rem, 1fr));
+            grid-template-columns: 3.5rem repeat(var(--venues), minmax(5rem, 1fr));
             grid-template-rows: auto repeat(var(--slots), 2.25rem);
             width: auto;
         }
 
-        /* The hours down the left, pinned while the venues scroll past. */
+        /* The hours down the left. */
         .timetable__hour {
             grid-row: calc(var(--at) + 1) / span 4;
             grid-column: 1;
-            position: sticky;
-            left: 0;
-            z-index: 2;
             padding-left: 0;
             border-left: none;
             border-top: 1px solid var(--concrete-light);
             background: var(--ground);
         }
 
-        /* The venue names across the top, pinned while the hours scroll past. */
+        /* The venue names are the header row here, and the corner sits
+           above the hours, so "Where" has nothing to label. */
+        .timetable__where {
+            display: none;
+        }
+
+        /* The venue names across the top, pinned just under the header bar
+           and the jump bar while the page scrolls the hours past. */
         .timetable__venue {
             grid-row: 1;
             grid-column: var(--lane);
-            top: 0;
+            top: calc(var(--header-bar-height) + var(--jump-bar-height));
             left: auto;
             z-index: 3;
             padding: var(--space-2);
@@ -197,15 +235,14 @@
             margin-left: var(--space-3);
         }
 
-        /* The empty corner above the hours, pinned both ways, so points
-           slide under it too. */
+        /* The empty corner above the hours, pinned level with the venue
+           names, so the hour labels slide under it too. */
         .timetable__grid::before {
             content: "";
             grid-row: 1;
             grid-column: 1;
             position: sticky;
-            top: 0;
-            left: 0;
+            top: calc(var(--header-bar-height) + var(--jump-bar-height));
             z-index: 4;
             background: var(--ground);
         }

@@ -3,6 +3,12 @@
  * the page. Used by the lineup (letters) and the schedule (days, #193).
  */
 
+/* Its height, built from the same values as the bar (one line of links),
+   so anything that sticks below it can stop just under it. */
+:root {
+    --jump-bar-height: calc(var(--text-3) * var(--line-height-normal) + 2 * var(--space-2) + 1px);
+}
+
 .jump-bar {
     position: sticky;
     top: var(--header-bar-height);
@@ -10,7 +16,26 @@
     /* Room for the flanges of a pipe just above it, which it would cover. */
     margin-top: var(--flange-overhang);
     padding-block: var(--space-2);
-    border-bottom: 1px solid var(--rule);
+    background: var(--ground);
+}
+
+/* The rule under the bar from --small; on phones the bar ends in its
+   backdrop alone. */
+@media (--small) {
+    .jump-bar {
+        border-bottom: 1px solid var(--rule);
+    }
+}
+
+/* A backdrop out through the gutters, so anything running full-bleed (the
+   timetable's strip on phones) passes under the bar, not beside it. It
+   stops above the rule: it paints over the bar's own border, so covering
+   the rule would hide it. The rule stays at the gutters. */
+.jump-bar::before {
+    content: "";
+    position: absolute;
+    inset: 0 calc(-1 * var(--gutter)) 0;
+    z-index: -1;
     background: var(--ground);
 }
 
@@ -20,6 +45,8 @@
     gap: var(--space-1) var(--space-3);
     font-family: var(--font-mono);
     font-size: var(--text-3);
+    /* Set, not the browser's default, so --jump-bar-height adds up. */
+    line-height: var(--line-height-normal);
     font-weight: var(--weight-bold);
     text-transform: uppercase;
 
