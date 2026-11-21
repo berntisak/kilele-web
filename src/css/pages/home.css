@@ -23,14 +23,15 @@
 
     /*
      * PLACEHOLDER pipe drawn in CSS, waiting for a proper graphic from the designer.
-     * The logo's main pipe, continued off the page. Its height and thickness match the pipe in the PNG.
+     * The logo's main pipe, continued off the page. Its height and thickness match the pipe in the SVG
+     * (y 273.2 and 23 tall, in a drawing 787.5 tall).
      */
     .edition-title__run {
         position: absolute;
-        top: 32.3%;
+        top: 34.69%;
         right: 0;
         left: 0;
-        height: 2.4%;
+        height: 2.93%;
         background: var(--red);
     }
 

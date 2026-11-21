@@ -105,7 +105,10 @@ module.exports = function(eleventyConfig) {
         return fs.readFileSync(full, "utf8");
     });
 
-    eleventyConfig.addPlugin(eleventyImageTransformPlugin);
+    eleventyConfig.addPlugin(eleventyImageTransformPlugin, {
+        formats: ["svg", "webp", "jpeg"],
+        svgShortCircuit: true,
+    });
     eleventyConfig.addPassthroughCopy("src/assets/");
     eleventyConfig.addPassthroughCopy("src/scripts/");
     eleventyConfig.addPassthroughCopy({ "node_modules/swup/dist/Swup.umd.js": "scripts/swup.umd.js" });
