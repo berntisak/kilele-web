@@ -35,13 +35,19 @@ If we want the view/open count displayed next to each artist / news item **in ki
 
 Vercel Web Analytics (and alternatives like Umami/Plausible) are cookieless and don't need a consent banner, which fits the European partners and the care/consent ethos in the Code of Conduct. If we ever move to Google Analytics for richer acquisition data, a consent banner becomes required in the EU.
 
-## Front page: the yellow marker and the tagline
+## Front page: the tagline
 
-The yellow "Music · Tech · Culture" marker sits on the CSS pipe run, which the designer's
-pipe art (Kilele-Website-Assets_Desktop copy 2.svg) is replacing. Discuss whether the marker
-comes back in a different way, and use it (or somewhere else on the front page) for the tagline,
-since the tagline is no longer part of the logo.
+The tagline is no longer part of the logo, so the front page needs a place for it.
 
-New tagline:
 - Short: "A space for adventurous music and culture"
 - Long: "A space for adventurous music and culture in East Africa"
+
+A prototype tried three ways to put it in the empty space right of "Common Grounds"
+(branch `prototype/tagline-placement`, never merged; run the dev server and add `?variant=A|B|C`):
+
+- A, Branch: a yellow marker on a short branch teed off the right-margin pipe.
+- B, Gauge plate: a plate hanging on a rod from the big gauge.
+- C, Pipe band: a band round the right-margin pipe, the tagline running down it.
+
+Verdict: A preferred, switching to C where there is not room for A. Settle the exact placement
+after the design clean-up (the header pipe first).
