@@ -3,9 +3,13 @@
  */
 
 .page--home {
+    /* The logo's width, and the pipe thickness that follows from it: the logo's pipe is 23 units thick in a drawing 1633.33 wide. */
+    --logo-width: min(20rem, 62vw);
+    --pipe-thickness: calc(var(--logo-width) * 23 / 1633.33);
+
     .edition-title {
         position: relative;
-        padding-block: var(--space-6) 0;
+        padding-block: var(--space-6) var(--space-7);
         overflow: hidden;
     }
 
@@ -22,9 +26,9 @@
     }
 
     /*
-     * PLACEHOLDER pipe drawn in CSS, waiting for a proper graphic from the designer.
-     * The logo's main pipe, continued off the page. Its height and thickness match the pipe in the SVG
-     * (y 273.2 and 23 tall, in a drawing 787.5 tall).
+     * An invisible guide: where the logo's main pipe would run on past the logo. Its height and
+     * thickness match the pipe in the logo SVG (y 273.2 and 23 tall, in a drawing 787.5 tall).
+     * The designer's pipe and the gauge line up to it.
      */
     .edition-title__run {
         position: absolute;
@@ -32,7 +36,27 @@
         right: 0;
         left: 0;
         height: 2.93%;
-        background: var(--red);
+    }
+
+    /* The designer's pipe (header-pipe.svg), sized so its pipe is as thick as the logo's and lined up with it. */
+    .edition-title__pipe {
+        position: absolute;
+        left: 0;
+        right: calc(var(--gutter) / 2);
+        top: calc(-100% * 131.29 / 9.89);
+        height: calc(100% * 240 / 9.89);
+        background: url("/assets/pipes/header-pipe.svg") left top / auto 100% repeat-x;
+    }
+
+    /* Corner 1: the pipe turns down in the middle of the right margin. It's longer than needed; the section's overflow: hidden cuts it off at the bottom edge. */
+    .edition-title__run::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: calc(var(--gutter) / 2);
+        width: var(--pipe-thickness);
+        height: 100vh;
+        background: var(--pipe);
     }
 
     /* The stretch of pipe from the logo to the content's right edge. Everything on the run is placed along it. */
@@ -63,31 +87,6 @@
         }
     }
 
-    /* The pipe marker, centred on its --x, about a third in from the right. Not on phones yet (see Tune the design). */
-    .edition-title__marker {
-        display: none;
-        position: absolute;
-        top: 50%;
-        left: var(--x);
-        translate: -50% -50%;
-        height: 1.5rem;
-        padding: 0 1.4rem 0 0.7rem;
-        background: var(--yellow);
-        color: var(--ink);
-        font-family: var(--font-mono);
-        font-size: var(--text-2);
-        font-weight: var(--weight-bold);
-        line-height: 1.5rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        white-space: nowrap;
-        clip-path: polygon(0 0, calc(100% - 0.75rem) 0, 100% 50%, calc(100% - 0.75rem) 100%, 0 100%);
-
-        @media (--medium) {
-            display: block;
-        }
-    }
-
     /*
      * PLACEHOLDER gauge drawn in CSS, waiting for a proper graphic from the designer (see Tune the design).
      * The stem is a leg; the dial hangs from it, its right edge on the page content's right edge.
@@ -104,27 +103,6 @@
     .edition-title__gauge--end {
         left: auto;
         right: calc(var(--size) / 2 - 0.2rem);
-    }
-
-    /* A leg standing on the run instead of hanging from it. On a gauge, the dial sits on top. */
-    .edition-title__leg--up {
-        top: auto;
-        bottom: 100%;
-        border-radius: 0.4rem 0.4rem 0 0;
-
-        & .edition-title__dial {
-            top: auto;
-            bottom: 100%;
-        }
-    }
-
-    /* A wide leg: only from --large, where the pipe is long enough. On phones they would crowd together, and at --medium the marker covers their place. */
-    .edition-title__leg--wide {
-        display: none;
-
-        @media (--large) {
-            display: block;
-        }
     }
 
     /* The dial: a red window dot from The Mall's facade, with a pale concrete rim. */
@@ -192,7 +170,7 @@
     /* PLACEHOLDER size until the designer's logo arrives. */
     .edition-title__logo {
         flex: none;
-        width: min(20rem, 62vw);
+        width: var(--logo-width);
     }
 
     /* The year, hanging off a dimension leader under the logo. */
@@ -247,6 +225,22 @@
             height: var(--space-4);
             margin-left: auto;
             background: var(--text-muted);
+        }
+    }
+
+    /* The pipe carries on down the right margin, past the Lead section and the news. */
+    .lead-section,
+    .latest-news {
+        position: relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: calc(var(--gutter) / 2);
+            width: var(--pipe-thickness);
+            background: var(--pipe);
         }
     }
 
@@ -359,17 +353,33 @@
 
     /*
      * PLACEHOLDER pipe drawn in CSS, waiting for the designer's graphics (see Tune the design).
-     * A run across the full page width, cut off at both edges, with legs dropping off it.
-     * The box is as tall as the longest leg, so no leg reaches the caption below.
+     * Corner 2: the pipe coming down the right margin turns left here and runs to the middle
+     * of the left margin, with legs dropping off it.
+     * The room above the caption is as tall as the longest leg, so no leg reaches the caption.
      */
     .archive-pipe {
-        height: 3.4rem;
+        position: relative;
+        display: flow-root;
+        padding-top: 3.4rem;
+
+        /* Corner 3: the pipe turns down at the run's left end and runs to the ink band, which hides it. */
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: calc(var(--gutter) / 2);
+            width: var(--pipe-thickness);
+            background: var(--pipe);
+        }
     }
 
     .archive-pipe__run {
-        position: relative;
-        display: block;
-        height: 0.4rem;
+        position: absolute;
+        top: 0;
+        left: calc(var(--gutter) / 2);
+        right: calc(var(--gutter) / 2);
+        height: var(--pipe-thickness);
         background: var(--pipe);
     }
 
@@ -397,6 +407,63 @@
         font-size: var(--text-2);
         letter-spacing: 0.08em;
         text-transform: uppercase;
+    }
+
+    /* Corner 4: the pipe comes out from under the ink band, turns right, and ends in a valve about two-thirds across. */
+    .closing-pipe {
+        /*
+         * How far the run sits below the band: the same as the run above the band sits above it
+         * (about 88px at 1440px). That gap comes from the Fig. 3 caption, so change this with it.
+         */
+        --band-gap: 5.5rem;
+        position: relative;
+        height: calc(var(--band-gap) + var(--pipe-thickness));
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: calc(var(--gutter) / 2);
+            width: var(--pipe-thickness);
+            height: 100%;
+            background: var(--pipe);
+        }
+    }
+
+    .closing-pipe__run {
+        position: absolute;
+        top: var(--band-gap);
+        left: calc(var(--gutter) / 2);
+        width: calc(100% * 2 / 3 - var(--gutter) / 2);
+        height: var(--pipe-thickness);
+        background: var(--pipe);
+    }
+
+    /* The valve centred on the run's end. */
+    .closing-pipe .pipe__valve {
+        top: 50%;
+        right: 0;
+        translate: 50% -50%;
+    }
+
+    /* The tagline as a yellow marker on the last run, pointing along the pipe to the valve. */
+    .closing-pipe__marker {
+        position: absolute;
+        top: calc(var(--band-gap) + var(--pipe-thickness) / 2);
+        right: calc(100% / 3 + var(--valve-size) / 2 + var(--space-5));
+        translate: 0 -50%;
+        height: 1.5rem;
+        padding: 0 1.4rem 0 0.7rem;
+        background: var(--yellow);
+        color: var(--ink);
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        font-weight: var(--weight-bold);
+        line-height: 1.5rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        clip-path: polygon(0 0, calc(100% - 0.75rem) 0, 100% 50%, calc(100% - 0.75rem) 100%, 0 100%);
     }
 
     /* The 2026 edition's photos in green, like C8. */
