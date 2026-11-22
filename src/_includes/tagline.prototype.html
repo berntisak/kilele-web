@@ -1,0 +1,196 @@
+{#
+  PROTOTYPE, throwaway. Three ways to put the tagline in the empty space right of
+  "Common Grounds", switchable with ?variant=A|B|C or the bar at the bottom.
+  Only included while the dev server runs (eleventy.env.runMode != "build").
+  Judge on desktop (around 1440px wide).
+#}
+<style>
+    /* Each variant covers the Lead section exactly, so it takes no room in the section's grid. */
+    /* grid-column: auto overrides the Lead section's "span every column" rule, so inset: 0 is the whole section, margins included. */
+    .tagline-proto { display: none; position: absolute; inset: 0; pointer-events: none; grid-column: auto !important; z-index: 1; }
+    .tagline-proto.is-current { display: block; }
+
+    /* Shared: the yellow marker look. */
+    .tagline-proto__tag {
+        margin: 0;
+        background: var(--yellow);
+        color: var(--ink);
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        font-weight: var(--weight-bold);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+
+    /* A: a branch tees off the right-margin pipe and carries the marker. */
+    .tagline-proto--a .tagline-proto__branch {
+        position: absolute;
+        top: 7.5rem;
+        right: calc(var(--gutter) / 2);
+        width: calc(var(--gutter) / 2 + 13rem);
+        height: var(--pipe-thickness);
+        background: var(--pipe);
+    }
+    .tagline-proto--a .tagline-proto__collar {
+        position: absolute;
+        top: calc(7.5rem - 0.25rem);
+        right: calc(var(--gutter) / 2 - 0.25rem);
+        width: calc(var(--pipe-thickness) + 0.5rem);
+        height: calc(var(--pipe-thickness) + 0.5rem);
+        background: var(--pipe);
+    }
+    .tagline-proto--a .tagline-proto__cap {
+        position: absolute;
+        top: calc(7.5rem + var(--pipe-thickness) / 2);
+        right: calc(var(--gutter) + 13rem - 0.3rem);
+        translate: 0 -50%;
+        width: 0.5rem;
+        height: 1rem;
+        border-radius: 0.15rem;
+        background: var(--pipe);
+    }
+    .tagline-proto--a .tagline-proto__tag {
+        position: absolute;
+        top: calc(7.5rem + var(--pipe-thickness) / 2);
+        right: calc(var(--gutter) + 1rem);
+        translate: 0 -50%;
+        width: 12rem;
+        padding: 0.45rem 1.6rem 0.45rem 0.8rem;
+        line-height: 1.4;
+        clip-path: polygon(0 0, calc(100% - 0.9rem) 0, 100% 50%, calc(100% - 0.9rem) 100%, 0 100%);
+    }
+
+    /* B: a plate hanging on a rod from the big gauge. */
+    .tagline-proto--b .tagline-proto__rod {
+        position: absolute;
+        top: calc(-1 * var(--dial-drop, 6rem));
+        left: var(--dial-x, 88%);
+        width: 2px;
+        height: calc(var(--dial-drop, 6rem) + 2rem);
+        background: var(--ink);
+    }
+    .tagline-proto--b .tagline-proto__tag {
+        position: absolute;
+        top: 2rem;
+        right: var(--gutter);
+        width: 12.5rem;
+        padding: 0.9rem 1rem 1rem;
+        line-height: 1.5;
+        border-top: 3px solid var(--ink);
+    }
+    .tagline-proto--b .tagline-proto__plate-label {
+        display: block;
+        margin-bottom: 0.4rem;
+        font-weight: normal;
+        opacity: 0.7;
+    }
+
+    /* C: a band wrapped round the right-margin pipe, the tagline running down it to a flow arrow. */
+    .tagline-proto--c .tagline-proto__tag {
+        position: absolute;
+        top: 2rem;
+        right: calc(var(--gutter) / 2 + var(--pipe-thickness) / 2 - 0.875rem);
+        width: 1.75rem;
+        padding: 0.7rem 0 1.6rem;
+        line-height: 1.75rem;
+        writing-mode: vertical-rl;
+        white-space: nowrap;
+        clip-path: polygon(0 0, 100% 0, 100% calc(100% - 0.9rem), 50% 100%, 0 calc(100% - 0.9rem));
+    }
+
+    /* The switcher: not part of the design. */
+    .tagline-proto-bar {
+        position: fixed;
+        z-index: 1000;
+        bottom: 1rem;
+        left: 50%;
+        translate: -50% 0;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.4rem 0.6rem;
+        border-radius: 999px;
+        background: #111;
+        color: #fff;
+        font: 600 13px/1 system-ui, sans-serif;
+        box-shadow: 0 4px 16px rgb(0 0 0 / 0.35);
+    }
+    .tagline-proto-bar button {
+        border: 0;
+        border-radius: 999px;
+        padding: 0.35rem 0.6rem;
+        background: #333;
+        color: #fff;
+        font: inherit;
+        cursor: pointer;
+    }
+</style>
+
+<div class="tagline-proto tagline-proto--a" data-variant="A" data-name="Branch" aria-hidden="true">
+    <span class="tagline-proto__branch"></span>
+    <span class="tagline-proto__collar"></span>
+    <span class="tagline-proto__cap"></span>
+    <p class="tagline-proto__tag">A space for adventurous music and culture</p>
+</div>
+
+<div class="tagline-proto tagline-proto--b" data-variant="B" data-name="Gauge plate" aria-hidden="true">
+    <span class="tagline-proto__rod"></span>
+    <p class="tagline-proto__tag"><span class="tagline-proto__plate-label">Reading at 0 V:</span>A space for adventurous music and culture in East Africa</p>
+</div>
+
+<div class="tagline-proto tagline-proto--c" data-variant="C" data-name="Pipe band" aria-hidden="true">
+    <p class="tagline-proto__tag">A space for adventurous music and culture</p>
+</div>
+
+<div class="tagline-proto-bar" aria-hidden="true">
+    <button type="button" data-step="-1">←</button>
+    <span class="tagline-proto-bar__label"></span>
+    <button type="button" data-step="1">→</button>
+</div>
+
+<script>
+    (() => {
+        const variants = [...document.querySelectorAll(".tagline-proto")];
+        const keys = variants.map((v) => v.dataset.variant);
+        const label = document.querySelector(".tagline-proto-bar__label");
+
+        // B hangs from the gauge: measure where the dial is, relative to the Lead section.
+        const placeRod = () => {
+            const lead = document.querySelector(".lead-section").getBoundingClientRect();
+            const dial = document.querySelector(".edition-title__gauge--end .edition-title__dial");
+            if (!dial) return;
+            const d = dial.getBoundingClientRect();
+            const b = document.querySelector(".tagline-proto--b");
+            b.style.setProperty("--dial-drop", `${lead.top - d.bottom}px`);
+            b.style.setProperty("--dial-x", `${d.left + d.width / 2 - lead.left - 1}px`);
+        };
+
+        const show = (key) => {
+            if (!keys.includes(key)) key = keys[0];
+            variants.forEach((v) => v.classList.toggle("is-current", v.dataset.variant === key));
+            const current = variants.find((v) => v.dataset.variant === key);
+            label.textContent = `${key} (${current.dataset.name})`;
+            const url = new URL(location.href);
+            url.searchParams.set("variant", key);
+            history.replaceState(null, "", url);
+            placeRod();
+        };
+
+        const step = (n) => {
+            const i = keys.indexOf(new URL(location.href).searchParams.get("variant"));
+            show(keys[(i + n + keys.length) % keys.length]);
+        };
+
+        document.querySelectorAll(".tagline-proto-bar button").forEach((b) =>
+            b.addEventListener("click", () => step(Number(b.dataset.step)))
+        );
+        document.addEventListener("keydown", (e) => {
+            if (e.target.closest("input, textarea, [contenteditable]")) return;
+            if (e.key === "ArrowLeft") step(-1);
+            if (e.key === "ArrowRight") step(1);
+        });
+        addEventListener("resize", placeRod);
+
+        show(new URL(location.href).searchParams.get("variant"));
+    })();
+</script>

@@ -446,26 +446,6 @@
         translate: 50% -50%;
     }
 
-    /* The tagline as a yellow marker on the last run, pointing along the pipe to the valve. */
-    .closing-pipe__marker {
-        position: absolute;
-        top: calc(var(--band-gap) + var(--pipe-thickness) / 2);
-        right: calc(100% / 3 + var(--valve-size) / 2 + var(--space-5));
-        translate: 0 -50%;
-        height: 1.5rem;
-        padding: 0 1.4rem 0 0.7rem;
-        background: var(--yellow);
-        color: var(--ink);
-        font-family: var(--font-mono);
-        font-size: var(--text-2);
-        font-weight: var(--weight-bold);
-        line-height: 1.5rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        white-space: nowrap;
-        clip-path: polygon(0 0, calc(100% - 0.75rem) 0, 100% 50%, calc(100% - 0.75rem) 100%, 0 100%);
-    }
-
     /* The 2026 edition's photos in green, like C8. */
     .previous-edition {
         --duotone: url(#duotone-green);
