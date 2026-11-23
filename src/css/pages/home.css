@@ -4,7 +4,15 @@
 
 .page--home {
     /* The logo's width. Its own pipe is 23 units thick in a drawing 1633.33 wide, so thinner than --pipe-width. */
-    --logo-width: min(20rem, 62vw);
+    --logo-width: 15rem; /* phone: 240px */
+
+    @media (--small) {
+        --logo-width: 22rem; /* tablet: 352px */
+    }
+
+    @media (--medium) {
+        --logo-width: 30rem; /* desktop: 480px */
+    }
 
     .edition-title {
         position: relative;
@@ -48,21 +56,131 @@
         background: url("/assets/pipes/pipe-segment.svg") left center / auto 100% repeat-x;
     }
 
-    /* A fitting from the designer's kit, at the pipe's scale; its box ends on the pipe's centre line. */
-    .edition-title__fitting {
+    /*
+     * TEST: the tagline as a horizontal marker hanging from a drop off the header pipe, about
+     * three-quarters across the page. --drop-x is that point, measured from the logo's right edge
+     * (where the run starts).
+     */
+    .edition-title__run {
+        --drop-x: calc(100vw * 3 / 4 - var(--gutter) - var(--logo-width));
+        --corner-length: 3rem; /* phone: corner 1 from the header pipe down to the marker's tee, which closes it */
+    }
+
+    /*
+     * Shared by the drop, the tagline and Fig. 2, so they sit on the section rather than the run.
+     * --pipe-y is the header pipe's centre line, measured from the section's top: the top
+     * padding, plus 36.16% of the logo's height (the run's top at 34.69%, plus half its 2.93%).
+     */
+    .edition-title {
+        --drop-length: 4rem;
+        --pipe-y: calc(var(--space-6) + var(--logo-width) * 788 / 1634 * 0.3616);
+    }
+
+    /* Below 900px there is no drop: the marker hangs off the right-margin pipe instead. */
+    .edition-title__drop {
+        display: none;
         position: absolute;
-        left: var(--x);
-        width: calc(var(--pipe-width) * 30.29 / 9.89);
+        top: 50%;
+        left: var(--drop-x);
+        width: var(--pipe-width);
+        height: var(--drop-length);
         translate: -50% 0;
+        background: url("/assets/pipes/pipe-segment-vertical.svg") center top / calc(100% * 40 / 9.89) auto repeat-y;
+
+        /* The tee where the drop leaves the header pipe. */
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: calc(var(--pipe-width) * 39.12 / 9.89);
+            aspect-ratio: 39.12 / 42.82;
+            translate: -50% -50%;
+            background: url("/assets/pipes/pipe-joint.svg") center / contain no-repeat;
+        }
+
+        @media (--medium) {
+            display: block;
+        }
     }
 
-    /* An inline fitting sets --shift (in the designer's units) to move its collar onto the pipe. */
-    .edition-title__fitting--up {
-        bottom: calc(50% - var(--shift, 0) * var(--pipe-width) / 9.89);
-    }
+    /*
+     * The marker as a block over three lines, hung as a flag: left of the right-margin pipe,
+     * --flag-drop below the header pipe (--pipe-y, set on .edition-title), on a stub
+     * --stub-length long.
+     *
+     * Fine-tuning: --flag-drop (how far below the header pipe), --stub-length (how far left of the
+     * right-margin pipe), width and font-size. Phone values first; the --small block (600px up)
+     * overrides them.
+     */
+    .edition-title__tagline {
+        --flag-drop: 1.5rem; /* phone */
+        --stub-length: 0.75rem; /* phone */
 
-    .edition-title__fitting--down {
-        top: calc(50% - var(--shift, 0) * var(--pipe-width) / 9.89);
+        position: absolute;
+        top: calc(var(--pipe-y) + var(--flag-drop));
+        right: calc(var(--gutter) / 2 + var(--pipe-width) / 2 + var(--stub-length));
+        width: 7.5rem; /* phone */
+        margin: 0;
+        padding: 0.3rem 0.5rem; /* phone */
+        background: var(--yellow);
+        color: var(--ink);
+        font-family: var(--font-mono);
+        font-size: var(--text-1); /* phone: 9px */
+        font-weight: var(--weight-bold);
+        line-height: 1.4;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+
+        /* Tablet (600px up). */
+        @media (--small) {
+            --flag-drop: 3rem;
+            --stub-length: 1rem;
+
+            width: 12rem;
+            padding: 0.45rem 0.8rem;
+            font-size: var(--text-2); /* 11px */
+        }
+
+        /* The stub: a short horizontal pipe from the flag's right edge to the right-margin pipe's centre. */
+        &::after {
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            width: var(--stub-length);
+            height: var(--pipe-width);
+            translate: 0 -50%;
+            content: "";
+            background: url("/assets/pipes/pipe-segment.svg") left center / auto calc(100% * 40 / 9.89) repeat-x;
+        }
+
+        /* The tee where the stub meets the right-margin pipe, drawn over it. */
+        &::before {
+            position: absolute;
+            z-index: 1;
+            top: 50%;
+            left: calc(100% + var(--stub-length));
+            width: calc(var(--pipe-width) * 39.12 / 9.89);
+            aspect-ratio: 39.12 / 42.82;
+            translate: -50% -50%;
+            content: "";
+            background: url("/assets/pipes/pipe-joint.svg") center / contain no-repeat;
+        }
+
+        /* Desktop (900px up): centred under the drop's end (--drop-length, set on .edition-title), 75vw across, with an arrow, and no stub or tee. */
+        @media (--medium) {
+            top: calc(var(--pipe-y) + var(--drop-length));
+            right: auto;
+            left: 75vw;
+            translate: -50% 0;
+            padding: 0.45rem 1.6rem 0.45rem 0.8rem;
+            clip-path: polygon(0 0, calc(100% - 0.9rem) 0, 100% 50%, calc(100% - 0.9rem) 100%, 0 100%);
+
+            &::before,
+            &::after {
+                content: none;
+            }
+        }
     }
 
     /*
@@ -99,15 +217,23 @@
         left: calc(100% - var(--pipe-width) / 2);
     }
 
-    /* Corner 1: the pipe turns down in the middle of the right margin. It's longer than needed; the section's overflow: hidden cuts it off at the bottom edge. */
+    /*
+     * Corner 1: the pipe turns down in the middle of the right margin. On phones it stops at the
+     * marker's tee joint. From 600px it's longer than needed; the section's overflow: hidden cuts it
+     * off at the bottom edge.
+     */
     .edition-title__run::after {
         content: "";
         position: absolute;
         top: calc(50% - var(--pipe-width) / 2);
         right: calc(var(--gutter) / 2);
         width: var(--pipe-width);
-        height: 100vh;
+        height: var(--corner-length);
         background: url("/assets/pipes/pipe-segment-vertical.svg") center top / calc(100% * 40 / 9.89) auto repeat-y;
+
+        @media (--small) {
+            height: 100vh;
+        }
     }
 
     /* The stretch of pipe from the logo to the content's right edge. Everything on the run is placed along it. */
@@ -241,15 +367,19 @@
         margin-top: var(--space-2);
     }
 
-    /* Fig. 2 labels the gauge, so it only shows where the gauge does. */
+    /*
+     * Fig. 2 labels the vent pipes, from 1200px. It sits 3.5rem above the header pipe's centre
+     * line, clear of the up-06 fitting below it, its right edge in line with the pipe's outer end
+     * (corner 1, half a gutter in).
+     */
     .edition-title__fig--corner {
         display: none;
 
         @media (--large) {
             display: block;
             position: absolute;
-            top: var(--space-4);
-            right: var(--gutter);
+            top: calc(var(--pipe-y) - 3.5rem);
+            right: calc(var(--gutter) / 2);
             margin: 0;
         }
     }
@@ -285,13 +415,17 @@
         position: relative;
 
         &::after {
-            content: "";
             position: absolute;
             top: 0;
             bottom: 0;
             right: calc(var(--gutter) / 2);
             width: var(--pipe-width);
             background: url("/assets/pipes/pipe-segment-vertical.svg") center top / calc(100% * 40 / 9.89) auto repeat-y;
+
+            /* The pipe only runs down the margin from 600px; on phones corner 1 ends in a valve instead. */
+            @media (--small) {
+                content: "";
+            }
         }
     }
 
@@ -503,17 +637,6 @@
         right: calc(var(--gutter) / 2);
         height: var(--pipe-width);
         background: url("/assets/pipes/pipe-segment.svg") left center / auto calc(100% * 40 / 9.89) repeat-x;
-    }
-
-    /* Each leg sets its own --x (how far along) and --length (how far down), like the Edition title's legs. */
-    .archive-pipe__leg {
-        position: absolute;
-        top: 0;
-        left: var(--x);
-        width: 0.4rem;
-        height: var(--length);
-        border-radius: 0 0 0.4rem 0.4rem;
-        background: var(--pipe);
     }
 
     /* Fig. 3 sits under the pipe's right end, in the same figure style as Fig. 1 and 2. */

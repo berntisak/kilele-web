@@ -13,21 +13,14 @@ description: "East Africa's first and only summit for music, tech and culture. C
         <div class="edition-title__pipework" aria-hidden="true">
             <span class="edition-title__run">
                 <span class="edition-title__pipe">
-                    <img class="edition-title__fitting edition-title__fitting--up" src="/assets/pipes/pipe-leg-up-01.svg" alt="" style="--x: 14%">
-                    <img class="edition-title__fitting edition-title__fitting--down" src="/assets/pipes/pipe-leg-down-01.svg" alt="" style="--x: 30%; --shift: 19.4">
-                    <img class="edition-title__fitting edition-title__fitting--up" src="/assets/pipes/pipe-leg-up-08.svg" alt="" style="--x: 48%">
-                    <img class="edition-title__fitting edition-title__fitting--down" src="/assets/pipes/pipe-leg-down-03.svg" alt="" style="--x: 62%">
-                    <img class="edition-title__fitting edition-title__fitting--up" src="/assets/pipes/pipe-leg-up-06.svg" alt="" style="--x: 77%; --shift: 16.6">
+                    <img class="pipe__fitting pipe__fitting--up" src="/assets/pipes/pipe-leg-up-01.svg" alt="" style="--x: 14%">
+                    <img class="pipe__fitting pipe__fitting--down" src="/assets/pipes/pipe-leg-down-01.svg" alt="" style="--x: 38%; --shift: 19.4">
+                    <img class="pipe__fitting pipe__fitting--up" src="/assets/pipes/pipe-leg-up-08.svg" alt="" style="--x: 48%">
+                    <img class="pipe__fitting pipe__fitting--down" src="/assets/pipes/pipe-leg-down-04.svg" alt="" style="--x: 88%">
+                    <img class="pipe__fitting pipe__fitting--up" src="/assets/pipes/pipe-leg-up-06.svg" alt="" style="--x: 77%; --shift: 16.6">
                 </span>
-                <span class="edition-title__track">
-                    {# A centre-zero voltmeter reading 0 V: in electronics, the shared 0 V reference is the "common ground". #}
-                    <span class="edition-title__leg edition-title__gauge edition-title__gauge--end" style="--length: 1.25rem; --size: 5rem">
-                        <span class="edition-title__dial">
-                            <span class="edition-title__needle"></span>
-                            <span class="edition-title__ground-symbol"></span>
-                        </span>
-                    </span>
-                </span>
+                {# TEST: the drop the tagline hangs from on desktop, about three-quarters across. #}
+                <span class="edition-title__drop"></span>
             </span>
         </div>
     </div>
@@ -36,6 +29,8 @@ description: "East Africa's first and only summit for music, tech and culture. C
         {{ edition.year }}
     </p>
     <p class="edition-title__fig">Fig. 1 — Kilele, fourth edition. Not to scale.</p>
+    {# TEST: the tagline, hung on the pipes by home.css: a flag on the right-margin pipe below 900px, under the drop from 900px. #}
+    <p class="edition-title__tagline">A space for adventurous music and culture</p>
     <p class="edition-title__fig edition-title__fig--corner">Fig. 2 — Vent Pipes. GND: 0 V (common).</p>
 </section>
 
@@ -76,11 +71,6 @@ description: "East Africa's first and only summit for music, tech and culture. C
       - Post-festival: looks back on the Edition that just ended
     #}
 
-    {# The tagline. Placement still to be settled after the design clean-up (see ideas.md). #}
-    <div class="lead-section__tagline">
-        <span class="lead-section__branch" aria-hidden="true"></span>
-        <p class="lead-section__marker">A space for adventurous music and culture</p>
-    </div>
 </section>
 
 {% set listedNews = news | rejectattr("hero_video") %}
@@ -117,13 +107,13 @@ description: "East Africa's first and only summit for music, tech and culture. C
 </section>
 {% endif %}
 
-{# PLACEHOLDER pipe drawn in CSS, like the Edition title's, waiting for the designer's graphics. #}
+{# Corner 2: the pipe under the news, with the designer's fittings hanging off it. #}
 <div class="archive-pipe">
     <span class="archive-pipe__run" aria-hidden="true">
-        <span class="archive-pipe__leg" style="--x: 17.6%; --length: 2.1rem"></span>
-        <span class="archive-pipe__leg" style="--x: 43.5%; --length: 1.25rem"></span>
-        <span class="archive-pipe__leg" style="--x: 69.4%; --length: 3rem"></span>
-        <span class="archive-pipe__leg" style="--x: 82.4%; --length: 0.9rem"></span>
+        <img class="pipe__fitting pipe__fitting--down" src="/assets/pipes/pipe-leg-down-02.svg" alt="" style="--x: 17.6%; --shift: 1.6">
+        <img class="pipe__fitting pipe__fitting--down" src="/assets/pipes/pipe-leg-down-05.svg" alt="" style="--x: 43.5%; --shift: 16.5">
+        <img class="pipe__fitting pipe__fitting--down" src="/assets/pipes/pipe-leg-down-07.svg" alt="" style="--x: 69.4%; --shift: 5.1">
+        <img class="pipe__fitting pipe__fitting--down" src="/assets/pipes/pipe-leg-down-01.svg" alt="" style="--x: 82.4%; --shift: 19.4">
     </span>
     <p class="archive-pipe__fig">Fig. 3 — Pipe. Carries nothing.</p>
 </div>

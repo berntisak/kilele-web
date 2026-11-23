@@ -88,7 +88,7 @@
     left: calc(-1 * (var(--pipe-width) + var(--valve-size)) / 2);
     width: var(--valve-size);
     height: var(--valve-size);
-    border: var(--flange-width) solid var(--pipe);
+    border: var(--valve-ring) solid var(--pipe);
     border-radius: 50%;
     background: var(--ground);
 }

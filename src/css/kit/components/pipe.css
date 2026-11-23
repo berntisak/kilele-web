@@ -48,7 +48,28 @@
     position: absolute;
     width: var(--valve-size);
     height: var(--valve-size);
-    border: var(--flange-width) solid var(--pipe);
+    border: var(--valve-ring) solid var(--pipe);
     border-radius: 50%;
     background: var(--ground);
+}
+
+/*
+ * A fitting: one of the designer's legs (src/assets/pipes), at the pipe's scale. The run it sits
+ * in places it: --x is how far along. Its box ends on the centre line of the box it sits in, so
+ * that box must be centred on the pipe. The legs are 30.29 units wide, the pipe 9.89.
+ */
+.pipe__fitting {
+    position: absolute;
+    left: var(--x);
+    width: calc(var(--pipe-width) * 30.29 / 9.89);
+    translate: -50% 0;
+}
+
+/* An inline fitting sets --shift (in the designer's units) to move its collar onto the pipe. */
+.pipe__fitting--up {
+    bottom: calc(50% - var(--shift, 0) * var(--pipe-width) / 9.89);
+}
+
+.pipe__fitting--down {
+    top: calc(50% - var(--shift, 0) * var(--pipe-width) / 9.89);
 }

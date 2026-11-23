@@ -5,9 +5,20 @@
  */
 
 :root {
-    --pipe-width: 0.5rem; /* 8px: a little thinner than the designer's pipe (9.89 units in their drawings); the drawings scale to it */
+    /* The pipe's thickness, growing with the logo; the designer's drawings (pipe 9.89 units) scale to it. */
+    --pipe-width: 0.25rem; /* phone: 4px */
+
+    @media (--small) {
+        --pipe-width: 0.375rem; /* tablet: 6px */
+    }
+
+    @media (--medium) {
+        --pipe-width: 0.5rem; /* desktop: 8px */
+    }
+
     --flange-width: 0.375rem; /* 6px */
     --flange-overhang: 0.25rem; /* 4px above and below the pipe */
-    --valve-size: 1.75rem; /* 28px across */
+    --valve-size: calc(var(--pipe-width) * 3); /* 3 pipes across: 24px desktop, 18px tablet, 12px phone */
+    --valve-ring: calc(var(--pipe-width) * 0.75); /* the valve's ring: 6px desktop, 4.5px tablet, 3px phone */
     --flange-spacing: 10rem; /* 160px between flanges on a straight run */
 }
