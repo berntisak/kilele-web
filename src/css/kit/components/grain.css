@@ -1,0 +1,18 @@
+/*
+ * Grain: a tiled print texture over the whole page, scrolling with it like printed paper.
+ * TEST, brought back from the first prototype (press.css). Which texture and how strong
+ * is still open (#139).
+ */
+body {
+    position: relative;
+}
+
+body::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    background: url("/assets/textures/grain.png") repeat;
+    opacity: var(--grain-opacity, 0.20);
+    pointer-events: none;
+}
