@@ -61,7 +61,7 @@
     /* The title with the view switch beside it, on the title's baseline.
        Where they don't fit side by side, the switch wraps under the title.
        The title's space before the pipe moves to the pair. */
-    .schedule__title {
+    .schedule__heading {
         display: flex;
         flex-wrap: wrap;
         align-items: baseline;
@@ -109,6 +109,12 @@
         font-weight: normal;
         line-height: var(--line-height-tight);
         text-transform: uppercase;
+    }
+
+    /* The first day sits right under the jump bar, so it needs less room above it
+       than the break between two days. */
+    .jump-bar + .schedule__group .schedule__day {
+        margin-top: var(--space-6);
     }
 
     .schedule__weekday {

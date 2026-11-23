@@ -14,18 +14,18 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@11ty/eleventy": "^3.1.6",
+    "@11ty/eleventy": "^3.1.8",
     "browserslist": "^4.29.5",
-    "jsdom": "^30.0.1",
+    "jsdom": "^31.0.1",
     "lightningcss": "^1.33.0",
     "prettier": "^3.10.1",
     "sharp": "^0.35.5"
   },
   "dependencies": {
-    "@11ty/eleventy-img": "^7.0.0",
-    "@supabase/supabase-js": "^2.118.0",
+    "@11ty/eleventy-img": "^7.1.1",
+    "@supabase/supabase-js": "^2.119.2",
     "dompurify": "^3.4.17",
-    "dotenv": "^18.0.9",
+    "dotenv": "^18.0.10",
     "luxon": "^3.7.2",
     "markdown-it": "^15.0.3",
     "swup": "^4.10.0"
