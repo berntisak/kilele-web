@@ -48,7 +48,7 @@
     </div>
 
     {% if partnersSection != "none" %}
-    {% set mainPartners = (partners | groupby("group")).main %}
+    {% set mainPartners = (activePartners | groupby("group")).main %}
     <section class="section partners">
         <header class="section-head{{ ' section-head--small' if partnersSection != 'large' }}">
             <h2 class="section-head__title">Partners</h2>
@@ -58,7 +58,7 @@
             <li>{% include "partner-logo.html" %}</li>
             {% endfor %}
             <li class="partners__more">
-                <a class="section-head__link" href="/about/partners/">And {{ (partners | length) - (mainPartners | length) }} more partners <span aria-hidden="true">→</span></a>
+                <a class="section-head__link" href="/about/partners/">And {{ (activePartners | length) - (mainPartners | length) }} more partners <span aria-hidden="true">→</span></a>
             </li>
         </ul>
     </section>

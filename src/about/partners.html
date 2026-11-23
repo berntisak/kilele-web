@@ -10,8 +10,8 @@ partnersSection: none
     <header class="partners-page__head">
         <dl class="stats-bar">
             <div><dt>Register</dt><dd>Partners, Kilele 2026</dd></div>
-            <div><dt>Partners</dt><dd>{{ partners | length }}</dd></div>
-            <div><dt>Groups</dt><dd>{{ partners | groupby("group") | length }}</dd></div>
+            <div><dt>Partners</dt><dd>{{ activePartners | length }}</dd></div>
+            <div><dt>Groups</dt><dd>{{ activePartners | groupby("group") | length }}</dd></div>
             <div><dt>Status</dt><dd>Archived</dd></div>
         </dl>
         <h1 class="page-title">Partners</h1>
@@ -20,7 +20,7 @@ partnersSection: none
 
     {% set groupNames = { main: "Main partners", tech: "Tech partners", other: "Other partners" } %}
 
-    {% for group, members in partners | groupby("group") %}
+    {% for group, members in activePartners | groupby("group") %}
     <div class="partners-page__group">
         <h2 class="partners-page__group-name">{{ groupNames[group] }} <span class="meta">{{ members | length }}</span></h2>
         <ul class="partners-page__wall" role="list">

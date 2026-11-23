@@ -4,195 +4,224 @@
         "short_name": "DCI",
         "group": "main",
         "logo": "/assets/logos/partners/DCI.webp",
-        "url": "https://www.danishculture.com/"
+        "url": "https://www.danishculture.com/",
+        "active": true
     },
     {
         "name": "EUNIC",
         "short_name": "EUNIC",
         "group": "main",
         "logo": "/assets/logos/partners/EUNIC.png",
-        "url": "https://eunic.eu/"
+        "url": "https://eunic.eu/",
+        "active": false
     },
     {
         "name": "Braid Fund",
         "short_name": "Braid Fund",
         "group": "main",
         "logo": "/assets/logos/partners/BraidFund.png",
-        "url": "https://www.ticahealth.org/resources/braidfund"
+        "url": "https://www.ticahealth.org/resources/braidfund",
+        "active": false
     },
     {
         "name": "Santuri Culture",
         "short_name": "Santuri",
         "group": "main",
         "logo": "/assets/logos/partners/Santuri-Culture-LOGO-Red.png",
-        "url": "https://santuriculture.com"
+        "url": "https://santuriculture.com",
+        "active": true
     },
     {
         "name": "Pro Helvetia",
         "short_name": "Pro Helvetia",
         "group": "main",
         "logo": "/assets/logos/partners/ProHelvetia_Magenta.png",
-        "url": "https://prohelvetia.ch/en/"
+        "url": "https://prohelvetia.ch/en/",
+        "active": true
     },
     {
         "name": "Support from the British Academy’s Global Innovation Fellowships Programme, Queen Mary, University of London and People's Palace Projects.",
         "short_name": "British Academy",
         "group": "main",
         "logo": "/assets/logos/partners/BritishAcademy.jpg",
-        "url": "https://peoplespalaceprojects.org.uk/en/"
+        "url": "https://peoplespalaceprojects.org.uk/en/",
+        "active": false
     },
     {
         "name": "Ableton",
         "short_name": "Ableton",
         "group": "tech",
         "logo": "/assets/logos/partners/Ableton-Logo.wine.png",
-        "url": "https://ableton.com"
+        "url": "https://ableton.com",
+        "active": false
     },
     {
         "name": "Adam Audio",
         "short_name": "Adam Audio",
         "group": "tech",
         "logo": "/assets/logos/partners/Adam Audio.png",
-        "url": "https://www.adam-audio.com/en/"
+        "url": "https://www.adam-audio.com/en/",
+        "active": false
     },
     {
         "name": "Focusrite",
         "short_name": "Focusrite",
         "group": "tech",
         "logo": "/assets/logos/partners/Focusrite.png",
-        "url": "https://focusrite.com"
+        "url": "https://focusrite.com",
+        "active": false
     },
     {
         "name": "Novation",
         "short_name": "Novation",
         "group": "tech",
         "logo": "/assets/logos/partners/Novation.jpg",
-        "url": "https://novationmusic.com"
+        "url": "https://novationmusic.com",
+        "active": false
     },
     {
         "name": "Bitwig",
         "short_name": "Bitwig",
         "group": "tech",
         "logo": "/assets/logos/partners/Bitwig.svg",
-        "url": "https://bitwig.com"
+        "url": "https://bitwig.com",
+        "active": false
     },
     {
         "name": "Black Rhino VR",
         "short_name": "BRVR",
         "group": "other",
         "logo": "/assets/logos/partners/BRVR.png",
-        "url": "https://www.blackrhinovr.com/"
+        "url": "https://www.blackrhinovr.com/",
+        "active": true
     },
     {
         "name": "Creatives Garage",
         "short_name": "Creatives Garage",
         "group": "other",
         "logo": "/assets/logos/partners/CreativesGarage.png",
-        "url": "https://creativesgarage.org/"
+        "url": "https://creativesgarage.org/",
+        "active": true
     },
     {
         "name": "Rabuko",
         "short_name": "Rabuko",
         "group": "other",
         "logo": "/assets/logos/partners/Rabuko.png",
-        "url": "https://www.instagram.com/rabukoke/"
+        "url": "https://www.instagram.com/rabukoke/",
+        "active": true
     },
     {
         "name": "Calotropis",
         "short_name": "Calotropis",
         "group": "other",
         "logo": "/assets/logos/partners/Calotropis.png",
-        "url": "https://www.instagram.com/calotropis.xyz/"
+        "url": "https://www.instagram.com/calotropis.xyz/",
+        "active": false
     },
     {
         "name": "Umojah Sound System",
         "short_name": "Umojah",
         "group": "other",
         "logo": "/assets/logos/partners/Umojah.png",
-        "url": "https://www.instagram.com/umojahsoundsystem/"
+        "url": "https://www.instagram.com/umojahsoundsystem/",
+        "active": true
     },
     {
         "name": "Rift",
         "short_name": "Rift",
         "group": "other",
         "logo": "/assets/logos/partners/Rift.jpg",
-        "url": "https://www.instagram.com/rift.ke/"
+        "url": "https://www.instagram.com/rift.ke/",
+        "active": false
     },
     {
         "name": "Frequency Shift",
         "short_name": "Frequency Shift",
         "group": "other",
         "logo": "/assets/logos/partners/FrequencyShift.png",
-        "url": "https://eunic.eu/projects/kenya-frequency-shift"
+        "url": "https://eunic.eu/projects/kenya-frequency-shift",
+        "active": false
     },
     {
         "name": "Goethe-Institut Kenya",
         "short_name": "Goethe",
         "group": "other",
         "logo": "/assets/logos/partners/Goethe.jpg",
-        "url": "https://www.goethe.de/ins/ke/en/index.html"
+        "url": "https://www.goethe.de/ins/ke/en/index.html",
+        "active": true
     },
     {
         "name": "Amp Studio",
         "short_name": "Amp",
         "group": "other",
         "logo": "/assets/logos/partners/Amp.png",
-        "url": "https://ampafrica.com/"
+        "url": "https://ampafrica.com/",
+        "active": false
     },
     {
         "name": "Sound of Nairobi",
         "short_name": "SON",
         "group": "other",
         "logo": "/assets/logos/partners/SON.png",
-        "url": "https://soundofnairobi.net/"
+        "url": "https://soundofnairobi.net/",
+        "active": false
     },
     {
         "name": "Independent Community Radio Network",
         "short_name": "ICRN",
         "group": "other",
         "logo": "/assets/logos/partners/ICRN.png",
-        "url": "https://icrn.live/"
+        "url": "https://icrn.live/",
+        "active": false
     },
     {
         "name": "Nadharia",
         "short_name": "Nadharia",
         "group": "other",
-        "logo": "/assets/logos/partners/Nadharia.png"
+        "logo": "/assets/logos/partners/Nadharia.png",
+        "active": true
     },
     {
         "name": "the mist",
         "short_name": "the mist",
         "group": "other",
-        "logo": "/assets/logos/partners/themist.jpg"
+        "logo": "/assets/logos/partners/themist.jpg",
+        "active": true
     },
     {
         "name": "University of Inland Norway",
         "short_name": "INN",
         "group": "other",
-        "logo": "/assets/logos/partners/inn.png"
+        "logo": "/assets/logos/partners/inn.png",
+        "active": false
     },
     {
         "name": "Zahabu",
         "short_name": "Zahabu",
         "group": "other",
-        "logo": "/assets/logos/partners/Zahabu.png"
+        "logo": "/assets/logos/partners/Zahabu.png",
+        "active": true
     },
     {
         "name": "The Mall",
         "short_name": "The Mall",
         "group": "other",
-        "logo": "/assets/logos/partners/TheMall.png"
+        "logo": "/assets/logos/partners/TheMall.png",
+        "active": true
     },
     {
         "name": "Tamasha",
         "short_name": "Tamasha",
         "group": "other",
-        "logo": "/assets/logos/partners/Tamasha.png"
+        "logo": "/assets/logos/partners/Tamasha.png",
+        "active": true
     },
     {
         "name": "MUNYU",
         "short_name": "MUNYU",
         "group": "other",
-        "logo": "/assets/logos/partners/Munyu.png"
+        "logo": "/assets/logos/partners/Munyu.png",
+        "active": true
     }
 ]
