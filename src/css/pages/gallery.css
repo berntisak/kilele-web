@@ -90,7 +90,8 @@
 
     /* The lightbox's buttons: a bare mono character, no button chrome. */
     .lightbox__button {
-        position: absolute;
+        min-width: var(--space-7);
+        min-height: var(--space-7);
         padding: 0;
         font-family: var(--font-mono);
         font-size: var(--text-5);
@@ -102,19 +103,15 @@
     }
 
     .lightbox__close {
+        position: absolute;
         top: var(--space-3);
         right: var(--space-4);
     }
 
-    /* Previous and next sit in the bottom corners, below the credits. */
-    .lightbox__prev {
-        bottom: var(--space-3);
-        left: var(--space-4);
-    }
-
-    .lightbox__next {
-        bottom: var(--space-3);
-        right: var(--space-4);
+    /* Previous and next in a row under the photo, one at each end. */
+    .lightbox__nav {
+        display: flex;
+        justify-content: space-between;
     }
 
     /* The whole photo always shows, as large as fits: scaled down, never cropped. */
