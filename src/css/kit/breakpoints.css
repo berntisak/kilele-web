@@ -1,0 +1,8 @@
+/*
+ * Screen-size cutoffs (rules 17–18). Each name means "this width and wider".
+ * LightningCSS swaps the names for these numbers at build time.
+ */
+
+@custom-media --small (min-width: 600px);
+@custom-media --medium (min-width: 900px);
+@custom-media --large (min-width: 1200px);

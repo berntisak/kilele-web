@@ -4,43 +4,96 @@ pagination:
   size: 1
   alias: point
 permalink: "/2026/schedule/{{ point.slug }}/index.html"
-layout: layouts/base.html
+layout: layouts/site.html
+pageName: schedule-point
+headerContext: Archive 2026
 eleventyComputed:
-    title: "{{ point.title }}"
+    title: "{{ point.short_title or point.title }}"
     description: "{{ (point.description or point.title) | truncate(160, true, '...') }}"
     og_image: "{{ point.photo_path }}"
     og_type: "event"
 ---
 
-<article class="content__container">
-    <div class="content__title">
-        <h1>{{ point.short_title or point.title }}</h1>
-    </div>
-        <div class="schedule__section schedule__section--split">
+<article class="section schedule-point" data-category="{{ point.category or 'none' }}">
+    <div class="pipe"></div>
+    <header class="schedule-point__head">
+        <p class="meta">
+            <span class="schedule-point__swatch"></span>
+            {{- point.category_name or "Program point" }} ·
+            {% if point.multi_day %}Runs {{ point.date_range }}{% else %}{{ point.day_label }}, {{ point.start_time_local }}–{{ point.end_time_local }}{% endif %} ·
+            {{ point.venue_name }}
+        </p>
+        <h1 class="page-title">{{ point.short_title or point.title }}</h1>
+    </header>
+
+    {% if point.artists | length %}
+    {# Balanced rows: as few rows as fit (max 5 across, 3 on tablets), shared evenly. #}
+    {% set count = point.artists | length %}
+    {% set cols = (count / ((count / 5) | round(0, "ceil"))) | round(0, "ceil") %}
+    {% set colsMid = (count / ((count / 3) | round(0, "ceil"))) | round(0, "ceil") %}
+    <figure class="schedule-point__media">
+        <ol class="schedule-point__cast{% if count > 4 %} schedule-point__cast--many{% endif %}" role="list" style="--cols: {{ cols }}; --cols-mid: {{ colsMid }}">
+            {% for credit in point.artists %}
+            {% for artist in lineup %}{% if artist.slug == credit.slug %}
+            <li>
+                <a class="schedule-point__artist" href="/2026/lineup/{{ artist.slug }}/">
+                    <span class="schedule-point__portrait">
+                        {% if artist.photo_square %}<img src="{{ artist.photo_square }}" alt="" loading="lazy" eleventy:ignore>{% endif %}
+                        <span class="schedule-point__number">{{ artist.number }}</span>
+                    </span>
+                    <span class="schedule-point__name">{{ artist.name }} →</span>
+                </a>
+            </li>
+            {% endif %}{% endfor %}
+            {% endfor %}
+        </ol>
+        <figcaption class="meta">Fig. — {{ point.artists | length }} {{ "artist" if point.artists | length == 1 else "artists" }} at {{ point.short_title or point.title }}</figcaption>
+    </figure>
+    {% else %}
+    {# No artists: the point's own photo (or the key art) takes one portrait's place. #}
+    <figure class="schedule-point__media">
+        <ol class="schedule-point__cast" role="list" style="--cols: 1; --cols-mid: 1">
+            <li>
+                <span class="schedule-point__portrait">
+                    <img src="{{ point.photo_path or '/assets/images/placeholder.jpg' }}" alt="" eleventy:ignore>
+                </span>
+            </li>
+        </ol>
+        <figcaption class="meta">Fig. — {{ point.short_title or point.title }}{% if not point.photo_path %} (key art){% endif %}</figcaption>
+    </figure>
+    {% endif %}
+
+    <div class="schedule-point__body">
+        <dl class="schedule-point__sheet">
+            {% if point.short_title and point.short_title != point.title %}
+            <div><dt class="meta">Full title</dt><dd>{{ point.title }}</dd></div>
+            {% endif %}
             <div>
-                <img src="{{ point.photo_path if point.photo_path else '/assets/images/placeholder.jpg' }}" alt="{{ point.title }}" width="1920" loading="lazy" eleventy:ignore/>
+                <dt class="meta">When</dt>
+                <dd>
+                    {% if point.multi_day %}{{ point.date_range }}, daily {{ point.start_time_local }}–{{ point.end_time_local }}
+                    {% else %}{{ point.day_label }}, {{ point.start_time_local }}–{{ point.end_time_local }}{% endif %}
+                </dd>
             </div>
-            <div class="schedule__section-text">
-                <div>
-                    <h2>{{ point.title }}</h2>
-                    {{ point.description | markdown | sanitize | safe }}
-                </div>
-                <div>
-                    {% if point.artists.length %}
-                        <p><strong>With: </strong>
-                        {%- for artist in point.artists -%}
-                            <a href="/2026/lineup/{{ artist.slug }}/"><u>{{ artist.name }}</u></a>
-                            {%- if not loop.last %}, {% endif -%}
-                        {%- endfor -%}
-                        </p>
-                    {% endif %}
-                    {% if point.category_name != "Uncategorized" %}
-                    <p><strong>Category:</strong> {{ point.category_name }}</p>
-                    {% endif %}
-                    <p><strong>Venue:</strong> {{ point.venue_name }}</p>
-                </div>
-            </div>
+            <div><dt class="meta">Where</dt><dd>{{ point.venue_name }}</dd></div>
+            {% if point.category %}
+            <div><dt class="meta">What</dt><dd><span class="category-label">{{ point.category_name }}</span></dd></div>
+            {% endif %}
+        </dl>
+        <div class="content schedule-point__description">
+            {{ point.description | markdown | sanitize | safe }}
         </div>
+    </div>
+
+    <nav class="pager schedule-point__pager" aria-label="More program points">
+        {% if pagination.href.previous %}
+        <a class="pager__previous" href="{{ pagination.href.previous }}">← Previous</a>
+        {% endif %}
+        <a class="pager__all" href="/2026/schedule/">Full schedule</a>
+        {% if pagination.href.next %}
+        <a class="pager__next" href="{{ pagination.href.next }}">Next →</a>
+        {% endif %}
+    </nav>
 </article>
 
 {% set canonicalUrl = site.url ~ page.url %}

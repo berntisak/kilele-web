@@ -1,0 +1,11 @@
+/*
+ * Meta: a small grey line of facts about an item (its number, date,
+ * reading time). Used by cards, news articles and artist pages.
+ */
+
+.meta {
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-2);
+    text-transform: uppercase;
+}

@@ -1,0 +1,63 @@
+/*
+ * Card: one link to one item, a tinted photo with the text straight below it,
+ * no box around them. The page sets the grid the cards sit in.
+ */
+
+/* The whole card is the link: no link colour or underline, and as tall as its row. */
+.card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+}
+
+/* The frame holds the photo and anything laid over it (the number). */
+.card__frame {
+    position: relative;
+}
+
+/*
+ * Every photo is cropped to the same wide shape, so the cards line up.
+ * A card without a photo gets a plain block of the same size.
+ * The photo is tinted in two colours by an SVG filter from duotones.html.
+ * A page can pick another one by setting --duotone.
+ */
+.card__photo {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    background: var(--placeholder);
+    filter: var(--duotone, url(#duotone-cobalt));
+}
+
+/* A big number in the photo's bottom-left corner. It turns red on hover, the card's only hover sign. */
+.card__number {
+    position: absolute;
+    bottom: var(--space-1);
+    left: var(--space-3);
+    color: var(--cream);
+    font-family: var(--font-display);
+    font-size: var(--text-7);
+    line-height: 1;
+
+    .card:hover & {
+        color: var(--pipe);
+    }
+}
+
+/* The text below the photo. */
+.card__panel {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: var(--space-1);
+    padding-top: var(--space-3);
+}
+
+.card__title {
+    font-size: var(--text-4);
+    font-weight: var(--weight-bold);
+    line-height: var(--line-height-snug);
+}

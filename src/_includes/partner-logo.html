@@ -1,0 +1,11 @@
+{# One partner's logo: a link to their site if they have one, otherwise a plain box.
+   Expects a variable called `partner`. #}
+{% if partner.url %}
+<a class="partner-logo" href="{{ partner.url }}" target="_blank" rel="noopener noreferrer">
+    <img src="{{ partner.logo }}" alt="{{ partner.name }}" loading="lazy">
+</a>
+{% else %}
+<span class="partner-logo">
+    <img src="{{ partner.logo }}" alt="{{ partner.name }}" loading="lazy">
+</span>
+{% endif %}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% set pageTitle = title or site.name %}
+    {% set pageDescription = description or site.description %}
+    {% set canonicalUrl = site.url ~ page.url %}
+    {% set pageImage = og_image or site.defaultImage %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Anton&family=Jost:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap">
+
+    <link rel="icon" type="image/x-icon" href="/assets/logos/favicon_2026.ico">
+
+    <title>{{ pageTitle }}</title>
+    <meta name="description" content="{{ pageDescription }}">
+    <link rel="canonical" href="{{ canonicalUrl }}">
+
+    <meta property="og:title" content="{{ pageTitle }}">
+    <meta property="og:description" content="{{ pageDescription }}">
+    <meta property="og:type" content="{{ og_type if og_type else 'website' }}">
+    <meta property="og:url" content="{{ canonicalUrl }}">
+    <meta property="og:image" content="{{ pageImage }}">
+    <meta property="og:site_name" content="{{ site.name }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ pageTitle }}">
+    <meta name="twitter:description" content="{{ pageDescription }}">
+    <meta name="twitter:image" content="{{ pageImage }}">
+
+    <link rel="stylesheet" href="/css/site.css">
+</head>
+<body>
+    {# The frame stays outside #swup, so it isn't swapped between pages. #}
+    <header class="header-bar">
+        <a class="header-bar__home" href="/">Kilele Summit<span class="header-bar__context"> — {{ headerContext or "Nairobi, Kenya" }}</span></a>
+        <button class="header-bar__index" type="button">Index</button>
+    </header>
+
+    {% include "site-index.html" %}
+    {% include "duotones.html" %}
+
+    <div id="swup" class="page page--{{ pageName }}">
+        {{ content | safe }}
+    </div>
+
+    {% if partnersSection != "none" %}
+    {% set mainPartners = (activePartners | groupby("group")).main %}
+    <section class="section partners">
+        <header class="section-head{{ ' section-head--small' if partnersSection != 'large' }}">
+            <h2 class="section-head__title">Partners</h2>
+        </header>
+        <ul class="partners__row" role="list">
+            {% for partner in mainPartners %}
+            <li>{% include "partner-logo.html" %}</li>
+            {% endfor %}
+            <li class="partners__more">
+                <a class="section-head__link" href="/about/partners/">And {{ (activePartners | length) - (mainPartners | length) }} more partners <span aria-hidden="true">→</span></a>
+            </li>
+        </ul>
+    </section>
+    {% endif %}
+
+    <footer class="footer-bar">
+        <span>Kilele {{ edition.year }}</span>
+        <span>
+            <a href="https://www.instagram.com/kilelesummit/" target="_blank" rel="noopener noreferrer">Instagram</a> ·
+            <a href="https://www.youtube.com/@KileleSummit" target="_blank" rel="noopener noreferrer">YouTube</a> ·
+            <a href="https://kilelesummit.substack.com/" target="_blank" rel="noopener noreferrer">Substack</a>
+        </span>
+    </footer>
+
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script src="/scripts/site-index.js" defer></script>
+</body>
+</html>

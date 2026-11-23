@@ -1,57 +1,47 @@
 ---
-layout: layouts/base.html
+layout: layouts/site.html
+pageName: news
+headerContext: News
 title: Latest news
 description: "Latest news"
 ---
 
-<div class="content__container">
-  <h1>Latest News</h1>
+{% set listedNews = news | rejectattr("hero_video") %}
+<section class="section news-list">
+    <header class="news-list__head">
+        <dl class="stats-bar">
+            <div><dt>News</dt><dd>{{ listedNews | length }}</dd></div>
+            <div><dt>Latest</dt><dd>{{ (listedNews | first).publish_date.slice(0, 10) }}</dd></div>
+            <div><dt>Earliest</dt><dd>{{ (listedNews | last).publish_date.slice(0, 10) }}</dd></div>
+            <div><dt>Edition</dt><dd>{{ edition.year }}</dd></div>
+        </dl>
+        <h1 class="page-title">News</h1>
+        <div class="pipe"></div>
+    </header>
 
-  <div class="news-filter-container">
-    <div id="activeFilter" class="active-filter" style="display: none;">
-      <span><b>Filtering by:</b> <strong id="activeFilterTag"></strong></span>
-      <button id="clearFilter" class="clear-filter-btn">Clear</button>
-    </div>
-  </div>
-
-  <div class="news-grid">
-    {% for post in news %}  
-    {% if not post.hero_video %}
-
-    <a href="/news/{{ post.slug }}/" class="news-card-link" data-tags="{% if post.tags %}{% for tag in post.tags %}{{ tag.name }}{% if not loop.last %},{% endif %}{% endfor %}{% endif %}">
-    <div class="news-card">
-
-        
-        {% if post.photo_path %}
-        <div class="news-card-image">
-            <img src="{{ post.photo_path }}" alt="{{ post.title }}" width="400" height="400" eleventy:ignore/>
-        </div>
+    <ol class="news-list__grid" role="list">
+        {% for post in news %}
+        {% if not post.hero_video %}
+        <li>
+            {% set number = ("00" ~ ((news | length) - loop.index0)).slice(-3) %}
+            <a class="card" href="/news/{{ post.slug }}/">
+                <div class="card__frame">
+                    {% if post.photo_path %}
+                    <img class="card__photo" src="{{ post.photo_path }}" alt="" loading="lazy" eleventy:ignore>
+                    {% else %}
+                    <div class="card__photo"></div>
+                    {% endif %}
+                    <span class="card__number" aria-hidden="true">{{ number }}</span>
+                </div>
+                <div class="card__panel">
+                    <p class="meta">
+                        No. {{ number }} · Filed <time datetime="{{ post.publish_date }}">{{ post.publish_date.slice(0, 10) }}</time>
+                    </p>
+                    <h2 class="card__title">{{ post.title }}</h2>
+                </div>
+            </a>
+        </li>
         {% endif %}
- 
-
-        <div class="news-card-content">
-            <div class="news-card-date-tag">
-            {{ post.publish_date | postDate }}
-            {% if post.tags %}
-            <div class="tags">
-                {% for tag in post.tags %}
-                {% if loop.index <= 2 %}
-                <span class="small-tag">{{ tag.name }}</span>
-                {% endif %}
-                {% endfor %}
-            </div>
-            {% endif %}
-            </div>
-            <div class="news-card-title">{{ post.title }}</div>       
-
-            <div class="news-card-text">{{ post.excerpt }}</div>
-            
-        </div>
-    </div>
-    </a>
-    {% endif %}
-    {% endfor %}
-</div>
-</div>
-
-<script src="/scripts/newsFilter.js"></script>
+        {% endfor %}
+    </ol>
+</section>

@@ -1,0 +1,22 @@
+<div class="timetable__scroll">
+    <div class="timetable__grid" style="--slots: {{ day.last_slot - day.first_slot }}; --venues: {{ day.venues | length }};">
+        <span class="timetable__where">Where</span>
+        {% for hour in day.hours %}
+        <span class="timetable__hour" style="--at: {{ hour.slot - day.first_slot + 1 }};">{{ hour.label }}</span>
+        {% endfor %}
+        {% for venue in day.venues %}
+        {% set lane = loop.index + 1 %}
+        <span class="timetable__venue" style="--lane: {{ lane }};">{{ venue.name }}</span>
+        {% for point in venue.points %}
+        {% set tag = "a" if point.slug else "div" %}
+        <{{ tag }} class="timetable__point{% if point.multi_day %} timetable__point--multi-day{% endif %}{% if point.overlaps_earlier %} timetable__point--overlap{% endif %}"
+            {% if point.slug %}href="/2026/schedule/{{ point.slug }}/"{% endif %}
+            data-category="{{ point.category or 'none' }}"
+            style="--lane: {{ lane }}; --from: {{ point.start_slot - day.first_slot + 1 }}; --to: {{ point.end_slot - day.first_slot + 1 }};">
+            <span class="timetable__time">{{ point.start_time_local }}–{{ point.end_time_local }}</span>
+            <span class="timetable__title">{{ point.short_title or point.title }}</span>
+        </{{ tag }}>
+        {% endfor %}
+        {% endfor %}
+    </div>
+</div>

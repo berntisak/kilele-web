@@ -1,0 +1,57 @@
+/*
+ * The Partners page (src/about/partners.html).
+ */
+
+.page--partners {
+    /* Each group: a hairline above and room around it. From --medium the heading
+       sits in a left column beside its logos. */
+    .partners-page__group {
+        display: grid;
+        gap: var(--space-5);
+        padding-block: var(--space-7);
+        border-top: 1px solid var(--rule);
+
+        @media (--medium) {
+            grid-template-columns: 14rem 1fr;
+        }
+    }
+
+    /* The group's name in the display face. On phones the count sits at the far
+       right; from --medium it sits under the name. */
+    .partners-page__group-name {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        font-family: var(--font-display);
+        font-size: var(--text-6);
+        font-weight: var(--weight-normal);
+        line-height: var(--line-height-tight);
+        text-transform: uppercase;
+
+        @media (--medium) {
+            flex-direction: column;
+            justify-content: start;
+            gap: var(--space-2);
+        }
+    }
+
+    /* The wall: the same grid for every group, more logos across as the screen widens. */
+    .partners-page__wall {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-6) var(--space-5);
+        align-items: center;
+
+        @media (--small) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        @media (--medium) {
+            grid-template-columns: repeat(5, 1fr);
+        }
+
+        @media (--large) {
+            grid-template-columns: repeat(6, 1fr);
+        }
+    }
+}

@@ -62,9 +62,6 @@
         <div id="swup" class="container transition-fade">
             <div class="body__container">
                 {{ content | safe }}
-                {% if not hidePartnersFooter %}
-                {% include "layouts/partners_footer.html" %}
-                {% endif %}
             </div>
         </div>
 
@@ -75,15 +72,24 @@
              enabled in the Vercel project settings, otherwise the script 404s. -->
         <script defer src="/_vercel/insights/script.js"></script>
         <script src="/scripts/menu.js" defer></script>
-        <script src="/scripts/galleryFilter.js" defer></script>
         <script src="/scripts/hero.js" defer></script>
-        <script src="/scripts/scheduleFilter.js" defer></script>
-        <script src="/scripts/calendarView.js" defer></script>
         <script src="/scripts/swup.umd.js" defer></script>
         <script defer>
             document.addEventListener("DOMContentLoaded", () => {
                 const swup = new Swup({
                     containers: ['#swup'],
+                    // The red-pipes prototype (#141) renders "/" through
+                    // layouts/press.html, which uses the same '#swup'
+                    // container id but a completely different head and
+                    // chrome. Without this, navigating home from any archive
+                    // page swaps in the prototype's body while leaving this
+                    // layout's header and global.css around it — a broken
+                    // page that only appears on the client-side path.
+                    // A full page load is correct while two layouts coexist.
+                    // Delete this when #140 unifies them.
+                    ignoreVisit: (url, { el } = {}) =>
+                        new URL(url, location.origin).pathname === '/' ||
+                        !!(el && el.closest('[data-no-swup]')),
                 });
             });
         </script>

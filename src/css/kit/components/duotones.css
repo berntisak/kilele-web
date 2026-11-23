@@ -1,0 +1,9 @@
+/*
+ * Duotones: the hidden SVG that holds the photo colour filters
+ * (src/_includes/duotones.html).
+ */
+
+/* Out of the flow, so it doesn't leave an empty line under the header bar. */
+.duotones {
+    position: absolute;
+}

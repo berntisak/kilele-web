@@ -1,0 +1,45 @@
+/*
+ * Header bar: the strip at the top of every page. Home link and page
+ * context on the left, the index button on the right (#143).
+ *
+ * It stays pinned to the top of the screen, so INDEX is always in reach.
+ * It never turns ink (#184).
+ */
+
+/* Its height, built from the same values as the bar, so anything else that
+   sticks to the top (or an in-page jump) can stop just below it. */
+:root {
+    --header-bar-height: calc(var(--text-2) * var(--line-height-normal) + 2 * var(--space-3) + 1px);
+}
+
+.header-bar {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--gutter);
+    border-bottom: 1px solid var(--rule); /* rule 10: a 1px line */
+    font-family: var(--font-mono);
+    font-size: var(--text-2);
+    line-height: var(--line-height-normal);
+    text-transform: uppercase;
+    background: var(--ground);
+    color: var(--text);
+}
+
+.header-bar__home {
+    color: inherit;
+    text-decoration: none;
+}
+
+.header-bar__context {
+    color: var(--text-muted);
+}
+
+.header-bar__index {
+    font: inherit;
+    text-transform: inherit;
+}

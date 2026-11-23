@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="kilele">
+  <style>
+    svg { --m-ink: #0f0f0e; --m-red: #b61212; --m-ground: #f2eee2; }
+  </style>
+  <path d="M4,26 L6,26 Q10,26 10,22 L10,12 Q10,8 14,8 L22,8 Q26,8 26,12 L26,26"
+        fill="none" stroke="var(--m-red)" stroke-width="4" stroke-linecap="round"/>
+</svg>

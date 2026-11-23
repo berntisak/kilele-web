@@ -1,0 +1,21 @@
+/*
+ * Footer bar: the strip at the bottom of every page. Bare for now; its
+ * contents are decided in the Site frame ticket (#184).
+ */
+
+.footer-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-5) var(--gutter);
+    border-top: 1px solid var(--rule); /* rule 10: a 1px line */
+    font-family: var(--font-mono);
+    font-size: var(--text-2);
+    background: var(--ground);
+    color: var(--text);
+}
+
+.footer-bar a {
+    color: inherit;
+}

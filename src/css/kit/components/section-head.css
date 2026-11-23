@@ -1,0 +1,44 @@
+/*
+ * Section head: a Section's heading on the left and, optionally, a link
+ * on the right (rule 6).
+ */
+
+.section-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-2) var(--space-4);
+    margin-bottom: var(--space-5);
+    font-family: var(--font-mono);
+    font-size: var(--text-3);
+    text-transform: uppercase;
+}
+
+.section-head__title {
+    font-family: var(--font-display);
+    font-size: var(--text-7);
+    font-weight: var(--weight-normal);
+    line-height: var(--line-height-tight);
+}
+
+/* A short bar before the heading. PLACEHOLDER: pipe colour until the designer settles the accents. */
+.section-head__title::before {
+    content: "";
+    display: inline-block;
+    /* One letter-height wide, so its length scales with the heading; as thick as the pipes. */
+    width: 1em;
+    height: var(--pipe-width);
+    margin-right: var(--space-3);
+    vertical-align: middle;
+    background: var(--pipe);
+}
+
+.section-head__link {
+    color: inherit;
+}
+
+/* A smaller heading, for Sections that shouldn't compete with the page's own content. */
+.section-head--small .section-head__title {
+    font-size: var(--text-6);
+}
