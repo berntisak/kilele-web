@@ -74,7 +74,8 @@
     .edition-title__pipe::after,
     .archive-pipe__run::before,
     .archive-pipe__run::after,
-    .closing-pipe__run::before {
+    .closing-pipe__run::before,
+    .lead-section__branch::after {
         content: "";
         position: absolute;
         z-index: 1;
@@ -91,9 +92,10 @@
         left: 0;
     }
 
-    /* The joints at a run's right end: corners 1 and 2. */
+    /* The joints at a run's right end: corners 1 and 2, and the tee where the tagline's branch leaves the pipe. */
     .edition-title__pipe::after,
-    .archive-pipe__run::after {
+    .archive-pipe__run::after,
+    .lead-section__branch::after {
         left: calc(100% - var(--pipe-width) / 2);
     }
 
@@ -306,9 +308,77 @@
             column-gap: var(--space-7);
             align-items: end;
 
-            & > :not(.lead-section__sentence, .lead-section__action) {
+            & > :not(.lead-section__sentence, .lead-section__action, .lead-section__tagline) {
                 grid-column: 1 / -1;
             }
+        }
+    }
+
+    /*
+     * The tagline. Placement still to be settled after the design clean-up (see ideas.md).
+     * The wrapper covers the whole Lead section, margins included. Hidden on phones for now.
+     */
+    .lead-section__tagline {
+        --branch-top: 7.5rem;
+        display: none;
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+
+        @media (--medium) {
+            display: block;
+        }
+    }
+
+    /* A short branch teed off the right-margin pipe, level with the theme. Only from --large, where there is room beside it. */
+    .lead-section__branch {
+        display: none;
+
+        @media (--large) {
+            display: block;
+            position: absolute;
+            top: var(--branch-top);
+            right: calc(var(--gutter) / 2);
+            width: calc(var(--gutter) / 2 + 13rem);
+            height: var(--pipe-width);
+            background: url("/assets/pipes/pipe-segment.svg") left center / auto calc(100% * 40 / 9.89) repeat-x;
+        }
+    }
+
+    /*
+     * The tagline as a yellow marker. Up to --large: a band round the right-margin pipe, the text
+     * running down it to a flow arrow. From --large: on the branch, pointing at the pipe.
+     */
+    .lead-section__marker {
+        position: absolute;
+        top: var(--space-6);
+        right: calc(var(--gutter) / 2 + var(--pipe-width) / 2 - 0.875rem);
+        width: 1.75rem;
+        margin: 0;
+        padding: 0.7rem 0 1.6rem;
+        background: var(--yellow);
+        color: var(--ink);
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        font-weight: var(--weight-bold);
+        line-height: 1.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        writing-mode: vertical-rl;
+        white-space: nowrap;
+        clip-path: polygon(0 0, 100% 0, 100% calc(100% - 0.9rem), 50% 100%, 0 calc(100% - 0.9rem));
+
+        @media (--large) {
+            top: calc(var(--branch-top) + var(--pipe-width) / 2);
+            right: calc(var(--gutter) + 1rem);
+            translate: 0 -50%;
+            width: 12rem;
+            padding: 0.45rem 1.6rem 0.45rem 0.8rem;
+            line-height: 1.4;
+            writing-mode: horizontal-tb;
+            white-space: normal;
+            clip-path: polygon(0 0, calc(100% - 0.9rem) 0, 100% 50%, calc(100% - 0.9rem) 100%, 0 100%);
         }
     }
 
