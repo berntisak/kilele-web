@@ -331,11 +331,14 @@
         }
     }
 
-    /* A short branch teed off the right-margin pipe, level with the theme. Only from --large, where there is room beside it. */
+    /*
+     * A short branch teed off the right-margin pipe, level with the theme. Only from 90rem (1440px):
+     * the theme heading stays about 958px wide from --large up, and the marker only clears it from there.
+     */
     .lead-section__branch {
         display: none;
 
-        @media (--large) {
+        @media (min-width: 90rem) {
             display: block;
             position: absolute;
             top: var(--branch-top);
@@ -347,8 +350,8 @@
     }
 
     /*
-     * The tagline as a yellow marker. Up to --large: a band round the right-margin pipe, the text
-     * running down it to a flow arrow. From --large: on the branch, pointing at the pipe.
+     * The tagline as a yellow marker. Below 90rem: a band round the right-margin pipe, the text
+     * running down it to a flow arrow. From 90rem: on the branch, pointing at the pipe.
      */
     .lead-section__marker {
         position: absolute;
@@ -369,7 +372,7 @@
         white-space: nowrap;
         clip-path: polygon(0 0, 100% 0, 100% calc(100% - 0.9rem), 50% 100%, 0 calc(100% - 0.9rem));
 
-        @media (--large) {
+        @media (min-width: 90rem) {
             top: calc(var(--branch-top) + var(--pipe-width) / 2);
             right: calc(var(--gutter) + 1rem);
             translate: 0 -50%;
