@@ -26,9 +26,9 @@
 .section-head__title::before {
     content: "";
     display: inline-block;
-    /* One letter-height wide and a seventh of that thick, so it scales with the heading. */
+    /* One letter-height wide, so its length scales with the heading; as thick as the pipes. */
     width: 1em;
-    height: 0.14em;
+    height: var(--pipe-width);
     margin-right: var(--space-3);
     vertical-align: middle;
     background: var(--pipe);

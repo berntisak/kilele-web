@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30.29 61.45">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #9f180f;
+      }
+
+      .cls-2 {
+        fill: #5a0404;
+      }
+    </style>
+  </defs>
+  <rect class="cls-1" x="7.37" y="38.43" width="17.8" height="12.85" transform="translate(32.54 89.71) rotate(-180)"/>
+  <rect class="cls-1" x="11.33" y="51.28" width="9.89" height="4.94" transform="translate(32.54 107.5) rotate(-180)"/>
+  <rect class="cls-2" x="11.33" y="51.28" width="9.89" height=".49" transform="translate(32.54 103.05) rotate(-180)"/>
+  <rect class="cls-1" x="10.26" y="32.5" width="12.03" height="5.93" transform="translate(32.54 70.92) rotate(-180)"/>
+  <rect class="cls-2" x="10.26" y="37.88" width="12.03" height=".55" transform="translate(32.54 76.3) rotate(-180)"/>
+  <rect class="cls-1" x="12.32" y="26.56" width="7.91" height="5.93" transform="translate(32.54 59.06) rotate(-180)"/>
+  <rect class="cls-2" x="12.32" y="31.95" width="7.91" height=".55" transform="translate(32.54 64.44) rotate(-180)"/>
+  <rect class="cls-1" x="12.32" y="19.64" width="7.91" height="5.93" transform="translate(32.54 45.22) rotate(-180)"/>
+  <rect class="cls-2" x="12.32" y="24.92" width="7.91" height=".66" transform="translate(32.54 50.49) rotate(-180)"/>
+  <rect class="cls-1" x="15.46" y="12.72" width="1.98" height="5.93" transform="translate(32.9 31.38) rotate(-180)"/>
+  <rect class="cls-1" x="10.34" y="25.57" width="11.86" height=".99" transform="translate(32.54 52.14) rotate(-180)"/>
+  <rect class="cls-1" x="10.52" y="18.65" width="11.86" height=".99" transform="translate(32.9 38.3) rotate(-180)"/>
+  <rect x="12.5" y="11.73" width="7.91" height=".99" transform="translate(32.9 24.46) rotate(-180)"/>
+  <rect class="cls-2" x="15.46" y="18.1" width="1.98" height=".55" transform="translate(32.9 36.76) rotate(-180)"/>
+</svg>

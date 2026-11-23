@@ -3,9 +3,8 @@
  */
 
 .page--home {
-    /* The logo's width, and the pipe thickness that follows from it: the logo's pipe is 23 units thick in a drawing 1633.33 wide. */
+    /* The logo's width. Its own pipe is 23 units thick in a drawing 1633.33 wide, so thinner than --pipe-width. */
     --logo-width: min(20rem, 62vw);
-    --pipe-thickness: calc(var(--logo-width) * 23 / 1633.33);
 
     .edition-title {
         position: relative;
@@ -38,25 +37,75 @@
         height: 2.93%;
     }
 
-    /* The designer's pipe (header-pipe.svg), sized so its pipe is as thick as the logo's and lined up with it. */
+    /* The header pipe: the designer's plain segment, as thick as --pipe-width, centred on the logo's pipe. */
     .edition-title__pipe {
         position: absolute;
         left: 0;
         right: calc(var(--gutter) / 2);
-        top: calc(-100% * 131.29 / 9.89);
-        height: calc(100% * 240 / 9.89);
-        background: url("/assets/pipes/header-pipe.svg") left top / auto 100% repeat-x;
+        top: 50%;
+        height: calc(var(--pipe-width) * 40 / 9.89);
+        translate: 0 -50%;
+        background: url("/assets/pipes/pipe-segment.svg") left center / auto 100% repeat-x;
+    }
+
+    /* A fitting from the designer's kit, at the pipe's scale; its box ends on the pipe's centre line. */
+    .edition-title__fitting {
+        position: absolute;
+        left: var(--x);
+        width: calc(var(--pipe-width) * 30.29 / 9.89);
+        translate: -50% 0;
+    }
+
+    /* An inline fitting sets --shift (in the designer's units) to move its collar onto the pipe. */
+    .edition-title__fitting--up {
+        bottom: calc(50% - var(--shift, 0) * var(--pipe-width) / 9.89);
+    }
+
+    .edition-title__fitting--down {
+        top: calc(50% - var(--shift, 0) * var(--pipe-width) / 9.89);
+    }
+
+    /*
+     * The joints: one where the logo's thinner pipe meets the header pipe, and one on each corner.
+     * Each sits on the end of a horizontal run, centred where the two pipes' centre lines cross:
+     * half a pipe thickness in from the run's end, halfway down it.
+     */
+    .edition-title__run::before,
+    .edition-title__pipe::after,
+    .archive-pipe__run::before,
+    .archive-pipe__run::after,
+    .closing-pipe__run::before {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        top: 50%;
+        left: calc(var(--pipe-width) / 2);
+        width: calc(var(--pipe-width) * 39.12 / 9.89);
+        aspect-ratio: 39.12 / 42.82;
+        translate: -50% -50%;
+        background: url("/assets/pipes/pipe-joint.svg") center / contain no-repeat;
+    }
+
+    /* The logo's joint sits right on the logo's edge. */
+    .edition-title__run::before {
+        left: 0;
+    }
+
+    /* The joints at a run's right end: corners 1 and 2. */
+    .edition-title__pipe::after,
+    .archive-pipe__run::after {
+        left: calc(100% - var(--pipe-width) / 2);
     }
 
     /* Corner 1: the pipe turns down in the middle of the right margin. It's longer than needed; the section's overflow: hidden cuts it off at the bottom edge. */
     .edition-title__run::after {
         content: "";
         position: absolute;
-        top: 0;
+        top: calc(50% - var(--pipe-width) / 2);
         right: calc(var(--gutter) / 2);
-        width: var(--pipe-thickness);
+        width: var(--pipe-width);
         height: 100vh;
-        background: var(--pipe);
+        background: url("/assets/pipes/pipe-segment-vertical.svg") center top / calc(100% * 40 / 9.89) auto repeat-y;
     }
 
     /* The stretch of pipe from the logo to the content's right edge. Everything on the run is placed along it. */
@@ -239,8 +288,8 @@
             top: 0;
             bottom: 0;
             right: calc(var(--gutter) / 2);
-            width: var(--pipe-thickness);
-            background: var(--pipe);
+            width: var(--pipe-width);
+            background: url("/assets/pipes/pipe-segment-vertical.svg") center top / calc(100% * 40 / 9.89) auto repeat-y;
         }
     }
 
@@ -340,7 +389,7 @@
 
     .lead-section__stub {
         width: var(--space-7);
-        height: 0.4rem;
+        height: var(--pipe-width);
         background: var(--pipe);
     }
 
@@ -369,8 +418,8 @@
             top: 0;
             bottom: 0;
             left: calc(var(--gutter) / 2);
-            width: var(--pipe-thickness);
-            background: var(--pipe);
+            width: var(--pipe-width);
+            background: url("/assets/pipes/pipe-segment-vertical.svg") center top / calc(100% * 40 / 9.89) auto repeat-y;
         }
     }
 
@@ -379,8 +428,8 @@
         top: 0;
         left: calc(var(--gutter) / 2);
         right: calc(var(--gutter) / 2);
-        height: var(--pipe-thickness);
-        background: var(--pipe);
+        height: var(--pipe-width);
+        background: url("/assets/pipes/pipe-segment.svg") left center / auto calc(100% * 40 / 9.89) repeat-x;
     }
 
     /* Each leg sets its own --x (how far along) and --length (how far down), like the Edition title's legs. */
@@ -417,16 +466,16 @@
          */
         --band-gap: 5.5rem;
         position: relative;
-        height: calc(var(--band-gap) + var(--pipe-thickness));
+        height: calc(var(--band-gap) + var(--pipe-width));
 
         &::before {
             content: "";
             position: absolute;
             top: 0;
             left: calc(var(--gutter) / 2);
-            width: var(--pipe-thickness);
+            width: var(--pipe-width);
             height: 100%;
-            background: var(--pipe);
+            background: url("/assets/pipes/pipe-segment-vertical.svg") center top / calc(100% * 40 / 9.89) auto repeat-y;
         }
     }
 
@@ -435,8 +484,8 @@
         top: var(--band-gap);
         left: calc(var(--gutter) / 2);
         width: calc(100% * 2 / 3 - var(--gutter) / 2);
-        height: var(--pipe-thickness);
-        background: var(--pipe);
+        height: var(--pipe-width);
+        background: url("/assets/pipes/pipe-segment.svg") left center / auto calc(100% * 40 / 9.89) repeat-x;
     }
 
     /* The valve centred on the run's end. */
