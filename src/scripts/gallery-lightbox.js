@@ -34,7 +34,7 @@ lightbox.addEventListener("keydown", (event) => {
     if (event.key === "ArrowRight") show(current + 1);
 });
 
-// A click anywhere in the lightbox closes it, except on its buttons and the credit links.
+// A click anywhere in the lightbox closes it, except on its buttons, the arrow row and the credit links.
 lightbox.addEventListener("click", (event) => {
-    if (!event.target.closest("a, button")) lightbox.close();
+    if (!event.target.closest("a, button, .lightbox__nav")) lightbox.close();
 });
