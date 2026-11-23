@@ -94,12 +94,16 @@
         min-height: var(--space-7);
         padding: 0;
         font-family: var(--font-mono);
-        font-size: var(--text-5);
+        font-size: var(--text-7); /* phone: 36px, easy to see and hit */
         line-height: var(--line-height-tight);
         color: inherit;
         background: none;
         border: 0;
         cursor: pointer;
+
+        @media (--medium) {
+            font-size: var(--text-5); /* desktop: 22px (--text-7 would grow to 80px) */
+        }
     }
 
     .lightbox__close {
@@ -108,15 +112,20 @@
         right: var(--space-4);
     }
 
-    /* Previous and next in a row under the photo, one at each end. */
+    /* Previous and next in a row under the photo, one at each end.
+       The auto margins on the photo, this row and the text share the spare height equally,
+       so the arrows and text sit halfway between the photo and the bottom of the screen. */
     .lightbox__nav {
         display: flex;
         justify-content: space-between;
+        margin-top: auto;
     }
 
-    /* The whole photo always shows, as large as fits: scaled down, never cropped. */
+    /* The whole photo always shows, as large as fits: scaled down, never cropped.
+       It doesn't grow past its own size, so its box hugs the picture. */
     .lightbox__photo {
-        flex: 1;
+        flex: 0 1 auto;
+        margin-top: auto;
         min-height: 0;
         width: 100%;
         object-fit: contain;
@@ -126,6 +135,7 @@
     .lightbox__text {
         font-size: var(--text-3);
         text-align: center;
+        margin-bottom: auto;
     }
 
     .lightbox__credit {
