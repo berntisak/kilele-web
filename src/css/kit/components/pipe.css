@@ -56,16 +56,17 @@
 /*
  * A fitting: one of the designer's legs (src/assets/pipes), at the pipe's scale. The run it sits
  * in places it: --x is how far along. Its box ends on the centre line of the box it sits in, so
- * that box must be centred on the pipe. The legs are 30.29 units wide, the pipe 9.89.
+ * that box must be centred on the pipe. The legs and tees are 31 units wide, the pipe 9.89.
  */
 .pipe__fitting {
     position: absolute;
     left: var(--x);
-    width: calc(var(--pipe-width) * 30.29 / 9.89);
+    width: calc(var(--pipe-width) * 31 / 9.89);
     translate: -50% 0;
 }
 
-/* An inline fitting sets --shift (in the designer's units) to move its collar onto the pipe. */
+/* A straight leg starts at its file's edge and needs no shift. A tee sets --shift (in the
+   designer's units) to move its joint back onto the pipe: 19.4 for tee-down-01, 16.6 for tee-up-01. */
 .pipe__fitting--up {
     bottom: calc(50% - var(--shift, 0) * var(--pipe-width) / 9.89);
 }

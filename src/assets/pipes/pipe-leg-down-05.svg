@@ -1,18 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30.29 60.68">
-  <defs>
-    <style>
-      .cls-1 {
-        fill: #9f180f;
-      }
-
-      .cls-2 {
-        fill: #5a0404;
-      }
-    </style>
-  </defs>
-  <rect class="cls-1" x="9.42" y="20.96" width="12.96" height="34.49" transform="translate(31.81 76.41) rotate(-180)"/>
-  <rect class="cls-2" x="9.42" y="54.79" width="12.96" height=".66" transform="translate(31.81 110.24) rotate(-180)"/>
-  <rect class="cls-2" x="9.42" y="53.69" width="12.96" height=".66" transform="translate(31.81 108.05) rotate(-180)"/>
-  <rect class="cls-2" x="9.42" y="52.59" width="12.96" height=".66" transform="translate(31.81 105.85) rotate(-180)"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 31 97" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:affinity="https://www.affinity.studio/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(-1,0,-0,-1,31.21,90.39)">
+        <path d="M12.41,11.43L18.8,11.43C20.62,11.43 22.09,12.9 22.09,14.71L22.09,90.96L9.12,90.96L9.12,14.71C9.12,12.9 10.59,11.43 12.41,11.43Z" style="fill:rgb(159,24,15);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(1,0,0,1,0,-12)">
+        <rect x="7.27" y="51.86" width="16.67" height="3.3" style="fill:rgb(159,24,15);"/>
+    </g>
+    <g transform="matrix(1,0,0,1,0,-12)">
+        <rect x="7.27" y="55.15" width="16.67" height="0.66" style="fill:rgb(90,4,4);"/>
+    </g>
 </svg>

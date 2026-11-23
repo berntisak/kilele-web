@@ -1,19 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30.29 103.66">
-  <defs>
-    <style>
-      .cls-1 {
-        fill: #9f180f;
-      }
-
-      .cls-2 {
-        fill: #5a0404;
-      }
-    </style>
-  </defs>
-  <path class="cls-1" d="M11.9,4.4h6.39c1.82,0,3.29,1.47,3.29,3.28v90.75h-12.97V7.68C8.61,5.87,10.08,4.4,11.9,4.4Z"/>
-  <rect class="cls-2" x="6.76" y="16.92" width="16.67" height=".66"/>
-  <rect class="cls-1" x="6.76" y="13.62" width="16.67" height="3.3"/>
-  <rect class="cls-2" x="6.76" y="57.34" width="16.67" height=".66"/>
-  <rect class="cls-1" x="6.76" y="54.05" width="16.67" height="3.3"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 31 104" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:affinity="https://www.affinity.studio/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,0,5.352011)">
+        <path d="M11.9,4.4L18.29,4.4C20.11,4.4 21.58,5.87 21.58,7.68L21.58,98.43L8.61,98.43L8.61,7.68C8.61,5.87 10.08,4.4 11.9,4.4Z" style="fill:rgb(159,24,15);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(1,0,0,1,0,5.352011)">
+        <rect x="6.76" y="16.92" width="16.67" height="0.66" style="fill:rgb(90,4,4);"/>
+    </g>
+    <g transform="matrix(1,0,0,1,0,5.352011)">
+        <rect x="6.76" y="13.62" width="16.67" height="3.3" style="fill:rgb(159,24,15);"/>
+    </g>
+    <g transform="matrix(1,0,0,1,0,5.352011)">
+        <rect x="6.76" y="57.34" width="16.67" height="0.66" style="fill:rgb(90,4,4);"/>
+    </g>
+    <g transform="matrix(1,0,0,1,0,5.352011)">
+        <rect x="6.76" y="54.05" width="16.67" height="3.3" style="fill:rgb(159,24,15);"/>
+    </g>
 </svg>
