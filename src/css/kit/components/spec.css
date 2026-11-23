@@ -1,0 +1,45 @@
+/*
+ * Spec: a ruled table of labelled facts (dl / dt / dd), each value a list of
+ * links. Used by artist pages and project pages.
+ */
+
+/* A dark line on top, a thin one under each row. */
+.spec {
+    border-top: 1px solid var(--text);
+}
+
+/* Phones: the label above its value. From --small: side by side. */
+.spec div {
+    display: grid;
+    gap: var(--space-1) var(--space-4);
+    padding-block: var(--space-3);
+    border-bottom: 1px solid var(--rule);
+
+    @media (--small) {
+        grid-template-columns: 8rem 1fr;
+    }
+}
+
+/* Several links stack in the value column. */
+.spec__value {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    font-weight: var(--weight-bold);
+}
+
+/* Short names run along one line and wrap. */
+.spec__value--inline {
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: var(--space-4);
+}
+
+.spec a {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+        color: var(--pipe);
+    }
+}

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 366" role="img" aria-label="kilele">
+  <style>
+    svg { --m-ink: #0f0f0e; --m-red: #b61212; --m-ground: #f2eee2; }
+  </style>
+  <g stroke="var(--m-red)" stroke-width="17" fill="none">
+    <line x1="0" y1="104" x2="612" y2="104" stroke-linecap="butt"/>
+    <g stroke-linecap="round">
+      <line x1="46" y1="104" x2="46" y2="70"/>
+      <line x1="84" y1="104" x2="84" y2="36"/>
+      <line x1="122" y1="104" x2="122" y2="82"/>
+      <line x1="214" y1="104" x2="214" y2="24"/>
+      <line x1="252" y1="104" x2="252" y2="12"/>
+      <line x1="290" y1="104" x2="290" y2="48"/>
+      <line x1="396" y1="104" x2="396" y2="58"/>
+      <line x1="434" y1="104" x2="434" y2="20"/>
+      <line x1="540" y1="104" x2="540" y2="76"/>
+      <line x1="578" y1="104" x2="578" y2="42"/>
+      <line x1="360" y1="104" x2="360" y2="348"/>
+    </g>
+  </g>
+  <circle cx="202" cy="176.25" r="19.6" fill="none" stroke="var(--m-red)" stroke-width="15.5"/>
+  <g fill="var(--m-ink)" stroke="var(--m-ink)">
+    <rect x="167" y="91" width="6" height="26"/>
+    <rect x="497" y="91" width="6" height="26"/>
+    <rect x="107" y="72" width="30" height="6"/>
+    <rect x="421" y="53" width="26" height="6"/><rect x="447" y="54.5" width="16" height="3"/><circle cx="470" cy="56" r="7" fill="none" stroke-width="3.5"/>
+    <rect x="609" y="88" width="7" height="32"/>
+  </g>
+  <g font-family="'Archivo Black','Arial Black',sans-serif" font-size="210" letter-spacing="-6"
+     fill="var(--m-ink)" paint-order="stroke fill" stroke="var(--m-ground)" stroke-width="17" stroke-linejoin="round">
+    <text x="330" y="326" text-anchor="middle">k&#305;lel<tspan dy="-16">e</tspan></text>
+  </g>
+</svg>

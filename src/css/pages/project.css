@@ -1,0 +1,65 @@
+/*
+ * One project's page (src/2026/projects/[slug].html).
+ */
+
+.page--project {
+    /* Phones: the photo above the text. From --medium: side by side, as on the artist page. */
+    .project {
+        display: grid;
+        gap: var(--space-6);
+
+        @media (--medium) {
+            grid-template-columns: 5fr 7fr;
+            align-items: start;
+        }
+    }
+
+    /* The main runs across both columns, above the photo and the text. */
+    .project__main {
+        grid-column: 1 / -1;
+    }
+
+    /* The photo's column runs as tall as the text beside it, so the sticky
+       photo stops where the text ends, before the pager. */
+    .project__figure-column {
+        align-self: stretch;
+    }
+
+    /* From --medium the photo stays in view while the text scrolls past. */
+    .project__figure {
+        @media (--medium) {
+            position: sticky;
+            top: calc(var(--header-bar-height) + var(--space-6));
+        }
+    }
+
+    /* Close under its meta line, as on the artist page. */
+    .project__name {
+        margin-top: var(--space-2);
+    }
+
+    /* The excerpt opens the text, a step larger than the description. */
+    .project__lead {
+        max-width: 50ch;
+        font-size: var(--text-5);
+        line-height: var(--line-height-normal);
+    }
+
+    .project__spec {
+        margin-top: var(--space-6);
+    }
+
+    /* About 65 characters a line, as on the artist page. */
+    .project__description {
+        max-width: 65ch;
+        margin-top: var(--space-6);
+    }
+
+    /* Across both columns, under everything, as on the artist page. */
+    .project__pager {
+        grid-column: 1 / -1;
+        margin-top: var(--space-8);
+        padding-top: var(--space-4);
+        border-top: 1px solid var(--rule);
+    }
+}

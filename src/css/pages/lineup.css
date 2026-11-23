@@ -1,0 +1,146 @@
+/*
+ * The 2026 lineup list (src/2026/lineup/lineup.html).
+ */
+
+.page--lineup {
+    .lineup__head {
+        margin-bottom: var(--space-7);
+    }
+
+    /* Jumping to a letter stops below the stuck bar instead of under it. */
+    .lineup__group {
+        scroll-margin-top: var(--space-8);
+    }
+
+    /* Phones: a black bar for each letter, the count at the right.
+       From --small: a big letter over a line, the count beside it. */
+    .lineup__letter {
+        display: flex;
+        justify-content: space-between;
+        margin-top: var(--space-6);
+        padding: var(--space-1) var(--space-2);
+        background: var(--text);
+        color: var(--ground);
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        font-weight: var(--weight-bold);
+
+        @media (--small) {
+            justify-content: flex-start;
+            align-items: baseline;
+            gap: var(--space-3);
+            margin-bottom: var(--space-4);
+            padding: 0 0 var(--space-2);
+            border-bottom: 1px solid var(--text);
+            background: none;
+            color: var(--text);
+            font-family: var(--font-display);
+            font-size: var(--text-8);
+            font-weight: var(--weight-normal);
+            line-height: var(--line-height-tight);
+        }
+    }
+
+    .lineup__count {
+        @media (--small) {
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: var(--text-2);
+        }
+    }
+
+    /* Phones: one row under another. From --small: a grid of tiles. */
+    .lineup__list {
+        @media (--small) {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-5) var(--space-3);
+        }
+
+        @media (--medium) {
+            grid-template-columns: repeat(5, 1fr);
+        }
+
+        @media (--large) {
+            grid-template-columns: repeat(6, 1fr);
+        }
+    }
+
+    /* Phones: the number in a narrow column, then the name.
+       From --small: one column, so the parts stack into a tile. */
+    .lineup__artist {
+        display: grid;
+        grid-template-columns: 3rem 1fr;
+        align-items: baseline;
+        gap: var(--space-3);
+        padding-block: var(--space-2);
+        border-bottom: 1px solid var(--rule);
+        color: inherit;
+        text-decoration: none;
+
+        &:hover {
+            color: var(--pipe);
+        }
+
+        @media (--small) {
+            grid-template-columns: 1fr;
+            gap: var(--space-2);
+            padding-block: 0;
+            border-bottom: none;
+        }
+    }
+
+    /* Portraits only from --small: phones keep the plain register. */
+    .lineup__photo {
+        display: none;
+
+        @media (--small) {
+            grid-area: 1 / 1;
+            display: block;
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            background: var(--placeholder);
+            filter: url(#duotone-green);
+        }
+    }
+
+    /* From --small the number shares the photo's cell, in its bottom-left corner.
+       Cream, not a role: it sits on a photo, not a Ground (as the kit card). */
+    .lineup__number {
+        color: var(--text-muted);
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+
+        @media (--small) {
+            /* Lifts it over the filtered photo, which paints in a later layer. */
+            position: relative;
+            grid-area: 1 / 1;
+            align-self: end;
+            margin: 0 0 var(--space-1) var(--space-2);
+            color: var(--cream);
+            font-family: var(--font-display);
+            font-size: var(--text-6);
+            line-height: var(--line-height-tight);
+
+            .lineup__artist:hover & {
+                color: var(--pipe);
+            }
+        }
+    }
+
+    /* Under a portrait the name is a caption, so it drops to body type. */
+    .lineup__name {
+        font-family: var(--font-display);
+        font-size: var(--text-6);
+        line-height: var(--line-height-snug);
+        text-transform: uppercase;
+
+        @media (--small) {
+            font-family: var(--font-body);
+            font-size: var(--text-4);
+            font-weight: var(--weight-bold);
+            text-transform: none;
+        }
+    }
+}

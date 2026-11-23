@@ -5,65 +5,90 @@ pagination:
   alias: project
   resolve: values
 permalink: "/2026/projects/{{ project.slug }}/"
-layout: layouts/base.html
+layout: layouts/site.html
+pageName: project
+headerContext: Archive 2026
 eleventyComputed:
     title: "{{ project.title }}"
     description: "{{ project.excerpt or project.title }}"
     og_image: "{{ project.photo_path }}"
-    og_type: "project"
+    og_type: "website"
 ---
 
-<article class="content__container">
-    <div class="news__section news__section-content active">
-         <div class="news__section-title"> 
-            {{project.title}}
-         </div>
-        <div class="news-post-image">
-        {% if project.photo_path %}
-            <img src="{{ project.photo_path }}" alt="{{ project.title }}" eleventy:ignore />
-        {% endif %}
-        </div>
-            <div class="news__section-text">
-                {{ project.description | markdown | sanitize | safe }}
-                {% if project.programPoints.length %}
-                <p>
-                <strong>{{project.title}}</strong> in the Kilele 2026 program:  
-                {%- for point in project.programPoints -%}
-                    <a href="/2026/schedule/{{ point.slug }}/"> <u><i>{{ point.short_title or point.title }}</i></u></a>
-                    {%- if not loop.last %}, {% endif -%}
-                {%- endfor -%}                    
-                </p>
+<article class="section project">
+    <div class="pipe project__main"></div>
+    <div class="project__figure-column">
+        <figure class="figure project__figure">
+            <div class="figure__frame">
+                {% if project.photo_large %}
+                <img class="figure__photo" src="{{ project.photo_large }}" alt="" width="1000" height="1000" eleventy:ignore>
+                {% else %}
+                <span class="figure__photo"></span>
                 {% endif %}
-                {% if project.artists.length %}
-                <p>
-                <strong>Artist profiles: </strong>     
-                {%- for artist in project.artists -%}
-                    <a href="/2026/lineupe/{{ artist.slug }}/"> <u><i>{{ artist.name }}</i></u></a>
-                    {%- if not loop.last %}, {% endif -%}
-                {%- endfor -%}
-                </p>
-                {% endif %}
+                <span class="figure__number" aria-hidden="true">{{ project.number }}</span>
+            </div>
+            <figcaption class="meta figure__caption">Fig. {{ project.number }} — {{ project.title }}, Projects 2026</figcaption>
+        </figure>
+    </div>
+    <div class="project__text">
+        <p class="meta">Project no. {{ project.number }} of {{ projects | length }} · Projects 2026</p>
+        <h1 class="page-title project__name">{{ project.title }}</h1>
+        <p class="project__lead">{{ project.excerpt }}</p>
+        <dl class="spec project__spec">
+            {% if project.programPoints.length %}
+            <div>
+                <dt class="meta">Program</dt>
+                <dd class="spec__value">
+                    {% for point in project.programPoints %}
+                    <a href="/2026/schedule/{{ point.slug }}/">{{ point.short_title or point.title }} →</a>
+                    {% endfor %}
+                </dd>
+            </div>
+            {% endif %}
+            {% if project.artists.length %}
+            <div>
+                <dt class="meta">Artists</dt>
+                <dd class="spec__value spec__value--inline">
+                    {% for artist in project.artists %}
+                    <a href="/2026/lineup/{{ artist.slug }}/">{{ artist.name }}</a>
+                    {% endfor %}
+                </dd>
+            </div>
+            {% endif %}
+            {% if project.links.length %}
+            <div>
+                <dt class="meta">Links</dt>
+                <dd class="spec__value spec__value--inline">
+                    {% for link in project.links %}
+                    <a href="{{ link.url }}" target="_blank" rel="noopener">{{ link.name }} ↗</a>
+                    {% endfor %}
+                </dd>
+            </div>
+            {% endif %}
+        </dl>
+        <div class="content project__description">
+            {{ project.description | markdown | sanitize | safe }}
         </div>
     </div>
+    <nav class="pager project__pager" aria-label="More projects">
+        {% if pagination.href.previous %}
+        <a class="pager__previous" href="{{ pagination.href.previous }}">← Previous</a>
+        {% endif %}
+        <a class="pager__all" href="/2026/projects/">All {{ projects | length }} projects</a>
+        {% if pagination.href.next %}
+        <a class="pager__next" href="{{ pagination.href.next }}">Next →</a>
+        {% endif %}
+    </nav>
 </article>
 {% set canonicalUrl = site.url ~ page.url %}
 
 <script type="application/ld+json">
 {{ {
     "@context": "https://schema.org",
-    "@type": "NewsArticle",
-    "headline": project.title,
-    "description": project.excerpt or project.sub_title or project.title,
-    "datePublished": project.publish_date,
+    "@type": "CreativeWork",
+    "name": project.title,
+    "description": project.excerpt,
     "image": project.photo_path,
-    "mainEntityOfPage": canonicalUrl,
-    "publisher": {
-        "@type": "Organization",
-        "name": site.name,
-        "logo": {
-            "@type": "ImageObject",
-            "url": site.logo
-        }
-    }
+    "url": canonicalUrl
 } | dump | safe }}
 </script>

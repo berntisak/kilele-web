@@ -1,0 +1,33 @@
+/*
+ * Type (rules 14–15). Fonts are the 2027 deck's (#177) and load from Google
+ * Fonts in the layout.
+ */
+
+:root {
+    --font-display: "Anton", "Arial Narrow", "Arial Black", sans-serif;
+    --font-body: "Jost", system-ui, -apple-system, "Segoe UI", sans-serif;
+    /* Space Grotesk carries every aligned number: it has tabular figures and Anton does not. */
+    --font-mono: "Space Grotesk", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    --weight-normal: 400;
+    --weight-bold: 700;
+
+    --line-height-tight: 0.95;
+    --line-height-snug: 1.1;
+    --line-height-normal: 1.5;
+    --line-height-loose: 1.8;
+
+    /* Steps 1–4 stay the same size on every screen. */
+    --text-1: 0.5625rem; /* 9px */
+    --text-2: 0.6875rem; /* 11px */
+    --text-3: 0.8125rem; /* 13px */
+    --text-4: 1rem; /* 16px */
+
+    /* Steps 5–9 grow from the first size at 375px to the second at 1200px.
+       The middle term is the straight line between those two points. */
+    --text-5: clamp(1.125rem, 1.01rem + 0.48vw, 1.375rem); /* 18 → 22px */
+    --text-6: clamp(1.25rem, 1.02rem + 0.97vw, 1.75rem); /* 20 → 28px */
+    --text-7: clamp(2.25rem, 1rem + 5.33vw, 5rem); /* 36 → 80px */
+    --text-8: clamp(2.5rem, 0.91rem + 6.79vw, 6rem); /* 40 → 96px */
+    --text-9: clamp(3rem, 0.5rem + 10.67vw, 8.5rem); /* 48 → 136px */
+}

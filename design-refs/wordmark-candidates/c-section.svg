@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="10 80 700 250" role="img" aria-label="kilele">
+  <style>
+    svg { --m-ink: #0f0f0e; --m-red: #b61212; --m-ground: #f2eee2; }
+  </style>
+  <text x="360" y="296" text-anchor="middle" font-family="'Archivo Black','Arial Black',sans-serif" font-size="230"
+        letter-spacing="-6" fill="var(--m-ink)">k&#305;lele</text>
+  <circle cx="218.7" cy="132" r="21.5" fill="none"
+          stroke="var(--m-red)" stroke-width="17"/>
+</svg>

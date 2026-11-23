@@ -1,35 +1,46 @@
 ---
-layout: layouts/base.html
-title: Projects
-description: "Projects"
+layout: layouts/site.html
+pageName: projects
+headerContext: Archive 2026
+title: Projects 2026
+description: "The projects of Kilele 2026"
 permalink: /2026/projects/index.html 
 ---
-<div class="content__container">
-  <h1>Projects at Kilele 2026</h1>
+<section class="section projects">
+    <header class="projects__head">
+        <dl class="stats-bar">
+            <div><dt>Register</dt><dd>Projects, Kilele 2026</dd></div>
+            <div><dt>Projects</dt><dd>{{ projects | length }}</dd></div>
+            <div><dt>Order</dt><dd>Alphabetical</dd></div>
+            <div><dt>Status</dt><dd>Archived</dd></div>
+        </dl>
+        <h1 class="page-title">Projects 2026</h1>
+        <div class="pipe"></div>
+    </header>
 
-  <div class="news-grid">
-    {% for project in projects %}  
-
-    <a href="/2026/projects/{{ project.slug }}/" class="news-card-link">
-    <div class="news-card">
-
-        
-        {% if project.photo_path %}
-        <div class="news-card-image">
-            <img src="{{ project.photo_path }}" alt="{{ project.title }}" width="400" height="400" eleventy:ignore/>
-        </div>
-        {% endif %}
- 
-
-        <div class="news-card-content">
-
-            <div class="news-card-title">{{ project.title }}</div>       
-
-            <div class="news-card-text">{{ project.excerpt }}</div>
-            
-        </div>
-    </div>
-    </a>
-    {% endfor %}
-</div>
-</div>
+    <ol class="projects__grid" role="list">
+        {% for project in projects %}
+        <li>
+            <a class="card" href="/2026/projects/{{ project.slug }}/">
+                <div class="card__frame">
+                    {% if project.photo_card %}
+                    <img class="card__photo" src="{{ project.photo_card }}" alt="" width="800" height="450" loading="lazy" eleventy:ignore>
+                    {% else %}
+                    <div class="card__photo"></div>
+                    {% endif %}
+                    <span class="card__number" aria-hidden="true">{{ project.number }}</span>
+                </div>
+                <div class="card__panel">
+                    <p class="meta">
+                        No. {{ project.number }} ·
+                        {{ project.programPoints | length }} {{ "point" if project.programPoints.length == 1 else "points" }} ·
+                        {{ project.artists | length }} {{ "artist" if project.artists.length == 1 else "artists" }}
+                    </p>
+                    <h2 class="card__title">{{ project.title }}</h2>
+                    <p class="projects__excerpt">{{ project.excerpt }}</p>
+                </div>
+            </a>
+        </li>
+        {% endfor %}
+    </ol>
+</section>

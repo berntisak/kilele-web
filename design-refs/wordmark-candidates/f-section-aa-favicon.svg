@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="kilele">
+  <style>
+    svg { --m-ink: #0f0f0e; --m-red: #b61212; --m-ground: #f2eee2; }
+  </style>
+  <circle cx="10" cy="9" r="5" fill="none" stroke="var(--m-red)" stroke-width="4.5"/>
+  <path d="M6,28 L14,28 Q19,28 19,23 L19,18 Q19,13 24,13 L32,13"
+        fill="none" stroke="var(--m-red)" stroke-width="4.5" stroke-linecap="butt"/>
+</svg>

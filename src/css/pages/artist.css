@@ -1,0 +1,52 @@
+/*
+ * One artist's page (src/2026/lineup/[slug].html).
+ */
+
+.page--artist {
+    /* Phones: the portrait above the text. From --medium: side by side. */
+    .artist {
+        display: grid;
+        gap: var(--space-6);
+
+        @media (--medium) {
+            grid-template-columns: 5fr 7fr;
+            align-items: start;
+        }
+    }
+
+    /* The main runs across both columns, above the portrait and the text. */
+    .artist__main {
+        grid-column: 1 / -1;
+    }
+
+    /* The portrait's column runs as tall as the text beside it, so the sticky
+       portrait stops where the text ends, before the pager. */
+    .artist__figure-column {
+        align-self: stretch;
+    }
+
+    /* From --medium the portrait stays in view while the text scrolls past. */
+    .artist__figure {
+        @media (--medium) {
+            position: sticky;
+            top: calc(var(--header-bar-height) + var(--space-6));
+        }
+    }
+
+    .artist__name {
+        margin-top: var(--space-2);
+    }
+
+    .artist__bio {
+        max-width: 65ch;
+        margin-top: var(--space-6);
+    }
+
+    /* Across both columns, under everything. */
+    .artist__pager {
+        grid-column: 1 / -1;
+        margin-top: var(--space-8);
+        padding-top: var(--space-4);
+        border-top: 1px solid var(--rule);
+    }
+}

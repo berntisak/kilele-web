@@ -1,0 +1,44 @@
+/*
+ * Partners section: the frame's credit to the partners, just above the footer bar
+ * (site.html): the main partners' logos and a link to the rest. The heading is
+ * full size on the front page and section-head--small everywhere else.
+ */
+
+/* The logos and the link in a row that wraps onto new lines when it's full:
+   centred on phones, from the left edge from 600px. */
+.partners__row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* phone: centred */
+    align-items: center;
+    gap: var(--space-6) var(--space-7); /* lines 32px apart, items 48px apart */
+
+    @media (--small) {
+        justify-content: flex-start; /* from 600px: gathered at the left edge */
+    }
+}
+
+/* Every item gets the same width, so the logos line up like columns. */
+.partners__row > li {
+    width: 8rem;
+
+    @media (--medium) {
+        width: 10.5rem; /* desktop: 168px */
+    }
+}
+
+/* In the footer row, a taller logo box on desktop than the shared one (partner-logo.css),
+   so the logos hold their own next to the heading. */
+.partners__row .partner-logo {
+    @media (--medium) {
+        height: 7rem; /* 112px */
+    }
+}
+
+/* The link to the rest, in the section head's small capitals. */
+.partners__more {
+    font-family: var(--font-mono);
+    font-size: var(--text-3);
+    text-transform: uppercase;
+    text-align: center;
+}

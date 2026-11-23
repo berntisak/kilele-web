@@ -1,0 +1,52 @@
+{# The index: the full-screen layer the INDEX button opens (#143, #184). #}
+<dialog class="site-index" id="site-index" data-ground="ink" aria-label="Site index">
+    <button class="site-index__close" type="button">Close</button>
+    <nav>
+        <div class="site-index__group">
+            <h2 class="site-index__label">About</h2>
+            <ul class="site-index__list" role="list">
+                <li><a class="site-index__row" href="/2027/theme-2027/">Theme 2027</a></li>
+                <li><a class="site-index__row" href="/about/what-is-kilele/">What is Kilele</a></li>
+                <li><a class="site-index__row" href="/about/practical/">Practical</a></li>
+                <li><a class="site-index__row" href="/about/code-of-conduct/">Code of Conduct</a></li>
+                <li><a class="site-index__row" href="/about/faq/">FAQ</a></li>
+                <li><a class="site-index__row" href="/about/contact/">Contact</a></li>
+                <li><a class="site-index__row" href="/about/partners/">Partners</a></li>
+            </ul>
+        </div>
+
+        <div class="site-index__group">
+            <h2 class="site-index__label">News</h2>
+            <ul class="site-index__list" role="list">
+                <li><a class="site-index__row" href="/news/">
+                    News
+                    {% if news | length %}<span class="site-index__count">{{ news | length }}</span>{% endif %}
+                </a></li>
+                <li><a class="site-index__row" href="https://kilelesummit.substack.com/" target="_blank" rel="noopener noreferrer">Substack</a></li>
+            </ul>
+        </div>
+
+        <div class="site-index__group">
+            <h2 class="site-index__label">Archive 2026</h2>
+            <ul class="site-index__list" role="list">
+                <li><a class="site-index__row" href="/2026/lineup/">
+                    Lineup
+                    {% if lineup | length %}<span class="site-index__count">{{ lineup | length }}</span>{% endif %}
+                </a></li>
+                <li><a class="site-index__row" href="/2026/schedule/">
+                    Schedule
+                    {% if schedule_list | length %}<span class="site-index__count">{{ schedule_list | length }}</span>{% endif %}
+                </a></li>
+                <li><a class="site-index__row" href="/2026/gallery/">
+                    Gallery
+                    {% if gallery.photos | length %}<span class="site-index__count">{{ gallery.photos | length }}</span>{% endif %}
+                </a></li>
+                <li><a class="site-index__row" href="/2026/projects/">
+                    Projects
+                    {% if projects | length %}<span class="site-index__count">{{ projects | length }}</span>{% endif %}
+                </a></li>
+                <li><a class="site-index__row" href="/2026/theme-2026/">Theme 2026</a></li>
+            </ul>
+        </div>
+    </nav>
+</dialog>

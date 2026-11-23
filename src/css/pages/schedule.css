@@ -1,0 +1,217 @@
+/*
+ * The 2026 schedule list (src/2026/schedule/schedule.html).
+ */
+
+.page--schedule {
+    /* The four columns, shared by the black bar and every row, so they line up. */
+    .schedule {
+        --schedule-columns: 9rem 1fr 11rem 8rem;
+        --schedule-bar: 6px;
+    }
+
+    /* Phones: each row of the jump bar stays on one line you swipe sideways.
+       From --small there's room, so they wrap again. */
+    .jump-bar__links,
+    .schedule__filter {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+        white-space: nowrap;
+
+        @media (--small) {
+            flex-wrap: wrap;
+            overflow-x: visible;
+        }
+    }
+
+    /* The category filter: words like the day links. Grey until pressed;
+       the pressed one is pipe red and underlined. */
+    .schedule__filter {
+        display: flex;
+        gap: var(--space-1) var(--space-3);
+        margin-top: var(--space-1);
+        font-family: var(--font-mono);
+        font-size: var(--text-3);
+        font-weight: var(--weight-bold);
+        text-transform: uppercase;
+
+        /* Hidden until the filter script reveals it (the List view only):
+           the display above would otherwise override the hidden attribute. */
+        &[hidden] {
+            display: none;
+        }
+
+        button {
+            font-weight: inherit;
+            text-transform: inherit;
+            color: var(--text-muted);
+
+            &:hover {
+                color: var(--pipe);
+            }
+        }
+
+        [aria-pressed="true"] {
+            color: var(--pipe);
+            text-decoration: underline;
+            text-underline-offset: 0.25em;
+        }
+    }
+
+    /* The title with the view switch beside it, on the title's baseline.
+       Where they don't fit side by side, the switch wraps under the title.
+       The title's space before the pipe moves to the pair. */
+    .schedule__title {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: var(--space-2) var(--space-5);
+        margin-bottom: var(--space-6);
+
+        .page-title {
+            margin-bottom: 0;
+        }
+    }
+
+    /* The switch between the List view and the Timetable view (#204):
+       words like the filter's; the open view is pipe red and underlined. */
+    .schedule__views {
+        display: flex;
+        gap: var(--space-3);
+        font-family: var(--font-mono);
+        font-size: var(--text-3);
+        font-weight: var(--weight-bold);
+        text-transform: uppercase;
+
+        a {
+            color: var(--text-muted);
+            text-decoration: none;
+
+            &:hover {
+                color: var(--pipe);
+            }
+        }
+
+        [aria-current] {
+            color: var(--pipe);
+            text-decoration: underline;
+            text-underline-offset: 0.25em;
+        }
+    }
+
+    /* Each Official day opens with a big heading: the weekday in the pipe colour, then the date. */
+    .schedule__day {
+        /* Jumping to a day stops below the stuck jump bar instead of under it. */
+        scroll-margin-top: var(--space-8);
+        margin: var(--space-8) 0 var(--space-4);
+        font-family: var(--font-display);
+        font-size: var(--text-9);
+        font-weight: normal;
+        line-height: var(--line-height-tight);
+        text-transform: uppercase;
+    }
+
+    .schedule__weekday {
+        color: var(--pipe);
+    }
+
+    /* The black bar under each day heading, holding the column titles. */
+    .schedule__columns {
+        display: grid;
+        min-height: var(--space-3);
+        padding: var(--space-1) var(--space-2) var(--space-1) calc(var(--schedule-bar) + var(--space-3));
+        background: var(--text);
+        color: var(--ground);
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        font-weight: var(--weight-bold);
+        text-transform: uppercase;
+
+        /* Phones: an empty strip, since the rows have no columns there. */
+        span {
+            display: none;
+        }
+
+        @media (--medium) {
+            grid-template-columns: var(--schedule-columns);
+            gap: var(--space-3);
+
+            span {
+                display: block;
+            }
+        }
+    }
+
+    /* One row: the four columns, a hairline under it. The whole row is the link. */
+    .schedule__point {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            "time  time"
+            "title title"
+            "venue venue";
+        gap: var(--space-1) var(--space-3);
+        align-items: center;
+        padding: var(--space-3) var(--space-2) var(--space-3) calc(var(--schedule-bar) + var(--space-3));
+        border-bottom: 1px solid var(--rule);
+        background: linear-gradient(var(--category), var(--category)) left / var(--schedule-bar) 100% no-repeat;
+        color: inherit;
+        text-decoration: none;
+
+        @media (--medium) {
+            grid-template-columns: var(--schedule-columns);
+            grid-template-areas: "time title venue what";
+            gap: var(--space-3);
+        }
+    }
+
+    /* Multi-day: the bar is dashed, as if the colour runs on past the row. */
+    .schedule__row--multi-day .schedule__point {
+        background-image: repeating-linear-gradient(var(--category) 0 6px, transparent 6px 10px);
+    }
+
+    .schedule__time {
+        grid-area: time;
+        font-family: var(--font-mono);
+        font-size: var(--text-3);
+        font-weight: var(--weight-bold);
+    }
+
+    .schedule__title {
+        grid-area: title;
+        font-family: var(--font-display);
+        font-size: var(--text-6);
+        line-height: var(--line-height-snug);
+        text-transform: uppercase;
+    }
+
+    /* The title turns pipe red while the row is under the pointer. */
+    a.schedule__point:hover .schedule__title {
+        color: var(--pipe);
+    }
+
+    .schedule__venue {
+        grid-area: venue;
+        color: var(--text-muted);
+        font-size: var(--text-3);
+    }
+
+    /* Phones: the category as plain text after the venue. From --medium: the What column instead. */
+    .schedule__category {
+        @media (--medium) {
+            display: none;
+        }
+    }
+
+    .schedule__what {
+        display: none;
+        grid-area: what;
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        text-transform: uppercase;
+
+        @media (--medium) {
+            display: block;
+        }
+    }
+}

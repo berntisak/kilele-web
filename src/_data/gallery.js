@@ -10,6 +10,7 @@ module.exports = async function() {
   );
 
   const baseUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/gallery/`;
+  const renderUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/render/image/public/gallery/`;
 
   // Fetch all categories
   const { data: categories, error: catError } = await supabase
@@ -91,14 +92,25 @@ module.exports = async function() {
       program_point_slug: pp?.slug || null,
       program_point_title: pp?.short_title || pp?.title || null,
       url: photo.image_path ? baseUrl + encodeURIComponent(photo.image_path) : null,
+      // A small square for the contact sheet. Only /render/ resizes; /object/ ignores ?width= (#141).
       url_thumb: photo.image_path
-        ? `${baseUrl}${encodeURIComponent(photo.image_path)}?width=400&quality=75`
+        ? `${renderUrl}${encodeURIComponent(photo.image_path)}?width=400&height=400&resize=cover&quality=75`
         : null,
     };
   });
 
+  // Each category carries its own photos, so the gallery page can count them and loop over them directly.
+  // The photos are numbered straight through the categories (1, 2, 3 …) for the contact sheet's labels.
+  let number = 0;
+  const categoriesWithPhotos = (categories || []).map(category => ({
+    ...category,
+    photos: enrichedPhotos
+      .filter(photo => photo.category_slug === category.slug && photo.url)
+      .map(photo => ({ ...photo, number: ++number })),
+  }));
+
   return {
-    categories: categories || [],
+    categories: categoriesWithPhotos,
     photos: enrichedPhotos,
   };
 };

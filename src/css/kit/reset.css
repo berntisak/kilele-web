@@ -1,0 +1,70 @@
+/*
+ * Evens out browser defaults so every rule after this starts from the same
+ * place in every browser.
+ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Stops phones from enlarging text on their own. */
+html {
+    -moz-text-size-adjust: none;
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+}
+
+/* Spacing is set by the components, not by browser defaults. */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+    margin: 0;
+}
+
+/* A list given role="list" is being used for layout, not as a bulleted list. */
+ul[role="list"],
+ol[role="list"] {
+    padding: 0;
+    list-style: none;
+}
+
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+img,
+picture {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+button {
+    padding: 0;
+    border: none;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+textarea:not([rows]) {
+    min-height: 10em;
+}

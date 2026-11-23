@@ -1,0 +1,136 @@
+/*
+ * One program point's page (src/2026/schedule/[slug].html).
+ */
+
+.page--schedule-point {
+    /* The meta line, then the headline, with a little air between and below the pipe. */
+    .schedule-point__head {
+        display: grid;
+        gap: var(--space-3);
+        margin-top: var(--space-5);
+    }
+
+    /* A small square in the category colour, in front of the category name. */
+    .schedule-point__swatch {
+        display: inline-block;
+        width: 0.8em;
+        height: 0.8em;
+        margin-right: 0.5em;
+        vertical-align: -0.05em;
+        background: var(--category);
+    }
+
+    .schedule-point__media {
+        display: grid;
+        gap: var(--space-3);
+        margin-top: var(--space-6);
+    }
+
+    /* Phones: two across. Wider: as many across as balances the rows (--cols-mid, --cols,
+       set by the template), each a fixed third, quarter or fifth of the width. */
+    .schedule-point__cast {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-4);
+
+        @media (--small) {
+            grid-template-columns: repeat(var(--cols-mid), calc((100% - 2 * var(--space-4)) / 3));
+        }
+
+        @media (--medium) {
+            grid-template-columns: repeat(var(--cols), calc((100% - 3 * var(--space-4)) / 4));
+        }
+    }
+
+    .schedule-point__cast--many {
+        @media (--medium) {
+            grid-template-columns: repeat(var(--cols), calc((100% - 4 * var(--space-4)) / 5));
+        }
+    }
+
+    /* One tile: the portrait square, its number on the bottom-left corner, the name under it. */
+    .schedule-point__artist {
+        display: grid;
+        gap: var(--space-2);
+        color: inherit;
+        text-decoration: none;
+    }
+
+    /* The photo and the number share one grid cell, so the number sits on the photo. */
+    .schedule-point__portrait {
+        display: grid;
+        aspect-ratio: 1;
+        background: var(--placeholder);
+
+        > * {
+            grid-area: 1 / 1;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: var(--category-duotone);
+        }
+    }
+
+    /* Cream, not a role: it always sits on a photo. Positioned, so it stays above
+       the photo once the photo gets its filter (a filter paints in a later layer). */
+    .schedule-point__number {
+        position: relative;
+        align-self: end;
+        margin: 0 0 var(--space-1) var(--space-3);
+        color: var(--cream);
+        font-family: var(--font-display);
+        font-size: var(--text-7);
+        line-height: var(--line-height-tight);
+    }
+
+    .schedule-point__artist:hover .schedule-point__number {
+        color: var(--pipe);
+    }
+
+    .schedule-point__name {
+        font-weight: var(--weight-bold);
+    }
+
+    /* Phones: the sheet above the description. From --medium: side by side, 5 to 7. */
+    .schedule-point__body {
+        display: grid;
+        gap: var(--space-6);
+        margin-top: var(--space-7);
+
+        @media (--medium) {
+            grid-template-columns: 5fr 7fr;
+            align-items: start;
+        }
+    }
+
+    /* The info sheet: a ruled table of label and value. */
+    .schedule-point__sheet {
+        border-top: 1px solid var(--text);
+
+        div {
+            display: grid;
+            gap: var(--space-1) var(--space-4);
+            padding-block: var(--space-3);
+            border-bottom: 1px solid var(--rule);
+
+            @media (--small) {
+                grid-template-columns: 8rem 1fr;
+                align-items: baseline;
+            }
+        }
+
+        dd {
+            font-weight: var(--weight-bold);
+        }
+    }
+
+    /* The pager closes the page, set off by space and a hairline. */
+    .schedule-point__pager {
+        margin-top: var(--space-8);
+        padding-top: var(--space-4);
+        border-top: 1px solid var(--rule);
+    }
+}

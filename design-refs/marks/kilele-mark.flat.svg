@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 366" role="img" aria-label="kilele">
+  <!--
+    Kilele wordmark — "H · Downcomer" (#137), full cut.
+
+    EDITABLE MASTER. Cream colourway, literal values, no CSS variables and no
+    paint-order — opens in Affinity, Inkscape and GIMP. Generated from
+    design-refs/marks/build-editable.mjs; edit that, not this.
+
+    For the ink colourway swap: #0f0f0e -> #f2eee2 (type and fittings),
+    #b61212 -> #c74240 (pipes), #f2eee2 -> #0f0f0e (the halo).
+
+    The halo is load-bearing, not decoration: it is the cream slug beneath the
+    type that keeps a clean gap where a pipe passes behind a letter. It is the
+    reason this mark cannot sit on a photograph or a transparent ground.
+  -->
+
+  <!-- Pipes: main run, cut off square at both ends, with round-capped legs. -->
+  <g stroke="#b61212" stroke-width="17" fill="none">
+    <line x1="0" y1="116" x2="612" y2="116" stroke-linecap="butt"/>
+    <g stroke-linecap="round">
+      <line x1="46" y1="116" x2="46" y2="70"/>
+      <line x1="84" y1="116" x2="84" y2="36"/>
+      <line x1="122" y1="116" x2="122" y2="82"/>
+      <line x1="214" y1="116" x2="214" y2="24"/>
+      <line x1="252" y1="116" x2="252" y2="12"/>
+      <line x1="290" y1="116" x2="290" y2="48"/>
+      <line x1="434" y1="116" x2="434" y2="20"/>
+      <line x1="540" y1="116" x2="540" y2="76"/>
+      <line x1="578" y1="116" x2="578" y2="42"/>
+      <line x1="84" y1="116" x2="84" y2="148"/>
+      <line x1="202" y1="116" x2="202" y2="130"/>
+      <line x1="252" y1="116" x2="252" y2="150"/>
+      <line x1="322" y1="116" x2="322" y2="196"/>
+      <line x1="360" y1="116" x2="360" y2="348"/>
+      <line x1="400" y1="116" x2="400" y2="182"/>
+      <line x1="464" y1="116" x2="464" y2="146"/>
+      <line x1="530" y1="116" x2="530" y2="194"/>
+      <line x1="578" y1="116" x2="578" y2="170"/>
+    </g>
+  </g>
+
+  <!-- The tittle: a pipe seen end-on, over the dotless i. -->
+  <circle cx="202" cy="176.25" r="19.6" fill="none" stroke="#b61212" stroke-width="15.5"/>
+
+  <!-- Fittings: two collars, a valve on a sawn-off feed, an end cap. -->
+  <g fill="#0f0f0e" stroke="#0f0f0e">
+    <rect x="167" y="103" width="6" height="26"/>
+    <rect x="497" y="103" width="6" height="26"/>
+    <rect x="107" y="72" width="30" height="6"/>
+    <rect x="421" y="53" width="26" height="6"/>
+    <rect x="447" y="54.5" width="16" height="3"/>
+    <circle cx="470" cy="56" r="7" fill="none" stroke-width="3.5"/>
+    <rect x="609" y="100" width="7" height="32"/>
+  </g>
+
+  <!--
+    The wordmark, in two stacked draws rather than one with paint-order:
+    first the cream slug that knocks the pipes out, then the ink letters.
+  -->
+  <g font-family="Archivo Black" font-size="210" letter-spacing="-6" text-anchor="start">
+    <text x="33" y="326" fill="#f2eee2" stroke="#f2eee2" stroke-width="17" stroke-linejoin="round">k&#305;lele</text>
+    <text x="33" y="326" fill="#0f0f0e">k&#305;lele</text>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+/*
+ * Page title: the big title at the head of a list page.
+ * Used by the news list and the lineup.
+ */
+
+.page-title {
+    margin-bottom: var(--space-6);
+    font-family: var(--font-display);
+    font-size: var(--text-8);
+    font-weight: var(--weight-normal);
+    line-height: var(--line-height-tight);
+    text-transform: uppercase;
+}

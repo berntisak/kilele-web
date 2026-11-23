@@ -1,90 +1,51 @@
 ---
-layout: layouts/base.html
-title: Line-up
-description: "Line-up"
+layout: layouts/site.html
+pageName: lineup
+headerContext: Archive 2026
+title: Lineup 2026
+description: "The artists of Kilele 2026"
 ---
 
-<div class="content__container">
-    <h1>Lineup Kilele 2026</h1>
+<section class="section lineup">
+    <header class="lineup__head">
+        <dl class="stats-bar">
+            <div><dt>Register</dt><dd>Artists, Kilele 2026</dd></div>
+            <div><dt>Entries</dt><dd>{{ lineup | length }}</dd></div>
+            <div><dt>Order</dt><dd>Alphabetical</dd></div>
+            <div><dt>Status</dt><dd>Archived</dd></div>
+        </dl>
+        <h1 class="page-title">Lineup 2026</h1>
+        <div class="pipe"></div>
+    </header>
 
-  <div class="lineup-letter-nav">
-    {% set current_letter = '' %}
-    {% for artist in lineup | sort(attribute='name') %}
-      {% set first_char = artist.name[0] | upper %}
-      {% if first_char >= 'A' and first_char <= 'Z' %}
-        {% set first_letter = first_char %}
-      {% else %}
-        {% set first_letter = '#' %}
-      {% endif %}
-      {% if first_letter != current_letter %}
-        {% set current_letter = first_letter %}
-        {% if first_letter == '#' %}
-          {% set anchor_id = 'letter-other' %}
-        {% else %}
-          {% set anchor_id = 'letter-' ~ first_letter | lower %}
-        {% endif %}
-        <a href="#{{ anchor_id }}">{{ current_letter }}</a>
-      {% endif %}
+    {% set groups = lineup | groupby("letter") %}
+
+    <div class="jump-bar">
+        <nav class="jump-bar__links" aria-label="Jump to a letter">
+            {% for letter, artists in groups %}
+            <a href="#letter-{{ 'other' if letter == '#' else letter | lower }}">{{ letter }}</a>
+            {% endfor %}
+        </nav>
+    </div>
+
+    {% for letter, artists in groups %}
+    <div class="lineup__group" id="letter-{{ 'other' if letter == '#' else letter | lower }}">
+        <h2 class="lineup__letter">{{ letter }} <span class="lineup__count">{{ artists.length }}</span></h2>
+        <ol class="lineup__list" role="list">
+            {% for artist in artists %}
+            <li>
+                <a class="lineup__artist" href="/2026/lineup/{{ artist.slug }}/">
+                    {% if artist.photo_square %}
+                    <img class="lineup__photo" src="{{ artist.photo_square }}" alt="" width="480" height="480" loading="lazy" eleventy:ignore>
+                    {% else %}
+                    <span class="lineup__photo"></span>
+                    {% endif %}
+                    <span class="lineup__number">{{ artist.number }}</span>
+                    <span class="lineup__name">{{ artist.name }}</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ol>
+    </div>
     {% endfor %}
-  </div>
-
-  <div class="lineup-list">
-
-    {% set current_letter = '' %}
-    {% for artist in lineup | sort(attribute='name') %}
-      {% set first_char = artist.name[0] | upper %}
-      {% if first_char >= 'A' and first_char <= 'Z' %}
-        {% set first_letter = first_char %}
-      {% else %}
-        {% set first_letter = '#' %}
-      {% endif %}
-      {% if first_letter != current_letter %}
-        {% set current_letter = first_letter %}
-        {% if first_letter == '#' %}
-          {% set anchor_id = 'letter-other' %}
-        {% else %}
-          {% set anchor_id = 'letter-' ~ first_letter | lower %}
-        {% endif %}
-        <div class="letter-section">
-          <h2 class="letter-heading" id="{{ anchor_id }}">{{ current_letter }}</h2>
-        </div>
-      {% endif %}
-      <a href="/2026/lineup/{{ artist.slug }}/">
-      <article class="lineup-list-element">
-        <img
-          src="{{ artist.photo_path if artist.photo_path else '/assets/images/placeholder.jpg' }}"
-          alt="{{ artist.name }}"
-          width="400" height="400"
-          eleventy:ignore
-        />
-        <div class="lineup-list---text">
-          <h2>
-            {{ artist.name }}
-          </h2>
-        </div>
-
-      </article>
-      </a>
-    {% endfor %}
-  </div>
-</div>
-
-
-<!--
-<div class="content__container">
-  <div class="title">
-  <h1>Lineup Kilele 2026</h1>
-  </div>
-<div class="lineup-list">
-{% for artist in lineup %}
-  <article class="lineup-list-element">
-
-      <div class="lineup-list---text"><h2><a href="/2026/lineup/{{ artist.slug }}/">{{ artist.name }}</a></h2></div>
-      <img style="width:150px" src="{{artist.photo_path}}" />
-
-  </article>
-{% endfor %}
-</div>
-
-</div>
--->
+</section>

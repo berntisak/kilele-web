@@ -1,120 +1,181 @@
 ---
-layout: layouts/base.html
-title: Kilele 2026
+layout: layouts/site.html
+pageName: home
+partnersSection: large
+title: "Kilele Summit — Common Grounds, 23–27 February 2027"
+description: "East Africa's first and only summit for music, tech and culture. Common Grounds, 23–27 February 2027, The Mall, Westlands, Nairobi."
 ---
 
-<div class="hero__wrapper">
-    <div class="content__container">
-        {% for post in news_latest.hero_video %}
-        {% if post.hero_video %}
-        <div class="hero__video-section">
-            <a href="/news/{{ post.slug }}/">
-                <div class="hero__section-video">
-                    <iframe src="{{ post.video_url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                </div>
-            </a>
+<section class="section edition-title">
+    <div class="edition-title__mark">
+        <img class="edition-title__logo" src="/assets/logos/kilele_logo_2027.svg"
+             alt="Kilele Summit" width="1634" height="788">
+        <div class="edition-title__pipework" aria-hidden="true">
+            <span class="edition-title__run">
+                <span class="edition-title__pipe">
+                    <img class="pipe__fitting pipe__fitting--up" src="/assets/pipes/pipe-leg-up-01.svg" alt="" style="--x: 14%">
+                    <img class="pipe__fitting pipe__fitting--down" src="/assets/pipes/pipe-tee-down-01.svg" alt="" style="--x: 38%; --shift: 19.4">
+                    <img class="pipe__fitting pipe__fitting--up" src="/assets/pipes/pipe-leg-up-02.svg" alt="" style="--x: 48%">
+                    <img class="pipe__fitting pipe__fitting--down" src="/assets/pipes/pipe-leg-down-04.svg" alt="" style="--x: 88%">
+                    <img class="pipe__fitting pipe__fitting--up" src="/assets/pipes/pipe-tee-up-01.svg" alt="" style="--x: 77%; --shift: 16.6">
+                </span>
+                {# TEST: the drop the tagline hangs from on desktop, about three-quarters across. #}
+                <span class="edition-title__drop"></span>
+            </span>
         </div>
-        {% endif %}
-        {% endfor %}
     </div>
+    <p class="edition-title__year">
+        <span class="edition-title__leader" aria-hidden="true"></span>
+        {{ edition.year }}
+    </p>
+    <p class="edition-title__fig">Fig. 1 — Kilele, fourth edition. Not to scale.</p>
+    {# TEST: the tagline, hung on the pipes by home.css: a flag on the right-margin pipe below 900px, under the drop from 900px. #}
+    <p class="edition-title__tagline">A space for adventurous music and culture</p>
+    <p class="edition-title__fig edition-title__fig--corner">Fig. 2 — Vent Pipes. GND: 0 V (common).</p>
+</section>
 
-    <div class="content__container">
-        <div class="hero__carousel">
-            {% for post in news_latest.hero %}
-            {% if not post.hero_video %}
-            <div class="hero__section {% if loop.index == 1 %}active{% endif %}">
-                <a href="/news/{{ post.slug }}/">
-                <div class="hero__section-content">
-                    <div class="hero__section-image">
+<section class="section lead-section">
+    {#
+      PLACEHOLDER copy, typed in by hand. Switch these for dynamic values from the
+      CMS when Stage setting (#181) reads the active Edition; the fields it needs
+      are added in "CMS fields for the front page's Edition copy" (#202).
+    #}
+    {% set theme = "Common Grounds" %}
+    {% set themeSentence = "Common Grounds is where we meet: on the dancefloor, in conversation, in collective action, and in the shared belief that another future is possible." %}
+    {% set dates = "23–27 February 2027" %}
+    {% set venue = "The Mall, Westlands, Nairobi" %}
+    {% set editionNumber = "04" %}
+    {% set themeTagline = "What can we build together?" %}
+
+    <p class="lead-section__label">Theme, {{ edition.year }}</p>
+    <h1 class="lead-section__theme">{{ theme }}</h1>
+    <dl class="lead-section__spec">
+        <div><dt>Dates</dt><dd>{{ dates }}</dd></div>
+        <div><dt>Venue</dt><dd>{{ venue }}</dd></div>
+        <div><dt>Edition</dt><dd>No. {{ editionNumber }}</dd></div>
+        <div><dt>Question</dt><dd>{{ themeTagline }}</dd></div>
+    </dl>
+    <p class="lead-section__sentence">{{ themeSentence }}</p>
+    <p class="lead-section__action">
+        <span class="lead-section__stub" aria-hidden="true"></span>
+        <a href="https://kilelesummit.substack.com/" target="_blank" rel="noopener noreferrer">Subscribe on Substack <span aria-hidden="true">→</span></a>
+        <span class="lead-section__note">(1 action available)</span>
+    </p>
+
+    {#
+      To be added later: the Lead section is the only part of the page that
+      changes with the Stage (#142). The Stage is set in the CMS (#181).
+      - Announcement: theme, dates, venue (above)
+      - Lineup: the same as Announcement for now
+      - Live: still open (a welcome video, visitor info, or something else)
+      - Post-festival: looks back on the Edition that just ended
+    #}
+
+</section>
+
+{% set listedNews = news | rejectattr("hero_video") %}
+{% set latestNews = listedNews.slice(0, 3) %}
+{% if latestNews | length %}
+<section class="section latest-news">
+    <header class="section-head">
+        <h2 class="section-head__title">Latest news</h2>
+        <p>Showing {{ latestNews | length }} of {{ listedNews | length }} · <a class="section-head__link" href="/news/">See all <span aria-hidden="true">→</span></a></p>
+    </header>
+    <ol class="latest-news__list" role="list">
+        {% for post in latestNews %}
+        <li>
+            {% set number = ("00" ~ ((news | length) - news.indexOf(post))).slice(-3) %}
+            <a class="card" href="/news/{{ post.slug }}/">
+                <div class="card__frame">
                     {% if post.photo_path %}
-                            <img src="{{ post.photo_path }}" alt="{{ post.title }}" eleventy:ignore>
+                    <img class="card__photo" src="{{ post.photo_path }}" alt="" loading="lazy" eleventy:ignore>
+                    {% else %}
+                    <div class="card__photo"></div>
                     {% endif %}
-                    </div>
-                    <div class="hero__section-text">
-                        <div class="hero__title_text">{{ post.title }}</div>
-                        <span class="hero__info_shout">{{ post.sub_title }}</span>
-                        <div class="hero__info_text">
-                            {{ post.hero_text | markdown | safe }}
-                        </div>
-                    </div>
+                    <span class="card__number" aria-hidden="true">{{ number }}</span>
                 </div>
-                </a>
-            </div>
-            {% endif %}
-            {% endfor %}  
-        </div>
-        <div class="hero__dots">
-            {% for post in news_latest.hero %}
-            {% if not post.hero_video %}
-            <span class="dot {% if loop.index == 1 %}active{% endif %}" data-index="{{ loop.index0 }}"></span>
-            {% endif %}
-            {% endfor %}
-        </div>
-    </div>
+                <div class="card__panel">
+                    <p class="meta">
+                        No. {{ number }} · Filed <time datetime="{{ post.publish_date }}">{{ post.publish_date.slice(0, 10) }}</time>
+                    </p>
+                    <h3 class="card__title">{{ post.title }}</h3>
+                </div>
+            </a>
+        </li>
+        {% endfor %}
+    </ol>
+</section>
+{% endif %}
 
+{# Corner 2: the pipe under the news, with the designer's fittings hanging off it. #}
+<div class="archive-pipe">
+    <span class="archive-pipe__run" aria-hidden="true">
+        <img class="pipe__fitting pipe__fitting--down" src="/assets/pipes/pipe-leg-down-02.svg" alt="" style="--x: 17.6%">
+        <img class="pipe__fitting pipe__fitting--down" src="/assets/pipes/pipe-leg-down-05.svg" alt="" style="--x: 43.5%">
+        <img class="pipe__fitting pipe__fitting--down" src="/assets/pipes/pipe-leg-down-03.svg" alt="" style="--x: 69.4%">
+        <img class="pipe__fitting pipe__fitting--down" src="/assets/pipes/pipe-tee-down-01.svg" alt="" style="--x: 82.4%; --shift: 19.4">
+    </span>
+    <p class="archive-pipe__fig">Fig. 3 — Pipe. Carries nothing.</p>
 </div>
 
+<section class="section previous-edition" data-ground="ink">
+    {# PLACEHOLDER photos, picked at random on each build. Which photos belong here is still to be decided. #}
+    {% set lineupPhoto = (lineup | selectattr("photo_path") | random).photo_path %}
+    {% set schedulePhoto = (lineup | selectattr("photo_path") | random).photo_path %}
+    {% set galleryPhoto = (gallery.photos | selectattr("url") | random).url %}
 
-<div class="content__container">
-    <h2>Latest News</h2>
-    <div class="news__section--hero">
-        {% for post in news_latest.regular %}
-        <div class="hero__pair">
-            <a href="/news/{{ post.slug }}/" >
-            <div class="hero__pair-img-container">
-            {% if post.photo_path %}
-                <img src="{{ post.photo_path }}" alt="{{ post.title }}" eleventy:ignore>
-            {% endif %}
-            </div>
-            <div class="hero__info--below">
-                <span class="sh3">{{ post.publish_date | postDate }}</span>
-                <h3>{{ post.title }}</h3>
-                <span class="sh3">{{ post.excerpt }}</span>
-            </div>
-        </a>
-        </div>
-        {% endfor %}  
-    </div>
+    <header class="section-head">
+        <h2 class="section-head__title">The {{ edition.previousYear }} edition</h2>
+        {# PLACEHOLDER status line, C8's copy typed in by hand. #}
+        <p>Status: archived · Six days · Complete</p>
+    </header>
+    <ul class="previous-edition__list" role="list">
+        <li>
+            <a class="card" href="/{{ edition.previousYear }}/lineup/">
+                <div class="card__frame">
+                    <img class="card__photo" src="{{ lineupPhoto }}" alt="" loading="lazy" eleventy:ignore>
+                    {% if lineup | length %}<span class="card__number" aria-hidden="true">{{ lineup | length }}</span>{% endif %}
+                </div>
+                <div class="card__panel">
+                    <h3 class="card__title">Lineup {{ edition.previousYear }} <span aria-hidden="true">→</span></h3>
+                    {% if lineup | length %}<p class="meta">{{ lineup | length }} artists, counted</p>{% endif %}
+                </div>
+            </a>
+        </li>
+        <li>
+            <a class="card" href="/{{ edition.previousYear }}/schedule/">
+                <div class="card__frame">
+                    <img class="card__photo" src="{{ schedulePhoto }}" alt="" loading="lazy" eleventy:ignore>
+                    {% if schedule_list | length %}<span class="card__number" aria-hidden="true">{{ schedule_list | length }}</span>{% endif %}
+                </div>
+                <div class="card__panel">
+                    <h3 class="card__title">Schedule {{ edition.previousYear }} <span aria-hidden="true">→</span></h3>
+                    {% if schedule_list | length %}<p class="meta">{{ schedule_list | length }} programme points, counted</p>{% endif %}
+                </div>
+            </a>
+        </li>
+        <li>
+            <a class="card" href="/{{ edition.previousYear }}/gallery/">
+                <div class="card__frame">
+                    <img class="card__photo" src="{{ galleryPhoto }}" alt="" loading="lazy" eleventy:ignore>
+                    {% if gallery.photos | length %}<span class="card__number" aria-hidden="true">{{ gallery.photos | length }}</span>{% endif %}
+                </div>
+                <div class="card__panel">
+                    <h3 class="card__title">Gallery {{ edition.previousYear }} <span aria-hidden="true">→</span></h3>
+                    {% if gallery.photos | length %}<p class="meta">{{ gallery.photos | length }} photographs, counted</p>{% endif %}
+                </div>
+            </a>
+        </li>
+    </ul>
+</section>
+
+{# Corner 4: the pipe comes out from under the ink band, turns right and ends in a valve. #}
+<div class="closing-pipe" aria-hidden="true">
+    <span class="closing-pipe__run">
+        <span class="pipe__valve"></span>
+    </span>
 </div>
 
-<!--div class="content__container">
-    <h2>Calotropis live from Kilele</h2>
-        <div class="radio_player">
-            <b>Stream A</b>
-            <iframe src="https://radio.calotropis.xyz/public/kilelestreamone/embed?theme=light" frameborder="0" allowtransparency="true" style="width: 100%; height: 150px; border: 0;"></iframe>
-            <p>
-            <b>Stream B</b>
-            <iframe src="https://radio.calotropis.xyz/public/calotropis_radio/embed?theme=light" frameborder="0" allowtransparency="true" style="width: 100%; height: 150px; border: 0;"></iframe>
-            </p>
-    </div>
-</div-->
-
-<div class="content__container">
-    <h2>Subscribe to our Substack</h2>
-    <div class="news__section--hero hero__section--newsletter">
-        <div class="newsletter-embed">
-            <iframe src="https://kilelesummit.substack.com/embed" frameborder="0" scrolling="no"></iframe>
-        </div>
-    </div>
-</div>
-
-<div class="content__container">
-    <center><h2>Follow Kilele</h2></center>
-        <div class="social-links">
-            <a href="https://www.youtube.com/@KileleSummit" target="_blank" rel="noopener noreferrer" class="social-link">
-                <span class="social-icon"><img src="/assets/logos/socials/youtube.png" alt="Kilele on Youtube"></span>
-            </a>
-            <a href="https://www.instagram.com/kilelesummit/" target="_blank" rel="noopener noreferrer" class="social-link">
-                <span class="social-icon"><img src="/assets/logos/socials/instagram.png" alt="Kilele on Instagram"></span>
-            </a>
-            <a href="https://discord.gg/5APgU25Rvg" target="_blank" rel="noopener noreferrer" class="social-link">
-                <span class="social-icon"><img src="/assets/logos/socials/discord.png" alt="Kilele Community on Discord"></span>
-            </a>
-            <a href="https://chat.whatsapp.com/GblpqxM5wSJ32IwqzDurGQ" target="_blank" rel="noopener noreferrer" class="social-link">
-                <span class="social-icon"><img src="/assets/logos/socials/whatsapp.png" alt="Kilele Whatsapp Broadcast channel"></span>
-            </a>
-        </div>
-</div>
-
-
-
+<!--section class="section upcoming-edition" data-ground="ink">
+    <p>Upcoming edition: the 2027 theme, Common Grounds</p>
+</section-->

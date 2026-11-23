@@ -1,0 +1,37 @@
+/*
+ * Partner logo: one partner's logo in a box of fixed height, greyscale on a
+ * light ground, its own colours back on hover. Used by the Partners page and
+ * the Partners section (rule 7). Markup in src/_includes/partner-logo.html.
+ */
+
+/* Every logo gets a box of the same height, whatever the shape of its file. */
+.partner-logo {
+    display: flex;
+    height: 4rem;
+
+    @media (--medium) {
+        height: 5rem;
+    }
+}
+
+/* The image transform wraps each img in a <picture>. This takes the picture
+   out of the layout, so the img itself fills the box. */
+.partner-logo picture {
+    display: contents;
+}
+
+/* The logo shrinks to fit inside its box without being stretched or cropped.
+   Greyscale makes the mixed colours read as one wall, and multiply lets the
+   cream show through white backgrounds, so the .jpg logos lose their white boxes. */
+.partner-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: grayscale(1);
+    mix-blend-mode: multiply;
+}
+
+/* A linked logo gets its own colours back when pointed at or tabbed to. */
+a.partner-logo:is(:hover, :focus-visible) img {
+    filter: none;
+}

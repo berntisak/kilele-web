@@ -1,0 +1,23 @@
+/*
+ * The news list (src/news/news.html).
+ */
+
+.page--news {
+    .news-list__head {
+        margin-bottom: var(--space-7);
+    }
+
+    /* One column on phones, two from --small, three from --large. */
+    .news-list__grid {
+        display: grid;
+        gap: var(--space-5);
+
+        @media (--small) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (--large) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+}

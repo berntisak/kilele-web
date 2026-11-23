@@ -1,0 +1,76 @@
+/*
+ * Pipe: a straight horizontal run of the red pipe, with a flange every
+ * --flange-spacing (rule 6).
+ * PLACEHOLDER: plain CSS for now. The designer's own pipe graphics may
+ * replace the pipe, the flanges, or both.
+ */
+
+.pipe {
+    --pipe-direction: 90deg;
+    position: relative;
+    height: var(--pipe-width);
+    background: var(--pipe);
+}
+
+/* The flanges: a repeating stripe a little wider than the pipe, along its length. */
+.pipe::before {
+    content: "";
+    position: absolute;
+    inset: calc(-1 * var(--flange-overhang)) 0;
+    background: repeating-linear-gradient(
+        var(--pipe-direction),
+        transparent 0 calc(var(--flange-spacing) - var(--flange-width)),
+        var(--pipe) calc(var(--flange-spacing) - var(--flange-width)) var(--flange-spacing)
+    );
+}
+
+/* A vertical run. Its height comes from where the page places it. */
+.pipe--vertical {
+    --pipe-direction: 180deg;
+    width: var(--pipe-width);
+    height: auto;
+}
+
+.pipe--vertical::before {
+    inset: 0 calc(-1 * var(--flange-overhang));
+}
+
+/* A collar: the square fitting where two runs meet. The page places it. */
+.pipe__collar {
+    position: absolute;
+    width: calc(var(--pipe-width) + 2 * var(--flange-overhang));
+    height: calc(var(--pipe-width) + 2 * var(--flange-overhang));
+    background: var(--pipe);
+}
+
+/* A valve wheel: closes the open end of a run. The page places it. */
+.pipe__valve {
+    position: absolute;
+    width: var(--valve-size);
+    height: var(--valve-size);
+    border: var(--valve-ring) solid var(--pipe);
+    border-radius: 50%;
+    background: var(--ground);
+}
+
+/*
+ * A fitting: one of the designer's legs (src/assets/pipes), at the pipe's scale. The run it sits
+ * in places it: --x is how far along. Its box ends on the centre line of the box it sits in, so
+ * that box must be centred on the pipe. The legs and tees are 31 units wide, the pipe 9.89.
+ */
+.pipe__fitting {
+    position: absolute;
+    left: var(--x);
+    width: calc(var(--pipe-width) * 31 / 9.89);
+    translate: -50% 0;
+}
+
+/* A straight leg starts at its file's edge and needs no shift. A tee sets --shift (in the
+   designer's units) to move its joint back onto the pipe: 19.4 for tee-down-01, 16.6 for tee-up-01. */
+.pipe__fitting--up {
+    bottom: calc(50% - var(--shift, 0) * var(--pipe-width) / 9.89);
+}
+
+.pipe__fitting--down {
+    top: calc(50% - var(--shift, 0) * var(--pipe-width) / 9.89);
+}

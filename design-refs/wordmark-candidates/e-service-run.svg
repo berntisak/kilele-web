@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 350" role="img" aria-label="kilele">
+  <style>
+    svg { --m-ink: #0f0f0e; --m-red: #b61212; --m-ground: #f2eee2; }
+  </style>
+  <g stroke="var(--m-red)" stroke-width="17" fill="none">
+    <line x1="0" y1="112" x2="612" y2="112" stroke-linecap="butt"/>
+    <g stroke-linecap="round">
+      <line x1="46" y1="112" x2="46" y2="78"/>
+      <line x1="84" y1="112" x2="84" y2="44"/>
+      <line x1="122" y1="112" x2="122" y2="90"/>
+      <line x1="214" y1="112" x2="214" y2="26"/>
+      <line x1="252" y1="112" x2="252" y2="12"/>
+      <line x1="290" y1="112" x2="290" y2="52"/>
+      <line x1="424" y1="112" x2="424" y2="62"/>
+      <line x1="462" y1="112" x2="462" y2="16"/>
+      <line x1="548" y1="112" x2="548" y2="84"/>
+      <line x1="586" y1="112" x2="586" y2="50"/>
+      <path d="M328,112 L328,46 Q328,34 340,34 L366,34"/>
+    </g>
+  </g>
+  <g fill="var(--m-ink)" stroke="var(--m-ink)">
+    <rect x="167" y="99" width="6" height="26"/>
+    <rect x="505" y="99" width="6" height="26"/>
+    <rect x="107" y="80" width="30" height="6"/>
+    <rect x="449" y="57" width="26" height="6"/><rect x="475" y="58.5" width="16" height="3"/><circle cx="498" cy="60" r="7" fill="none" stroke-width="3.5"/>
+    <rect x="609" y="96" width="7" height="32"/>
+  </g>
+  <text x="330" y="316" text-anchor="middle" font-family="'Archivo Black','Arial Black',sans-serif" font-size="210"
+        letter-spacing="-6" fill="var(--m-ink)">kilele</text>
+</svg>

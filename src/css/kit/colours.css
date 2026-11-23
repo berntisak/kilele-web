@@ -1,0 +1,69 @@
+/*
+ * Colours (rule 11). The palette says what each colour is; the roles say what
+ * it is for. Pages and components only use roles. Hexes are the 2027 deck's
+ * (#177).
+ */
+
+:root {
+    /* Palette */
+    --red: #9f180f; /* the designer's pipe red, as in the logo and pipe drawings */
+    --cream: #f1ede1;
+    --ink: #111111;
+    --cobalt: #2448d8;
+    --yellow: #f2c438;
+    --green: #6f8c65;
+    --concrete-light: #c9c3b4;
+    --concrete-dark: #3a3832;
+
+    /* Roles, cream ground */
+    --ground: var(--cream);
+    --text: var(--ink);
+    --text-muted: #5b574d;
+    --rule: rgb(17 17 17 / 0.16);
+    --surface: color-mix(in srgb, var(--cream), white 40%);
+    --pipe: var(--red);
+    --placeholder: var(--concrete-light);
+    --halftone: rgb(74 71 66 / 0.55);
+    --screen: rgb(15 15 14 / 0.3);
+
+    /* Status of an item in the announcement cycle (#142). Yellow fails
+       contrast on cream, so --status-upcoming is for fills, never text. */
+    --status-now: var(--cobalt);
+    --status-upcoming: var(--yellow);
+    --status-past: var(--green);
+
+    /* Category of a Program point (#193). PLACEHOLDERS mixed from the palette,
+       until the final colours are set in Tune the design (#201). */
+    --category-performance: var(--red);
+    --category-workshop: var(--cobalt);
+    --category-panel: var(--green);
+    --category-presentation: color-mix(in srgb, var(--cobalt), var(--cream) 50%);
+    --category-sundowner: var(--yellow);
+    --category-networking: color-mix(in srgb, var(--green), var(--cream) 50%);
+    --category-installation: var(--concrete-dark);
+    --category-none: var(--concrete-light);
+}
+
+/* Rule 12. Red is too dark to see on ink (2.5:1), so the pipe turns green. */
+[data-ground="ink"] {
+    --ground: var(--ink);
+    --text: var(--cream);
+    --text-muted: #b4ad9c;
+    --rule: rgb(241 237 225 / 0.18);
+    --surface: color-mix(in srgb, var(--ink), white 6%);
+    --pipe: var(--green);
+    --placeholder: var(--concrete-dark);
+}
+
+/* An element's data-category picks its category colour and duotone (#193).
+   Everything inside reads var(--category) (labels, bars, swatches) and
+   var(--category-duotone) (portraits). Categories without their own duotone
+   get green. */
+[data-category] { --category: var(--category-none); --category-duotone: url(#duotone-green); }
+[data-category="performance"] { --category: var(--category-performance); --category-duotone: url(#duotone-red); }
+[data-category="workshop"] { --category: var(--category-workshop); --category-duotone: url(#duotone-cobalt); }
+[data-category="panel"] { --category: var(--category-panel); --category-duotone: url(#duotone-green); }
+[data-category="presentation"] { --category: var(--category-presentation); }
+[data-category="sundowner"] { --category: var(--category-sundowner); --category-duotone: url(#duotone-yellow); }
+[data-category="networking"] { --category: var(--category-networking); }
+[data-category="installation"] { --category: var(--category-installation); }

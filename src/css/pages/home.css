@@ -1,0 +1,728 @@
+/*
+ * The front page.
+ */
+
+.page--home {
+    /* The logo's width. Its own pipe is 23 units thick in a drawing 1633.33 wide, so thinner than --pipe-width. */
+    --logo-width: 15rem; /* phone: 240px */
+
+    @media (--small) {
+        --logo-width: 22rem; /* tablet: 352px */
+    }
+
+    @media (--medium) {
+        --logo-width: 30rem; /* desktop: 480px */
+    }
+
+    .edition-title {
+        position: relative;
+        padding-block: var(--space-6) var(--space-7);
+        overflow: hidden;
+    }
+
+    /* The logo and the pipework side by side. */
+    .edition-title__mark {
+        display: flex;
+    }
+
+    /* From the logo's right edge to the page's right edge, as tall as the logo. */
+    .edition-title__pipework {
+        position: relative;
+        flex: 1;
+        margin-right: calc(-1 * var(--gutter));
+    }
+
+    /*
+     * An invisible guide: where the logo's main pipe would run on past the logo. Its height and
+     * thickness match the pipe in the logo SVG (y 273.2 and 23 tall, in a drawing 787.5 tall).
+     * The designer's pipe and the gauge line up to it.
+     */
+    .edition-title__run {
+        position: absolute;
+        top: 34.69%;
+        right: 0;
+        left: 0;
+        height: 2.93%;
+    }
+
+    /* The header pipe: the designer's plain segment, as thick as --pipe-width, centred on the logo's pipe. */
+    .edition-title__pipe {
+        position: absolute;
+        left: 0;
+        right: calc(var(--gutter) / 2);
+        top: 50%;
+        height: calc(var(--pipe-width) * 40 / 9.89);
+        translate: 0 -50%;
+        background: url("/assets/pipes/pipe-segment.svg") left center / auto 100% repeat-x;
+    }
+
+    /*
+     * TEST: the tagline as a horizontal marker hanging from a drop off the header pipe, about
+     * three-quarters across the page. --drop-x is that point, measured from the logo's right edge
+     * (where the run starts).
+     */
+    .edition-title__run {
+        --drop-x: calc(100vw * 3 / 4 - var(--gutter) - var(--logo-width));
+        --corner-length: 3rem; /* phone: corner 1 from the header pipe down to the marker's tee, which closes it */
+    }
+
+    /*
+     * Shared by the drop, the tagline and Fig. 2, so they sit on the section rather than the run.
+     * --pipe-y is the header pipe's centre line, measured from the section's top: the top
+     * padding, plus 36.16% of the logo's height (the run's top at 34.69%, plus half its 2.93%).
+     */
+    .edition-title {
+        --drop-length: 4rem;
+        --pipe-y: calc(var(--space-6) + var(--logo-width) * 788 / 1634 * 0.3616);
+    }
+
+    /* Below 900px there is no drop: the marker hangs off the right-margin pipe instead. */
+    .edition-title__drop {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: var(--drop-x);
+        width: var(--pipe-width);
+        height: var(--drop-length);
+        translate: -50% 0;
+        background: url("/assets/pipes/pipe-segment-vertical.svg") center top / calc(100% * 40 / 9.89) auto repeat-y;
+
+        /* The tee where the drop leaves the header pipe. */
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: calc(var(--pipe-width) * 39.12 / 9.89);
+            aspect-ratio: 39.12 / 42.82;
+            translate: -50% -50%;
+            background: url("/assets/pipes/pipe-joint.svg") center / contain no-repeat;
+        }
+
+        @media (--medium) {
+            display: block;
+        }
+    }
+
+    /*
+     * The marker as a block over three lines, hung as a flag: left of the right-margin pipe,
+     * --flag-drop below the header pipe (--pipe-y, set on .edition-title), on a stub
+     * --stub-length long.
+     *
+     * Fine-tuning: --flag-drop (how far below the header pipe), --stub-length (how far left of the
+     * right-margin pipe), width and font-size. Phone values first; the --small block (600px up)
+     * overrides them.
+     */
+    .edition-title__tagline {
+        --flag-drop: 1.5rem; /* phone */
+        --stub-length: 0.75rem; /* phone */
+
+        position: absolute;
+        top: calc(var(--pipe-y) + var(--flag-drop));
+        right: calc(var(--gutter) / 2 + var(--pipe-width) / 2 + var(--stub-length));
+        width: 7.5rem; /* phone */
+        margin: 0;
+        padding: 0.3rem 0.5rem; /* phone */
+        background: var(--yellow);
+        color: var(--ink);
+        font-family: var(--font-mono);
+        font-size: var(--text-1); /* phone: 9px */
+        font-weight: var(--weight-bold);
+        line-height: 1.4;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+
+        /* Tablet (600px up). */
+        @media (--small) {
+            --flag-drop: 3rem;
+            --stub-length: 1rem;
+
+            width: 12rem;
+            padding: 0.45rem 0.8rem;
+            font-size: var(--text-2); /* 11px */
+        }
+
+        /* The stub: a short horizontal pipe from the flag's right edge to the right-margin pipe's centre. */
+        &::after {
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            width: var(--stub-length);
+            height: var(--pipe-width);
+            translate: 0 -50%;
+            content: "";
+            background: url("/assets/pipes/pipe-segment.svg") left center / auto calc(100% * 40 / 9.89) repeat-x;
+        }
+
+        /* The tee where the stub meets the right-margin pipe, drawn over it. */
+        &::before {
+            position: absolute;
+            z-index: 1;
+            top: 50%;
+            left: calc(100% + var(--stub-length));
+            width: calc(var(--pipe-width) * 39.12 / 9.89);
+            aspect-ratio: 39.12 / 42.82;
+            translate: -50% -50%;
+            content: "";
+            background: url("/assets/pipes/pipe-joint.svg") center / contain no-repeat;
+        }
+
+        /* Desktop (900px up): centred under the drop's end (--drop-length, set on .edition-title), 75vw across, with an arrow, and no stub or tee. */
+        @media (--medium) {
+            top: calc(var(--pipe-y) + var(--drop-length));
+            right: auto;
+            left: 75vw;
+            translate: -50% 0;
+            padding: 0.45rem 1.6rem 0.45rem 0.8rem;
+            clip-path: polygon(0 0, calc(100% - 0.9rem) 0, 100% 50%, calc(100% - 0.9rem) 100%, 0 100%);
+
+            &::before,
+            &::after {
+                content: none;
+            }
+        }
+    }
+
+    /*
+     * The joints: one where the logo's thinner pipe meets the header pipe, and one on each corner.
+     * Each sits on the end of a horizontal run, centred where the two pipes' centre lines cross:
+     * half a pipe thickness in from the run's end, halfway down it.
+     */
+    .edition-title__run::before,
+    .edition-title__pipe::after,
+    .archive-pipe__run::before,
+    .archive-pipe__run::after,
+    .closing-pipe__run::before,
+    .lead-section__branch::after {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        top: 50%;
+        left: calc(var(--pipe-width) / 2);
+        width: calc(var(--pipe-width) * 39.12 / 9.89);
+        aspect-ratio: 39.12 / 42.82;
+        translate: -50% -50%;
+        background: url("/assets/pipes/pipe-joint.svg") center / contain no-repeat;
+    }
+
+    /* The logo's joint sits right on the logo's edge. */
+    .edition-title__run::before {
+        left: 0;
+    }
+
+    /* The joints at a run's right end: corners 1 and 2, and the tee where the tagline's branch leaves the pipe. */
+    .edition-title__pipe::after,
+    .archive-pipe__run::after,
+    .lead-section__branch::after {
+        left: calc(100% - var(--pipe-width) / 2);
+    }
+
+    /*
+     * Corner 1: the pipe turns down in the middle of the right margin. On phones it stops at the
+     * marker's tee joint. From 600px it's longer than needed; the section's overflow: hidden cuts it
+     * off at the bottom edge.
+     */
+    .edition-title__run::after {
+        content: "";
+        position: absolute;
+        top: calc(50% - var(--pipe-width) / 2);
+        right: calc(var(--gutter) / 2);
+        width: var(--pipe-width);
+        height: var(--corner-length);
+        background: url("/assets/pipes/pipe-segment-vertical.svg") center top / calc(100% * 40 / 9.89) auto repeat-y;
+
+        @media (--small) {
+            height: 100vh;
+        }
+    }
+
+    /* The stretch of pipe from the logo to the content's right edge. Everything on the run is placed along it. */
+    .edition-title__track {
+        position: absolute;
+        inset: 0 var(--gutter) 0 0;
+    }
+
+    /* A leg hanging off the run. Each leg sets its own --x (how far along) and --length (how far down). */
+    .edition-title__leg {
+        position: absolute;
+        top: 0;
+        left: var(--x);
+        width: 0.4rem;
+        height: var(--length);
+        border-radius: 0 0 0.4rem 0.4rem;
+        background: var(--red);
+
+        /* The flange: a short crossbar, slightly wider than the leg. */
+        &::after {
+            content: "";
+            position: absolute;
+            top: 45%;
+            left: -0.15rem;
+            right: -0.15rem;
+            height: 0.18rem;
+            background: var(--red);
+        }
+    }
+
+    /*
+     * PLACEHOLDER gauge drawn in CSS, waiting for a proper graphic from the designer (see Tune the design).
+     * The stem is a leg; the dial hangs from it, its right edge on the page content's right edge.
+     * Only from --large, like C8 on desktop.
+     */
+    .edition-title__gauge {
+        display: none;
+        @media (--large) {
+            display: block;
+        }
+    }
+
+    /* The last gauge: its dial's right edge on the content's right edge. */
+    .edition-title__gauge--end {
+        left: auto;
+        right: calc(var(--size) / 2 - 0.2rem);
+    }
+
+    /* The dial: a red window dot from The Mall's facade, with a pale concrete rim. */
+    .edition-title__dial {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        translate: -50% 0;
+        width: var(--size);
+        aspect-ratio: 1;
+        border: 0.3rem solid var(--concrete-light);
+        border-radius: 50%;
+        background: var(--red);
+        box-shadow: 0 0 0 0.15rem var(--concrete-dark);
+
+        /* Inside the red dot, "text colour" means cream, so everything drawn on it shows up. */
+        --text: var(--cream);
+        color: var(--text);
+    }
+
+    /* The needle, pointing straight up at 0 V, with a round hub at its foot. */
+    .edition-title__needle {
+        position: absolute;
+        bottom: 50%;
+        left: 50%;
+        translate: -50% 0;
+        width: calc(var(--size) / 25);
+        height: 44%;
+        background: var(--text);
+        transform-origin: 50% 100%;
+        rotate: var(--reading, 0deg);
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: calc(var(--size) / -14);
+            left: 50%;
+            translate: -50% 0;
+            width: calc(var(--size) / 7);
+            height: calc(var(--size) / 7);
+            border-radius: 50%;
+            background: var(--text);
+        }
+    }
+
+    /*
+     * The electrical ground symbol, below the hub: a short stem over three shrinking bars, each one a gradient.
+     * Measured in tenths of a 5rem dial's tenth (--unit), so it scales with every dial.
+     */
+    .edition-title__ground-symbol {
+        --unit: calc(var(--size) / 50);
+        position: absolute;
+        bottom: 17%;
+        left: 50%;
+        translate: -50% 0;
+        width: calc(var(--unit) * 10);
+        height: calc(var(--unit) * 8);
+        background:
+            linear-gradient(var(--text), var(--text)) center 0 / calc(var(--unit) * 1.2) calc(var(--unit) * 3) no-repeat,
+            linear-gradient(var(--text), var(--text)) center calc(var(--unit) * 3) / 100% calc(var(--unit) * 1.2) no-repeat,
+            linear-gradient(var(--text), var(--text)) center calc(var(--unit) * 4.8) / 64% calc(var(--unit) * 1.2) no-repeat,
+            linear-gradient(var(--text), var(--text)) center calc(var(--unit) * 6.6) / 28% calc(var(--unit) * 1.2) no-repeat;
+    }
+
+    /* PLACEHOLDER size until the designer's logo arrives. */
+    .edition-title__logo {
+        flex: none;
+        width: var(--logo-width);
+    }
+
+    /* The year, hanging off a dimension leader under the logo. */
+    .edition-title__year {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        margin-top: var(--space-2);
+        font-family: var(--font-mono);
+        font-weight: var(--weight-bold);
+        font-size: var(--text-4);
+        line-height: 1;
+    }
+
+    /* Captions labelled like figures in a technical manual. */
+    .edition-title__fig {
+        margin-top: var(--space-2);
+    }
+
+    /*
+     * Fig. 2 labels the vent pipes, from 1200px. It sits 3.5rem above the header pipe's centre
+     * line, clear of the up-06 fitting below it, its right edge in line with the pipe's outer end
+     * (corner 1, half a gutter in).
+     */
+    .edition-title__fig--corner {
+        display: none;
+
+        @media (--large) {
+            display: block;
+            position: absolute;
+            top: calc(var(--pipe-y) - 3.5rem);
+            right: calc(var(--gutter) / 2);
+            margin: 0;
+        }
+    }
+
+    /* The leader: the span is the line, ::before is the dot, ::after is the tick. */
+    .edition-title__leader {
+        display: flex;
+        align-items: center;
+        width: var(--space-8);
+        height: 1px;
+        background: var(--text-muted);
+
+        &::before {
+            content: "";
+            width: var(--space-2);
+            height: var(--space-2);
+            border-radius: 50%;
+            background: var(--text-muted);
+        }
+
+        &::after {
+            content: "";
+            width: 1px;
+            height: var(--space-4);
+            margin-left: auto;
+            background: var(--text-muted);
+        }
+    }
+
+    /* The pipe carries on down the right margin, past the Lead section and the news. */
+    .lead-section,
+    .latest-news {
+        position: relative;
+
+        &::after {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: calc(var(--gutter) / 2);
+            width: var(--pipe-width);
+            background: url("/assets/pipes/pipe-segment-vertical.svg") center top / calc(100% * 40 / 9.89) auto repeat-y;
+
+            /* The pipe only runs down the margin from 600px; on phones corner 1 ends in a valve instead. */
+            @media (--small) {
+                content: "";
+            }
+        }
+    }
+
+    /*
+     * The Lead section, Announcement Stage. From --medium the theme sentence and
+     * the Substack link share one row; everything else spans the full width.
+     */
+    .lead-section {
+        padding-block: var(--space-6) var(--space-7);
+
+        @media (--medium) {
+            display: grid;
+            grid-template-columns: minmax(0, 52ch) auto;
+            column-gap: var(--space-7);
+            align-items: end;
+
+            & > :not(.lead-section__sentence, .lead-section__action, .lead-section__tagline) {
+                grid-column: 1 / -1;
+            }
+        }
+    }
+
+    /*
+     * The tagline. Placement still to be settled after the design clean-up (see ideas.md).
+     * The wrapper covers the whole Lead section, margins included. Hidden on phones for now.
+     */
+    .lead-section__tagline {
+        --branch-top: 7.5rem;
+        display: none;
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+
+        @media (--medium) {
+            display: block;
+        }
+    }
+
+    /*
+     * A short branch teed off the right-margin pipe, level with the theme. Only from 90rem (1440px):
+     * the theme heading stays about 958px wide from --large up, and the marker only clears it from there.
+     */
+    .lead-section__branch {
+        display: none;
+
+        @media (min-width: 90rem) {
+            display: block;
+            position: absolute;
+            top: var(--branch-top);
+            right: calc(var(--gutter) / 2);
+            width: calc(var(--gutter) / 2 + 13rem);
+            height: var(--pipe-width);
+            background: url("/assets/pipes/pipe-segment.svg") left center / auto calc(100% * 40 / 9.89) repeat-x;
+        }
+    }
+
+    /*
+     * The tagline as a yellow marker. Below 90rem: a band round the right-margin pipe, the text
+     * running down it to a flow arrow. From 90rem: on the branch, pointing at the pipe.
+     */
+    .lead-section__marker {
+        position: absolute;
+        top: var(--space-6);
+        right: calc(var(--gutter) / 2 + var(--pipe-width) / 2 - 0.875rem);
+        width: 1.75rem;
+        margin: 0;
+        padding: 0.7rem 0 1.6rem;
+        background: var(--yellow);
+        color: var(--ink);
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        font-weight: var(--weight-bold);
+        line-height: 1.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        writing-mode: vertical-rl;
+        white-space: nowrap;
+        clip-path: polygon(0 0, 100% 0, 100% calc(100% - 0.9rem), 50% 100%, 0 calc(100% - 0.9rem));
+
+        @media (min-width: 90rem) {
+            top: calc(var(--branch-top) + var(--pipe-width) / 2);
+            right: calc(var(--gutter) + 1rem);
+            translate: 0 -50%;
+            width: 12rem;
+            padding: 0.45rem 1.6rem 0.45rem 0.8rem;
+            line-height: 1.4;
+            writing-mode: horizontal-tb;
+            white-space: normal;
+            clip-path: polygon(0 0, calc(100% - 0.9rem) 0, 100% 50%, calc(100% - 0.9rem) 100%, 0 100%);
+        }
+    }
+
+    .lead-section__label {
+        color: var(--pipe);
+        font-family: var(--font-mono);
+        font-size: var(--text-3);
+        font-weight: var(--weight-bold);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .lead-section__theme {
+        margin-top: var(--space-2);
+        font-family: var(--font-display);
+        font-size: var(--text-9);
+        font-weight: var(--weight-normal);
+        line-height: var(--line-height-tight);
+        text-transform: uppercase;
+    }
+
+    /* The facts as a ruled spec sheet: two columns on phones; from --medium, four sized by their content, so each stays on one line. */
+    .lead-section__spec {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 56rem;
+        margin-top: var(--space-4);
+        border-top: 2px solid var(--text);
+        font-family: var(--font-mono);
+        font-size: var(--text-3);
+        text-transform: uppercase;
+
+        @media (--medium) {
+            grid-template-columns: repeat(4, auto);
+        }
+
+        & div {
+            padding: var(--space-2) var(--space-3) var(--space-2) 0;
+            border-bottom: 1px solid var(--text);
+        }
+
+        & dt {
+            color: var(--text-muted);
+            font-size: var(--text-2);
+        }
+
+        & dd {
+            margin: 0;
+            font-weight: var(--weight-bold);
+        }
+    }
+
+    .lead-section__sentence {
+        max-width: 52ch;
+        margin-top: var(--space-4);
+    }
+
+    /* The one action: a red pipe stub leading into the link, and a dry note after it. */
+    .lead-section__action {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--space-3);
+        margin-top: var(--space-4);
+
+        & a {
+            padding-bottom: var(--space-1);
+            border-bottom: 2px solid var(--pipe);
+            color: inherit;
+            font-family: var(--font-mono);
+            font-size: var(--text-3);
+            font-weight: var(--weight-bold);
+            letter-spacing: 0.15em;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+    }
+
+    .lead-section__stub {
+        width: var(--space-7);
+        height: var(--pipe-width);
+        background: var(--pipe);
+    }
+
+    .lead-section__note {
+        color: var(--text-muted);
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        text-transform: uppercase;
+    }
+
+    /*
+     * PLACEHOLDER pipe drawn in CSS, waiting for the designer's graphics (see Tune the design).
+     * Corner 2: the pipe coming down the right margin turns left here and runs to the middle
+     * of the left margin, with legs dropping off it.
+     * The room above the caption is as tall as the longest leg, so no leg reaches the caption.
+     */
+    .archive-pipe {
+        position: relative;
+        display: flow-root;
+        padding-top: 3.4rem;
+
+        /* Corner 3: the pipe turns down at the run's left end and runs to the ink band, which hides it. */
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: calc(var(--gutter) / 2);
+            width: var(--pipe-width);
+            background: url("/assets/pipes/pipe-segment-vertical.svg") center top / calc(100% * 40 / 9.89) auto repeat-y;
+        }
+    }
+
+    .archive-pipe__run {
+        position: absolute;
+        top: 0;
+        left: calc(var(--gutter) / 2);
+        right: calc(var(--gutter) / 2);
+        height: var(--pipe-width);
+        background: url("/assets/pipes/pipe-segment.svg") left center / auto calc(100% * 40 / 9.89) repeat-x;
+    }
+
+    /* Fig. 3 sits under the pipe's right end, in the same figure style as Fig. 1 and 2. */
+    .archive-pipe__fig {
+        margin: var(--space-2) var(--gutter) var(--space-4);
+        text-align: right;
+    }
+
+    .edition-title__fig,
+    .archive-pipe__fig {
+        color: var(--text-muted);
+        font-family: var(--font-mono);
+        font-size: var(--text-2);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    /* Corner 4: the pipe comes out from under the ink band, turns right, and ends in a valve about two-thirds across. */
+    .closing-pipe {
+        /*
+         * How far the run sits below the band: the same as the run above the band sits above it
+         * (about 88px at 1440px). That gap comes from the Fig. 3 caption, so change this with it.
+         */
+        --band-gap: 5.5rem;
+        position: relative;
+        height: calc(var(--band-gap) + var(--pipe-width));
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: calc(var(--gutter) / 2);
+            width: var(--pipe-width);
+            height: 100%;
+            background: url("/assets/pipes/pipe-segment-vertical.svg") center top / calc(100% * 40 / 9.89) auto repeat-y;
+        }
+    }
+
+    .closing-pipe__run {
+        position: absolute;
+        top: var(--band-gap);
+        left: calc(var(--gutter) / 2);
+        width: calc(100% * 2 / 3 - var(--gutter) / 2);
+        height: var(--pipe-width);
+        background: url("/assets/pipes/pipe-segment.svg") left center / auto calc(100% * 40 / 9.89) repeat-x;
+    }
+
+    /* The valve centred on the run's end. */
+    .closing-pipe .pipe__valve {
+        top: 50%;
+        right: 0;
+        translate: 50% -50%;
+    }
+
+    /* The 2026 edition's photos in green, like C8. */
+    .previous-edition {
+        --duotone: url(#duotone-green);
+
+        /*
+         * Fine diagonal hatching over the ink, like C8: a 1px line of the text colour
+         * every 9px, drawn with a repeating gradient. Only the image is set, so the
+         * Section's ground colour stays underneath.
+         */
+        background-image: repeating-linear-gradient(
+            45deg,
+            color-mix(in srgb, var(--text) 11%, transparent) 0 1px,
+            transparent 1px 9px
+        );
+
+        /* Titles in display capitals, like C8: these cards name a whole archive, not one news item. */
+        & .card__title {
+            font-family: var(--font-display);
+            font-size: var(--text-6);
+            font-weight: var(--weight-normal);
+            text-transform: uppercase;
+        }
+    }
+
+    /* One column on phones, three from --medium: never two, which would leave the third card alone. */
+    .latest-news__list,
+    .previous-edition__list {
+        display: grid;
+        gap: var(--space-5);
+
+        @media (--medium) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+}
