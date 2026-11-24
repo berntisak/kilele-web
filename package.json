@@ -24,7 +24,7 @@
   "dependencies": {
     "@11ty/eleventy-img": "^7.1.1",
     "@supabase/supabase-js": "^2.119.2",
-    "dompurify": "^3.4.17",
+    "dompurify": "^3.4.18",
     "dotenv": "^18.0.10",
     "luxon": "^3.7.2",
     "markdown-it": "^15.0.3",
