@@ -1,53 +1,38 @@
 // _data/gallery.js
 
-require('dotenv').config();
-const { createClient } = require('@supabase/supabase-js');
+const { client, must } = require('../../utils/supabase');
 
 module.exports = async function() {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLIC_KEY
-  );
+  const supabase = client();
 
   const baseUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/gallery/`;
 
   // Fetch all categories
-  const { data: categories, error: catError } = await supabase
+  const categories = await must('gallery_categories (gallery)', supabase
     .from('gallery_categories')
     .select('id, name, slug, display_name, sort_order')
-    .order('sort_order', { ascending: true });
-
-  if (catError) {
-    console.error('Error fetching gallery categories:', catError);
-  }
+    .order('sort_order', { ascending: true }));
 
   // Fetch all photos with photographer and category
-  const { data: photos, error: photoError } = await supabase
+  const photos = await must('gallery_photos (gallery)', supabase
     .from('gallery_photos')
     .select(`
       id, image_path, caption, link, sort_order, program_point_id,
       category_id (id, name, slug, display_name),
       photographer_id (id, name, link)
     `)
-    .order('sort_order', { ascending: true });
-
-  if (photoError) {
-    console.error('Error fetching gallery photos:', photoError);
-    return { categories: [], photos: [] };
-  }
+    .order('sort_order', { ascending: true }));
 
   // Fetch artists linked to photos via junction table
-  const { data: artistLinks, error: artistError } = await supabase
+  const artistLinks = await must('gallery_photo_artists (gallery)', supabase
     .from('gallery_photo_artists')
     .select(`
       photo_id,
       artists (name, slug, public)
-    `);
-
-  if (artistError) console.error('Error fetching gallery photo artists:', artistError);
+    `));
 
   const artistMap = {};
-  (artistLinks || []).forEach(link => {
+  artistLinks.forEach(link => {
     if (link.artists?.public) {
       if (!artistMap[link.photo_id]) artistMap[link.photo_id] = [];
       artistMap[link.photo_id].push({
@@ -59,26 +44,22 @@ module.exports = async function() {
 
   // Fetch program points for any photos that have a program_point_id
   const programPointIds = [...new Set(
-    (photos || []).map(p => p.program_point_id).filter(Boolean)
+    photos.map(p => p.program_point_id).filter(Boolean)
   )];
 
   const programPointMap = {};
   if (programPointIds.length) {
-    const { data: programPoints, error: ppError } = await supabase
+    const programPoints = await must('program_points (gallery)', supabase
       .from('program_points')
       .select('id, title, short_title, slug')
-      .in('id', programPointIds);
+      .in('id', programPointIds));
 
-    if (ppError) {
-      console.error('Error fetching program points for gallery:', ppError);
-    } else {
-      (programPoints || []).forEach(pp => {
-        programPointMap[pp.id] = { title: pp.title, short_title: pp.short_title, slug: pp.slug };
-      });
-    }
+    programPoints.forEach(pp => {
+      programPointMap[pp.id] = { title: pp.title, short_title: pp.short_title, slug: pp.slug };
+    });
   }
 
-  const enrichedPhotos = (photos || []).map(photo => {
+  const enrichedPhotos = photos.map(photo => {
     const pp = programPointMap[photo.program_point_id] || null;
     return {
       ...photo,
@@ -98,7 +79,7 @@ module.exports = async function() {
   });
 
   return {
-    categories: categories || [],
+    categories,
     photos: enrichedPhotos,
   };
 };

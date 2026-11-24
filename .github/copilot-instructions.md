@@ -36,6 +36,31 @@ Three tables power dynamic content (queries configured in `_data/`):
 - `NEXT_PUBLIC_SUPABASE_URL` — Supabase project URL
 - `NEXT_PUBLIC_SUPABASE_PUBLIC_KEY` — Anon key (safe for public queries)
 
+### Reading from Supabase: `utils/supabase.js`
+
+Data files do NOT create their own client and do NOT handle query errors
+themselves. Both come from `utils/supabase.js`:
+
+```javascript
+const { client, must } = require('../../utils/supabase');
+const rows = await must('artists (lineup)', client().from('artists').select('id, name'));
+```
+
+- `client()` — the memoised anon client; loads `.env` and fails if either var is missing.
+- `must(label, query)` — awaits the query and **throws** on a PostgREST error,
+  keeping its code/details/hint. An empty result is not an error.
+
+**Never go back to logging an error and returning `[]`.** Eleventy cannot see a
+`console.error`, so the build succeeds and the page ships empty — that is how
+kilele-cms#246's column grants emptied the lineup on two branches with nothing
+going red. Throwing fails `npx eleventy` (exit 1) and so fails the Eleventy
+Build Check workflow on the pull request.
+
+**Name every column; never `select('*')`.** PostgREST answers `select=*` with
+`permission denied` as soon as one column is withheld from `anon`, which is
+already the case on `artists`. A column added to a query must also be granted
+to `anon` in the CMS migrations.
+
 ### Image URL Construction
 All data files append Supabase Storage base URL + add optional query params:
 ```javascript

@@ -1,13 +1,10 @@
 // _data/news.js
-const { createClient } = require('@supabase/supabase-js');
+const { client, must } = require('../../utils/supabase');
 
 module.exports = async function () {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLIC_KEY // ok if public read policies exist; use service key on server if needed
-  );
+  const supabase = client();
 
-  const { data: news, error } = await supabase
+  const news = await must('news_posts + tags (news)', supabase
     .from('news_posts')
     .select(`
       *,
@@ -17,16 +14,11 @@ module.exports = async function () {
       )
     `)
     .eq('public', true)
-    .order('publish_date', { ascending: false });
-
-  if (error) {
-    console.error('Error fetching news:', error);
-    return [];
-  }
+    .order('publish_date', { ascending: false }));
 
   const baseUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/news/`;
 
-  return (news || []).map(post => ({
+  return news.map(post => ({
     ...post,
     tags: (post.news_post_tags || []).map(row => row.tags),
     photo_path: post.image_path

@@ -1,7 +1,6 @@
 // _data/schedule.js
 
-require('dotenv').config();
-const { createClient } = require('@supabase/supabase-js');
+const { client, must } = require('../../utils/supabase');
 const { DateTime } = require('luxon');
 
 let cachedPromise = null;
@@ -13,13 +12,10 @@ module.exports = async function() {
 };
 
 async function fetchSchedule() {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLIC_KEY
-  );
+  const supabase = client();
 
   // 1️⃣ Get all program points with their category + venue info
-  const { data: schedule, error } = await supabase
+  const schedule = await must('program_points (schedule)', supabase
     .from('program_points')
     .select(`
       id, title, short_title, description, photo_path, start_time, end_time, slug, public,
@@ -27,25 +23,18 @@ async function fetchSchedule() {
       venue_id (name, color)
     `)
     .eq('public', true)
-    .order('start_time', { ascending: true });
-
-  if (error) {
-    console.error('Error fetching schedule:', error);
-    return [];
-  }
+    .order('start_time', { ascending: true }));
 
   // 2️⃣ Fetch artists linked to each program point
-  const { data: artistLinks, error: artistError } = await supabase
+  const artistLinks = await must('program_point_artists (schedule)', supabase
     .from('program_point_artists')
     .select(`
       program_point_id,
       artists (name, slug, public)
-    `);
-
-  if (artistError) console.error('Error fetching artists:', artistError);
+    `));
 
   const artistMap = {};
-  (artistLinks || []).forEach(link => {
+  artistLinks.forEach(link => {
     // Only include public artists
     if (link.artists?.public) {
       if (!artistMap[link.program_point_id]) artistMap[link.program_point_id] = [];
@@ -59,7 +48,7 @@ async function fetchSchedule() {
   // 3️⃣ Enrich the schedule items
   const baseUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/program_points/`;
 
-  const enriched = (schedule || []).map(point => {
+  const enriched = schedule.map(point => {
     const start = DateTime.fromISO(point.start_time, { zone: 'Africa/Nairobi' });
     const end = DateTime.fromISO(point.end_time, { zone: 'Africa/Nairobi' });
 
